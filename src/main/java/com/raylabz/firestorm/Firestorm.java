@@ -158,8 +158,12 @@ public class Firestorm {
      * @param object The object to retrieve the DocumentReference for.
      * @return Returns DocumentReference.
      */
-    public static DocumentReference getDocumentReference(final FirestormObject object) {
+    public static DocumentReference getObjectReference(final FirestormObject object) {
         return firestore.collection(object.getClass().getSimpleName()).document(object.getDocumentID());
+    }
+
+    public static CollectionReference getFieldReference(final FirestormObject object, final String fieldName) {
+        return firestore.collection(object.getClass().getSimpleName()).document(object.getDocumentID()).collection(fieldName);
     }
 
     /**
@@ -169,7 +173,7 @@ public class Firestorm {
      * @param <T> The type of objects this listener can be attached to.
      */
     public static <T> void attachListener(final FirestormObject object, final FirestormEventListener<T> eventListener) {
-        ListenerRegistration listenerRegistration = getDocumentReference(object).addSnapshotListener(eventListener);
+        ListenerRegistration listenerRegistration = getObjectReference(object).addSnapshotListener(eventListener);
         object.addListener(listenerRegistration);
     }
 

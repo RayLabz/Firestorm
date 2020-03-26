@@ -1,5 +1,6 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
@@ -124,6 +125,19 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //TODO - Persistence setting: https://firebase.google.com/docs/firestore/manage-data/enable-offline
+
+        //TODO - Transactions: https://firebase.google.com/docs/firestore/manage-data/transactions#transactions
+
+        //TODO - Batch writes: https://firebase.google.com/docs/firestore/manage-data/transactions#batched-writes
+
+        //TODO - Cursors & pagination: https://firebase.google.com/docs/firestore/query-data/query-cursors
+
+        //TODO - Custom based data export tooling
+
+        //TODO - Nested collections? Allow this?
+
 
     }
 

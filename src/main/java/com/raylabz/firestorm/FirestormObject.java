@@ -17,18 +17,22 @@ public class FirestormObject {
         return documentID;
     }
 
+    @Exclude
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }
 
+    @Exclude
     public ArrayList<ListenerRegistration> getListeners() {
         return listeners;
     }
 
+    @Exclude
     public void addListener(ListenerRegistration listenerRegistration) {
         listeners.add(listenerRegistration);
     }
 
+    @Exclude
     public void removeListener(ListenerRegistration listenerRegistration) {
         listeners.remove(listenerRegistration);
     }
