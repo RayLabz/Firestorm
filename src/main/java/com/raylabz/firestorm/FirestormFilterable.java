@@ -16,10 +16,10 @@ import java.util.concurrent.Executor;
  *
  * @param <T> The type of objects this FirestormFilterable is able to interact with.
  */
-public class FirestormFilterable<T> {
+public class FirestormFilterable<T> implements Filterable<T> {
 
-    private Query query;
-    private final Class<T> aClass;
+    protected Query query;
+    protected final Class<T> aClass;
 
     /**
      * Instantiates a class of FirestormFilterable.
@@ -264,6 +264,10 @@ public class FirestormFilterable<T> {
         return query.hashCode();
     }
 
+    /**
+     * Fetches the results of a filterable.
+     * @return An ArrayList containing the results of a filter.
+     */
     public ArrayList<T> fetch() {
         ApiFuture<QuerySnapshot> future = query.get();
         try {

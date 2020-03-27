@@ -4,6 +4,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.FirestormEventListener;
+import com.raylabz.firestorm.FirestormTransaction;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class Main {
             Person person = new Person("Nicos", "Kasenides", 26);
             Person person2 = new Person("Panayiota", "Michaelide", 24);
 
+            System.out.println("-- CREATE --");
+
             //Create:
             long before = System.currentTimeMillis();
             Firestorm.create(person);
@@ -51,11 +54,15 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- CREATE 2 --");
+
             //Create:
             before = System.currentTimeMillis();
             Firestorm.create(person2);
             after = System.currentTimeMillis();
             System.out.println(after - before);
+
+            System.out.println("-- LISTENER ATTACH --");
 
             Firestorm.attachListener(person2, new FirestormEventListener<Person>(Person.class) {
                 @Override
@@ -71,6 +78,8 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- UPDATE --");
+
             //Update:
             person.setAge(person.getAge() + 1);
             before = System.currentTimeMillis();
@@ -80,8 +89,10 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- GET --");
+
             //Get:
-            final String id = person.getDocumentID();
+            final String id = person.getId();
             before = System.currentTimeMillis();
             final Person retrievedPerson = Firestorm.get(Person.class, id);
             after = System.currentTimeMillis();
@@ -90,9 +101,11 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- LIST--");
+
             //List all:
             before = System.currentTimeMillis();
-            final ArrayList<Person> persons = Firestorm.listAll(Person.class);
+            final ArrayList<Person> persons = Firestorm.list(Person.class);
             after = System.currentTimeMillis();
             for (Person p : persons) {
                 System.out.println("--> " + p.getFirstname());
@@ -101,9 +114,11 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- FILTER --");
+
             //List filter:
             before = System.currentTimeMillis();
-            final ArrayList<Person> filteredPersons = Firestorm.list(Person.class).whereGreaterThan("age", 25).fetch();
+            final ArrayList<Person> filteredPersons = Firestorm.filter(Person.class).whereGreaterThan("age", 25).fetch();
             after = System.currentTimeMillis();
             for (Person p : filteredPersons) {
                 System.out.println("--> " + p.getFirstname());
@@ -112,17 +127,32 @@ public class Main {
 
             new Scanner(System.in).nextLine();
 
+            System.out.println("-- DELETE --");
+
             //Delete:
             before = System.currentTimeMillis();
             Firestorm.delete(person);
             after = System.currentTimeMillis();
             System.out.println(after - before);
 
+            new Scanner(System.in).nextLine();
+
+            System.out.println("-- TRANSACTION --");
+
+            Firestorm.runTransaction(new FirestormTransaction() {
+                @Override
+                public void execute() {
+                    Person p = get(Person.class, person2.getId());
+                    System.out.println("Fetched with transaction: " + p.getFirstname());
+                    delete(p);
+                    System.out.println("Deleted with transaction (person 2)");
+                }
+            });
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //TODO - Transactions: https://firebase.google.com/docs/firestore/manage-data/transactions#transactions
 
         //TODO - Batch writes: https://firebase.google.com/docs/firestore/manage-data/transactions#batched-writes
 

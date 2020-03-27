@@ -19,7 +19,7 @@ public class Firestorm {
     private static Firestorm instance = null;
     private static FirebaseOptions options;
     private static FirebaseApp firebaseApp;
-    private static Firestore firestore;
+    public static Firestore firestore; //TODO package private
 
     /**
      * Retrieves instance of Firestorm.
@@ -54,8 +54,8 @@ public class Firestorm {
         final DocumentReference reference = firestore.collection(className).document();
         final String id = reference.getId();
         try {
+            object.setId(id);
             reference.set(object).get();
-            object.setDocumentID(id);
             return true;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class Firestorm {
      */
     public static boolean delete(final FirestormObject object) {
         final String className = object.getClass().getSimpleName();
-        final DocumentReference reference = firestore.collection(className).document(object.getDocumentID());
+        final DocumentReference reference = firestore.collection(className).document(object.getId());
         try {
             reference.delete().get();
             return true;
@@ -87,7 +87,7 @@ public class Firestorm {
      */
     public static boolean update(final FirestormObject object) {
         final String className = object.getClass().getSimpleName();
-        final DocumentReference reference = firestore.collection(className).document(object.getDocumentID());
+        final DocumentReference reference = firestore.collection(className).document(object.getId());
         try {
             reference.set(object).get();
             return true;
@@ -123,11 +123,11 @@ public class Firestorm {
 
     /**
      * Lists all available documents of a given type.
-     * @param aClass The type of the documents to list.
+     * @param aClass The type of the documents to filter.
      * @param <T> A type matching the type of aClass.
      * @return Returns an ArrayList of objects of type aClass.
      */
-    public static <T> ArrayList<T> listAll(final Class<T> aClass) {
+    public static <T> ArrayList<T> list(final Class<T> aClass) {
         ApiFuture<QuerySnapshot> future = firestore.collection(aClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = null;
@@ -144,12 +144,12 @@ public class Firestorm {
     }
 
     /**
-     * Lists a set documents which match the filtering criteria provided. Returns a list of all documents if not filters are used.
-     * @param aClass The type of the documents to list.
+     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if not filters are used.
+     * @param aClass The type of the documents to filter.
      * @param <T> A type matching the type of aClass.
      * @return Returns a FirestormFilterable which can be used to append filter parameters.
      */
-    public static <T> FirestormFilterable<T> list(final Class<T> aClass) {
+    public static <T> FirestormFilterable<T> filter(final Class<T> aClass) {
         return new FirestormFilterable<T>(firestore.collection(aClass.getSimpleName()), aClass);
     }
 
@@ -159,11 +159,11 @@ public class Firestorm {
      * @return Returns DocumentReference.
      */
     public static DocumentReference getObjectReference(final FirestormObject object) {
-        return firestore.collection(object.getClass().getSimpleName()).document(object.getDocumentID());
+        return firestore.collection(object.getClass().getSimpleName()).document(object.getId());
     }
 
     public static CollectionReference getFieldReference(final FirestormObject object, final String fieldName) {
-        return firestore.collection(object.getClass().getSimpleName()).document(object.getDocumentID()).collection(fieldName);
+        return firestore.collection(object.getClass().getSimpleName()).document(object.getId()).collection(fieldName);
     }
 
     /**
@@ -195,6 +195,19 @@ public class Firestorm {
         for (ListenerRegistration listenerRegistration : object.getListeners()) {
             listenerRegistration.remove();
             object.removeListener(listenerRegistration);
+        }
+    }
+
+    /**
+     * Runs a transaction.
+     * @param transaction The transaction to run.
+     */
+    public static void runTransaction(final FirestormTransaction transaction) {
+        ApiFuture<Void> futureTransaction = Firestorm.firestore.runTransaction(transaction);
+        try {
+            futureTransaction.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
     }
 
