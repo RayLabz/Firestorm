@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
  */
 public class FirestormFilterable<T> {
 
-    private final Query query;
+    private Query query;
     private final Class<T> aClass;
 
     /**
@@ -46,10 +46,12 @@ public class FirestormFilterable<T> {
      */
     @Nonnull
     public FirestormFilterable<T> whereEqualTo(@Nonnull String field, @Nullable Object value) {
-        return new FirestormFilterable<T>(query.whereEqualTo(field, value), aClass);
+        query = query.whereEqualTo(field, value);
+        return this;
     }
 
     //TODO - Continue documentation of methods.
+    //TODO - Change this so that it returns the same object, like above
 
     @Nonnull
     public FirestormFilterable<T> whereEqualTo(@Nonnull FieldPath fieldPath, @Nullable Object value) {
@@ -89,7 +91,8 @@ public class FirestormFilterable<T> {
     @Nonnull
     
     public FirestormFilterable<T> whereGreaterThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereGreaterThan(fieldPath, value), aClass);
+        query = query.whereGreaterThan(fieldPath, value);
+        return this;
     }
 
     @Nonnull
@@ -241,23 +244,13 @@ public class FirestormFilterable<T> {
         return query.addSnapshotListener(executor, listener);
     }
 
-
-    public boolean equals(Object obj) {
-        return query.equals(obj);
-    }
-
     public int hashCode() {
         return query.hashCode();
     }
 
-    @Nonnull
-    public Firestore getFirestore() {
-        return query.getFirestore();
-    }
-
     public ArrayList<T> fetch() {
         final Firestore firestore = query.getFirestore();
-        ApiFuture<QuerySnapshot> future = firestore.collection(aClass.getSimpleName()).get();
+        ApiFuture<QuerySnapshot> future = query.get();
         try {
             List<QueryDocumentSnapshot> documents = null;
             documents = future.get().getDocuments();

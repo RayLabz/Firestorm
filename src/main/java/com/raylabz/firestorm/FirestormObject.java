@@ -9,8 +9,8 @@ import java.util.ArrayList;
 @IgnoreExtraProperties
 public class FirestormObject {
 
-    @Exclude private String documentID;
-    @Exclude private ArrayList<ListenerRegistration> listeners = new ArrayList<>();
+    @Exclude private transient String documentID;
+    @Exclude private transient ArrayList<ListenerRegistration> listeners = new ArrayList<>();
 
     @Exclude
     public String getDocumentID() {
