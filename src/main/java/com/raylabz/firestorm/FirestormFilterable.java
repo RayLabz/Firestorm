@@ -13,6 +13,7 @@ import java.util.concurrent.Executor;
 
 /**
  * An object that enables quick use of Firestore filters without using additional DocumentReferences.
+ *
  * @param <T> The type of objects this FirestormFilterable is able to interact with.
  */
 public class FirestormFilterable<T> {
@@ -22,7 +23,8 @@ public class FirestormFilterable<T> {
 
     /**
      * Instantiates a class of FirestormFilterable.
-     * @param query The initial query of the filterable.
+     *
+     * @param query  The initial query of the filterable.
      * @param aClass The type of objects this filterable can interact with.
      */
     public FirestormFilterable(Query query, final Class<T> aClass) {
@@ -32,6 +34,7 @@ public class FirestormFilterable<T> {
 
     /**
      * Retrieves the current query.
+     *
      * @return Returns Query.
      */
     public Query getQuery() {
@@ -40,6 +43,7 @@ public class FirestormFilterable<T> {
 
     /**
      * Filters a given <b>field</b> that is equal to the given <b>value</b>.
+     *
      * @param field The field to filter.
      * @param value The value of the filter.
      * @return Returns a filterable.
@@ -50,181 +54,193 @@ public class FirestormFilterable<T> {
         return this;
     }
 
-    //TODO - Continue documentation of methods.
-    //TODO - Change this so that it returns the same object, like above
-
     @Nonnull
     public FirestormFilterable<T> whereEqualTo(@Nonnull FieldPath fieldPath, @Nullable Object value) {
-        return new FirestormFilterable<T>(query.whereEqualTo(fieldPath, value), aClass);
+        query = query.whereEqualTo(fieldPath, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereLessThan(@Nonnull String field, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereLessThan(field, value), aClass);
+        query = query.whereLessThan(field, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereLessThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereLessThan(fieldPath, value), aClass);
+        query = query.whereLessThan(fieldPath, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereLessThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereLessThanOrEqualTo(field, value), aClass);
+        query = query.whereLessThanOrEqualTo(field, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereLessThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereLessThanOrEqualTo(fieldPath, value), aClass);
+        query = query.whereLessThanOrEqualTo(fieldPath, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereGreaterThan(@Nonnull String field, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereGreaterThan(field, value), aClass);
+        query = query.whereGreaterThan(field, value);
+        return this;
     }
 
     @Nonnull
-    
+
     public FirestormFilterable<T> whereGreaterThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereGreaterThan(fieldPath, value);
         return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereGreaterThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereGreaterThanOrEqualTo(field, value), aClass);
+        query = query.whereGreaterThanOrEqualTo(field, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereGreaterThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereGreaterThanOrEqualTo(fieldPath, value), aClass);
+        query = query.whereGreaterThanOrEqualTo(fieldPath, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereArrayContains(@Nonnull String field, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereArrayContains(field, value), aClass);
+        query = query.whereArrayContains(field, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereArrayContains(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
-        return new FirestormFilterable<T>(query.whereArrayContains(fieldPath, value), aClass);
+        query = query.whereArrayContains(fieldPath, value);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereArrayContainsAny(@Nonnull String field, @Nonnull List<?> values) {
-        return new FirestormFilterable<T>(query.whereArrayContainsAny(field, values), aClass);
+        query = query.whereArrayContainsAny(field, values);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereArrayContainsAny(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
-        return new FirestormFilterable<T>(query.whereArrayContainsAny(fieldPath, values), aClass);
+        query = query.whereArrayContainsAny(fieldPath, values);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereIn(@Nonnull String field, @Nonnull List<?> values) {
-        return new FirestormFilterable<T>(query.whereIn(field, values), aClass);
+        query = query.whereIn(field, values);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> whereIn(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
-        return new FirestormFilterable<T>(query.whereIn(fieldPath, values), aClass);
+        query = query.whereIn(fieldPath, values);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> orderBy(@Nonnull String field) {
-        return new FirestormFilterable<T>(query.orderBy(field), aClass);
+        query = query.orderBy(field);
+        return this;
     }
 
     @Nonnull
-    
     public FirestormFilterable<T> orderBy(@Nonnull FieldPath fieldPath) {
-        return new FirestormFilterable<T>(query.orderBy(fieldPath), aClass);
+        query = query.orderBy(fieldPath);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull String field, @Nonnull Query.Direction direction) {
-        return new FirestormFilterable<T>(query.orderBy(field, direction), aClass);
+        query = query.orderBy(field, direction);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull FieldPath fieldPath, @Nonnull Query.Direction direction) {
-        return new FirestormFilterable<T>(query.orderBy(fieldPath, direction), aClass);
+        query = query.orderBy(fieldPath, direction);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> limit(int limit) {
-        return new FirestormFilterable<T>(query.limit(limit), aClass);
+        query = query.limit(limit);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> offset(int offset) {
-        return new FirestormFilterable<T>(query.offset(offset), aClass);
+        query = query.offset(offset);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> startAt(@Nonnull DocumentSnapshot snapshot) {
-        return new FirestormFilterable<T>(query.startAt(snapshot), aClass);
+        query = query.startAt(snapshot);
+        return this;
     }
+
     @Nonnull
     public FirestormFilterable<T> startAt(Object... fieldValues) {
-        return new FirestormFilterable<T>(query.startAt(fieldValues), aClass);
+        query = query.startAt(fieldValues);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> select(String... fields) {
-        return new FirestormFilterable<T>(query.select(fields), aClass);
+        query = query.select(fields);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> select(FieldPath... fieldPaths) {
-        return new FirestormFilterable<T>(query.select(fieldPaths), aClass);
+        query = query.select(fieldPaths);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> startAfter(@Nonnull DocumentSnapshot snapshot) {
-        return new FirestormFilterable<T>(query.startAfter(snapshot), aClass);
+        query = query.startAfter(snapshot);
+        return this;
     }
 
-    
+
     public FirestormFilterable<T> startAfter(Object... fieldValues) {
-        return new FirestormFilterable<T>(query.startAfter(fieldValues), aClass);
+        query = query.startAfter(fieldValues);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> endBefore(@Nonnull DocumentSnapshot snapshot) {
-        return new FirestormFilterable<T>(query.endBefore(snapshot), aClass);
+        query = query.endBefore(snapshot);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> endBefore(Object... fieldValues) {
-        return new FirestormFilterable<T>(query.endBefore(fieldValues), aClass);
+        query = query.endBefore(fieldValues);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> endAt(Object... fieldValues) {
-        return new FirestormFilterable<T>(query.endAt(fieldValues), aClass);
+        query = query.endAt(fieldValues);
+        return this;
     }
 
     @Nonnull
     public FirestormFilterable<T> endAt(@Nonnull DocumentSnapshot snapshot) {
-        return new FirestormFilterable<T>(query.endAt(snapshot), aClass);
+        query = query.endAt(snapshot);
+        return this;
     }
 
-    
     public void stream(@Nonnull ApiStreamObserver<DocumentSnapshot> responseObserver) {
         query.stream(responseObserver);
     }
@@ -249,7 +265,6 @@ public class FirestormFilterable<T> {
     }
 
     public ArrayList<T> fetch() {
-        final Firestore firestore = query.getFirestore();
         ApiFuture<QuerySnapshot> future = query.get();
         try {
             List<QueryDocumentSnapshot> documents = null;
