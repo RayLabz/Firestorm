@@ -146,6 +146,17 @@ public class Main {
                     System.out.println("Fetched with transaction: " + p.getFirstname());
                     delete(p);
                     System.out.println("Deleted with transaction (person 2)");
+
+                    Person person3 = new Person("John", "Smith", 50);
+                    create(person3);
+                    System.out.println("Created person3 with transaction");
+
+                    person3.setAge(40);
+                    update(person3);
+                    System.out.println("Updated person3 with transaction");
+
+                    delete(person3);
+                    System.out.println("Deleted person3 with transaction");
                 }
             });
 
