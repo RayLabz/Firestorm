@@ -3,6 +3,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 import com.raylabz.firestorm.Firestorm;
+import com.raylabz.firestorm.FirestormConfig;
 import com.raylabz.firestorm.FirestormEventListener;
 import com.raylabz.firestorm.FirestormTransaction;
 
@@ -30,12 +31,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        InputStream stream = new ByteArrayInputStream(FIREBASE_SERVICE_ACCOUNT_JSON.getBytes(StandardCharsets.UTF_8));
-
         try {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(stream))
+                    .setCredentials(GoogleCredentials.fromStream(FirestormConfig.fromString(FIREBASE_SERVICE_ACCOUNT_JSON).toInputStream()))
                     .setDatabaseUrl("https://raylabz.firebaseio.com/")
                     .build();
 

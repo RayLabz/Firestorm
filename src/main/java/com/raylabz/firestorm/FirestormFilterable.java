@@ -34,7 +34,6 @@ public class FirestormFilterable<T> implements Filterable<T> {
 
     /**
      * Retrieves the current query.
-     *
      * @return Returns Query.
      */
     public Query getQuery() {
@@ -42,10 +41,9 @@ public class FirestormFilterable<T> implements Filterable<T> {
     }
 
     /**
-     * Filters a given <b>field</b> that is equal to the given <b>value</b>.
-     *
-     * @param field The field to filter.
-     * @param value The value of the filter.
+     * Filters by value (equality).
+     * @param field The field.
+     * @param value The value.
      * @return Returns a filterable.
      */
     @Nonnull
@@ -54,139 +52,264 @@ public class FirestormFilterable<T> implements Filterable<T> {
         return this;
     }
 
+    /**
+     * Filters by value by field path (equality).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereEqualTo(@Nonnull FieldPath fieldPath, @Nullable Object value) {
         query = query.whereEqualTo(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by value (less than).
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereLessThan(@Nonnull String field, @Nonnull Object value) {
         query = query.whereLessThan(field, value);
         return this;
     }
 
+    /**
+     * Filters by value (less than).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereLessThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereLessThan(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by value (less than or equal to).
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereLessThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
         query = query.whereLessThanOrEqualTo(field, value);
         return this;
     }
 
+    /**
+     * Filters by value (less than or equal to).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereLessThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereLessThanOrEqualTo(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by value (greater than).
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereGreaterThan(@Nonnull String field, @Nonnull Object value) {
         query = query.whereGreaterThan(field, value);
         return this;
     }
 
+    /**
+     * Filters by value (greater than).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
-
     public FirestormFilterable<T> whereGreaterThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereGreaterThan(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by value (greater than or equal to).
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereGreaterThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
         query = query.whereGreaterThanOrEqualTo(field, value);
         return this;
     }
 
+    /**
+     * Filters by value (greater than or equal to).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereGreaterThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereGreaterThanOrEqualTo(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by array field containing a value.
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereArrayContains(@Nonnull String field, @Nonnull Object value) {
         query = query.whereArrayContains(field, value);
         return this;
     }
 
+    /**
+     * Filters by array field containing a value.
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereArrayContains(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereArrayContains(fieldPath, value);
         return this;
     }
 
+    /**
+     * Filters by field containing any of a list of values.
+     * @param field The field.
+     * @param values The list of values.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereArrayContainsAny(@Nonnull String field, @Nonnull List<?> values) {
         query = query.whereArrayContainsAny(field, values);
         return this;
     }
 
+    /**
+     * Filters by field containing any of a list of values.
+     * @param fieldPath The field path.
+     * @param values The list of values.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereArrayContainsAny(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
         query = query.whereArrayContainsAny(fieldPath, values);
         return this;
     }
 
+    /**
+     * Filters by an <u>array</u> field containing a list of values.
+     * @param field The field.
+     * @param values The list of values.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereIn(@Nonnull String field, @Nonnull List<?> values) {
         query = query.whereIn(field, values);
         return this;
     }
 
+    /**
+     * Filters by an <u>array</u> field containing a list of values.
+     * @param fieldPath The field path.
+     * @param values The list of values.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> whereIn(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
         query = query.whereIn(fieldPath, values);
         return this;
     }
 
+    /**
+     * Orders results by a field.
+     * @param field The field.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull String field) {
         query = query.orderBy(field);
         return this;
     }
 
+    /**
+     * Orders results by a field.
+     * @param fieldPath The field path.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull FieldPath fieldPath) {
         query = query.orderBy(fieldPath);
         return this;
     }
 
+    /**
+     * Orders results by a field in a specified direction.
+     * @param field The field.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull String field, @Nonnull Query.Direction direction) {
         query = query.orderBy(field, direction);
         return this;
     }
 
+    /**
+     * Orders results by a field in a specified direction.
+     * @param fieldPath The field path.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> orderBy(@Nonnull FieldPath fieldPath, @Nonnull Query.Direction direction) {
         query = query.orderBy(fieldPath, direction);
         return this;
     }
 
+    /**
+     * Limits the number of results.
+     * @param limit The maximum number of results to fetch.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> limit(int limit) {
         query = query.limit(limit);
         return this;
     }
 
+    /**
+     * Offsets the results by a certain index.
+     * @param offset The offset.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> offset(int offset) {
         query = query.offset(offset);
         return this;
     }
 
+    /**
+     * Starts the filtering at specified document.
+     * @param snapshot The document snapshot to start retrieving the results from.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> startAt(@Nonnull DocumentSnapshot snapshot) {
         query = query.startAt(snapshot);
         return this;
     }
 
+    //TODO
     @Nonnull
     public FirestormFilterable<T> startAt(Object... fieldValues) {
         query = query.startAt(fieldValues);

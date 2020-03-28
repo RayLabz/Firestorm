@@ -1,5 +1,12 @@
 package com.raylabz.firestorm;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 public class FirestormConfig {
 
     private String type;
@@ -13,6 +20,19 @@ public class FirestormConfig {
     private String auth_provider_x509_cert_url;
     private String client_x509_cert_url;
 
+    /**
+     * Instantiates a new object of FirestormConfig, based on the service account details of Firebase.
+     * @param type The type of account.
+     * @param project_id The project ID of the service account.
+     * @param private_key_id The private key ID of the service account.
+     * @param private_key The private key of the service account.
+     * @param client_email The client email of the service account.
+     * @param client_id The client ID of the service account.
+     * @param auth_uri The auth URI of the service account.
+     * @param token_uri The token URI of the service account.
+     * @param auth_provider_x509_cert_url The auth provider certification URL of the service account.
+     * @param client_x509_cert_url The client certification URL of the service account.
+     */
     public FirestormConfig(String type, String project_id, String private_key_id, String private_key, String client_email, String client_id, String auth_uri, String token_uri, String auth_provider_x509_cert_url, String client_x509_cert_url) {
         this.type = type;
         this.project_id = project_id;
@@ -24,6 +44,32 @@ public class FirestormConfig {
         this.token_uri = token_uri;
         this.auth_provider_x509_cert_url = auth_provider_x509_cert_url;
         this.client_x509_cert_url = client_x509_cert_url;
+    }
+
+    /**
+     * Converts a JSON-formatted string into a FirestormConfig object.
+     * @param string The string to parse.
+     * @return Returns a FirestormConfig object.
+     * @throws JsonSyntaxException Throws an exception if the object parsed is not a FirestormConfig object.
+     */
+    public static FirestormConfig fromString(final String string) throws JsonSyntaxException {
+        return new Gson().fromJson(string, FirestormConfig.class);
+    }
+
+    /**
+     * Converts FirestormConfig to an InputStream.
+     * @return Returns InputStream object.
+     */
+    public InputStream toInputStream() {
+        return new ByteArrayInputStream(toJson().getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * Returns a JSON-formatted string representing the FirestormConfig object.
+     * @return Returns a JSON-formatted string.
+     */
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
     public String getType() {

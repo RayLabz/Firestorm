@@ -14,14 +14,17 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
 
     private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
-    private final Class<T> aClass;
+    /**
+     * The class of the object listened to by the event listener.
+     */
+    private final Class<T> objectClass;
 
     /**
      * Instantiates a FirestormEventListener.
-     * @param aClass The class of objects this listener can be attached to.
+     * @param objectClass The class of objects this listener can be attached to.
      */
-    public FirestormEventListener(Class<T> aClass) {
-        this.aClass = aClass;
+    public FirestormEventListener(Class<T> objectClass) {
+        this.objectClass = objectClass;
     }
 
     /**
@@ -37,7 +40,7 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
         }
 
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            T object = documentSnapshot.toObject(aClass);
+            T object = documentSnapshot.toObject(objectClass);
             onSuccess(object);
         }
         else {
@@ -47,22 +50,22 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
 
     /**
      * Implements logic upon success of data update delivery.
-     * @param object
+     * @param object The object being updated.
      */
     public abstract void onSuccess(T object);
 
     /**
      * Implements logic upon failure of data update delivery.
-     * @param failureMessage
+     * @param failureMessage The message of the failure.
      */
     public abstract void onFailure(final String failureMessage);
 
     /**
      * Retrieves the class attribute of this FirestormEventListener.
-     * @return
+     * @return Returns a class.
      */
-    public Class<T> getaClass() {
-        return aClass;
+    public Class<T> getObjectClass() {
+        return objectClass;
     }
 
 }

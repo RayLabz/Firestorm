@@ -11,15 +11,14 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The main class of the Firestorm API, which allows interactions with the Firestore.
- * Must be initialized with a FirebaseApp object using the <b>init()</b> method before interacting with the Firestore.
+ * Must be initialized with a FirebaseApp object using the <i>init()</b> method before interacting with the Firestore.
  */
 public class Firestorm {
 
-    private static FirebaseApp firebaseApp;
     public static Firestore firestore; //TODO package private??
 
     /**
-     * Initializes Firestorm <b>after Firebase has been initialized using <i>Firebase.initializeApp()</i></b>.
+     * Initializes Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
      */
     public static void init() {
         Firestorm.firestore = FirestoreClient.getFirestore();
@@ -34,54 +33,45 @@ public class Firestorm {
     /**
      * Creates a Firestore document from an object.
      * @param object An object containing the data to be written in Firestore.
-     * @return Returns <b>true</b> if successful, false otherwise.
      */
-    public static boolean create(final FirestormObject object) {
+    public static void create(final FirestormObject object) {
         final String className = object.getClass().getSimpleName();
         final DocumentReference reference = firestore.collection(className).document();
         final String id = reference.getId();
         try {
             object.setId(id);
             reference.set(object).get();
-            return true;
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return false;
+            e.printStackTrace(); //TODO throw FirestormException?
         }
     }
 
     /**
      * Deletes a document from the Firestore based on the document ID of an object.
      * @param object An object which provides the document ID for deletion.
-     * @return Returns <b>true</b> if successful, false otherwise.
      */
-    public static boolean delete(final FirestormObject object) {
+    public static void delete(final FirestormObject object) {
         final String className = object.getClass().getSimpleName();
         final DocumentReference reference = firestore.collection(className).document(object.getId());
         try {
             reference.delete().get();
-            return true;
+            //TODO - Should object become null now?
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return false;
+            e.printStackTrace(); //TODO throw FirestormException?
         }
-        //TODO - Should object become null now?
     }
 
     /**
      * Updates a document in Firestore based on the document ID and data of an object.
      * @param object An object which provides data and the document ID for the update.
-     * @return Returns <b>true</b> if successful, false otherwise.
      */
-    public static boolean update(final FirestormObject object) {
+    public static void update(final FirestormObject object) {
         final String className = object.getClass().getSimpleName();
         final DocumentReference reference = firestore.collection(className).document(object.getId());
         try {
             reference.set(object).get();
-            return true;
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return false;
+            e.printStackTrace(); //TODO throw FirestormException?
         }
     }
 
@@ -104,7 +94,7 @@ public class Firestorm {
                 return null;
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO throw FirestormException?
             return null;
         }
     }
@@ -125,7 +115,7 @@ public class Firestorm {
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO throw FirestormException?
             return null;
         }
     }
@@ -195,7 +185,7 @@ public class Firestorm {
         try {
             futureTransaction.get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO throw FirestormException?
         }
     }
 
