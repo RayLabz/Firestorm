@@ -19,17 +19,17 @@ import java.util.concurrent.Executor;
 public class FirestormFilterable<T> implements Filterable<T> {
 
     protected Query query;
-    protected final Class<T> aClass;
+    protected final Class<T> objectClass;
 
     /**
      * Instantiates a class of FirestormFilterable.
      *
      * @param query  The initial query of the filterable.
-     * @param aClass The type of objects this filterable can interact with.
+     * @param objectClass The type of objects this filterable can interact with.
      */
-    public FirestormFilterable(Query query, final Class<T> aClass) {
+    public FirestormFilterable(Query query, final Class<T> objectClass) {
         this.query = query;
-        this.aClass = aClass;
+        this.objectClass = objectClass;
     }
 
     /**
@@ -275,7 +275,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
             documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
             for (final QueryDocumentSnapshot document : documents) {
-                Object object = document.toObject(aClass);
+                Object object = document.toObject(objectClass);
                 documentList.add((T) object);
             }
             return documentList;

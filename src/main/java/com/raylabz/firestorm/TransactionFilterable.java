@@ -18,10 +18,10 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
      * Instantiates a class of TransactionFilterable.
      *
      * @param query  The initial query of the filterable.
-     * @param aClass The type of objects this filterable can interact with.
+     * @param objectClass The type of objects this filterable can interact with.
      */
-    public TransactionFilterable(Query query, Class<T> aClass, Transaction transaction) {
-        super(query, aClass);
+    public TransactionFilterable(Query query, Class<T> objectClass, Transaction transaction) {
+        super(query, objectClass);
         this.transaction = transaction;
     }
 
@@ -37,7 +37,7 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
             documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
             for (final QueryDocumentSnapshot document : documents) {
-                Object object = document.toObject(aClass);
+                Object object = document.toObject(objectClass);
                 documentList.add((T) object);
             }
             return documentList;

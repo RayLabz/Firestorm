@@ -3,7 +3,6 @@ package com.raylabz.firestorm;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.ArrayList;
@@ -16,25 +15,13 @@ import java.util.concurrent.ExecutionException;
  */
 public class Firestorm {
 
-    private static Firestorm instance = null;
-    private static FirebaseOptions options;
     private static FirebaseApp firebaseApp;
-    public static Firestore firestore; //TODO package private
+    public static Firestore firestore; //TODO package private??
 
     /**
-     * Retrieves instance of Firestorm.
-     * @return Returns Firestorm instance.
+     * Initializes Firestorm <b>after Firebase has been initialized using <i>Firebase.initializeApp()</i></b>.
      */
-    public static Firestorm getInstance() {
-        return instance;
-    }
-
-    /**
-     * Initializes Firestorm with an instance of a FirebaseApp.
-     * @param firebaseApp An <u>initialized</u> FirebaseApp object.
-     */
-    public static void init(final FirebaseApp firebaseApp) {
-        Firestorm.firebaseApp = firebaseApp;
+    public static void init() {
         Firestorm.firestore = FirestoreClient.getFirestore();
         //TODO Consider initialization of connection to improve first-connection latency?
     }
@@ -78,6 +65,7 @@ public class Firestorm {
             e.printStackTrace();
             return false;
         }
+        //TODO - Should object become null now?
     }
 
     /**
@@ -99,19 +87,19 @@ public class Firestorm {
 
     /**
      * Retrieves a document as an object from Firestore.
-     * @param aClass The class of the object retrieved.
+     * @param objectClass The class of the object retrieved.
      * @param documentID The documentID of the object to retrieve.
-     * @param <T> A type matching the type of aClass.
-     * @return Returns an object of type T (aClass).
+     * @param <T> A type matching the type of objectClass.
+     * @return Returns an object of type T (objectClass).
      */
-    public static <T> T get(final Class<T> aClass, final String documentID) {
-        DocumentReference docRef = firestore.collection(aClass.getSimpleName()).document(documentID);
+    public static <T> T get(final Class<T> objectClass, final String documentID) {
+        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = null;
         try {
             document = future.get();
             if (document.exists()) {
-                return (T) document.toObject(aClass);
+                return (T) document.toObject(objectClass);
             } else {
                 return null;
             }
@@ -123,18 +111,17 @@ public class Firestorm {
 
     /**
      * Lists all available documents of a given type.
-     * @param aClass The type of the documents to filter.
-     * @param <T> A type matching the type of aClass.
-     * @return Returns an ArrayList of objects of type aClass.
+     * @param objectClass The type of the documents to filter.
+     * @param <T> A type matching the type of objectClass.
+     * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> list(final Class<T> aClass) {
-        ApiFuture<QuerySnapshot> future = firestore.collection(aClass.getSimpleName()).get();
+    public static <T> ArrayList<T> list(final Class<T> objectClass) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
-            List<QueryDocumentSnapshot> documents = null;
-            documents = future.get().getDocuments();
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
             for (final QueryDocumentSnapshot document : documents) {
-                documentList.add((T) document.toObject(aClass));
+                documentList.add((T) document.toObject(objectClass));
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
@@ -145,12 +132,12 @@ public class Firestorm {
 
     /**
      * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if not filters are used.
-     * @param aClass The type of the documents to filter.
-     * @param <T> A type matching the type of aClass.
+     * @param objectClass The type of the documents to filter.
+     * @param <T> A type matching the type of objectClass.
      * @return Returns a FirestormFilterable which can be used to append filter parameters.
      */
-    public static <T> FirestormFilterable<T> filter(final Class<T> aClass) {
-        return new FirestormFilterable<T>(firestore.collection(aClass.getSimpleName()), aClass);
+    public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
+        return new FirestormFilterable<T>(firestore.collection(objectClass.getSimpleName()), objectClass);
     }
 
     /**
@@ -162,9 +149,10 @@ public class Firestorm {
         return firestore.collection(object.getClass().getSimpleName()).document(object.getId());
     }
 
-    public static CollectionReference getFieldReference(final FirestormObject object, final String fieldName) {
-        return firestore.collection(object.getClass().getSimpleName()).document(object.getId()).collection(fieldName);
-    }
+    //TODO nested collections
+//    public static CollectionReference getFieldReference(final FirestormObject object, final String fieldName) {
+//        return firestore.collection(object.getClass().getSimpleName()).document(object.getId()).collection(fieldName);
+//    }
 
     /**
      * Attaches an event listener which listens for updates to an object.
@@ -210,6 +198,5 @@ public class Firestorm {
             e.printStackTrace();
         }
     }
-
 
 }

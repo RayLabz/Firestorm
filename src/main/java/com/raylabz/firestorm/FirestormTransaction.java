@@ -8,38 +8,67 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Enables Firestore transactions through its <b>execute()</b> function
+ */
 public abstract class FirestormTransaction implements Transaction.Function<Void> {
 
     private Transaction transaction;
 
-    public void create(final FirestormObject object) {
+    /**
+     * Creates a Firestore document from an object as part of a transaction.
+     * @param object The object containing the data.
+     */
+    public final void create(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
         object.setId(reference.getId());
         transaction = transaction.create(reference, object);
     }
 
-    public <T> T get(final Class<T> aClass, final String documentID) {
-        final DocumentReference documentReference = Firestorm.firestore.collection(aClass.getSimpleName()).document(documentID);
+    /**
+     * Retrieves an object using its documentID as part of a transaction.
+     * @param objectClass The class of the object.
+     * @param documentID The object's document ID.
+     * @param <T> The type of the object (same with objectClass).
+     * @return Returns an object of type T/objectClass
+     */
+    public <T> T get(final Class<T> objectClass, final String documentID) {
+        final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
         try {
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
-            return snapshot.toObject(aClass);
+            return snapshot.toObject(objectClass);
         } catch (InterruptedException | ExecutionException e) {
             throw new TransactionException(e);
         }
     }
 
+    /**
+     * Updates an object as part of a transaction.
+     * @param object The object to update.
+     */
     public void update(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         transaction = transaction.set(reference, object);
     }
 
+    /**
+     * Deletes an object as part of a transaction.
+     * @param object The object to delete.
+     */
     public void delete(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         transaction = transaction.delete(reference);
+        //TODO - Should object become null now?
     }
 
-    public <T> ArrayList<T> list(final Class<T> aClass) {
-        ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(aClass.getSimpleName()).get();
+    /**
+     * Lists all objects of type <b>objectClass</b> as part of a transaction.
+     * @param objectClass The class of the object.
+     * @param <T> The type of the object (same with objectClass).
+     * @return Returns an ArrayList of type T/objectClass.
+     */
+    public <T> ArrayList<T> list(final Class<T> objectClass) {
+        ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
@@ -53,7 +82,7 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
 
             ArrayList<T> documentList = new ArrayList<>();
             for (final DocumentSnapshot snapshot : documentSnapshots) {
-                T object = snapshot.toObject(aClass);
+                T object = snapshot.toObject(objectClass);
                 documentList.add(object);
             }
             return documentList;
@@ -63,17 +92,33 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
         }
     }
 
-    public <T> TransactionFilterable<T> filter(final Class<T> aClass) {
-        return new TransactionFilterable<T>(Firestorm.firestore.collection(aClass.getSimpleName()), aClass, transaction);
+    /**
+     * Filters objects of a certain type based on given conditions.
+     * @param objectClass The class of the object.
+     * @param <T> The type of the object (same with objectClass).
+     * @return Returns an ArrayList of objects of type T/objectClass, matching the provided filters.
+     */
+    public <T> TransactionFilterable<T> filter(final Class<T> objectClass) {
+        return new TransactionFilterable<T>(Firestorm.firestore.collection(objectClass.getSimpleName()), objectClass, transaction);
     }
 
+    /**
+     * Overrides method <b>updateCallback()</b> of the Transaction.Function interface.
+     * Initializes the transaction object used to carry out the transaction and then executes the transaction code
+     * provided by the developer.
+     * @param transaction The transaction object.
+     * @return Returns null.
+     */
     @Override
-    public Void updateCallback(Transaction transaction) throws Exception {
+    public Void updateCallback(Transaction transaction) {
         this.transaction = transaction;
         execute();
         return null;
     }
 
+    /**
+     * Implemented by the developer - runs transaction commands.
+     */
     public abstract void execute();
 
 }

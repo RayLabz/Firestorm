@@ -39,7 +39,8 @@ public class Main {
                     .setDatabaseUrl("https://raylabz.firebaseio.com/")
                     .build();
 
-            Firestorm.init(FirebaseApp.initializeApp(options));
+            FirebaseApp.initializeApp(options);
+            Firestorm.init();
 
             Person person = new Person("Nicos", "Kasenides", 26);
             Person person2 = new Person("Panayiota", "Michaelide", 24);
