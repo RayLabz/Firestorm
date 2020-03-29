@@ -33,11 +33,10 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
     public ArrayList<T> fetch() {
         ApiFuture<QuerySnapshot> future = transaction.get(query);
         try {
-            List<QueryDocumentSnapshot> documents = null;
-            documents = future.get().getDocuments();
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
             for (final QueryDocumentSnapshot document : documents) {
-                Object object = document.toObject(objectClass);
+                T object = document.toObject(objectClass);
                 documentList.add((T) object);
             }
             return documentList;
