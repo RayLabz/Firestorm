@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.cloud.FirestoreClient;
+import com.raylabz.firestorm.exception.FirestormException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Firestorm {
 
-    public static Firestore firestore; //TODO package private??
+    static Firestore firestore;
 
     /**
      * Initializes Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
@@ -42,7 +43,7 @@ public class Firestorm {
             object.setId(id);
             reference.set(object).get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
+            throw new FirestormException(e);
         }
     }
 
@@ -57,7 +58,7 @@ public class Firestorm {
             reference.delete().get();
             //TODO - Should object become null now?
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
+            throw new FirestormException(e);
         }
     }
 
@@ -71,7 +72,7 @@ public class Firestorm {
         try {
             reference.set(object).get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
+            throw new FirestormException(e);
         }
     }
 
@@ -85,17 +86,15 @@ public class Firestorm {
     public static <T> T get(final Class<T> objectClass, final String documentID) {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
-        DocumentSnapshot document = null;
         try {
-            document = future.get();
+            DocumentSnapshot document = future.get();
             if (document.exists()) {
                 return (T) document.toObject(objectClass);
             } else {
                 return null;
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
-            return null;
+            throw new FirestormException(e);
         }
     }
 
@@ -115,8 +114,7 @@ public class Firestorm {
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
-            return null;
+            throw new FirestormException(e);
         }
     }
 
@@ -185,7 +183,7 @@ public class Firestorm {
         try {
             futureTransaction.get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); //TODO throw FirestormException?
+            throw new FirestormException(e);
         }
     }
 

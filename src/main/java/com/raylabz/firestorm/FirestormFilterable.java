@@ -299,7 +299,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
     }
 
     /**
-     * Starts the filtering at specified document.
+     * Specifies the starting point of a query.
      * @param snapshot The document snapshot to start retrieving the results from.
      * @return Returns a filterable.
      */
@@ -309,80 +309,146 @@ public class FirestormFilterable<T> implements Filterable<T> {
         return this;
     }
 
-    //TODO
+    /**
+     * Specifies the starting point of a query.
+     * @param fieldValues The field values to start the filtering results at.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> startAt(Object... fieldValues) {
         query = query.startAt(fieldValues);
         return this;
     }
 
+    /**
+     * Selects a specified set of fields from an object.
+     * @param fields The fields to select.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> select(String... fields) {
         query = query.select(fields);
         return this;
     }
 
+    /**
+     * Selects a specified set of fields from an object.
+     * @param fieldPaths The paths of the fields to select.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> select(FieldPath... fieldPaths) {
         query = query.select(fieldPaths);
         return this;
     }
 
+    /**
+     * Specifies the starting point of a query - after the specified document.
+     * @param snapshot The document snapshot to start retrieving the results after.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> startAfter(@Nonnull DocumentSnapshot snapshot) {
         query = query.startAfter(snapshot);
         return this;
     }
 
-
+    /**
+     * Specifies the starting point of a query - after the spcified field values.
+     * @param fieldValues The field values to starting retrieving the results after.
+     * @return Returns a filterable.
+     */
     public FirestormFilterable<T> startAfter(Object... fieldValues) {
         query = query.startAfter(fieldValues);
         return this;
     }
 
+    /**
+     * Specifies the ending point of a query (before this point)
+     * @param snapshot The document snapshot to end the query before.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> endBefore(@Nonnull DocumentSnapshot snapshot) {
         query = query.endBefore(snapshot);
         return this;
     }
 
+    /**
+     * Specifies the ending point of a query (before this point).
+     * @param fieldValues The field values to end the query before.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> endBefore(Object... fieldValues) {
         query = query.endBefore(fieldValues);
         return this;
     }
 
+    /**
+     * Specifies the ending point of a query.
+     * @param fieldValues The field values to end the query at.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> endAt(Object... fieldValues) {
         query = query.endAt(fieldValues);
         return this;
     }
 
+    /**
+     * Specifies the ending point of a query.
+     * @param snapshot The document snapshot the end the query at.
+     * @return Returns a filterable.
+     */
     @Nonnull
     public FirestormFilterable<T> endAt(@Nonnull DocumentSnapshot snapshot) {
         query = query.endAt(snapshot);
         return this;
     }
 
+    /**
+     * Streams the query to an observer.
+     * @param responseObserver The observer to stream the query to.
+     */
     public void stream(@Nonnull ApiStreamObserver<DocumentSnapshot> responseObserver) {
         query.stream(responseObserver);
     }
 
+    /**
+     * Retrieves the query snapshot.
+     * @return Returns an ApiFuture of type QuerySnapshot.
+     */
     @Nonnull
     public ApiFuture<QuerySnapshot> get() {
         return query.get();
     }
 
+    /**
+     * Adds an event listener to a snapshot.
+     * @param listener The listener to add.
+     * @return Returns a ListenerRegistration.
+     */
     @Nonnull
     public ListenerRegistration addSnapshotListener(@Nonnull EventListener<QuerySnapshot> listener) {
         return query.addSnapshotListener(listener);
     }
 
+    /**
+     * Adds an event listener to a snapshot.
+     * @param executor The executor of the event.
+     * @param listener The listener to add.
+     * @return Returns a ListenerRegistration.
+     */
     @Nonnull
     public ListenerRegistration addSnapshotListener(@Nonnull Executor executor, @Nonnull EventListener<QuerySnapshot> listener) {
         return query.addSnapshotListener(executor, listener);
     }
 
+    /**
+     * Retrieves a hash code for the query.
+     * @return Returns an integer hash code.
+     */
     public int hashCode() {
         return query.hashCode();
     }
