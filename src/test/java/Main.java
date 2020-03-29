@@ -183,8 +183,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        //TODO - Batch writes: https://firebase.google.com/docs/firestore/manage-data/transactions#batched-writes
-
         //TODO - Cursors & pagination: https://firebase.google.com/docs/firestore/query-data/query-cursors
 
         //TODO - Custom based data export tooling
