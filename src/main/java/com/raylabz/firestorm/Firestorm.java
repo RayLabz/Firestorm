@@ -55,7 +55,7 @@ public class Firestorm {
         final DocumentReference reference = firestore.collection(className).document(object.getId());
         try {
             reference.delete().get();
-            //TODO - Should object become null now?
+            object.setId(null);
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
         }
@@ -174,7 +174,7 @@ public class Firestorm {
     }
 
     /**
-     * Runs a transaction.
+     * Runs a transaction operation.
      * @param transaction The transaction to run.
      */
     public static void runTransaction(final FirestormTransaction transaction) {
@@ -186,6 +186,10 @@ public class Firestorm {
         }
     }
 
+    /**
+     * Runs a batch write operation.
+     * @param batch The batch to run.
+     */
     public static void runBatch(final FirestormBatch batch) {
         batch.doBatch();
     }

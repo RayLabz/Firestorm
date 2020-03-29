@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/Examples.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/BatchException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Batches.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Batches.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Create.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Delete.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Filters.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Get.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/List.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Listeners.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Updates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Batches.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/BatchExamples.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TransactionsExamples.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,9 +90,9 @@
       <recent name="com.raylabz.firestorm" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Batches">
-    <configuration name="Batches" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Batches" />
+  <component name="RunManager" selected="Application.BatchExamples">
+    <configuration name="BatchExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BatchExamples" />
       <module name="Firestorm" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -115,7 +107,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Batches" />
+        <item itemvalue="Application.BatchExamples" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -135,7 +127,7 @@
       <workItem from="1585332443182" duration="114000" />
       <workItem from="1585384681103" duration="1913000" />
       <workItem from="1585422275198" duration="359000" />
-      <workItem from="1585422647996" duration="16922000" />
+      <workItem from="1585422647996" duration="20156000" />
     </task>
     <servers />
   </component>

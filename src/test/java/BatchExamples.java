@@ -8,7 +8,7 @@ import com.raylabz.firestorm.FirestormConfig;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Batches {
+public class BatchExamples {
 
     //Create some objects for our test:
     private static final Person john = new Person("John", "Smith", 50);
