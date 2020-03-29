@@ -2,7 +2,6 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.cloud.FirestoreClient;
 import com.raylabz.firestorm.exception.FirestormException;
 
@@ -16,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Firestorm {
 
-    static Firestore firestore;
+    public static Firestore firestore; //TODO Package private
 
     /**
      * Initializes Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
@@ -185,6 +184,10 @@ public class Firestorm {
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
         }
+    }
+
+    public static void runBatch(final FirestormBatch batch) {
+        batch.doBatch();
     }
 
 }

@@ -464,7 +464,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
             documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
             for (final QueryDocumentSnapshot document : documents) {
-                Object object = document.toObject(objectClass);
+                T object = document.toObject(objectClass);
                 documentList.add((T) object);
             }
             return documentList;

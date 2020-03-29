@@ -2,6 +2,7 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.raylabz.firestorm.exception.FirestormException;
 import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
@@ -9,9 +10,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Enables Firestore transactions through its <b>execute()</b> function
+ * Enables Firestore transactions.
  */
-public abstract class FirestormTransaction implements Transaction.Function<Void> {
+public abstract class FirestormTransaction extends FirestormOperation implements Transaction.Function<Void> {
 
     private Transaction transaction;
 
@@ -32,7 +33,7 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * @param <T> The type of the object (same with objectClass).
      * @return Returns an object of type T/objectClass
      */
-    public <T> T get(final Class<T> objectClass, final String documentID) {
+    public final <T> T get(final Class<T> objectClass, final String documentID) {
         final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
         try {
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
@@ -46,7 +47,7 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * Updates an object as part of a transaction.
      * @param object The object to update.
      */
-    public void update(final FirestormObject object) {
+    public final void update(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         transaction = transaction.set(reference, object);
     }
@@ -55,10 +56,10 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * Deletes an object as part of a transaction.
      * @param object The object to delete.
      */
-    public void delete(final FirestormObject object) {
+    public final void delete(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         transaction = transaction.delete(reference);
-        //TODO - Should object become null now?
+        object.setId(null);
     }
 
     /**
@@ -67,7 +68,7 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * @param <T> The type of the object (same with objectClass).
      * @return Returns an ArrayList of type T/objectClass.
      */
-    public <T> ArrayList<T> list(final Class<T> objectClass) {
+    public final <T> ArrayList<T> list(final Class<T> objectClass) {
         ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -98,7 +99,7 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * @param <T> The type of the object (same with objectClass).
      * @return Returns an ArrayList of objects of type T/objectClass, matching the provided filters.
      */
-    public <T> TransactionFilterable<T> filter(final Class<T> objectClass) {
+    public final <T> TransactionFilterable<T> filter(final Class<T> objectClass) {
         return new TransactionFilterable<T>(Firestorm.firestore.collection(objectClass.getSimpleName()), objectClass, transaction);
     }
 
@@ -110,15 +111,17 @@ public abstract class FirestormTransaction implements Transaction.Function<Void>
      * @return Returns null.
      */
     @Override
-    public Void updateCallback(Transaction transaction) {
+    public final Void updateCallback(Transaction transaction) {
         this.transaction = transaction;
-        execute();
+        try {
+            managedExecute();
+        } catch (FirestormException e) {
+            onFailure(e);
+            return null;
+        }
+
+        onSuccess();
         return null;
     }
-
-    /**
-     * Implemented by the developer - runs transaction commands.
-     */
-    public abstract void execute();
 
 }
