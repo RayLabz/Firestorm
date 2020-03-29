@@ -2,25 +2,32 @@ import com.raylabz.firestorm.FirestormObject;
 
 public class Person extends FirestormObject {
 
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private int age;
 
-    public Person(String firstname, String lastname, int age) {
-        super();
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Person(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.age = age;
     }
 
     public Person() { }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getAge() {
@@ -30,4 +37,5 @@ public class Person extends FirestormObject {
     public void setAge(int age) {
         this.age = age;
     }
+
 }
