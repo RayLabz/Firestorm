@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Firestorm {
 
-    public static Firestore firestore; //TODO Package private
+    static Firestore firestore;
 
     /**
      * Initializes Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.

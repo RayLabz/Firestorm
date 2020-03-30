@@ -457,17 +457,18 @@ public class FirestormFilterable<T> implements Filterable<T> {
      * Fetches the results of a filterable.
      * @return An ArrayList containing the results of a filter.
      */
-    public ArrayList<T> fetch() {
+    public QueryResult<T> fetch() {
         ApiFuture<QuerySnapshot> future = query.get();
         try {
-            List<QueryDocumentSnapshot> documents = null;
-            documents = future.get().getDocuments();
+            final List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
+            String lastID = null;
             for (final QueryDocumentSnapshot document : documents) {
                 T object = document.toObject(objectClass);
                 documentList.add((T) object);
+                lastID = document.getId();
             }
-            return documentList;
+            return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID); //TODO - If documents list has size 0??
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;

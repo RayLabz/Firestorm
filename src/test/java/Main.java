@@ -1,4 +1,5 @@
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteBatch;
 import com.google.firebase.FirebaseApp;
@@ -177,6 +178,31 @@ public class Main {
 //
 //                }
 //            });
+
+            final QueryResult<Person> queryResult = Firestorm.filter(Person.class).orderBy("age").limit(10).fetch();
+            ArrayList<Person> list = queryResult.getResults();
+
+            for (Person p : list) {
+                System.out.println("-> " + p.getFirstName());
+            }
+
+            final String lastDocID = queryResult.getLastDocumentID();
+            System.out.println("Last doc ID: " + lastDocID);
+
+            System.out.println("Press enter to load new results...");
+            new Scanner(System.in).nextLine();
+
+            final QueryResult<Person> queryResult2 = Firestorm.filter(Person.class).orderBy("age").startAfter(queryResult.getSnapshot()).limit(10).fetch();
+            ArrayList<Person> list2 = queryResult2.getResults();
+
+            for (Person p : list2) {
+                System.out.println("-> " + p.getFirstName());
+            }
+
+            final String lastDocID2 = queryResult2.getLastDocumentID();
+            System.out.println("Last doc ID: " + lastDocID2);
+
+
 
 
         } catch (IOException e) {

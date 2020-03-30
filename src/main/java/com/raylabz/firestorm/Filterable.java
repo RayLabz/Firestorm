@@ -8,6 +8,6 @@ public interface Filterable<T> {
      * Fetches the results of a filterable.
      * @return An ArrayList containing the results of a filter.
      */
-    ArrayList<T> fetch();
+    QueryResult<T> fetch();
 
 }

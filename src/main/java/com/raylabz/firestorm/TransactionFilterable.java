@@ -5,6 +5,7 @@ import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.Transaction;
+import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +31,20 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
      * @return An ArrayList containing the results of a filter.
      */
     @Override
-    public ArrayList<T> fetch() {
+    public QueryResult<T> fetch() {
         ApiFuture<QuerySnapshot> future = transaction.get(query);
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<T>();
+            String lastID = null;
             for (final QueryDocumentSnapshot document : documents) {
                 T object = document.toObject(objectClass);
                 documentList.add((T) object);
+                lastID = document.getId();
             }
-            return documentList;
+            return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID); //TODO - If documents list has size 0??
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
+            throw new TransactionException(e);
         }
     }
 
