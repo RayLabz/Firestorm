@@ -29,19 +29,16 @@ public class PaginationExamples {
 
         //Pagination:
 
-        QueryResult<Person> result = null;
+        QueryResult<Person> result;
         String lastDocumentID = null;
         do {
             result = Paginator.init(Person.class, lastDocumentID).orderBy("age").fetch();
-            for (Person p : result.getResults()) {
+            for (Person p : result.getItems()) {
                 System.out.println("-> " + p.getFirstName());
             }
             lastDocumentID = result.getLastDocumentID();
             new Scanner(System.in).nextLine();
-        } while (!result.getResults().isEmpty());
-
-
-
+        } while (!result.hasItems());
 
 
     }

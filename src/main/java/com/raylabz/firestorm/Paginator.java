@@ -342,7 +342,12 @@ public class Paginator<T> implements Filterable<T> {
                 documentList.add((T) object);
                 lastID = document.getId();
             }
-            return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID); //TODO - If documents list has size 0??
+            if (documentList.isEmpty()) {
+                return new QueryResult<>(documentList, null, null);
+            }
+            else {
+                return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID);
+            }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;

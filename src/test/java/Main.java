@@ -1,16 +1,9 @@
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.WriteBatch;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.gson.Gson;
 import com.raylabz.firestorm.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -180,7 +173,7 @@ public class Main {
 //            });
 
             final QueryResult<Person> queryResult = Firestorm.filter(Person.class).orderBy("age").limit(10).fetch();
-            ArrayList<Person> list = queryResult.getResults();
+            ArrayList<Person> list = queryResult.getItems();
 
             for (Person p : list) {
                 System.out.println("-> " + p.getFirstName());
@@ -193,7 +186,7 @@ public class Main {
             new Scanner(System.in).nextLine();
 
             final QueryResult<Person> queryResult2 = Firestorm.filter(Person.class).orderBy("age").startAfter(queryResult.getSnapshot()).limit(10).fetch();
-            ArrayList<Person> list2 = queryResult2.getResults();
+            ArrayList<Person> list2 = queryResult2.getItems();
 
             for (Person p : list2) {
                 System.out.println("-> " + p.getFirstName());
@@ -208,8 +201,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //TODO - Cursors & pagination: https://firebase.google.com/docs/firestore/query-data/query-cursors
 
         //TODO - Custom based data export tooling
 
