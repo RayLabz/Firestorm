@@ -1,48 +1,61 @@
 package com.raylabz.firestorm;
 
-import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.rpc.UnimplementedException;
-import com.google.cloud.firestore.FieldPath;
-import com.google.cloud.firestore.Query;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
+import com.raylabz.firestorm.exception.FirestormException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Enables easy pagination.
+ *
  * @param <T> The type of objects returned by the paginator.
  */
-public abstract class Paginator<T> {
+public class Paginator<T> implements Filterable<T> {
 
     private final int DEFAULT_LIMIT = 10;
-
-    private QueryDocumentSnapshot lastSnapshot = null;
+    private Class<T> objectClass;
+    private String lastDocumentID = null;
     private Query query;
     private int limit = DEFAULT_LIMIT;
 
     /**
      * Instantiates a Paginator object for a certain class.
+     *
      * @param objectClass The type of objects returned by the Paginator.
      */
-    public Paginator(Class<T> objectClass) {
+    private Paginator(Class<T> objectClass, final String lastDocumentID) {
         query = Firestorm.firestore.collection(objectClass.getSimpleName());
+        this.objectClass = objectClass;
+        this.lastDocumentID = lastDocumentID;
     }
 
     /**
      * Instantiates a Paginator object for a certain class and a certain results limit.
+     *
      * @param objectClass The type of objects returned by the Paginator.
-     * @param limit The limit in number of results for each page.
+     * @param limit       The limit in number of results for each page.
      */
-    public Paginator(Class<T> objectClass, int limit) {
-        this(objectClass);
+    private Paginator(Class<T> objectClass, final String lastDocumentID, int limit) {
+        this(objectClass, lastDocumentID);
         this.limit = limit;
+    }
+
+    public static <T> Paginator<T> init(Class<T> objectClass, final String lastDocumentID, final int limit) {
+        return new Paginator<>(objectClass, lastDocumentID, limit);
+    }
+
+    public static <T> Paginator<T> init(Class<T> objectClass, final String lastDocumentID) {
+        return new Paginator<>(objectClass, lastDocumentID);
     }
 
     /**
      * Filters by value (equality).
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -55,8 +68,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value by field path (equality).
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -67,6 +81,7 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (less than).
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -79,8 +94,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (less than).
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -91,6 +107,7 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (less than or equal to).
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -103,8 +120,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (less than or equal to).
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -115,6 +133,7 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (greater than).
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -127,8 +146,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (greater than).
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -139,6 +159,7 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (greater than or equal to).
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -151,8 +172,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by value (greater than or equal to).
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -163,6 +185,7 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by array field containing a value.
+     *
      * @param field The field.
      * @param value The value.
      * @return Returns a Paginator.
@@ -175,8 +198,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by array field containing a value.
+     *
      * @param fieldPath The field path.
-     * @param value The value.
+     * @param value     The value.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -187,7 +211,8 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by field containing any of a list of values.
-     * @param field The field.
+     *
+     * @param field  The field.
      * @param values The list of values.
      * @return Returns a Paginator.
      */
@@ -199,8 +224,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by field containing any of a list of values.
+     *
      * @param fieldPath The field path.
-     * @param values The list of values.
+     * @param values    The list of values.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -211,7 +237,8 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by an <u>array</u> field containing a list of values.
-     * @param field The field.
+     *
+     * @param field  The field.
      * @param values The list of values.
      * @return Returns a Paginator.
      */
@@ -223,8 +250,9 @@ public abstract class Paginator<T> {
 
     /**
      * Filters by an <u>array</u> field containing a list of values.
+     *
      * @param fieldPath The field path.
-     * @param values The list of values.
+     * @param values    The list of values.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -235,6 +263,7 @@ public abstract class Paginator<T> {
 
     /**
      * Orders results by a field.
+     *
      * @param field The field.
      * @return Returns a Paginator.
      */
@@ -246,6 +275,7 @@ public abstract class Paginator<T> {
 
     /**
      * Orders results by a field.
+     *
      * @param fieldPath The field path.
      * @return Returns a Paginator.
      */
@@ -257,6 +287,7 @@ public abstract class Paginator<T> {
 
     /**
      * Orders results by a field in a specified direction.
+     *
      * @param field The field.
      * @return Returns a Paginator.
      */
@@ -268,6 +299,7 @@ public abstract class Paginator<T> {
 
     /**
      * Orders results by a field in a specified direction.
+     *
      * @param fieldPath The field path.
      * @return Returns a Paginator.
      */
@@ -277,11 +309,44 @@ public abstract class Paginator<T> {
         return this;
     }
 
-    public ArrayList<T> getNext() {
-        //TODO - Implement
-        return null;
 
-        //TODO Update last snapshot too...
+    @Override
+    public QueryResult<T> fetch() {
+
+        //If there is a last document, set the query to start after it:
+        if (lastDocumentID != null) {
+            DocumentSnapshot lastDocumentSnapshot;
+            try {
+                DocumentReference lastDocumentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(lastDocumentID);
+                ApiFuture<DocumentSnapshot> future = lastDocumentReference.get();
+                lastDocumentSnapshot = future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new FirestormException(e);
+            }
+            if (lastDocumentSnapshot != null) {
+                query = query.startAfter(lastDocumentSnapshot);
+            }
+        }
+
+        //Query limits:
+        query = query.limit(limit);
+
+        //Run the query and return the results:
+        ApiFuture<QuerySnapshot> future = query.get();
+        try {
+            final List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            ArrayList<T> documentList = new ArrayList<T>();
+            String lastID = null;
+            for (final QueryDocumentSnapshot document : documents) {
+                T object = document.toObject(objectClass);
+                documentList.add((T) object);
+                lastID = document.getId();
+            }
+            return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID); //TODO - If documents list has size 0??
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
