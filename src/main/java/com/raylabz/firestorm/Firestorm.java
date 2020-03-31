@@ -21,8 +21,13 @@ public class Firestorm {
      * Initializes Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
      */
     public static void init() {
-        Firestorm.firestore = FirestoreClient.getFirestore();
-        //TODO Consider initialization of connection to improve first-connection latency?
+        firestore = FirestoreClient.getFirestore();
+
+        /* Dummy request used for initialization:
+            The initial call to Firestore has high latency so it is preferable to make a dummy request
+            as soon as the object is initialized instead of waiting to make the first connection when a real request is made.
+         */
+        firestore.listCollections();
     }
 
     /**
