@@ -1,7 +1,7 @@
-package com.raylabz.firestorm.exception;
+package com.raylabz.firestorm;
 
 /**
- * An exception thrown by setting too many batch operations (>500).
+ * An exception thrown by setting too many batch operations (over 500).
  */
 public class TooManyOperationsException extends RuntimeException {
 

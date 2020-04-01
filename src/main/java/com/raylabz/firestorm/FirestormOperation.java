@@ -1,7 +1,5 @@
 package com.raylabz.firestorm;
 
-import com.raylabz.firestorm.exception.FirestormException;
-
 /**
  * Abstracts a Firestorm operation, its execution and callbacks.
  */

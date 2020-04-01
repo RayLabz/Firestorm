@@ -4,8 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteBatch;
 import com.google.cloud.firestore.WriteResult;
-import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.exception.TooManyOperationsException;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

@@ -5,7 +5,6 @@ import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.Transaction;
-import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * A filterable used in transactions.
- * @param <T>
+ * @param <T> The type of objects used in this transaction filterable.
  */
 public class TransactionFilterable<T> extends FirestormFilterable<T> {
 
@@ -24,6 +23,7 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
      *
      * @param query  The initial query of the filterable.
      * @param objectClass The type of objects this filterable can interact with.
+     * @param transaction The transaction object passed from Firestore.
      */
     public TransactionFilterable(Query query, Class<T> objectClass, Transaction transaction) {
         super(query, objectClass);

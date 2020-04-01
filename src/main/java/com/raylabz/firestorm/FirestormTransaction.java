@@ -2,8 +2,6 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
 import java.util.List;

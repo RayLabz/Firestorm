@@ -2,7 +2,6 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import com.raylabz.firestorm.exception.FirestormException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -289,6 +288,7 @@ public class Paginator<T> implements Filterable<T> {
      * Orders results by a field in a specified direction.
      *
      * @param field The field.
+     * @param direction  The direction (ascending/descending) of ordering.
      * @return Returns a Paginator.
      */
     @Nonnull
@@ -301,6 +301,7 @@ public class Paginator<T> implements Filterable<T> {
      * Orders results by a field in a specified direction.
      *
      * @param fieldPath The field path.
+     * @param direction The direction (ascending/descending) of ordering.
      * @return Returns a Paginator.
      */
     @Nonnull

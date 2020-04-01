@@ -257,6 +257,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
     /**
      * Orders results by a field in a specified direction.
      * @param field The field.
+     * @param direction The direction (ascending/descending) of ordering.
      * @return Returns a filterable.
      */
     @Nonnull
@@ -268,6 +269,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
     /**
      * Orders results by a field in a specified direction.
      * @param fieldPath The field path.
+     * @param direction The direction (ascending/descending) of ordering.
      * @return Returns a filterable.
      */
     @Nonnull

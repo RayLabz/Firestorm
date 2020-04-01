@@ -3,15 +3,23 @@ package com.raylabz.firestorm;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.raylabz.firestorm.exception.FirestormException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/*
+ * Firestorm is an object-oriented data access API for Firestore.
+ * https://raylabz.github.io/Firestorm/
+ * @version 1.0.0
+ *
+ * @author RayLabz 2020
+ * https://www.raylabz.com
+ */
+
 /**
  * The main class of the Firestorm API, which allows basic interactions with the Firestore.
- * Must be initialized with a FirebaseApp object using the <i>init()</b> method before interacting with the Firestore.
+ * Must be initialized with a FirebaseApp object using the <i>init()</i> method before interacting with the Firestore.
  */
 public class Firestorm {
 

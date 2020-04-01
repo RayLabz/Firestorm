@@ -1,4 +1,4 @@
-package com.raylabz.firestorm.exception;
+package com.raylabz.firestorm;
 
 /**
  * An exception thrown during a transaction.
