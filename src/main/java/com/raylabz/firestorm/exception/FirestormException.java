@@ -6,4 +6,8 @@ public class FirestormException extends RuntimeException {
         super(e.getMessage());
     }
 
+    public FirestormException(String message) {
+        super(message);
+    }
+
 }

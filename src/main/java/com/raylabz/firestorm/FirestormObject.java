@@ -3,6 +3,7 @@ package com.raylabz.firestorm;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.annotation.Exclude;
 import com.google.cloud.firestore.annotation.IgnoreExtraProperties;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class FirestormObject {
 
     /**
      * Retrieves the document ID <b>id</b> of this object.
-     * @return
+     * @return Returns the ID.
      */
     public String getId() {
         return id;
@@ -30,7 +31,7 @@ public class FirestormObject {
 
     /**
      * Sets the document ID for this object.
-     * @param id
+     * @param id The ID.
      */
     void setId(String id) {
         this.id = id;
@@ -62,6 +63,14 @@ public class FirestormObject {
     public void removeListener(ListenerRegistration listenerRegistration) {
         listeners.remove(listenerRegistration);
         listenerRegistration.remove();
+    }
+
+    /**
+     * Converts the object to a JSON-formatted string.
+     * @return Returns a JSON-formatted string.
+     */
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
 }

@@ -100,7 +100,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @return Returns an ArrayList of objects of type T/objectClass, matching the provided filters.
      */
     public final <T> TransactionFilterable<T> filter(final Class<T> objectClass) {
-        return new TransactionFilterable<T>(Firestorm.firestore.collection(objectClass.getSimpleName()), objectClass, transaction);
+        return new TransactionFilterable<>(Firestorm.firestore.collection(objectClass.getSimpleName()), objectClass, transaction);
     }
 
     /**

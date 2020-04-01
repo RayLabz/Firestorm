@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Firestorm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Firestorm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Examples.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MainExamples.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +97,7 @@
       <recent name="com.raylabz.firestorm" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PaginationExamples">
+  <component name="RunManager" selected="Application.MainExamples">
     <configuration name="BatchExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BatchExamples" />
       <module name="Firestorm" />
@@ -97,8 +105,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+    <configuration name="MainExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainExamples" />
       <module name="Firestorm" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -113,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainExamples" />
         <item itemvalue="Application.PaginationExamples" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.BatchExamples" />
       </list>
     </recent_temporary>
@@ -142,16 +150,16 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="665" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1585654314310">
-      <screen x="0" y="0" width="1739" height="939" />
+    <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1585727001409">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1739.939@0.0.1739.939" timestamp="1585654314310" />
-    <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585560089810" />
-    <state x="721" y="362" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585653039640">
-      <screen x="0" y="0" width="1739" height="939" />
+    <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585727001409" />
+    <state x="796" y="401" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585725751471">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="721" y="362" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1739.939@0.0.1739.939" timestamp="1585653039640" />
-    <state x="796" y="401" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585470500526" />
+    <state x="796" y="401" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585725751471" />
     <state x="607" y="231" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1585422282500">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

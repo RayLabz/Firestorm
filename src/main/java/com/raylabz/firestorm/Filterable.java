@@ -1,7 +1,5 @@
 package com.raylabz.firestorm;
 
-import java.util.ArrayList;
-
 public interface Filterable<T> {
 
     /**

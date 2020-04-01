@@ -35,18 +35,18 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
         ApiFuture<QuerySnapshot> future = transaction.get(query);
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-            ArrayList<T> documentList = new ArrayList<T>();
+            ArrayList<T> documentList = new ArrayList<>();
             String lastID = null;
             for (final QueryDocumentSnapshot document : documents) {
                 T object = document.toObject(objectClass);
-                documentList.add((T) object);
+                documentList.add(object);
                 lastID = document.getId();
             }
             if (documentList.isEmpty()) {
                 return new QueryResult<>(documentList, null, null);
             }
             else {
-                return new QueryResult<T>(documentList, documents.get(documents.size() - 1), lastID);
+                return new QueryResult<>(documentList, documents.get(documents.size() - 1), lastID);
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new TransactionException(e);

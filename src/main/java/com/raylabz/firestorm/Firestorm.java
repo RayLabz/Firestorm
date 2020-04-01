@@ -33,10 +33,12 @@ public class Firestorm {
     /**
      * Private constructor.
      */
-    private Firestorm() { }
+    private Firestorm() {
+    }
 
     /**
      * Creates a Firestore document from an object.
+     *
      * @param object An object containing the data to be written in Firestore.
      */
     public static void create(final FirestormObject object) {
@@ -53,6 +55,7 @@ public class Firestorm {
 
     /**
      * Deletes a document from the Firestore based on the document ID of an object.
+     *
      * @param object An object which provides the document ID for deletion.
      */
     public static void delete(final FirestormObject object) {
@@ -68,6 +71,7 @@ public class Firestorm {
 
     /**
      * Updates a document in Firestore based on the document ID and data of an object.
+     *
      * @param object An object which provides data and the document ID for the update.
      */
     public static void update(final FirestormObject object) {
@@ -82,9 +86,10 @@ public class Firestorm {
 
     /**
      * Retrieves a document as an object from Firestore.
+     *
      * @param objectClass The class of the object retrieved.
-     * @param documentID The documentID of the object to retrieve.
-     * @param <T> A type matching the type of objectClass.
+     * @param documentID  The documentID of the object to retrieve.
+     * @param <T>         A type matching the type of objectClass.
      * @return Returns an object of type T (objectClass).
      */
     public static <T> T get(final Class<T> objectClass, final String documentID) {
@@ -93,9 +98,9 @@ public class Firestorm {
         try {
             DocumentSnapshot document = future.get();
             if (document.exists()) {
-                return (T) document.toObject(objectClass);
+                return document.toObject(objectClass);
             } else {
-                return null;
+                throw new FirestormException("The document with ID " + documentID + " does not exist.");
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
@@ -103,18 +108,20 @@ public class Firestorm {
     }
 
     /**
-     * Lists all available documents of a given type.
+     * Lists available documents of a given type.
+     *
      * @param objectClass The type of the documents to filter.
-     * @param <T> A type matching the type of objectClass.
+     * @param limit       The maximum number of documents to return.
+     * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> list(final Class<T> objectClass) {
-        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
+    public static <T> ArrayList<T> list(final Class<T> objectClass, int limit) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
             for (final QueryDocumentSnapshot document : documents) {
-                documentList.add((T) document.toObject(objectClass));
+                documentList.add(document.toObject(objectClass));
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
@@ -123,17 +130,47 @@ public class Firestorm {
     }
 
     /**
-     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if not filters are used.
+     * Lists ALL available documents of a given type. May incur charges for read operations for huge numbers of documents.
+     *
      * @param objectClass The type of the documents to filter.
-     * @param <T> A type matching the type of objectClass.
+     * @param <T>         A type matching the type of objectClass.
+     * @param getAll      Indicates whether or not to get all documents of this type. If getAll is false, the function
+     *                    will retrieve the first 100 documents by default.
+     * @return Returns an ArrayList of objects of type objectClass.
+     */
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass, boolean getAll) {
+        ApiFuture<QuerySnapshot> future;
+        if (getAll) {
+            future = firestore.collection(objectClass.getSimpleName()).get();
+        } else {
+            future = firestore.collection(objectClass.getSimpleName()).limit(100).get();
+        }
+        try {
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            ArrayList<T> documentList = new ArrayList<>();
+            for (final QueryDocumentSnapshot document : documents) {
+                documentList.add(document.toObject(objectClass));
+            }
+            return documentList;
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
+     *
+     * @param objectClass The type of the documents to filter.
+     * @param <T>         A type matching the type of objectClass.
      * @return Returns a FirestormFilterable which can be used to append filter parameters.
      */
     public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
-        return new FirestormFilterable<T>(firestore.collection(objectClass.getSimpleName()), objectClass);
+        return new FirestormFilterable(firestore.collection(objectClass.getSimpleName()), objectClass);
     }
 
     /**
      * Retrieves a DocumentReference to an object.
+     *
      * @param object The object to retrieve the DocumentReference for.
      * @return Returns DocumentReference.
      */
@@ -141,16 +178,12 @@ public class Firestorm {
         return firestore.collection(object.getClass().getSimpleName()).document(object.getId());
     }
 
-    //TODO nested collections
-//    public static CollectionReference getFieldReference(final FirestormObject object, final String fieldName) {
-//        return firestore.collection(object.getClass().getSimpleName()).document(object.getId()).collection(fieldName);
-//    }
-
     /**
      * Attaches an event listener which listens for updates to an object.
-     * @param object The object to attach the listener to.
+     *
+     * @param object        The object to attach the listener to.
      * @param eventListener An implementation of a FirestormEventListener.
-     * @param <T> The type of objects this listener can be attached to.
+     * @param <T>           The type of objects this listener can be attached to.
      */
     public static <T> void attachListener(final FirestormObject object, final FirestormEventListener<T> eventListener) {
         ListenerRegistration listenerRegistration = getObjectReference(object).addSnapshotListener(eventListener);
@@ -159,7 +192,8 @@ public class Firestorm {
 
     /**
      * Detaches a specified listener from an object.
-     * @param object The object to detach the listener from.
+     *
+     * @param object               The object to detach the listener from.
      * @param listenerRegistration The listener.
      */
     public static void detachListener(final FirestormObject object, ListenerRegistration listenerRegistration) {
@@ -169,6 +203,7 @@ public class Firestorm {
 
     /**
      * Detaches all listeners from an object.
+     *
      * @param object The object to detach the listeners from.
      */
     public static void detachAllListeners(final FirestormObject object) {
@@ -180,6 +215,7 @@ public class Firestorm {
 
     /**
      * Runs a transaction operation.
+     *
      * @param transaction The transaction to run.
      */
     public static void runTransaction(final FirestormTransaction transaction) {
@@ -193,6 +229,7 @@ public class Firestorm {
 
     /**
      * Runs a batch write operation.
+     *
      * @param batch The batch to run.
      */
     public static void runBatch(final FirestormBatch batch) {

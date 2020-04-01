@@ -60,12 +60,4 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
      */
     public abstract void onFailure(final String failureMessage);
 
-    /**
-     * Retrieves the class attribute of this FirestormEventListener.
-     * @return Returns a class.
-     */
-    public Class<T> getObjectClass() {
-        return objectClass;
-    }
-
 }
