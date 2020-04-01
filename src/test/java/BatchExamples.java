@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class BatchExamples {
 
     //Create some objects for our test:
-    private static final Person john = new Person("John", "Smith", 50);
-    private static final Person jane = new Person("Jane", "Smith", 45);
-    private static final Person george = new Person("George", "Smith", 18);
+    private static final Person john = new Person("John", "Smith", 50, "excluded");
+    private static final Person jane = new Person("Jane", "Smith", 45, "excluded");
+    private static final Person george = new Person("George", "Smith", 18, "excluded");
 
     public static void main(String[] args) {
 

@@ -78,3 +78,14 @@ h6 {
 p {
     text-align: justify;
 }
+
+.info-panel {
+    padding: 10px;
+    border-radius: 2px;
+    text-align: center;
+}
+
+h5 {
+    padding-top: 20px;
+    font-weight: bold;
+}

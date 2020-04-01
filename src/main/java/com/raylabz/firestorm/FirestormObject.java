@@ -1,5 +1,6 @@
 package com.raylabz.firestorm;
 
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.annotation.Exclude;
 import com.google.cloud.firestore.annotation.IgnoreExtraProperties;
@@ -41,6 +42,16 @@ public class FirestormObject {
     }
 
     /**
+     * Retrieves a DocumentReference to an object.
+     *
+     * @return Returns DocumentReference.
+     */
+    @Exclude
+    public DocumentReference getObjectReference() {
+        return Firestorm.firestore.collection(getClass().getSimpleName()).document(id);
+    }
+
+    /**
      * Retrieves the object's listeners.
      * @return Returns an ArrayList of ListenerRegistration.
      */
@@ -66,6 +77,42 @@ public class FirestormObject {
     public void removeListener(ListenerRegistration listenerRegistration) {
         listeners.remove(listenerRegistration);
         listenerRegistration.remove();
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to this object.
+     *
+     * @param eventListener An implementation of a FirestormEventListener.
+     * @param <T>           The type of objects this listener can be attached to.
+     * @return Returns a ListenerRegistration.
+     */
+    @Exclude
+    public <T> ListenerRegistration attachListener(final FirestormEventListener<T> eventListener) {
+        ListenerRegistration listenerRegistration = getObjectReference().addSnapshotListener(eventListener);
+        addListener(listenerRegistration);
+        return listenerRegistration;
+    }
+
+    /**
+     * Detaches a specified listener from this object.
+     *
+     * @param listenerRegistration The listener.
+     */
+    @Exclude
+    public void detachListener(ListenerRegistration listenerRegistration) {
+        removeListener(listenerRegistration);
+    }
+
+    /**
+     * Detaches all listeners from this object.
+     *
+     */
+    @Exclude
+    public void detachAllListeners() {
+        for (ListenerRegistration listenerRegistration : listeners) {
+            listenerRegistration.remove();
+            removeListener(listenerRegistration);
+        }
     }
 
     /**

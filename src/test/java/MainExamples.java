@@ -1,4 +1,7 @@
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.ListenerRegistration;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.raylabz.firestorm.*;
@@ -42,29 +45,31 @@ public class MainExamples {
         //Initialize Firestorm:
         Firestorm.init();
 
-        // -------- CREATE -------- //
 
-        //Instantiate a custom object:
-        Person person = new Person("MyFirstname", "MyLastname", 50);
 
-        //Write the object in Firestore using Firestorm:
-        Firestorm.create(person);
-
-        // -------- UPDATE -------- //
-
-        //Update the person data locally:
-        person.setAge(51);
-
-        //Update the object in Firestore:
-        Firestorm.update(person);
-
-        // -------- GET -------- //
-
-        //To get a document from Firestore, you need its ID. Ideally, you have saved this from previous use.
-        final String personID = person.getId();
-
-        //Get the document from Firestorm.
-        Person retrievedPerson = Firestorm.get(Person.class, personID);
+//        // -------- CREATE -------- //
+//
+//        //Instantiate a custom object:
+//        Person person = new Person("MyFirstname", "MyLastname", 50);
+//
+//        //Write the object in Firestore using Firestorm:
+//        Firestorm.create(person);
+//
+//        // -------- UPDATE -------- //
+//
+//        //Update the person data locally:
+//        person.setAge(51);
+//
+//        //Update the object in Firestore:
+//        Firestorm.update(person);
+//
+//        // -------- GET -------- //
+//
+//        //To get a document from Firestore, you need its ID. Ideally, you have saved this from previous use.
+//        final String personID = person.getId();
+//
+//        //Get the document from Firestorm.
+//        Person retrievedPerson = Firestorm.get(Person.class, personID);
 
 
 

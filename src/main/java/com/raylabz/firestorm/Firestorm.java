@@ -141,17 +141,10 @@ public class Firestorm {
      *
      * @param objectClass The type of the documents to filter.
      * @param <T>         A type matching the type of objectClass.
-     * @param getAll      Indicates whether or not to get all documents of this type. If getAll is false, the function
-     *                    will retrieve the first 100 documents by default.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> listAll(final Class<T> objectClass, boolean getAll) {
-        ApiFuture<QuerySnapshot> future;
-        if (getAll) {
-            future = firestore.collection(objectClass.getSimpleName()).get();
-        } else {
-            future = firestore.collection(objectClass.getSimpleName()).limit(100).get();
-        }
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
@@ -176,13 +169,14 @@ public class Firestorm {
     }
 
     /**
-     * Retrieves a DocumentReference to an object.
-     *
-     * @param object The object to retrieve the DocumentReference for.
+     * Retrieves a DocumentReference to an object using an ID.
+     * @param objectClass The type of the object.
+     * @param documentID The object's ID.
+     * @param <T> The type of the object.
      * @return Returns DocumentReference.
      */
-    public static DocumentReference getObjectReference(final FirestormObject object) {
-        return firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+    public static <T> DocumentReference getObjectReference(final Class<T> objectClass, final String documentID) {
+        return firestore.collection(objectClass.getSimpleName()).document(documentID);
     }
 
     /**
@@ -191,43 +185,28 @@ public class Firestorm {
      * @param <T> The Type of class.
      * @return Returns a CollectionReference.
      */
-    public static <T> CollectionReference getTypeReference(final Class<T> objectClass) {
+    public static <T> CollectionReference getCollectionReference(final Class<T> objectClass) {
         return firestore.collection(objectClass.getSimpleName());
     }
 
     /**
-     * Attaches an event listener which listens for updates to an object.
-     *
-     * @param object        The object to attach the listener to.
+     * Attaches an event listener which listens for updates to an object using its ID.
+     * @param objectClass The class of the object.
+     * @param documentID The object's ID.
      * @param eventListener An implementation of a FirestormEventListener.
-     * @param <T>           The type of objects this listener can be attached to.
+     * @param <T> The Type of objects this listener can be attached to.
+     * @return Returns a ListenerRegistration.
      */
-    public static <T> void attachListener(final FirestormObject object, final FirestormEventListener<T> eventListener) {
-        ListenerRegistration listenerRegistration = getObjectReference(object).addSnapshotListener(eventListener);
-        object.addListener(listenerRegistration);
+    public static <T> ListenerRegistration attachListener(final Class<T> objectClass, final String documentID, final FirestormEventListener<T> eventListener) {
+        return firestore.collection(objectClass.getSimpleName()).document(documentID).addSnapshotListener(eventListener);
     }
 
     /**
-     * Detaches a specified listener from an object.
-     *
-     * @param object               The object to detach the listener from.
-     * @param listenerRegistration The listener.
+     * Detatches a specified listener from an object.
+     * @param listenerRegistration The listenerRegistration to detatch.
      */
-    public static void detachListener(final FirestormObject object, ListenerRegistration listenerRegistration) {
+    public static void detachListener(ListenerRegistration listenerRegistration) {
         listenerRegistration.remove();
-        object.removeListener(listenerRegistration);
-    }
-
-    /**
-     * Detaches all listeners from an object.
-     *
-     * @param object The object to detach the listeners from.
-     */
-    public static void detachAllListeners(final FirestormObject object) {
-        for (ListenerRegistration listenerRegistration : object.getListeners()) {
-            listenerRegistration.remove();
-            object.removeListener(listenerRegistration);
-        }
     }
 
     /**
