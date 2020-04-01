@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <link rel="shortcut icon" type="image/png" href="images/firestorm_logo.png"/>
+    <meta name="theme-color" content="#0277bd"/>
+    <title>Firestorm - RayLabz</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper orange darken-4"></div>
+</nav>
+
+<main>
+
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br>
+            <h1 class="header center orange-text text-darken-4">Firestorm</h1>
+            <br>
+            <div class="row center">
+                <img class="responsive-img" src="images/firestorm_logo.png" width="200"/>
+            </div>
+            <div class="row center">
+                <h5 class="header col s12 light">An object-oriented data access API for Google's Firestore.</h5>
+            </div>
+
+            <p class="justify">
+                Firestorm is an object-oriented data access API for Google's Firestore. It enables developers to
+                rapidly develop applications that utilize Firestore's capabilities by interacting with it in an
+                object-oriented
+                way. Firestorm uses standardized functions and complements the full flexibility of Google's Firestore
+                API.
+            </p>
+
+            <hr/>
+
+            <h4>Contents</h4>
+
+            <ul class="browser-default">
+                <li><a href="#downloadAndImport">Download and import</a>
+                <li><a href="#guide">Guide</a>
+                    <ul class="browser-default">
+                        <li><a href="#initialization">Initialization</a>
+                        <li><a href="#customClasses">Custom classes</a></li>
+                        <li><a href="#basicOperations">Basic operations</a>
+                            <ul class="browser-default">
+                                <li><a href="#create">Create</a></li>
+                                <li><a href="#update">Update</a></li>
+                                <li><a href="#list">List</a></li>
+                                <li><a href="#listAll">List all</a></li>
+                                <li><a href="#delete">Delete</a></li>
+                                <li><a href="#objectReference">Get object reference</a></li>
+                                <li><a href="#typeReference">Get type reference</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#realTimeUpdates">Real-time updates</a>
+                            <ul class="browser-default">
+                                <li><a href="#attachListener">Attaching listeners</a></li>
+                                <li><a href="#detatchListener">Detaching listeners</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#transactions">Transactions</a></li>
+                        <li><a href="#batches">Batch writes</a></li>
+                        <li><a href="#pagination">Pagination</a></li>
+                    </ul>
+                </li>
+                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="#usage">License</a></li>
+                <li><a href="#bugreport">Bug reporting</a></li>
+            </ul>
+
+            <h4 id="guide">Guide</h4>
+
+            <h5 id="downloadAndImport">Download and import</h5>
+
+            <p>You can automatically import JSec in your project using Maven or Gradle:</p>
+
+            <p><b><u>Maven:</u></b></p>
+
+            <pre class="prettyprint">
+&lt;dependency&gt;
+  &lt;groupId&gt;com.raylabz&lt;/groupId&gt;
+  &lt;artifactId&gt;jsec&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+
+            <p><b><u>Gradle:</u></b></p>
+
+            <pre class="prettyprint">implementation 'com.raylabz:jsec:1.0.0'</pre>
+
+            <p>
+                Alternatively, you can download JSec as a .jar library:
+            </p>
+
+            <a class="btn orange darken-4" href="https://github.com/RayLabz/JSec/raw/master/Download/JSec.jar">Download
+                .jar</a>
+
+            <h5 id="hashing">Hashing</h5>
+
+            <p>
+                JSec allows you to obtain a hash representation of text and raw data using various hashing algorithms.
+                SHA512 is used by default. To hash text or raw data, use the <span class="code">Hashing.hash()</span>
+                method.<br/>
+            </p>
+
+            <pre class="prettyprint java">
+final String input = "MyRandomInput";
+String hash = Hashing.hash(input);</pre>
+
+            <p>Alternatively, you can convert any type of data into raw bytes and hash them:</p>
+
+            <pre class="prettyprint java">
+final String input = "MyRandomInput";
+final byte[] rawData = input.getBytes();
+String hash = Hashing.hash(rawData);</pre>
+
+            <h6 id="hashingAlgorithms">Hashing algorithms</h6>
+
+            <p>You can also use other available hashing algorithms listed below (<span class="code">HashType</span>),
+                using the same function but providing the algorithm first:</p>
+
+            <ul class="browser-default">
+                <li>MD5</li>
+                <li>SHA1</li>
+                <li>SHA256</li>
+                <li>SHA384</li>
+                <li>SHA512 (default)</li>
+            </ul>
+
+            <pre class="prettyprint java">String hash = Hashing.hash(HashType.MD5, input);</pre>
+
+            <p>However, use of the default hashing algorithm is suggested to provide better security. For even greater
+                security,
+                please look into using salt in the section below.</p>
+
+            <h6 id="salt">Hashing with salt</h6>
+
+            <p>
+                To make your hashes more secure, you need to use salt. Salt provides randomness to the algorithms,
+                making the resulting hash computationally infeasible to guess or find using a rainbow table. A salt is a
+                random
+                string of bytes that randomizes the output of the algorithm. To provide better security, you need to
+                create
+                a salt and store it securely so that you can use it to re-create the same hash for the same data again
+                if needed.
+                To create a random salt, use the <span class="code">Hashing.salt()</span> method:
+            </p>
+
+            <pre class="prettyprint java">final byte[] salt = Hashing.salt();</pre>
+
+            <p>Then, you can pass the salt (pun intended) as a parameter to the <span class="code">hash()</span> method:
+            </p>
+
+            <pre class="prettyprint java">
+Hashing.hash(input, salt);
+//OR
+Hashing.hash(HashType.MD5, input, salt);</pre>
+
+            <p><b>Remember to store the salt in a file or database, otherwise you will not be able to re-create the same
+                hash.</b></p>
+
+            <!--------------------------------------------------------------------------------------------------------->
+
+            <h5 id="symmetricEncryption">Symmetric encryption</h5>
+
+            <p>
+                You can symmetrically encrypt text with a key/password using the <span
+                    class="code">SymmetricEncryption</span> class.
+                This class utilizes the Advanced Encryption Standard (AES) algorithm, which is the adopted worldwide
+                standard for symmetric encryption. To encrypt, use the <span
+                    class="code">SymmetricEncryption.encrypt()</span>
+                method with your input and key/password as parameters:
+            </p>
+
+            <pre class="prettyprint java">
+final String input = "MyRandomInput";
+final String encrypted = SymmetricEncryption.encrypt(input, key);</pre>
+
+            <p>To decrypt an encrypted text, you can use the <span class="code">decrypt()</span> method:</p>
+
+            <pre class="prettyprint java">
+final String decrypted = SymmetricEncryption.decrypt(encrypted, key);</pre>
+
+
+            <h5 id="asymmetricEncryption">Asymmetric Encryption</h5>
+
+            <p>
+                You can asymmetrically encrypt data using the <span class="code">AsymmetricEncryption</span> class,
+                which uses the RSA algorithm. Asymmetric encryption can be used to provide better security against
+                password
+                theft and is commonly used in secure communications. A public and private key are automatically
+                generated
+                for you, so you may directly encrypt data without having to create keys.
+            </p>
+
+            <p>To asymmetrically encrypt data using the randomly generated keys, use the <span
+                    class="code">encrypt()</span> method:</p>
+
+            <pre class="prettyprint java">
+final String input = "MyRandomInput";
+byte[] encrypted = AsymmetricEncryption.encrypt(input.getBytes());</pre>
+
+            <p>You may then decrypt the data using the <span class="code">decrypt()</span> method:</p>
+
+            <pre class="prettyprint java">
+byte[] decrypted = AsymmetricEncryption.decrypt(encrypted);</pre>
+
+            <p>Asymmetric encryption is useless without obtaining the public and private keys. To obtain these keys, use
+                the
+                <span class="code">getPrivateKey()</span> and <span class="code">getPublicKey()</span> methods
+                correspondingly:</p>
+
+            <pre class="prettyprint java">
+PrivateKey privateKey = AsymmetricEncryption.getPrivateKey();
+PublicKey publicKey = AsymmetricEncryption.getPublicKey();</pre>
+
+            <p>You may then convert these keys into bytes and store them in a file or database for future use or send
+                them to another client, using the <span class="code">getEncoded()</span> method:</p>
+
+            <pre class="prettyprint java">
+byte[] privateKeyBytes = privateKey.getEncoded();
+byte[] publicKeyBytes = publicKey.getEncoded();</pre>
+
+            <p>After storing the keys, you can load them using the <span class="code">getPrivateKeyFromBytes()</span>
+                and <span class="code">getPublicKeyFromBytes()</span> methods correspondingly:</p>
+
+            <pre class="prettyprint java">
+privateKey = AsymmetricEncryption.getPrivateKeyFromBytes(privateKeyBytes);
+publicKey = AsymmetricEncryption.getPublicKeyFromBytes(publicKeyBytes);</pre>
+
+            <p>Then use the <span class="code">setKeyPair()</span> method to set the keys:</p>
+
+            <pre class="prettyprint java">
+AsymmetricEncryption.setKeyPair(publicKey, privateKey);</pre>
+
+            <p>In case you are loading pre-stored keys or received keys, make sure to load them before encrypting or
+                decrypting, otherwise
+                random keys will be used and the data will not be encrypted/decrypted correctly.</p>
+
+            <!--------------------------------------------------------------------------------------------------------->
+
+            <h4 id="example">Full example</h4>
+
+            <p>Please see the <a href="https://github.com/RayLabz/JSec/tree/master/Example">complete example here.</a>
+            </p>
+
+            <h4 id="documentation">Documentation</h4>
+
+            <p>Visit the <a href="documentation">documentation.</a></p>
+
+            <h4 id="usage">License</h4>
+
+            <p>
+                JSec is released under the <a href="https://github.com/RayLabz/JSec/blob/master/LICENSE">Apache 2.0
+                license</a>.
+            </p>
+
+            <h4 id="source">Source code</h4>
+
+            <p>
+                You can find the source code at the project's repository <a
+                    href="https://github.com/RayLabz/JSec/">here</a>.
+            </p>
+
+            <h4 id="bugreport">Bug reporting</h4>
+
+            <p>Please report bugs <a href="mailto:RayLabzg@gmail.com?subject=JSec">here</a>.</p>
+
+            <br/><br/>
+        </div>
+    </div>
+
+</main>
+
+<footer class="page-footer orange darken-4">
+    <div class="container">
+        <div class="center light">Made by <a class="white-text" href="http://www.RayLabz.com">RayLabz</a></div>
+        <br/>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+</body>
+</html>

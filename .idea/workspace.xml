@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/BatchExamples.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/MainExamples.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/PaginationExamples.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/Person.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/ServiceAccount.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/TransactionsExamples.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-frame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-noframe.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Filterable.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Firestorm.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormBatch.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormConfig.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormEventListener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormFilterable.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormObject.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormOperation.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormTransaction.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Paginator.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/QueryResult.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionFilterable.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/FirestormException.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TooManyOperationsException.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TransactionException.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-frame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-summary.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-frame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-summary.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/constant-values.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/deprecated-list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/help-doc.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-10.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-11.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-12.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-13.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-14.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-15.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-16.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-17.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-18.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-19.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-3.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-4.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-5.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-6.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-7.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-8.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-9.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/overview-frame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/overview-summary.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/overview-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/package-frame.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/package-list" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/package-summary.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/package-tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/serialized-form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/stylesheet.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/css/materialize.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/css/materialize.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/firestorm_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/js/init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/js/materialize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/js/materialize.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/js/util.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-noframe.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Filterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Filterable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Firestorm.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Firestorm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormBatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormBatch.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormConfig.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormConfig.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormEventListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormEventListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormException.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormFilterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormFilterable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormOperation.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormOperation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormTransaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormTransaction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Paginator.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Paginator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/QueryResult.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/QueryResult.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TooManyOperationsException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TooManyOperationsException.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionException.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionFilterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionFilterable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/deprecated-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/deprecated-list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-10.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-12.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-14.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-15.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-16.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-17.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-18.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-18.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-9.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/javadoc/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/serialized-form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Firestorm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Firestorm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormBatch.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormBatch.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormEventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormEventListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormFilterable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormFilterable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormOperation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormOperation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormTransaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/FirestormTransaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Paginator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/Paginator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/QueryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/QueryResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TransactionFilterable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TransactionFilterable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/exception/FirestormException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/exception/TooManyOperationsException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/exception/TransactionException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/MainExamples.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/MainExamples.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,12 +118,16 @@
     </option>
   </component>
   <component name="ProjectId" id="1ZiqnoYhc8krKAV7WVcAqFHXexM" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
     <property name="Repository.Attach.Annotations" value="false" />
@@ -130,7 +137,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/images" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -147,6 +154,10 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs\images" />
+      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="com.raylabz.firestorm.exception" />
@@ -208,6 +219,9 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1585727001409">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -229,38 +243,42 @@
     </state>
     <state x="362" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1739.939@0.0.1739.939" timestamp="1585656054995" />
     <state x="400" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585424995079" />
-    <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1585730439146">
+    <state x="690" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585730763150">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730439146" />
+    <state x="690" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730763150" />
+    <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1585732333938">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585732333937" />
     <state x="739" y="286" key="FileChooserDialogImpl" timestamp="1585730102054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="739" y="286" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730102054" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1585730439412">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1585732333966">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1696" height="248" key="GridCell.Tab.0.bottom/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730439412" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1585730439412">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585732333966" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1585732333965">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1696" height="248" key="GridCell.Tab.0.center/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730439412" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1585730439412">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585732333965" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1585732333965">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1696" height="248" key="GridCell.Tab.0.left/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730439412" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1585730439412">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585732333965" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1585732333966">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1696" height="248" key="GridCell.Tab.0.right/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730439412" />
-    <state x="667" y="276" width="710" height="546" key="find.popup" timestamp="1585560314890">
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585732333966" />
+    <state x="667" y="276" width="710" height="546" key="find.popup" timestamp="1585730704110">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="276" width="710" height="546" key="find.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585560314890" />
+    <state x="667" y="276" width="710" height="546" key="find.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585730704110" />
     <state x="564" y="203" width="672" height="613" key="search.everywhere.popup" timestamp="1585653822003">
       <screen x="0" y="0" width="1739" height="939" />
     </state>

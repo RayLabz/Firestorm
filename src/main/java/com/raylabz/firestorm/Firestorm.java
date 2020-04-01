@@ -172,7 +172,7 @@ public class Firestorm {
      * @return Returns a FirestormFilterable which can be used to append filter parameters.
      */
     public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
-        return new FirestormFilterable(firestore.collection(objectClass.getSimpleName()), objectClass);
+        return new FirestormFilterable<T>(firestore.collection(objectClass.getSimpleName()), objectClass);
     }
 
     /**
@@ -183,6 +183,16 @@ public class Firestorm {
      */
     public static DocumentReference getObjectReference(final FirestormObject object) {
         return firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+    }
+
+    /**
+     * Retrieves a CollectionReference to a type.
+     * @param objectClass The class of object to get a reference for.
+     * @param <T> The Type of class.
+     * @return Returns a CollectionReference.
+     */
+    public static <T> CollectionReference getTypeReference(final Class<T> objectClass) {
+        return firestore.collection(objectClass.getSimpleName());
     }
 
     /**
