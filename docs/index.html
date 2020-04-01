@@ -299,7 +299,7 @@ Firestorm.update(person);</pre>
             </p>
 
             <pre class="prettyprint java">
-Firestorm.list(Person.class, 100);</pre>
+ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100);</pre>
 
             <p>The above code will retrieve at maximum 100 objects of type Person.</p>
 
@@ -315,7 +315,7 @@ Firestorm.list(Person.class, 100);</pre>
             </p>
 
             <pre class="prettyprint java">
-Firestorm.listAll(Person.class);</pre>
+ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class);</pre>
 
             <div class="info-panel light-blue lighten-2 white-text">Google will charge your project $0.30-$0.60 per million reads depending on location.
             <a class="yellow-text" href="https://firebase.google.com/docs/firestore/pricing">Click here</a> to find out more about Firebase pricing.</div>
@@ -409,7 +409,7 @@ Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt
     }
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Attaching a listener to an object automatically saves it in the object's <span class="code">listeners</span> list
+            <div class="info-panel light-blue lighten-2 white-text">Attaching a listener to an <u>object</u> automatically saves it in the object's <span class="code">listeners</span> list
                 for future reference so you do not need to do that manually.
                 You can obtain the list of listeners for each object by using the method <span class="code">getListeners()</span> on an object.</div>
 

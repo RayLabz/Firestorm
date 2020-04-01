@@ -45,6 +45,19 @@ public class MainExamples {
         //Initialize Firestorm:
         Firestorm.init();
 
+        //Instantiate object:
+        Person person = new Person("firstname", "lastname", 50, "excluded");
+
+        //Save to Firestore:
+        Firestorm.create(person);
+
+        String personID = person.getId();
+
+        //Change object attributes:
+        person.setAge(51);
+
+        //Update object:
+        Firestorm.update(person);
 
 
 //        // -------- CREATE -------- //
