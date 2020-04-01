@@ -24,6 +24,8 @@ public class MainExamples {
 
     public static void main(String[] args) {
 
+        //Initialize Firebase:
+
         try {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
@@ -32,14 +34,39 @@ public class MainExamples {
                     .build();
 
             FirebaseApp.initializeApp(options);
-            Firestorm.init();
-
-            final Person person = Firestorm.get(Person.class, "0rlSOiTxZt0yZABAjGzD");
-            System.out.println(person.toJson());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Initialize Firestorm:
+        Firestorm.init();
+
+        // -------- CREATE -------- //
+
+        //Instantiate a custom object:
+        Person person = new Person("MyFirstname", "MyLastname", 50);
+
+        //Write the object in Firestore using Firestorm:
+        Firestorm.create(person);
+
+        // -------- UPDATE -------- //
+
+        //Update the person data locally:
+        person.setAge(51);
+
+        //Update the object in Firestore:
+        Firestorm.update(person);
+
+        // -------- GET -------- //
+
+        //To get a document from Firestore, you need its ID. Ideally, you have saved this from previous use.
+        final String personID = person.getId();
+
+        //Get the document from Firestorm.
+        Person retrievedPerson = Firestorm.get(Person.class, personID);
+
+
 
     }
 

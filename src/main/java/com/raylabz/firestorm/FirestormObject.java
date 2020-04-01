@@ -7,6 +7,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+/**
+ * Abstracts an object which will be stored in Firestore.
+ */
 @IgnoreExtraProperties
 public class FirestormObject {
 

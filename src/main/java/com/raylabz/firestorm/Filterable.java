@@ -1,5 +1,9 @@
 package com.raylabz.firestorm;
 
+/**
+ * Abstracts the fetch method, used by filtered query objects to fetch the results.
+ * @param <T>
+ */
 public interface Filterable<T> {
 
     /**

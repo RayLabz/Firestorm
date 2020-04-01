@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * A filterable used in transactions.
+ * @param <T>
+ */
 public class TransactionFilterable<T> extends FirestormFilterable<T> {
 
     private final Transaction transaction;

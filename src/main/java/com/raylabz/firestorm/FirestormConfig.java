@@ -7,6 +7,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Stores Firestore configuration - enables quick parsing of service account files.
+ */
 public class FirestormConfig {
 
     private String type;

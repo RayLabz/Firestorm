@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * The main class of the Firestorm API, which allows interactions with the Firestore.
+ * The main class of the Firestorm API, which allows basic interactions with the Firestore.
  * Must be initialized with a FirebaseApp object using the <i>init()</b> method before interacting with the Firestore.
  */
 public class Firestorm {
@@ -33,8 +33,7 @@ public class Firestorm {
     /**
      * Private constructor.
      */
-    private Firestorm() {
-    }
+    private Firestorm() { }
 
     /**
      * Creates a Firestore document from an object.

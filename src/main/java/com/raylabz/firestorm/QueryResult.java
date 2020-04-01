@@ -1,9 +1,12 @@
 package com.raylabz.firestorm;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 
+/**
+ * Models a result returned from a query.
+ * @param <T> The type of objects in the result.
+ */
 public class QueryResult<T> {
 
     private final ArrayList<T> items;
