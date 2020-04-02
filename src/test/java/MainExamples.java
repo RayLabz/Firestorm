@@ -49,6 +49,8 @@ public class MainExamples {
         //Save to Firestore:
         Firestorm.create(person);
 
+        Firestorm.firestore.collection(Person.class.getSimpleName()).document("myPerson").;
+
         String personID = person.getId();
 
         //Change object attributes:

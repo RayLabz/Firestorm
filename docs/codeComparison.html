@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <link rel="shortcut icon" type="image/png" href="images/firestorm_logo.png"/>
+    <meta name="theme-color" content="#e65100"/>
+    <title>Firestorm - RayLabz</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper orange darken-4" style="padding-left: 10px;"><a href="index.html"><i
+            class="material-icons white-text">arrow_back</i></a></div>
+</nav>
+
+<main>
+
+    <div class="container">
+
+        <div class="row center">
+            <h3>Code Comparison</h3>
+            <br/>
+            <p class="center">
+                This page shows a comparison between Firestorm and the standard Firestore API in terms of:
+            </p>
+            <ul>
+                <li>a) Number of lines of code written without empty lines and comments.</li>
+                <li>b) Overall code complexity.</li>
+            </ul>
+        </div>
+
+        <hr/>
+
+        <!-- CREATE OBJECT -->
+        <div class="row">
+            <h5 class="center">Create object</h5>
+            <p class="center">
+                Code needed to create an object in Firestore.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
+try {
+    docRef.set(person).get();
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Firestorm.create(person);</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        In the standard API, you have to reference a collection and provide document IDs manually each time.
+                        In addition, you have to manually call <span class="code">get()</span> on your document snapshot in
+                        order to make sure that your request is sent before proceeding while manually handling exceptions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm automatically references collections, allocates new document IDs and waits for the request
+                        to be sent while automatically handling exceptions.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- UPDATE OBJECT -->
+        <div class="row">
+            <h5 class="center">Update object</h5>
+            <p class="center">
+                Code needed to update an object in Firestore.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+try {
+    docRef.set(person).get();
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Firestorm.update(person);</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to have saved a <span class="code">DocumentReference</span> to your document
+                        or re-obtaining it from its ID (which you must also save). Just like when creating an object,
+                        you need to manually call <span class="code">get()</span> and handle any exceptions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm updates the object with minimal code without the need to store <span class="code">DocumentReference</span>s
+                        or document IDs manually. It also handles any exceptions automatically.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+    </div>
+
+</main>
+
+<footer class="page-footer orange darken-4">
+    <div class="container">
+        <div class="center light">Made by <a class="white-text" href="http://www.RayLabz.com">RayLabz</a></div>
+        <br/>
+    </div>
+</footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+</body>
+</html>

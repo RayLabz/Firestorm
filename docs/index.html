@@ -39,7 +39,7 @@
                     object-oriented way. Firestorm uses standardized functions and complements the full flexibility of
                     Google's Firestore API.
                     It organizes classes as Firestore collections and objects of these classes as documents in these collections.
-                    Most importantly, it reduces the amount of code needed dramatically, compared to the standard Firestore API.
+                    Most importantly, it dramatically reduces the amount of code required, compared to the standard Firestore API.
                 </p>
             </div>
 
@@ -219,7 +219,7 @@ public class Person <mark>extends FirestormObject</mark> {
 
             <h5>Excluding attributes</h5>
 
-            <p>You can exclude certain class attributes from being stored in the Firestore by labelling their <u>getter
+            <p>You can exclude certain class attributes from being stored in the Firestore by annotating their <u>getter
                 functions</u>
                 with the <span class="code red-text text-darken-3">@Exclude</span> annotation:</p>
 
