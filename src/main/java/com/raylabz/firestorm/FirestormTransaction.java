@@ -21,7 +21,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
     public final void create(final FirestormObject object) {
         final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
         object.setId(reference.getId());
-        transaction = transaction.create(reference, object);
+        transaction = transaction.set(reference, object);
     }
 
     /**
@@ -63,10 +63,43 @@ public abstract class FirestormTransaction extends FirestormOperation implements
     /**
      * Lists all objects of type <b>objectClass</b> as part of a transaction.
      * @param objectClass The class of the object.
+     * @param limit The maximum number of objects return.
      * @param <T> The type of the object (same with objectClass).
      * @return Returns an ArrayList of type T/objectClass.
      */
-    public final <T> ArrayList<T> list(final Class<T> objectClass) {
+    public final <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
+        ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).limit(limit).get();
+        try {
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            final int NUM_OF_DOCUMENTS = documents.size();
+            DocumentReference[] documentReferences = new DocumentReference[NUM_OF_DOCUMENTS];
+            for (int i = 0; i < documents.size(); i++) {
+                documentReferences[i] = documents.get(i).getReference();
+            }
+
+            final ApiFuture<List<DocumentSnapshot>> all = transaction.getAll(documentReferences);
+            final List<DocumentSnapshot> documentSnapshots = all.get();
+
+            ArrayList<T> documentList = new ArrayList<>();
+            for (final DocumentSnapshot snapshot : documentSnapshots) {
+                T object = snapshot.toObject(objectClass);
+                documentList.add(object);
+            }
+            return documentList;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            throw new TransactionException(e);
+        }
+    }
+
+    /**
+     * Lists ALL available documents of a given type. May incur charges for read operations for huge numbers of documents.
+     *
+     * @param objectClass The type of the documents to filter.
+     * @param <T>         A type matching the type of objectClass.
+     * @return Returns an ArrayList of objects of type objectClass.
+     */
+    public final <T> ArrayList<T> listAll(final Class<T> objectClass) {
         ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();

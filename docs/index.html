@@ -62,6 +62,11 @@
                                 <li><a href="#collectionReference">Obtaining collection references</a></li>
                             </ul>
                         </li>
+                        <li><a href="#filtering">Filtering</a>
+                            <ul class="browser-default">
+                                <li><a href="#filtersReference">Filters reference</a></li>
+                            </ul>
+                        </li>
                         <li><a href="#realTimeUpdates">Real-time updates</a>
                             <ul class="browser-default">
                                 <li><a href="#attachListener">Attaching listeners</a></li>
@@ -359,6 +364,189 @@ CollectionReference collectionReference = Firestorm.getCollectionReference(Perso
 
             <hr/>
 
+            <h4 id="filtering">Filtering</h4>
+
+            <p>
+                Firestorm allows you to easily filter results using the <span class="code">filter()</span>
+                method. This method expects a type as a parameter and will return a <span class="code">FirestormFilterable</span>
+                object:
+            </p>
+
+            <pre class="prettyprint java">
+final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class);</pre>
+
+            <p>
+                Items can be filtered using several methods. It is preferable to chain these methods in order
+                to make the code easier to read:
+            </p>
+
+            <pre class="prettyprint java">
+final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class)
+        .whereEqualTo("firstName", "John")
+        .whereGreaterThan("age", 10)
+        .orderBy("age")
+        .limit(5);</pre>
+
+            <p>
+                You can get the results of a filter by using the <span class="code">fetch()</span> method.
+                This returns a <span class="code">QueryResult</span> object:
+            </p>
+
+            <pre class="prettyprint java">
+final QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
+        .whereEqualTo("firstName", "John")
+        .whereGreaterThan("age", 10)
+        .orderBy("age")
+        .limit(5)
+        .fetch();</pre>
+
+            <p>Finally, you can get the items retrieved by your query using the <span class="code">getItems()</span> method,
+            which returns an <span class="code">ArrayList</span> of items:</p>
+
+            <pre class="prettyprint java">
+final ArrayList&lt;Person&gt; items = result.getItems();</pre>
+
+            <p>
+                You can also get a) the query snapshot, b) the last returned item's ID, and c) whether or not the result
+                has returned any items using:
+            </p>
+
+            <pre class="prettyprint java">
+//Get query snapshot:
+final QueryDocumentSnapshot snapshot = result.getSnapshot();
+
+//Get the last item's ID:
+final String lastItemID = result.getLastDocumentID();
+
+//Check if the result has returned and items:
+final boolean hasItems = result.hasItems();</pre>
+
+            <h5 id="filtersReference">Filters reference</h5>
+
+            <p>
+                The following is a table of filters, ordering, limits etc. which can be applied to a query via the
+                <span class="code">filter()</span> method:
+            </p>
+
+            <table class="responsive-table highlight">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Use</th>
+                        <th>Params</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>whereEqualTo</td>
+                        <td>Returns objects that have a field with a value equal to the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereLessThan</td>
+                        <td>Returns objects that have a field with a value less than the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereLessThanOrEqualTo</td>
+                        <td>Returns objects that have a field with a value less than or equal to the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereGreaterThan</td>
+                        <td>Returns objects that have a field with a value greater than the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereGreaterThanOrEqualTo</td>
+                        <td>Returns objects that have a field with a value greater than or equal to the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereArrayContains</td>
+                        <td>Returns objects that have a field (array) containing the given value.</td>
+                        <td>Field name, value <br/> Field path, value</td>
+                    </tr>
+                    <tr>
+                        <td>whereArrayContainsAny</td>
+                        <td>Returns objects that have a field (array) containing any of a given list of values.</td>
+                        <td>Field name, list of values <br/> Field path, list of values</td>
+                    </tr>
+                    <tr>
+                        <td>whereIn</td>
+                        <td>Returns objects that have a field containing any of a given list of values.</td>
+                        <td>Field name, list of values <br/> Field path, list of values</td>
+                    </tr>
+                    <tr>
+                        <td>orderBy</td>
+                        <td>Returns objects ordered by a specific field.</td>
+                        <td>Field name <br/> Field path <br/> Field name, Direction of order <br/> Field path, Direction of order</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>Limits the number of results returned by the query.</td>
+                        <td>Limit (number)</td>
+                    </tr>
+                    <tr>
+                        <td>offset</td>
+                        <td>Offsets the query's start position by a given amount.</td>
+                        <td>Offset(number)</td>
+                    </tr>
+                    <tr>
+                        <td>startAt</td>
+                        <td>Starts the query at a specific document.</td>
+                        <td>DocumentSnapshot <br/> List of field values</td>
+                    </tr>
+                    <tr>
+                        <td>select</td>
+                        <td>Selects only specific fields to return from an object.</td>
+                        <td>List of fields <br/> List of field paths</td>
+                    </tr>
+                    <tr>
+                        <td>startAfter</td>
+                        <td>Starts the query after a specified document.</td>
+                        <td>DocumentSnapshot <br/> List of field values</td>
+                    </tr>
+                    <tr>
+                        <td>endBefore</td>
+                        <td>Ends the query before a specified document.</td>
+                        <td>DocumentSnapshot <br/> List of field values</td>
+                    </tr>
+                    <tr>
+                        <td>endAt</td>
+                        <td>Ends the query at a specified document.</td>
+                        <td>DocumentSnapshot <br/> List of field values</td>
+                    </tr>
+                    <tr>
+                        <td>stream</td>
+                        <td>Streams the query to an observer.</td>
+                        <td>ApiStreamObserver</td>
+                    </tr>
+                    <tr>
+                        <td>get</td>
+                        <td>Retrieves a snapshot of the query.</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>addSnapshotListener</td>
+                        <td>Adds a snapshot listener to the query.</td>
+                        <td>EventListener <br/> Executor and EventListener</td>
+                    </tr>
+                    <tr>
+                        <td>hashCode</td>
+                        <td>Retrieves the hash code of the query.</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>fetch</td>
+                        <td>Fetches the results of the query directly.</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr/>
+
             <h4 id="realTimeUpdates">Real-time updates</h4>
 
             <h6 id="attachListener">Attaching listeners</h6>
@@ -435,19 +623,205 @@ Firestorm.detachListener(listenerRegistration);</pre>
 
             <h4 id="transactions">Transactions</h4>
 
-            <!--TODO-->
+            <p>
+                Firestorm allows you to quickly define and run a Firestore transaction using the <span class="code">runTransaction()</span> method.
+                To do so, you first need to declare a new <span class="code">FirestormTransaction</span>:
+            </p>
+
+            <pre class="prettyprint java">
+FirestormTransaction transaction = new FirestormTransaction() {
+    @Override
+    public void execute() {
+        create(person1);
+        get(person2);
+        update(person2);
+        delete(person3);
+        list(Person.class);
+    }
+
+    @Override
+    public void onSuccess() {
+        System.out.println("Transaction successful!");
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Transaction failed.");
+    }
+};</pre>
+
+            <p>You can then run your transaction using the <span class="code">runTransaction()</span> method:</p>
+
+            <pre class="prettyprint java">
+Firestorm.runTransaction(transaction);</pre>
+
+            <p>Alternatively, you can directly run a nameless transaction:</p>
+
+            <pre class="prettyprint java">
+Firestorm.runTransaction(new FirestormTransaction() {
+    @Override
+    public void execute() {
+        create(person1);
+        get(person2);
+        update(person2);
+        delete(person3);
+        list(Person.class);
+    }
+
+    @Override
+    public void onSuccess() {
+        System.out.println("Transaction successful!");
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Transaction failed.");
+    }
+});</pre>
+
+            <div class="info-panel light-blue lighten-2 white-text">You can read more about Firestore transactions and batch writes
+                <a class="yellow-text" href="https://firebase.google.com/docs/firestore/manage-data/transactions">here</a>.</div>
 
             <hr/>
 
             <h4 id="batches">Batch writes</h4>
 
-            <!--TODO-->
+            <p>
+                Firestorm also allows you to quickly define and run batch write operations on Firestore, using the <span class="code">runBatch()</span>
+                You can define a new batch by creating a new <span class="code">FirestormBatch</span> object:
+            </p>
+
+            <pre class="prettyprint java">
+FirestormBatch batch = new FirestormBatch() {
+    @Override
+    public void execute() {
+        create(person);
+        update(person2);
+        delete(person3);
+    }
+
+    @Override
+    public void onSuccess() {
+        System.out.println("Batch operation successful!");
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Batch operation failed.");
+    }
+};</pre>
+
+            <p>Run a batch using the <span class="code">runBatch()</span> method:</p>
+
+            <pre class="prettyprint java">
+Firestorm.runBatch(batch);</pre>
+
+            <p>Alternatively, using a nameless object:</p>
+
+            <pre class="prettyprint java">
+Firestorm.runBatch(new FirestormBatch() {
+    @Override
+    public void execute() {
+        create(person);
+        update(person2);
+        delete(person3);
+    }
+
+    @Override
+    public void onSuccess() {
+        System.out.println("Batch operation successful!");
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Batch operation failed.");
+    }
+});</pre>
 
             <hr/>
 
             <h4 id="pagination">Pagination</h4>
 
-            <!--TODO-->
+            <p>
+                Firestorm supports quick pagination of results for a specified type using the <span class="code">Paginator</span> class.
+                The paginator's <span class="code">next()</span> method receives the type of objects to paginate and the last listed document's ID. In the first call,
+                the last listed document's ID should be passed as <i>null</i>:
+            </p>
+
+            <pre class="prettyprint java">
+String lastDocumentID = null;
+Paginator&lt;Person&gt; paginator = Paginator.next(Person.class, lastDocumentID);</pre>
+
+            <p>You can also pass a limit for the number of results per page in the <span class="code">next()</span> method. By default,
+            the number of results per page is set to 10.</p>
+
+            <pre class="prettyprint java">
+Paginator&lt;Person&gt; paginator = Paginator.next(Person.class, lastDocumentID, <mark>10</mark>);</pre>
+
+            <p>Then, you can retrieve the results of the pagination using the <span class="code">fetch()</span> method:</p>
+
+            <pre class="prettyprint java">
+QueryResult&lt;Person&gt; result = paginator.fetch();</pre>
+
+            <p>
+                From the results object, you can use the <span class="code">getItems()</span> method to retrieve the items:
+            </p>
+
+            <pre class="prettyprint java">
+final ArrayList&lt;Person&gt; items = result.getItems();</pre>
+
+            <p>
+                You can also use the <span class="code">getLastDocumentID()</span> method to get the ID of the last document
+                in the current results. <u>You will need use this ID later to get the next page of results</u>.
+            </p>
+
+            <pre class="prettyprint java">
+lastDocumentID = result.getLastDocumentID();</pre>
+
+            <p>
+                You can then pass the last document's ID to the paginator's <span class="code">next()</span> method again
+                to retrieve the next page of results, and so on:
+            </p>
+
+            <pre class="prettyprint java">
+paginator = Paginator.next(Person.class, lastDocumentID);</pre>
+
+            <p>Furthermore, you can check if a result contains items without getting its items array using the <span class="code">hasItems()</span> method:</p>
+
+            <pre class="prettyprint java">
+boolean hasItems = result.hasItems();</pre>
+
+            <h6>Full pagination example:</h6>
+
+            <p>This example continues looping and fetching new results until there are no items left to fetch:</p>
+
+            <pre class="prettyprint java">
+QueryResult&lt;Person&gt; result;
+String lastDocumentID = null;
+do {
+    result = Paginator.next(Person.class, lastDocumentID).fetch();
+    System.out.println("Fetched items: " + result.getItems().size());
+    for (Person p : result.getItems()) {
+        System.out.println("-> " + p.getFirstName());
+    }
+    lastDocumentID = result.getLastDocumentID();
+    new Scanner(System.in).nextLine();
+} while (result.hasItems());</pre>
+
+            <h6>Pagination with filtering</h6>
+
+            <p>
+                You also can use filters and ordering for paginated results:
+            </p>
+
+            <pre class="prettyprint java">
+paginator = Paginator.next(Person.class, lastDocumentID, 10).whereEqualTo("age", 40);</pre>
+
+            <pre class="prettyprint java">
+paginator = Paginator.next(Person.class, lastDocumentID, 50).whereGreaterThan("age", 5);</pre>
+
+            <pre class="prettyprint java">
+paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");</pre>
 
             <hr/>
 
@@ -455,7 +829,7 @@ Firestorm.detachListener(listenerRegistration);</pre>
 
             <h3 id="documentation">Documentation</h3>
 
-            <p>Visit the <a href="javadoc">documentation.</a></p>
+            <p><a href="javadoc">View the documentation.</a></p>
 
             <hr/>
 

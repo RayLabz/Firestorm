@@ -388,7 +388,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
     }
 
     /**
-     * Specifies the ending point of a query.
+     * Specifies the ending point of a query to a specific snapshot.
      * @param fieldValues The field values to end the query at.
      * @return Returns a filterable.
      */
@@ -399,7 +399,7 @@ public class FirestormFilterable<T> implements Filterable<T> {
     }
 
     /**
-     * Specifies the ending point of a query.
+     * Specifies the ending point of a query to a specific snapshot.
      * @param snapshot The document snapshot the end the query at.
      * @return Returns a filterable.
      */

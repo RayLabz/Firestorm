@@ -32,7 +32,7 @@ public class PaginationExamples {
         QueryResult<Person> result;
         String lastDocumentID = null;
         do {
-            result = Paginator.init(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+            result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
             System.out.println("Fetched items: " + result.getItems().size());
             for (Person p : result.getItems()) {
                 System.out.println("-> " + p.getFirstName());

@@ -49,42 +49,9 @@ public class Firestorm {
      * @param object An object containing the data to be written in Firestore.
      */
     public static void create(final FirestormObject object) {
-        final String className = object.getClass().getSimpleName();
-        final DocumentReference reference = firestore.collection(className).document();
-        final String id = reference.getId();
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
         try {
-            object.setId(id);
-            reference.set(object).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
-        }
-    }
-
-    /**
-     * Deletes a document from the Firestore based on the document ID of an object.
-     *
-     * @param object An object which provides the document ID for deletion.
-     */
-    public static void delete(final FirestormObject object) {
-        final String className = object.getClass().getSimpleName();
-        final DocumentReference reference = firestore.collection(className).document(object.getId());
-        try {
-            reference.delete().get();
-            object.setId(null);
-        } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
-        }
-    }
-
-    /**
-     * Updates a document in Firestore based on the document ID and data of an object.
-     *
-     * @param object An object which provides data and the document ID for the update.
-     */
-    public static void update(final FirestormObject object) {
-        final String className = object.getClass().getSimpleName();
-        final DocumentReference reference = firestore.collection(className).document(object.getId());
-        try {
+            object.setId(reference.getId());
             reference.set(object).get();
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
@@ -115,14 +82,43 @@ public class Firestorm {
     }
 
     /**
+     * Updates a document in Firestore based on the document ID and data of an object.
+     *
+     * @param object An object which provides data and the document ID for the update.
+     */
+    public static void update(final FirestormObject object) {
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+        try {
+            reference.set(object).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes a document from the Firestore based on the document ID of an object.
+     *
+     * @param object An object which provides the document ID for deletion.
+     */
+    public static void delete(final FirestormObject object) {
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+        try {
+            reference.delete().get();
+            object.setId(null);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Lists available documents of a given type.
      *
      * @param objectClass The type of the documents to filter.
-     * @param limit       The maximum number of documents to return.
+     * @param limit       The maximum number of objects to return.
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> list(final Class<T> objectClass, int limit) {
+    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();

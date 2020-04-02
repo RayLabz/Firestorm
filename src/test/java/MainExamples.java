@@ -1,14 +1,12 @@
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.ListenerRegistration;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.raylabz.firestorm.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MainExamples {
 
@@ -58,6 +56,100 @@ public class MainExamples {
 
         //Update object:
         Firestorm.update(person);
+
+        FirestormTransaction transaction = new FirestormTransaction() {
+            @Override
+            public void execute() {
+                create(person1);
+                update(person2);
+                delete(person3);
+            }
+
+            @Override
+            public void onSuccess() {
+                System.out.println("Transaction successful!");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("Transaction failed.");
+            }
+        };
+
+        Firestorm.runTransaction(transaction);
+
+        Firestorm.runTransaction(new FirestormTransaction() {
+            @Override
+            public void execute() {
+                create(person1);
+                get(person2);
+                update(person2);
+                delete(person3);
+                list(Person.class);
+            }
+
+            @Override
+            public void onSuccess() {
+                System.out.println("Transaction successful!");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("Transaction failed.");
+            }
+        });
+
+        FirestormBatch batch = new FirestormBatch() {
+            @Override
+            public void execute() {
+                create(person);
+                update(person2);
+                delete(person3);
+            }
+
+            @Override
+            public void onSuccess() {
+                System.out.println("Transaction successful!");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("Transaction failed.");
+            }
+        };
+
+        Firestorm.runBatch(batch);
+
+        String lastDocumentID = null;
+        Paginator<Person> paginator = Paginator.next(Person.class, lastDocumentID);
+
+
+        final QueryResult<Person> result = paginator.fetch();
+        final ArrayList<Person> items = result.getItems();
+        lastDocumentID = result.getLastDocumentID();
+
+        paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");
+
+
+        final QueryResult<Person> result = Firestorm.filter(Person.class)
+                .whereEqualTo("firstName", "John")
+                .whereGreaterThan("age", 10)
+                .orderBy("age")
+                .limit(5)
+                .fetch();
+
+        final ArrayList<Person> items = result.getItems();
+
+        //Get query snapshot:
+        final QueryDocumentSnapshot snapshot = result.getSnapshot();
+
+        //Get the last item's ID:
+        final String lastItemID = result.getLastDocumentID();
+
+        //Check if the result has returned and items:
+        final boolean hasItems = result.hasItems();
+
+
 
 
 //        // -------- CREATE -------- //

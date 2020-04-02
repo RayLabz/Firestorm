@@ -44,11 +44,11 @@ public class Paginator<T> implements Filterable<T> {
         this.limit = limit;
     }
 
-    public static <T> Paginator<T> init(Class<T> objectClass, final String lastDocumentID, final int limit) {
+    public static <T> Paginator<T> next(Class<T> objectClass, final String lastDocumentID, final int limit) {
         return new Paginator<>(objectClass, lastDocumentID, limit);
     }
 
-    public static <T> Paginator<T> init(Class<T> objectClass, final String lastDocumentID) {
+    public static <T> Paginator<T> next(Class<T> objectClass, final String lastDocumentID) {
         return new Paginator<>(objectClass, lastDocumentID);
     }
 
