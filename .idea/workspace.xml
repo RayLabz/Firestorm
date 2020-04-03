@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/codeComparison.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/codeComparison.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/BatchExamples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/BatchExamples.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/MainExamples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MainExamples.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PaginationExamples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PaginationExamples.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ServiceAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ServiceAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TransactionsExamples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TransactionsExamples.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,36 +100,6 @@
       <recent name="com.raylabz.firestorm" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainExamples">
-    <configuration name="BatchExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="BatchExamples" />
-      <module name="Firestorm" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MainExamples" />
-      <module name="Firestorm" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PaginationExamples" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="PaginationExamples" />
-      <module name="Firestorm" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MainExamples" />
-        <item itemvalue="Application.PaginationExamples" />
-        <item itemvalue="Application.BatchExamples" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -156,7 +118,7 @@
       <workItem from="1585422647996" duration="27370000" />
       <workItem from="1585814824862" duration="16478000" />
       <workItem from="1585902577373" duration="13757000" />
-      <workItem from="1585946404917" duration="2002000" />
+      <workItem from="1585946404917" duration="2068000" />
     </task>
     <servers />
   </component>
@@ -167,10 +129,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="181" key="#Project_Structure" timestamp="1585734310817">
+    <state x="552" y="181" key="#Project_Structure" timestamp="1585948470629">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="181" key="#Project_Structure/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585734310816" />
+    <state x="552" y="181" key="#Project_Structure/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585948470629" />
+    <state x="414" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585948481683">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585948481683" />
     <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1585911302419">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
