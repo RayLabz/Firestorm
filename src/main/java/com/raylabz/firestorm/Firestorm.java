@@ -2,6 +2,7 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.annotation.Exclude;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class Firestorm {
      * Creates a Firestore document from an object.
      *
      * @param object An object containing the data to be written in Firestore.
+     * @param onFailureListener FailureListener to execute onFailure().
      */
     public static void create(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
@@ -59,11 +61,27 @@ public class Firestorm {
     }
 
     /**
+     * Creates a Firestore document from an object.
+     *
+     * @param object An object containing the data to be written in Firestore.
+     */
+    public static void create(final FirestormObject object) {
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
+        try {
+            object.setId(reference.getId());
+            reference.set(object).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Retrieves a document as an object from Firestore.
      *
      * @param objectClass The class of the object retrieved.
      * @param documentID  The documentID of the object to retrieve.
      * @param <T>         A type matching the type of objectClass.
+     * @param onFailureListener FailureListener to execute onFailure().
      * @return Returns an object of type T (objectClass).
      */
     public static <T> T get(final Class<T> objectClass, final String documentID, final OnFailureListener onFailureListener) {
@@ -84,9 +102,33 @@ public class Firestorm {
     }
 
     /**
+     * Retrieves a document as an object from Firestore.
+     *
+     * @param objectClass The class of the object retrieved.
+     * @param documentID  The documentID of the object to retrieve.
+     * @param <T>         A type matching the type of objectClass.
+     * @return Returns an object of type T (objectClass).
+     */
+    public static <T> T get(final Class<T> objectClass, final String documentID) {
+        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            if (document.exists()) {
+                return document.toObject(objectClass);
+            } else {
+                throw new FirestormException("The document with ID " + documentID + " does not exist.");
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Updates a document in Firestore based on the document ID and data of an object.
      *
      * @param object An object which provides data and the document ID for the update.
+     * @param onFailureListener FailureListener to execute onFailure().
      */
     public static void update(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
@@ -98,9 +140,24 @@ public class Firestorm {
     }
 
     /**
+     * Updates a document in Firestore based on the document ID and data of an object.
+     *
+     * @param object An object which provides data and the document ID for the update.
+     */
+    public static void update(final FirestormObject object) {
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+        try {
+            reference.set(object).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Deletes a document from the Firestore based on the document ID of an object.
      *
      * @param object An object which provides the document ID for deletion.
+     * @param onFailureListener OnFailureListener to execute onFailure().
      */
     public static void delete(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
@@ -113,6 +170,45 @@ public class Firestorm {
     }
 
     /**
+     * Deletes a document from the Firestore based on the document ID of an object.
+     *
+     * @param object An object which provides the document ID for deletion.
+     */
+    public static void delete(final FirestormObject object) {
+        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+        try {
+            reference.delete().get();
+            object.setId(null);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Lists available documents of a given type.
+     *
+     * @param objectClass The type of the documents to filter.
+     * @param limit       The maximum number of objects to return.
+     * @param <T>         A type matching the type of objectClass.
+     * @param onFailureListener OnFailureListener to execute onFailure().
+     * @return Returns an ArrayList of objects of type objectClass.
+     */
+    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit, final OnFailureListener onFailureListener) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
+        try {
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            ArrayList<T> documentList = new ArrayList<>();
+            for (final QueryDocumentSnapshot document : documents) {
+                documentList.add(document.toObject(objectClass));
+            }
+            return documentList;
+        } catch (InterruptedException | ExecutionException e) {
+            onFailureListener.onFailure(e);
+            return null;
+        }
+    }
+
+    /**
      * Lists available documents of a given type.
      *
      * @param objectClass The type of the documents to filter.
@@ -120,8 +216,30 @@ public class Firestorm {
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit, final OnFailureListener onFailureListener) {
+    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
+        try {
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            ArrayList<T> documentList = new ArrayList<>();
+            for (final QueryDocumentSnapshot document : documents) {
+                documentList.add(document.toObject(objectClass));
+            }
+            return documentList;
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Lists ALL available documents of a given type. May incur charges for read operations for huge numbers of documents.
+     *
+     * @param objectClass The type of the documents to filter.
+     * @param <T>         A type matching the type of objectClass.
+     * @param onFailureListener OnFailureListener to execute onFailure().
+     * @return Returns an ArrayList of objects of type objectClass.
+     */
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass, final OnFailureListener onFailureListener) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
@@ -142,7 +260,7 @@ public class Firestorm {
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> listAll(final Class<T> objectClass, final OnFailureListener onFailureListener) {
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass) {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -152,8 +270,7 @@ public class Firestorm {
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
-            onFailureListener.onFailure(e);
-            return null;
+            throw new FirestormException(e);
         }
     }
 
@@ -199,6 +316,21 @@ public class Firestorm {
      */
     public static <T> ListenerRegistration attachListener(final Class<T> objectClass, final String documentID, final FirestormEventListener<T> eventListener) {
         return firestore.collection(objectClass.getSimpleName()).document(documentID).addSnapshotListener(eventListener);
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to this object.
+     *
+     * @param eventListener An implementation of a FirestormEventListener.
+     * @param <T>           The type of objects this listener can be attached to.
+     * @return Returns a ListenerRegistration.
+     */
+    public static <T> ListenerRegistration attachListener(final FirestormEventListener<T> eventListener) {
+        ListenerRegistration listenerRegistration =
+                getObjectReference(eventListener.getObjectToListenFor().getClass(), eventListener.getObjectToListenFor().getId())
+                .addSnapshotListener(eventListener);
+        eventListener.getObjectToListenFor().addListener(listenerRegistration);
+        return listenerRegistration;
     }
 
     /**

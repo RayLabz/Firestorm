@@ -8,6 +8,7 @@ import com.raylabz.firestorm.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class MainExamples {
@@ -45,39 +46,39 @@ public class MainExamples {
         //Initialize Firestorm:
         Firestorm.init();
 
-        //Instantiate object:
-        Person person = new Person("firstname", "lastname", 50, "excluded");
-
-        //Save to Firestore:
-        Firestorm.create(person, error -> {
-            System.out.println("Write failed.");
-        });
-
-        person.setAge(52);
-
-        Firestorm.update(person, error -> {
-            System.out.println("Update failed.");
-        });
-
-        Person person1 = Firestorm.get(Person.class, "X", error -> {
-            System.out.println("Get failed.");
-        });
-
-        Firestorm.delete(person, error -> {
-            System.out.println("Delete failed.");
-        });
-
-        ArrayList<Person> list = Firestorm.list(Person.class, 10, e -> {
-            System.out.println("List failed.");
-        });
-
-        ArrayList<Person> list = Firestorm.listAll(Person.class, e -> {
-            System.out.println("List failed.");
-        });
-
-        Firestorm.delete(person, e -> {
-            System.out.println("Delete failed.");
-        });
+//        //Instantiate object:
+//        Person person = new Person("firstname", "lastname", 50, "excluded");
+//
+//        //Save to Firestore:
+//        Firestorm.create(person, error -> {
+//            System.out.println("Write failed.");
+//        });
+//
+//        person.setAge(52);
+//
+//        Firestorm.update(person, error -> {
+//            System.out.println("Update failed.");
+//        });
+//
+//        Person person1 = Firestorm.get(Person.class, "X", error -> {
+//            System.out.println("Get failed.");
+//        });
+//
+//        Firestorm.delete(person, error -> {
+//            System.out.println("Delete failed.");
+//        });
+//
+//        ArrayList<Person> list = Firestorm.list(Person.class, 10, e -> {
+//            System.out.println("List failed.");
+//        });
+//
+//        ArrayList<Person> list = Firestorm.listAll(Person.class, e -> {
+//            System.out.println("List failed.");
+//        });
+//
+//        Firestorm.delete(person, e -> {
+//            System.out.println("Delete failed.");
+//        });
 
 //        ApiFuture<QuerySnapshot> future = firestore.collection(Person.class.getSimpleName()).get();
 //        try {
@@ -115,30 +116,145 @@ public class MainExamples {
 //                .fetch();
 //        ArrayList<Person> items = result.getItems();
 
+        Firestore firestore;
+
         DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                System.err.println("Listen failed: " + e);
-                return;
+        ApiFuture<Void> futureTransaction = firestore.runTransaction(transaction -> {
+            DocumentSnapshot snapshot = transaction.get(docRef).get();
+            long oldAge = snapshot.getLong("age");
+            transaction.update(docRef, "age", oldAge + 1);
+            return null;
+        });
+        try {
+            futureTransaction.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        WriteBatch batch = firestore.batch();
+        DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("person1");
+        batch.set(docRef, person1);
+        DocumentReference docRef2 = firestore.collection(Person.class.getSimpleName()).document("person2");
+        batch.update(docRef2, "age", 15);
+        DocumentReference docRef3 = firestore.collection(Person.class.getSimpleName()).document("person3");
+        batch.delete(docRef3);
+        ApiFuture<List<WriteResult>> future = batch.commit();
+        try {
+            for (WriteResult result :future.get()) {
+                //TODO
             }
-            if (snapshot != null && snapshot.exists()) {
-                Person person = snapshot.toObject(Person.class);
-            } else {
-                System.out.print("Current data: null");
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        final Person person = new Person();
+
+        Firestorm.runTransaction(new FirestormTransaction() {
+            @Override
+            public void execute() {
+                get(Person.class, person.getId());
+                person.setAge(20);
+                update(person);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("Transaction failed.");
+            }
+            @Override
+            public void onSuccess() {
+                System.out.println("Transaction success.");
             }
         });
 
-        person.attachListener(new FirestormEventListener<Person>() { //TODO RETHINK!
+
+        Person person = new Person("MyPerson", "MyPerson", 10, "X");
+        Firestorm.create(person, new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("FAILED");
+            }
+        });
+
+        Firestorm.attachListener(new FirestormEventListener<Person>(person) {
             @Override
             public void onSuccess() {
-
+                System.out.println("Object updated!");
             }
 
             @Override
             public void onFailure(String failureMessage) {
-
+                System.out.println("Failed to update object.");
             }
         });
+
+        for (int i = 1; i < 6; i++) {
+            new Scanner(System.in).nextLine();
+            person.setAge(-i);
+            Firestorm.update(person);
+        }
+
+        System.out.println("FINALLY:");
+        System.out.println("AGE = " + person.getAge());
+
+        Firestorm.delete(person);
+
+        Firestorm.runBatch(new FirestormBatch() {
+            @Override
+            public void execute() {
+                create(person1);
+                update(person2);
+                delete(person3);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                System.out.println("Batch write failed.");
+            }
+            @Override
+            public void onSuccess() {
+                System.out.println("Batch write success.");
+            }
+        });
+
+        try {
+            //First page:
+            CollectionReference people = firestore.collection(Person.class.getSimpleName());
+            Query firstPage = people.orderBy("age").limit(25);
+            ApiFuture<QuerySnapshot> future = firstPage.get();
+            List<QueryDocumentSnapshot> docs = future.get().getDocuments();
+            for (QueryDocumentSnapshot snapshot : docs) {
+                //TODO
+            }
+            //Next page (and so on):
+            QueryDocumentSnapshot lastDoc = docs.get(docs.size() - 1);
+            Query secondPage = people.orderBy("age").startAfter(lastDoc).limit(25);
+            future = secondPage.get();
+            docs = future.get().getDocuments();
+            for (QueryDocumentSnapshot snapshot : docs) {
+                //TODO
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        //First page:
+        QueryResult<Person> result;
+        String lastDocumentID = null;
+        result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+        for (Person p : result.getItems()) {
+            //TODO
+        }
+        lastDocumentID = result.getLastDocumentID();
+        //Next page (and so on):
+        result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+        for (Person p : result.getItems()) {
+            //TODO
+        }
+        lastDocumentID = result.getLastDocumentID();
+
+
+
+
 
 
 

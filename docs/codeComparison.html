@@ -25,13 +25,19 @@
 
         <div class="row center">
             <h3>Code Comparison</h3>
-            <br/>
+            <div class="col s12 center" style="margin-top: 20px; margin-bottom: 30px">
+                <h4 class="center light">
+                    Overall, Firestorm aims to use object-oriented principles in an object-oriented world. Its core lies in
+                    dealing with logical objects rather than raw data, aiming to improve code readability and facilitate rapid development.
+                </h4>
+            </div>
             <p class="center">
-                This page shows a comparison between Firestorm and the standard Firestore API in terms of:
+                This page shows a comparison of codes between Firestorm and the standard Firestore API needed to carry out basic Firestore operations in terms of:
             </p>
             <ul>
-                <li>a) Number of lines of code written without empty lines and comments.</li>
-                <li>b) Overall code complexity.</li>
+                <li>a) Total lines of code written</li>
+                <li>b) Code readability</li>
+                <li>c) Complexity</li>
             </ul>
 
         </div>
@@ -415,14 +421,14 @@ docRef.addSnapshotListener((snapshot, e) -&gt; {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
+Firestorm.attachListener(new FirestormEventListener&lt;Person&gt;(person) {
     @Override
-    public void onSuccess(Person object) {
-        System.out.println("Success");
+    public void onSuccess() {
+        System.out.println("Object updated!");
     }
     @Override
     public void onFailure(String failureMessage) {
-        System.out.println("Failure");
+        System.out.println("Failed to update object.");
     }
 });</pre>
             </div>
@@ -436,7 +442,9 @@ person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
                     <i class="material-icons small">clear</i><br/>
                     <p>
                         The standard API requires you to manually reference the collection and document to attach a
-                    listener and handle any errors.
+                        listener to snapshots, check if those snapshots exist and handle any errors. It does not update data
+                        of any objects automatically, which means you have to manually update each field of your objects, allocate
+                        new memory for a new object.
                 </div>
             </div>
 
@@ -445,6 +453,8 @@ person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
                     <i class="material-icons small">check</i><br/>
                     <p>
                         Firestorm attaches and automatically manages listeners on specific objects, while forcing you to
+                        handle success and failure scenarios. <u>It also automatically updates the data of the same object</u>,
+                        without the need to manually set the new data from the updated version to the local object.
                     </p>
                 </div>
             </div>
@@ -453,7 +463,249 @@ person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
 
         <!------------------------------------------------------------------------------------------------------------->
 
+        <hr/>
 
+        <!-- TRANSACTIONS  -->
+        <div class="row">
+            <h5 class="center">Transactions</h5>
+            <p class="center">
+                Code needed to run Firestore transactions.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
+ApiFuture&lt;Void&gt; futureTransaction = firestore.runTransaction(transaction -&gt; {
+    DocumentSnapshot snapshot = transaction.get(docRef).get();
+    long oldAge = snapshot.getLong("age");
+    transaction.update(docRef, "age", oldAge + 1);
+    return null;
+});
+try {
+    futureTransaction.get();
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Firestorm.runTransaction(new FirestormTransaction() {
+    @Override
+    public void execute() {
+        get(Person.class, person.getId());
+        person.setAge(20);
+        update(person);
+    }
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Transaction failed.");
+    }
+    @Override
+    public void onSuccess() {
+        System.out.println("Transaction success.");
+    }
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the collection and document to carry out a transaction on.
+                    Transactions are carried out based on snapshots, which can be modified based on their fields. The programmer
+                    needs to handle exceptions manually.
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm can run a nameless transaction which implements three functions, called <span class="code">execute()</span>,
+                        <span class="code">onFailure()</span> and <span class="code">onSuccess()</span>. It forces the programmer
+                        to handle success and failure scenarios while dealing with objects instead of snapshot fields.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- BATCH WRITES  -->
+        <div class="row">
+            <h5 class="center">Batch writes</h5>
+            <p class="center">
+                Code needed to run Firestore batch writes.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+WriteBatch batch = firestore.batch();
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("person1");
+batch.set(docRef, person1);
+DocumentReference docRef2 = firestore.collection(Person.class.getSimpleName()).document("person2");
+batch.update(docRef2, "age", 15);
+DocumentReference docRef3 = firestore.collection(Person.class.getSimpleName()).document("person3");
+batch.delete(docRef3);
+ApiFuture&lt;List&lt;WriteResult&gt;&gt; future = batch.commit();
+try {
+    for (WriteResult result :future.get()) {
+        //TODO
+    }
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Firestorm.runBatch(new FirestormBatch() {
+    @Override
+    public void execute() {
+        create(person1);
+        update(person2);
+        delete(person3);
+    }
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("Batch write failed.");
+    }
+    @Override
+    public void onSuccess() {
+        System.out.println("Batch write success.");
+    }
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires a manual reference to each collection and document you want to carry out a transaction on.
+                        There is a need to commit batches, loop through the results to get each one individually to block the batch while
+                    manually dealing with exceptions.
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm can run a nameless batch write which can create, update or delete documents based on
+                        already-defined objects without the need for references. It forces the programmer to handle success
+                        and failure scenarios and there is no need to manage batch commits.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- PAGINATION  -->
+        <div class="row">
+            <h5 class="center">Pagination</h5>
+            <p class="center">
+                Code needed to acquire documents in a pagination fashion.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+try {
+    //--- First page ---
+
+    CollectionReference people = firestore.collection(Person.class.getSimpleName());
+    Query firstPage = people.orderBy("age").limit(25);
+    ApiFuture&lt;QuerySnapshot&gt; future = firstPage.get();
+    List&lt;QueryDocumentSnapshot&gt; docs = future.get().getDocuments();
+    for (QueryDocumentSnapshot snapshot : docs) {
+        //TODO
+    }
+
+    //--- Second page and on ---
+
+    QueryDocumentSnapshot lastDoc = docs.get(docs.size() - 1);
+    Query secondPage = people.orderBy("age").startAfter(lastDoc).limit(25);
+    future = secondPage.get();
+    docs = future.get().getDocuments();
+    for (QueryDocumentSnapshot snapshot : docs) {
+        //TODO
+    }
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+//--- First page ---
+
+String lastDocumentID = null;
+QueryResult&lt;Person&gt; result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+for (Person p : result.getItems()) {
+    //TODO
+}
+lastDocumentID = result.getLastDocumentID();
+
+//--- Second page and on ---
+
+result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+for (Person p : result.getItems()) {
+    //TODO
+}
+lastDocumentID = result.getLastDocumentID();</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires a manual reference to the collection being paginated. It requires dealing
+                    with query snapshots handling exceptions, while the data has to manually be converted back into objects.
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm allows quick pagination of a class using inherent result limits for each paginator.
+                        It automatically converts result data into objects which can then be used instantly.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <a href="index.html">Back to the guide</a>
+
+        <br/><br/>
 
 
     </div>
