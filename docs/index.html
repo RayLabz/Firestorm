@@ -11,12 +11,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <style>
+        h3 {
+            text-shadow: 1px 1px 2px grey;
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-    <div class="nav-wrapper orange darken-4"></div>
-</nav>
+<!--<nav>-->
+<!--    <div class="nav-wrapper orange darken-4"></div>-->
+<!--</nav>-->
 
 <main>
 
@@ -39,7 +44,7 @@
                     object-oriented way. Firestorm uses standardized functions and complements the full flexibility of
                     Google's Firestore API.
                     It organizes classes as Firestore collections and objects of these classes as documents in these collections.
-                    Most importantly, it dramatically reduces the amount of code required, compared to the standard Firestore API.
+                    Most importantly, it aims to reduce code, improve its readability and support rapid application development.
                 </p>
             </div>
 
@@ -84,6 +89,7 @@
                         <li><a href="#transactions">Transactions</a></li>
                         <li><a href="#batches">Batch writes</a></li>
                         <li><a href="#pagination">Pagination</a></li>
+                        <li><a href="#json">Serialization to JSON</a></li>
                     </ul>
                 </li>
                 <li><a href="#documentation">Documentation</a></li>
@@ -296,6 +302,24 @@ Firestorm.create(person);</pre>
             <pre class="prettyprint java">
 String personID = person.getId();</pre>
 
+            <p>You can also attach an <span class="code">OnFailureListener</span> to this call, which will allow you
+            to define what happens when this operation fails:</p>
+
+            <pre class="prettyprint java">
+Firestorm.create(person, new OnFailureListener() {
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("FAILED");
+    }
+});</pre>
+
+            <p>Or briefly, using lambda expressions:</p>
+
+            <pre class="prettyprint java">
+Firestorm.create(person, error -> {
+    System.out.println("FAILED");
+});</pre>
+
             <h5 id="update">Update</h5>
 
             <p>
@@ -304,6 +328,13 @@ String personID = person.getId();</pre>
 
             <pre class="prettyprint java">
 Firestorm.update(person);</pre>
+
+            <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
+
+            <pre class="prettyprint java">
+Firestorm.update(person, error -> {
+    System.out.println("FAILED");
+});</pre>
 
             <div class="info-panel light-blue lighten-2 white-text">Only changed attributes will be updated on
                 Firestore.
@@ -326,6 +357,13 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100);</pre>
 
             <p>The above code will retrieve at maximum 100 objects of type Person.</p>
 
+            <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
+
+            <pre class="prettyprint">
+ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> {
+    System.out.println("FAILED");
+});</pre>
+
             <div class="info-panel light-blue lighten-2 white-text">Google will charge your Firestore instance by the
                 amount of reads and writes
                 occurring on your database. This is why the <span class="code">list()</span> method forces you to limit
@@ -342,6 +380,11 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100);</pre>
 
             <pre class="prettyprint java">
 ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class);</pre>
+
+            <pre class="prettyprint">
+ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
+    System.out.println("FAILED");
+});</pre>
 
             <div class="info-panel light-blue lighten-2 white-text">Google will charge your project $0.30-$0.60 per
                 million reads depending on location.
@@ -365,6 +408,11 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class);</pre>
 
             <pre class="prettyprint java">
 Firestorm.delete(person);</pre>
+
+            <pre class="prettyprint">
+Firestorm.delete(person, error -> {
+    System.out.println("FAILED");
+});</pre>
 
             <h5 id="documentReference">Obtaining document references</h5>
 
@@ -452,6 +500,12 @@ final String lastItemID = result.getLastDocumentID();
 
 //Check if the result has returned and items:
 final boolean hasItems = result.hasItems();</pre>
+
+            <div class="info-panel light-blue lighten-2 white-text">Firestore will automatically create indexes for simple queries.
+                However, some compound queries will require you to define compound Firestore indexes.
+                <a class="yellow-text" href="https://firebase.google.com/docs/firestore/query-data/indexing">Click here</a>
+                to learn more about composite Firebase indexes.
+            </div>
 
             <h5 id="filtersReference">Filters reference</h5>
 
@@ -880,7 +934,17 @@ paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName
 
             <hr/>
 
+            <h4 id="json">Serialization to JSON</h4>
+
+            <p>You can easily serialize your custom objects to a JSON-formatted <span class="code">String</span> by calling <span class="code">toJson()</span>:</p>
+
+            <pre class="prettyprint">
+String personJSON = person.toJson();</pre>
+
             <!--------------------------------------------------------------------------------------------------------->
+
+            <br/>
+            <hr/>
 
             <h3 id="documentation">Documentation</h3>
 
