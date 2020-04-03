@@ -33,6 +33,7 @@
                 <li>a) Number of lines of code written without empty lines and comments.</li>
                 <li>b) Overall code complexity.</li>
             </ul>
+
         </div>
 
         <hr/>
@@ -58,7 +59,9 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.create(person);</pre>
+Firestorm.create(person, error -> {
+    System.out.println("Write failed.");
+});</pre>
             </div>
 
         </div>
@@ -81,7 +84,7 @@ Firestorm.create(person);</pre>
                     <i class="material-icons small">check</i><br/>
                     <p>
                         Firestorm automatically references collections, allocates new document IDs and waits for the request
-                        to be sent while automatically handling exceptions.
+                        to be sent while handling errors using a listener.
                     </p>
                 </div>
             </div>
@@ -112,7 +115,9 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.update(person);</pre>
+Firestorm.update(person, error -> {
+    System.out.println("Update failed.");
+});</pre>
             </div>
 
         </div>
@@ -134,8 +139,8 @@ Firestorm.update(person);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm updates the object with minimal code without the need to store <span class="code">DocumentReference</span>s
-                        or document IDs manually. It also handles any exceptions automatically.
+                        Firestorm updates the object without the need to store <span class="code">DocumentReference</span>s
+                        or document IDs manually. It also handles any errors using an error listener.
                     </p>
                 </div>
             </div>
@@ -143,6 +148,313 @@ Firestorm.update(person);</pre>
         </div>
 
         <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- READ OBJECT -->
+        <div class="row">
+            <h5 class="center">Read object</h5>
+            <p class="center">
+                Code needed to read an object from Firestore.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
+try {
+    DocumentSnapshot document = docRef.get().get();
+    if (document.exists()) {
+        Person personObject = document.toObject(Person.class);
+    } else {
+        System.out.println("No such document!");
+    }
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Person person = Firestorm.get(Person.class, "X", error -> {
+    System.out.println("Get failed.");
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the object's collection and document ID and handle exceptions,
+                        while also checking if the document exists.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm retrieves the document by providing the class of the object and its document ID, while handling
+                        any errors using a listener.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- READ OBJECT -->
+        <div class="row">
+            <h5 class="center">List objects</h5>
+            <p class="center">
+                Code needed to list a class of objects.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Person.class.getSimpleName()).get();
+try {
+    List&lt;QueryDocumentSnapshot&gt; documents = future.get().getDocuments();
+    for (DocumentSnapshot document : documents) {
+        Person person = document.toObject(Person.class);
+    }
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+ArrayList&lt;Person&gt; list = Firestorm.list(Person.class, 10, error -> {
+    System.out.println("List failed.");
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the collection and then loop through each
+                        document from this collection.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm returns an array list of objects for your type, which is more versatile than handling
+                        each object individually.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- DELETE OBJECT -->
+        <div class="row">
+            <h5 class="center">Delete object</h5>
+            <p class="center">
+                Code needed to delete an object from Firestore.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+ApiFuture&lt;WriteResult&gt; writeResult = firestore.collection(Person.class.getSimpleName()).document("myPerson").delete();
+try {
+    writeResult.get();
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+Firestorm.delete(person, error -> {
+    System.out.println("Delete failed.");
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the collection and document ID and handle any
+                        exceptions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm deletes the object without the need to reference its ID or type, while handling errors using a listener.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- FILTERING -->
+        <div class="row">
+            <h5 class="center">Queries</h5>
+            <p class="center">
+                Code needed to execute a query.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Person.class.getSimpleName())
+        .whereEqualTo("age", 50)
+        .get();
+try {
+    List&lt;QueryDocumentSnapshot&gt; documents = future.get().getDocuments();
+    for (DocumentSnapshot document : documents) {
+        Person person = document.toObject(Person.class);
+    }
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
+        .whereEqualTo("age", 50)
+        .fetch();
+ArrayList&lt;Person&gt; items = result.getItems();</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the collection being filtered. It also handles
+                        and converts each document retrieved separately.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm allows you to filter types without the need to handle errors, while retrieving the results
+                        in an ArrayList.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+        <hr/>
+
+        <!-- REAL-TIME UPDATES -->
+        <div class="row">
+            <h5 class="center">Real-time updates</h5>
+            <p class="center">
+                Code needed to attach listeners to objects/documents for real-time updates.<br/>
+            </p>
+
+            <div class="col s12 m6">
+                <h6 class="center">Standard API</h6>
+                <pre class="prettyprint java red lighten-4">
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
+docRef.addSnapshotListener((snapshot, e) -&gt; {
+    if (e != null) {
+        System.err.println("Listen failed: " + e);
+        return;
+    }
+    if (snapshot != null && snapshot.exists()) {
+        Person person = snapshot.toObject(Person.class);
+    } else {
+        System.out.print("Current data: null");
+    }
+});</pre>
+            </div>
+
+            <div class="col s12 m6">
+                <h6 class="center">Firestorm</h6>
+                <pre class="prettyprint java green lighten-4">
+person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
+    @Override
+    public void onSuccess(Person object) {
+        System.out.println("Success");
+    }
+    @Override
+    public void onFailure(String failureMessage) {
+        System.out.println("Failure");
+    }
+});</pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col s12 m6">
+                <div class="info-panel red lighten-1 white-text">
+                    <i class="material-icons small">clear</i><br/>
+                    <p>
+                        The standard API requires you to manually reference the collection and document to attach a
+                    listener and handle any errors.
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="info-panel green lighten-1 white-text">
+                    <i class="material-icons small">check</i><br/>
+                    <p>
+                        Firestorm attaches and automatically manages listeners on specific objects, while forcing you to
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!------------------------------------------------------------------------------------------------------------->
+
+
+
 
     </div>
 

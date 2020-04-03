@@ -48,13 +48,13 @@ public class Firestorm {
      *
      * @param object An object containing the data to be written in Firestore.
      */
-    public static void create(final FirestormObject object) {
+    public static void create(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
         try {
             object.setId(reference.getId());
             reference.set(object).get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
         }
     }
 
@@ -66,7 +66,7 @@ public class Firestorm {
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an object of type T (objectClass).
      */
-    public static <T> T get(final Class<T> objectClass, final String documentID) {
+    public static <T> T get(final Class<T> objectClass, final String documentID, final OnFailureListener onFailureListener) {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
@@ -74,10 +74,12 @@ public class Firestorm {
             if (document.exists()) {
                 return document.toObject(objectClass);
             } else {
-                throw new FirestormException("The document with ID " + documentID + " does not exist.");
+                onFailureListener.onFailure(new FirestormException("The document with ID " + documentID + " does not exist."));
+                return null;
             }
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
+            return null;
         }
     }
 
@@ -86,12 +88,12 @@ public class Firestorm {
      *
      * @param object An object which provides data and the document ID for the update.
      */
-    public static void update(final FirestormObject object) {
+    public static void update(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         try {
             reference.set(object).get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
         }
     }
 
@@ -100,13 +102,13 @@ public class Firestorm {
      *
      * @param object An object which provides the document ID for deletion.
      */
-    public static void delete(final FirestormObject object) {
+    public static void delete(final FirestormObject object, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
         try {
             reference.delete().get();
             object.setId(null);
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
         }
     }
 
@@ -118,7 +120,7 @@ public class Firestorm {
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
+    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit, final OnFailureListener onFailureListener) {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -128,7 +130,8 @@ public class Firestorm {
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
+            return null;
         }
     }
 
@@ -139,7 +142,7 @@ public class Firestorm {
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
      */
-    public static <T> ArrayList<T> listAll(final Class<T> objectClass) {
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass, final OnFailureListener onFailureListener) {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -149,7 +152,8 @@ public class Firestorm {
             }
             return documentList;
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            onFailureListener.onFailure(e);
+            return null;
         }
     }
 
@@ -198,7 +202,7 @@ public class Firestorm {
     }
 
     /**
-     * Detatches a specified listener from an object.
+     * Detaches a specified listener from an object.
      * @param listenerRegistration The listenerRegistration to detatch.
      */
     public static void detachListener(ListenerRegistration listenerRegistration) {
@@ -214,8 +218,9 @@ public class Firestorm {
         ApiFuture<Void> futureTransaction = Firestorm.firestore.runTransaction(transaction);
         try {
             futureTransaction.get();
+            transaction.onSuccess();
         } catch (InterruptedException | ExecutionException e) {
-            throw new FirestormException(e);
+            transaction.onFailure(e);
         }
     }
 

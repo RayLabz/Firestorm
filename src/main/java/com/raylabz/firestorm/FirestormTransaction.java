@@ -150,8 +150,6 @@ public abstract class FirestormTransaction extends FirestormOperation implements
             onFailure(e);
             return null;
         }
-
-        onSuccess();
         return null;
     }
 

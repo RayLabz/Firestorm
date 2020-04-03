@@ -1,12 +1,14 @@
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.raylabz.firestorm.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainExamples {
 
@@ -47,136 +49,96 @@ public class MainExamples {
         Person person = new Person("firstname", "lastname", 50, "excluded");
 
         //Save to Firestore:
-        Firestorm.create(person);
+        Firestorm.create(person, error -> {
+            System.out.println("Write failed.");
+        });
 
-        Firestorm.firestore.collection(Person.class.getSimpleName()).document("myPerson").;
+        person.setAge(52);
 
-        String personID = person.getId();
+        Firestorm.update(person, error -> {
+            System.out.println("Update failed.");
+        });
 
-        //Change object attributes:
-        person.setAge(51);
+        Person person1 = Firestorm.get(Person.class, "X", error -> {
+            System.out.println("Get failed.");
+        });
 
-        //Update object:
-        Firestorm.update(person);
+        Firestorm.delete(person, error -> {
+            System.out.println("Delete failed.");
+        });
 
-        FirestormTransaction transaction = new FirestormTransaction() {
-            @Override
-            public void execute() {
-                create(person1);
-                update(person2);
-                delete(person3);
+        ArrayList<Person> list = Firestorm.list(Person.class, 10, e -> {
+            System.out.println("List failed.");
+        });
+
+        ArrayList<Person> list = Firestorm.listAll(Person.class, e -> {
+            System.out.println("List failed.");
+        });
+
+        Firestorm.delete(person, e -> {
+            System.out.println("Delete failed.");
+        });
+
+//        ApiFuture<QuerySnapshot> future = firestore.collection(Person.class.getSimpleName()).get();
+//        try {
+//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+//            for (DocumentSnapshot document : documents) {
+//                Person person = document.toObject(Person.class);
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        ApiFuture<WriteResult> writeResult = firestore.collection(Person.class.getSimpleName()).document("myPerson").delete();
+//        try {
+//            writeResult.get();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
+//        ApiFuture<QuerySnapshot> future = firestore.collection(Person.class.getSimpleName())
+//                .whereEqualTo("age", 50)
+//                .get();
+//        try {
+//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+//            for (DocumentSnapshot document : documents) {
+//                Person person = document.toObject(Person.class);
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
+
+//
+//        QueryResult<Person> result = Firestorm.filter(Person.class)
+//                .whereEqualTo("age", 50)
+//                .fetch();
+//        ArrayList<Person> items = result.getItems();
+
+        DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+                return;
             }
-
-            @Override
-            public void onSuccess() {
-                System.out.println("Transaction successful!");
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                System.out.println("Transaction failed.");
-            }
-        };
-
-        Firestorm.runTransaction(transaction);
-
-        Firestorm.runTransaction(new FirestormTransaction() {
-            @Override
-            public void execute() {
-                create(person1);
-                get(person2);
-                update(person2);
-                delete(person3);
-                list(Person.class);
-            }
-
-            @Override
-            public void onSuccess() {
-                System.out.println("Transaction successful!");
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                System.out.println("Transaction failed.");
+            if (snapshot != null && snapshot.exists()) {
+                Person person = snapshot.toObject(Person.class);
+            } else {
+                System.out.print("Current data: null");
             }
         });
 
-        FirestormBatch batch = new FirestormBatch() {
-            @Override
-            public void execute() {
-                create(person);
-                update(person2);
-                delete(person3);
-            }
-
+        person.attachListener(new FirestormEventListener<Person>() { //TODO RETHINK!
             @Override
             public void onSuccess() {
-                System.out.println("Transaction successful!");
+
             }
 
             @Override
-            public void onFailure(Exception e) {
-                System.out.println("Transaction failed.");
+            public void onFailure(String failureMessage) {
+
             }
-        };
-
-        Firestorm.runBatch(batch);
-
-        String lastDocumentID = null;
-        Paginator<Person> paginator = Paginator.next(Person.class, lastDocumentID);
-
-
-        final QueryResult<Person> result = paginator.fetch();
-        final ArrayList<Person> items = result.getItems();
-        lastDocumentID = result.getLastDocumentID();
-
-        paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");
-
-
-        final QueryResult<Person> result = Firestorm.filter(Person.class)
-                .whereEqualTo("firstName", "John")
-                .whereGreaterThan("age", 10)
-                .orderBy("age")
-                .limit(5)
-                .fetch();
-
-        final ArrayList<Person> items = result.getItems();
-
-        //Get query snapshot:
-        final QueryDocumentSnapshot snapshot = result.getSnapshot();
-
-        //Get the last item's ID:
-        final String lastItemID = result.getLastDocumentID();
-
-        //Check if the result has returned and items:
-        final boolean hasItems = result.hasItems();
-
-
-
-
-//        // -------- CREATE -------- //
-//
-//        //Instantiate a custom object:
-//        Person person = new Person("MyFirstname", "MyLastname", 50);
-//
-//        //Write the object in Firestore using Firestorm:
-//        Firestorm.create(person);
-//
-//        // -------- UPDATE -------- //
-//
-//        //Update the person data locally:
-//        person.setAge(51);
-//
-//        //Update the object in Firestore:
-//        Firestorm.update(person);
-//
-//        // -------- GET -------- //
-//
-//        //To get a document from Firestore, you need its ID. Ideally, you have saved this from previous use.
-//        final String personID = person.getId();
-//
-//        //Get the document from Firestorm.
-//        Person retrievedPerson = Firestorm.get(Person.class, personID);
+        });
 
 
 

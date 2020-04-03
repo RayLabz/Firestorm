@@ -116,6 +116,15 @@ public class FirestormObject {
     }
 
     /**
+     * Sets the listeners of this object to an array of listeners.
+     * @param listeners The listeners array to set.
+     */
+    @Exclude
+    void setListeners(ArrayList<ListenerRegistration> listeners) {
+        this.listeners = listeners;
+    }
+
+    /**
      * Converts the object to a JSON-formatted string.
      * @return Returns a JSON-formatted string.
      */
