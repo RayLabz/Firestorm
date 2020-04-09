@@ -185,6 +185,37 @@ public class Firestorm {
     }
 
     /**
+     * Deletes an object based on its class and documentID.
+     * @param objectClass The class of the object to delete.
+     * @param objectID The ID of the object/document in Firestore.
+     * @param <T> The type (class) of the object.
+     */
+    public static <T> void delete(final Class<T> objectClass, final String objectID) {
+        final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
+        try {
+            reference.delete().get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes an object based on its class and documentID.
+     * @param objectClass The class of the object to delete.
+     * @param objectID The ID of the object/document in Firestore.
+     * @param <T> The type (class) of the object.
+     * @param onFailureListener OnFailureListener to execute onFailure().
+     */
+    public static <T> void delete(final Class<T> objectClass, final String objectID, final OnFailureListener onFailureListener) {
+        final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
+        try {
+            reference.delete().get();
+        } catch (InterruptedException | ExecutionException e) {
+            onFailureListener.onFailure(e);
+        }
+    }
+
+    /**
      * Lists available documents of a given type.
      *
      * @param objectClass The type of the documents to filter.
