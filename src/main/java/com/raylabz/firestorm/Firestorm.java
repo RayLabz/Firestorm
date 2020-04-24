@@ -256,18 +256,33 @@ public class Firestorm {
     }
 
     /**
-     * Deletes a document from the Firestore based on the document ID of an object.
-     *
-     * @param <T> The type of the object to be deleted.
-     * @param objectClass The class of the object to be deleted.
-     * @param id The ID of the object to be deleted.
+     * Deletes an object based on its class and documentID.
+     * @param objectClass The class of the object to delete.
+     * @param objectID The ID of the object/document in Firestore.
+     * @param <T> The type (class) of the object.
      */
-    public static <T> void delete(final Class<T> objectClass, final String id) {
-        final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(id);
+    public static <T> void delete(final Class<T> objectClass, final String objectID) {
+        final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
         try {
             reference.delete().get();
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes an object based on its class and documentID.
+     * @param objectClass The class of the object to delete.
+     * @param objectID The ID of the object/document in Firestore.
+     * @param <T> The type (class) of the object.
+     * @param onFailureListener OnFailureListener to execute onFailure().
+     */
+    public static <T> void delete(final Class<T> objectClass, final String objectID, final OnFailureListener onFailureListener) {
+        final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
+        try {
+            reference.delete().get();
+        } catch (InterruptedException | ExecutionException e) {
+            onFailureListener.onFailure(e);
         }
     }
 

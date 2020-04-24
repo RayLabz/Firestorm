@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormObjectAnnotation.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/raylabz-06d78bb1d9a9.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/annotation/FirestormObjectAnnotation.java" afterDir="false" />
@@ -99,6 +100,11 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TooManyOperationsException.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TransactionException.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TransactionFilterable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/raylabz/firestorm/TransactionFilterable.class" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Firestorm_jar/Firestorm.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Firestorm_jar/Firestorm.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
+>>>>>>> d55dad87dc810ba5c8f9cf6bafe27f9b4458ebb1
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
