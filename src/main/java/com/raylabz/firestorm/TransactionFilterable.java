@@ -5,6 +5,7 @@ import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.Transaction;
+import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
 import java.util.List;

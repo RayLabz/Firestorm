@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Abstracts an object which will be stored in Firestore.
  */
 @IgnoreExtraProperties
-public class FirestormObject {
+public abstract class FirestormObject {
 
     /**
      * The document ID of the object after it is created in Firestore.

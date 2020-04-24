@@ -183,19 +183,19 @@ Firestorm.init();</pre>
             <p>The following code shows an example on how to create a Firestorm-managed object:</p>
 
             <pre class="prettyprint java">
-public class Person <mark>extends FirestormObject</mark> {
+public class Tutor <mark>extends FirestormObject</mark> {
 
     private String firstName;
     private String lastName;
     private int age;
 
-    public Person(String firstName, String lastName, int age) {
+    public Tutor(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
     }
 
-    <mark>public Person() { }</mark>
+    <mark>public Tutor() { }</mark>
 
     public String getFirstName() {
         return firstName;
@@ -230,21 +230,21 @@ public class Person <mark>extends FirestormObject</mark> {
                 with the <span class="code red-text text-darken-3">@Exclude</span> annotation:</p>
 
             <pre class="prettyprint java">
-public class Person extends FirestormObject {
+public class Tutor extends FirestormObject {
 
     private String firstName;
     private String lastName;
     private int age;
     <mark>private String excludedField;</mark>
 
-    public Person(String firstName, String lastName, int age, String excludedField) {
+    public Tutor(String firstName, String lastName, int age, String excludedField) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.excludedField = excludedField;
     }
 
-    public Person() { }
+    public Tutor() { }
 
     public String getFirstName() {
         return firstName;
@@ -294,19 +294,19 @@ public class Person extends FirestormObject {
             </p>
 
             <pre class="prettyprint java">
-Firestorm.create(person);</pre>
+Firestorm.create(tutor);</pre>
 
             <p>Creating an object will set its <span class="code">id</span> attribute which is null by default. You can
                 retrieve this attribute and save it for reference if needed:</p>
 
             <pre class="prettyprint java">
-String personID = person.getId();</pre>
+String personID = tutor.getId();</pre>
 
             <p>You can also attach an <span class="code">OnFailureListener</span> to this call, which will allow you
             to define what happens when this operation fails:</p>
 
             <pre class="prettyprint java">
-Firestorm.create(person, new OnFailureListener() {
+Firestorm.create(tutor, new OnFailureListener() {
     @Override
     public void onFailure(Exception e) {
         System.out.println("FAILED");
@@ -316,7 +316,7 @@ Firestorm.create(person, new OnFailureListener() {
             <p>Or briefly, using lambda expressions:</p>
 
             <pre class="prettyprint java">
-Firestorm.create(person, error -> {
+Firestorm.create(tutor, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -327,12 +327,12 @@ Firestorm.create(person, error -> {
             </p>
 
             <pre class="prettyprint java">
-Firestorm.update(person);</pre>
+Firestorm.update(tutor);</pre>
 
             <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
 
             <pre class="prettyprint java">
-Firestorm.update(person, error -> {
+Firestorm.update(tutor, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -353,14 +353,14 @@ Firestorm.update(person, error -> {
             </p>
 
             <pre class="prettyprint java">
-ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100);</pre>
+ArrayList&lt;Tutor&gt; peopleList = Firestorm.list(Tutor.class, 100);</pre>
 
-            <p>The above code will retrieve at maximum 100 objects of type Person.</p>
+            <p>The above code will retrieve at maximum 100 objects of type Tutor.</p>
 
             <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
 
             <pre class="prettyprint">
-ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> {
+ArrayList&lt;Tutor&gt; peopleList = Firestorm.list(Tutor.class, 100, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -379,10 +379,10 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> 
             </p>
 
             <pre class="prettyprint java">
-ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class);</pre>
+ArrayList&lt;Tutor&gt; peopleList = Firestorm.listAll(Tutor.class);</pre>
 
             <pre class="prettyprint">
-ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
+ArrayList&lt;Tutor&gt; peopleList = Firestorm.listAll(Tutor.class, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -407,10 +407,10 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
             </p>
 
             <pre class="prettyprint java">
-Firestorm.delete(person);</pre>
+Firestorm.delete(tutor);</pre>
 
             <pre class="prettyprint">
-Firestorm.delete(person, error -> {
+Firestorm.delete(tutor, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -422,14 +422,14 @@ Firestorm.delete(person, error -> {
             </p>
 
             <pre class="prettyprint java">
-DocumentReference objectReference = person.getObjectReference();</pre>
+DocumentReference objectReference = tutor.getObjectReference();</pre>
 
             <p>
                 Alternatively, you can provide an object type and a document ID:
             </p>
 
             <pre class="prettyprint java">
-DocumentReference objectReference = Firestorm.getObjectReference(Person.class, documentID);</pre>
+DocumentReference objectReference = Firestorm.getObjectReference(Tutor.class, documentID);</pre>
 
             <h5 id="collectionReference">Obtaining collection references</h5>
 
@@ -439,7 +439,7 @@ DocumentReference objectReference = Firestorm.getObjectReference(Person.class, d
             </p>
 
             <pre class="prettyprint java">
-CollectionReference collectionReference = Firestorm.getCollectionReference(Person.class);</pre>
+CollectionReference collectionReference = Firestorm.getCollectionReference(Tutor.class);</pre>
 
             <hr/>
 
@@ -452,7 +452,7 @@ CollectionReference collectionReference = Firestorm.getCollectionReference(Perso
             </p>
 
             <pre class="prettyprint java">
-final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class);</pre>
+final FirestormFilterable&lt;Tutor&gt; filter = Firestorm.filter(Tutor.class);</pre>
 
             <p>
                 Items can be filtered using several methods. It is preferable to chain these methods in order
@@ -460,7 +460,7 @@ final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class);
             </p>
 
             <pre class="prettyprint java">
-final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class)
+final FirestormFilterable&lt;Tutor&gt; filter = Firestorm.filter(Tutor.class)
         .whereEqualTo("firstName", "John")
         .whereGreaterThan("age", 10)
         .orderBy("age")
@@ -472,7 +472,7 @@ final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class)
             </p>
 
             <pre class="prettyprint java">
-final QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
+final QueryResult&lt;Tutor&gt; result = Firestorm.filter(Tutor.class)
         .whereEqualTo("firstName", "John")
         .whereGreaterThan("age", 10)
         .orderBy("age")
@@ -484,7 +484,7 @@ final QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
                 which returns an <span class="code">ArrayList</span> of items:</p>
 
             <pre class="prettyprint java">
-final ArrayList&lt;Person&gt; items = result.getItems();</pre>
+final ArrayList&lt;Tutor&gt; items = result.getItems();</pre>
 
             <p>
                 You can also get a) the query snapshot, b) the last returned item's ID, and c) whether or not the result
@@ -645,9 +645,9 @@ final boolean hasItems = result.hasItems();</pre>
             </p>
 
             <pre class="prettyprint java">
-person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
+tutor.attachListener(new FirestormEventListener&lt;Tutor&gt;(Tutor.class) {
     @Override
-    public void onSuccess(Person object) {
+    public void onSuccess(Tutor object) {
         System.out.println("Object updated!");
     }
 
@@ -661,9 +661,9 @@ person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
                 ID:</p>
 
             <pre class="prettyprint java">
-Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt;Person&gt;(Person.class) {
+Firestorm.attachListener(Tutor.class, documentID, new FirestormEventListener&lt;Tutor&gt;(Tutor.class) {
     @Override
-    public void onSuccess(Person object) {
+    public void onSuccess(Tutor object) {
         System.out.println("Object updated!");
     }
 
@@ -676,9 +676,9 @@ Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt
             <p>You can save the listener in a variable for future reference:</p>
 
             <pre class="prettyprint java">
-<mark>final ListenerRegistration listenerRegistration</mark> = Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt;Person&gt;(Person.class) {
+<mark>final ListenerRegistration listenerRegistration</mark> = Firestorm.attachListener(Tutor.class, documentID, new FirestormEventListener&lt;Tutor&gt;(Tutor.class) {
     @Override
-    public void onSuccess(Person object) {
+    public void onSuccess(Tutor object) {
         System.out.println("Object updated!");
     }
 
@@ -702,13 +702,13 @@ Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt
                 the <span class="code">detachListener()</span> method:</p>
 
             <pre class="prettyprint java">
-person.detachListener(listenerRegistration);</pre>
+tutor.detachListener(listenerRegistration);</pre>
 
             <p>You can also detach all listeners from an object by using <span class="code">detachAllListeners()</span>:
             </p>
 
             <pre class="prettyprint java">
-person.detachAllListeners();</pre>
+tutor.detachAllListeners();</pre>
 
             <p>To detach a listener that was assigned a Firestore document, you can use:</p>
 
@@ -733,7 +733,7 @@ FirestormTransaction transaction = new FirestormTransaction() {
         get(person2);
         update(person2);
         delete(person3);
-        list(Person.class);
+        list(Tutor.class);
     }
 
     @Override
@@ -762,7 +762,7 @@ Firestorm.runTransaction(new FirestormTransaction() {
         get(person2);
         update(person2);
         delete(person3);
-        list(Person.class);
+        list(Tutor.class);
     }
 
     @Override
@@ -796,7 +796,7 @@ Firestorm.runTransaction(new FirestormTransaction() {
 FirestormBatch batch = new FirestormBatch() {
     @Override
     public void execute() {
-        create(person);
+        create(tutor);
         update(person2);
         delete(person3);
     }
@@ -823,7 +823,7 @@ Firestorm.runBatch(batch);</pre>
 Firestorm.runBatch(new FirestormBatch() {
     @Override
     public void execute() {
-        create(person);
+        create(tutor);
         update(person2);
         delete(person3);
     }
@@ -853,20 +853,20 @@ Firestorm.runBatch(new FirestormBatch() {
 
             <pre class="prettyprint java">
 String lastDocumentID = null;
-Paginator&lt;Person&gt; paginator = Paginator.next(Person.class, lastDocumentID);</pre>
+Paginator&lt;Tutor&gt; paginator = Paginator.next(Tutor.class, lastDocumentID);</pre>
 
             <p>You can also pass a limit for the number of results per page in the <span class="code">next()</span>
                 method. By default,
                 the number of results per page is set to 10.</p>
 
             <pre class="prettyprint java">
-Paginator&lt;Person&gt; paginator = Paginator.next(Person.class, lastDocumentID, <mark>10</mark>);</pre>
+Paginator&lt;Tutor&gt; paginator = Paginator.next(Tutor.class, lastDocumentID, <mark>10</mark>);</pre>
 
             <p>Then, you can retrieve the results of the pagination using the <span class="code">fetch()</span> method:
             </p>
 
             <pre class="prettyprint java">
-QueryResult&lt;Person&gt; result = paginator.fetch();</pre>
+QueryResult&lt;Tutor&gt; result = paginator.fetch();</pre>
 
             <p>
                 From the results object, you can use the <span class="code">getItems()</span> method to retrieve the
@@ -874,7 +874,7 @@ QueryResult&lt;Person&gt; result = paginator.fetch();</pre>
             </p>
 
             <pre class="prettyprint java">
-final ArrayList&lt;Person&gt; items = result.getItems();</pre>
+final ArrayList&lt;Tutor&gt; items = result.getItems();</pre>
 
             <p>
                 You can also use the <span class="code">getLastDocumentID()</span> method to get the ID of the last
@@ -892,7 +892,7 @@ lastDocumentID = result.getLastDocumentID();</pre>
             </p>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID);</pre>
+paginator = Paginator.next(Tutor.class, lastDocumentID);</pre>
 
             <p>Furthermore, you can check if a result contains items without getting its items array using the <span
                     class="code">hasItems()</span> method:</p>
@@ -905,12 +905,12 @@ boolean hasItems = result.hasItems();</pre>
             <p>This example continues looping and fetching new results until there are no items left to fetch:</p>
 
             <pre class="prettyprint java">
-QueryResult&lt;Person&gt; result;
+QueryResult&lt;Tutor&gt; result;
 String lastDocumentID = null;
 do {
-    result = Paginator.next(Person.class, lastDocumentID).fetch();
+    result = Paginator.next(Tutor.class, lastDocumentID).fetch();
     System.out.println("Fetched items: " + result.getItems().size());
-    for (Person p : result.getItems()) {
+    for (Tutor p : result.getItems()) {
         System.out.println("-> " + p.getFirstName());
     }
     lastDocumentID = result.getLastDocumentID();
@@ -924,13 +924,13 @@ do {
             </p>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID, 10).whereEqualTo("age", 40);</pre>
+paginator = Paginator.next(Tutor.class, lastDocumentID, 10).whereEqualTo("age", 40);</pre>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID, 50).whereGreaterThan("age", 5);</pre>
+paginator = Paginator.next(Tutor.class, lastDocumentID, 50).whereGreaterThan("age", 5);</pre>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");</pre>
+paginator = Paginator.next(Tutor.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");</pre>
 
             <hr/>
 
@@ -939,7 +939,7 @@ paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName
             <p>You can easily serialize your custom objects to a JSON-formatted <span class="code">String</span> by calling <span class="code">toJson()</span>:</p>
 
             <pre class="prettyprint">
-String personJSON = person.toJson();</pre>
+String personJSON = tutor.toJson();</pre>
 
             <!--------------------------------------------------------------------------------------------------------->
 

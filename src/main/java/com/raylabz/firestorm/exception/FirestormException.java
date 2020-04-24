@@ -1,4 +1,4 @@
-package com.raylabz.firestorm;
+package com.raylabz.firestorm.exception;
 
 /**
  * Exception thrown by Firestorm.
