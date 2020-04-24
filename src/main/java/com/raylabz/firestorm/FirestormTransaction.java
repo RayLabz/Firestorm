@@ -3,7 +3,9 @@ package com.raylabz.firestorm;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.TransactionException;
+import com.raylabz.firestorm.reflector.Reflector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,15 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * Creates a Firestore document from an object as part of a transaction.
      * @param object The object containing the data.
      */
-    public final void create(final FirestormObject object) {
-        final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
-        object.setId(reference.getId());
-        transaction = transaction.set(reference, object);
+    public final void create(final Object object) {
+        try {
+            Reflector.checkObject(object);
+            final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
+            Reflector.setIDField(object, reference.getId());
+            transaction = transaction.set(reference, object);
+        } catch (FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
@@ -47,19 +54,42 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * Updates an object as part of a transaction.
      * @param object The object to update.
      */
-    public final void update(final FirestormObject object) {
-        final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
-        transaction = transaction.set(reference, object);
+    public final void update(final Object object) {
+        try {
+            Reflector.checkObject(object);
+            final String id = Reflector.getIDField(object);
+            final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
+            transaction = transaction.set(reference, object);
+        } catch (IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
      * Deletes an object as part of a transaction.
      * @param object The object to delete.
      */
-    public final void delete(final FirestormObject object) {
-        final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(object.getId());
+    public final void delete(final Object object) {
+        try {
+            Reflector.checkObject(object);
+            final String id = Reflector.getIDField(object);
+            final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
+            transaction = transaction.delete(reference);
+            Reflector.setIDField(object, null);
+        } catch (IllegalAccessException | FirestormObjectException | NoSuchFieldException e) {
+            throw new TransactionException(e);
+        }
+    }
+
+    /**
+     * Deletes an object as part of a transaction.
+     * @param objectClass The class of the object to delete.
+     * @param objectID The ID of the object to delete.
+     * @param <T> The type of the object to delete.
+     */
+    public <T> void delete(final Class<T> objectClass, final String objectID) {
+        final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
         transaction = transaction.delete(reference);
-        object.setId(null);
     }
 
     /**

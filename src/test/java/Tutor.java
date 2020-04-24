@@ -3,6 +3,7 @@ import com.raylabz.firestorm.annotation.ID;
 
 @FirestormObjectAnnotation
 public class Tutor {
+
     @ID private String id;
     private String firstname;
     private String lastname;
@@ -14,7 +15,7 @@ public class Tutor {
         this.age = age;
     }
 
-    public Tutor() {
+    private Tutor() {
     }
 
     public String getFirstname() {
@@ -47,5 +48,15 @@ public class Tutor {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Tutor{" +
+                "id='" + id + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

@@ -3,29 +3,27 @@ package com.raylabz.firestorm;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
-import com.google.cloud.firestore.ListenerRegistration;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 
 /**
  * Implements logic for Firestore update events.
- * @param <T> The class of objects this listener can be attached to.
  */
-public abstract class FirestormEventListener<T> implements EventListener<DocumentSnapshot> {
+public abstract class OnReferenceUpdateListener implements EventListener<DocumentSnapshot> {
 
     private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
     /**
      * The listener is listening for changes to this object.
      */
-    private FirestormObject objectToListenFor;
+    private final Object objectToListenFor;
 
     /**
-     * Instantiates a FirestormEventListener.
+     * Instantiates an OnReferenceUpdateListener.
      * @param object The object to attach the listener to.
      */
-    public FirestormEventListener(FirestormObject object) {
+    public OnReferenceUpdateListener(final Object object) {
         this.objectToListenFor = object;
     }
 
@@ -42,12 +40,17 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
         }
 
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            FirestormObject fetchedObject = documentSnapshot.toObject(objectToListenFor.getClass());
-            if (objectToListenFor != null) {
-                final ArrayList<ListenerRegistration> oldListeners = objectToListenFor.getListeners();
-                objectToListenFor = fetchedObject;
-                objectToListenFor.setListeners(oldListeners);
-                onSuccess();
+            Object fetchedObject = documentSnapshot.toObject(objectToListenFor.getClass());
+
+            if (fetchedObject != null) {
+
+                if (fetchedObject.getClass() != objectToListenFor.getClass()) {
+                    onFailure("The type of the event listener's received object does not match the type provided.");
+                    return;
+                }
+
+                onSuccess(fetchedObject);
+
             }
             else {
                 onFailure("Failed to retrieve update to object.");
@@ -58,14 +61,18 @@ public abstract class FirestormEventListener<T> implements EventListener<Documen
         }
     }
 
-    public FirestormObject getObjectToListenFor() {
+    /**
+     * Returns the object being listened at by this listener.
+     * @return Returns the object being listened at by this listener.
+     */
+    public Object getObjectToListenFor() {
         return objectToListenFor;
     }
 
     /**
      * Implements logic upon success of data update delivery.
      */
-    public abstract void onSuccess();
+    public abstract void onSuccess(Object object);
 
     /**
      * Implements logic upon failure of data update delivery.
