@@ -1,4 +1,4 @@
-package com.raylabz.firestorm.reflector;
+package com.raylabz.firestorm;
 
 import com.raylabz.firestorm.annotation.FirestormObject;
 import com.raylabz.firestorm.annotation.ID;
@@ -142,7 +142,7 @@ public final class Reflector {
         return false;
     }
 
-    public static void setIDField(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException {
+    static void setIDField(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException {
         Field idField = object.getClass().getDeclaredField("id");
         boolean accessible = idField.isAccessible();
         idField.setAccessible(true);
@@ -150,7 +150,7 @@ public final class Reflector {
         idField.setAccessible(accessible);
     }
 
-    public static String getIDField(final Object object) throws NoSuchFieldException, IllegalAccessException {
+    static String getIDField(final Object object) throws NoSuchFieldException, IllegalAccessException {
         Field idField = object.getClass().getDeclaredField("id");
         boolean accessible = idField.isAccessible();
         idField.setAccessible(true);

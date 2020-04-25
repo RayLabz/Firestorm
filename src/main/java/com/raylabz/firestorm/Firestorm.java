@@ -5,7 +5,6 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.reflector.Reflector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,37 +44,6 @@ public class Firestorm {
      * Private constructor.
      */
     private Firestorm() { }
-
-//    /**
-//     * Creates a Firestore document from a managed object.
-//     *
-//     * @param object An object containing the data to be written in Firestore.
-//     * @param onFailureListener FailureListener to execute onFailure().
-//     */
-//    public static void create(final FirestormObject object, final OnFailureListener onFailureListener) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
-//        try {
-//            object.setId(reference.getId());
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            onFailureListener.onFailure(e);
-//        }
-//    }
-//
-//    /**
-//     * Creates a Firestore document from a managed object.
-//     *
-//     * @param object An object containing the data to be written in Firestore.
-//     */
-//    public static void create(final FirestormObject object) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
-//        try {
-//            object.setId(reference.getId());
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
 
     /**
      * Creates a Firestore document from an object.
@@ -225,37 +193,6 @@ public class Firestorm {
             throw new FirestormException(e);
         }
     }
-
-//    /**
-//     * Deletes a document from the Firestore based on the document ID of a managed object.
-//     *
-//     * @param object An object which provides the document ID for deletion.
-//     * @param onFailureListener OnFailureListener to execute onFailure().
-//     */
-//    public static void delete(final FirestormObject object, final OnFailureListener onFailureListener) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
-//        try {
-//            reference.delete().get();
-//            object.setId(null);
-//        } catch (InterruptedException | ExecutionException e) {
-//            onFailureListener.onFailure(e);
-//        }
-//    }
-//
-//    /**
-//     * Deletes a document from the Firestore based on the document ID of a managed object.
-//     *
-//     * @param object An object which provides the document ID for deletion.
-//     */
-//    public static void delete(final FirestormObject object) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
-//        try {
-//            reference.delete().get();
-//            object.setId(null);
-//        } catch (InterruptedException | ExecutionException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
 
     /**
      * Deletes an object from Firestore.

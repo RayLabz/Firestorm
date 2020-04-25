@@ -33,8 +33,8 @@ public class Main {
         System.out.println("Press to create using object");
         new Scanner(System.in).nextLine();
 
-        Person person = new Person("nicos", "kasenides", 27);
-        Person person2 = new Person("xx", "yy", 45);
+        Person person = new Person("nicos", "kasenides", 27, -1);
+        Person person2 = new Person("xx", "yy", 45, -1);
         final String id = Firestorm.create(person, new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
@@ -101,7 +101,7 @@ public class Main {
 
         ArrayList<Person> personsToCreate = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            personsToCreate.add(new Person("person" + (i + 1), "lastname" + (i + 1), i));
+            personsToCreate.add(new Person("person" + (i + 1), "lastname" + (i + 1), i, -1));
         }
 
         Firestorm.runBatch(new FirestormBatch() {
@@ -129,7 +129,7 @@ public class Main {
         Firestorm.runTransaction(new FirestormTransaction() {
             @Override
             public void execute() {
-                Person transactionPerson = new Person("Special", "Person", 10);
+                Person transactionPerson = new Person("Special", "Person", 10, -1);
                 create(transactionPerson);
                 personsToCreate.get(0).setAge(-10);
                 update(personsToCreate.get(0));

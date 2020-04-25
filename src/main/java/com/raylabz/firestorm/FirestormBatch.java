@@ -8,7 +8,6 @@ import com.raylabz.firestorm.exception.BatchException;
 import com.raylabz.firestorm.exception.FirestormException;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.TooManyOperationsException;
-import com.raylabz.firestorm.reflector.Reflector;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

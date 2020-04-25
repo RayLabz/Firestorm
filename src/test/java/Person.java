@@ -1,3 +1,4 @@
+import com.google.cloud.firestore.annotation.Exclude;
 import com.raylabz.firestorm.annotation.FirestormObject;
 import com.raylabz.firestorm.annotation.ID;
 
@@ -8,11 +9,13 @@ public class Person {
     private String firstName;
     private String lastName;
     private int age;
+    private int ignoredField;
 
-    public Person(String firstName, String lastName, int age) {
+    public Person(String firstName, String lastName, int age, int ignoredField) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.ignoredField = ignoredField;
     }
 
     private Person() {
@@ -48,6 +51,15 @@ public class Person {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Exclude
+    public int getIgnoredField() {
+        return ignoredField;
+    }
+
+    public void setIgnoredField(int ignoredField) {
+        this.ignoredField = ignoredField;
     }
 
     @Override
