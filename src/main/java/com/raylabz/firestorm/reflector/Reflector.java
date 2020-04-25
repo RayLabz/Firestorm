@@ -1,6 +1,6 @@
 package com.raylabz.firestorm.reflector;
 
-import com.raylabz.firestorm.annotation.FirestormObjectAnnotation;
+import com.raylabz.firestorm.annotation.FirestormObject;
 import com.raylabz.firestorm.annotation.ID;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 
@@ -18,9 +18,9 @@ public final class Reflector {
      */
     public static void checkClass(final Class<?> clazz) throws FirestormObjectException {
         //Check if object is annotated as @FirestormObjectAnnotation:
-        final FirestormObjectAnnotation classAnnotation = clazz.getAnnotation(FirestormObjectAnnotation.class);
+        final FirestormObject classAnnotation = clazz.getAnnotation(FirestormObject.class);
         if (classAnnotation == null) {
-            throw new FirestormObjectException("The class '" + clazz.getSimpleName() + "' needs to be annotated with @" + FirestormObjectAnnotation.class.getSimpleName() + ".");
+            throw new FirestormObjectException("The class '" + clazz.getSimpleName() + "' needs to be annotated with @" + FirestormObject.class.getSimpleName() + ".");
         }
 
         //Check if object class has an no-parameter constructor:

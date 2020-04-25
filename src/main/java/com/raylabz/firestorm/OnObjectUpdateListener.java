@@ -44,11 +44,25 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
             return;
         }
 
+        //Check ID of objectToListenFor:
+        try {
+            Field idField = objectToListenFor.getClass().getDeclaredField("id");
+            boolean accessible = idField.isAccessible();
+            idField.setAccessible(true);
+            final String idValue = (String) idField.get(objectToListenFor);
+            idField.setAccessible(accessible);
+            if (idValue == null) {
+                return;
+            }
+        } catch (IllegalAccessException | NoSuchFieldException ex) {
+            onFailure(ex.getMessage());
+            return;
+        }
+
         if (documentSnapshot != null && documentSnapshot.exists()) {
             Object fetchedObject = documentSnapshot.toObject(objectToListenFor.getClass());
 
             if (fetchedObject != null) {
-
                 if (fetchedObject.getClass() != objectToListenFor.getClass()) {
                     onFailure("The type of the event listener's received object does not match the type provided.");
                     return;

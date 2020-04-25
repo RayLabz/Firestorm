@@ -17,14 +17,20 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
     /**
      * The listener is listening for changes to this object.
      */
-    private final Object objectToListenFor;
+    private final Class<?> objectClass;
+
+    /**
+     * The document ID of the object to listen to.
+     */
+    private final String documentID;
 
     /**
      * Instantiates an OnReferenceUpdateListener.
-     * @param object The object to attach the listener to.
+     * @param objectClass The type of object this listener will be attached to.
      */
-    public OnReferenceUpdateListener(final Object object) {
-        this.objectToListenFor = object;
+    public OnReferenceUpdateListener(final Class<?> objectClass, final String documentID) {
+        this.objectClass = objectClass;
+        this.documentID = documentID;
     }
 
     /**
@@ -40,11 +46,11 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
         }
 
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            Object fetchedObject = documentSnapshot.toObject(objectToListenFor.getClass());
+            Object fetchedObject = documentSnapshot.toObject(objectClass);
 
             if (fetchedObject != null) {
 
-                if (fetchedObject.getClass() != objectToListenFor.getClass()) {
+                if (fetchedObject.getClass() != objectClass) {
                     onFailure("The type of the event listener's received object does not match the type provided.");
                     return;
                 }
@@ -56,17 +62,22 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
                 onFailure("Failed to retrieve update to object.");
             }
         }
-        else {
-            onFailure(NO_SNAPSHOT_EXISTS_MESSAGE);
-        }
     }
 
     /**
-     * Returns the object being listened at by this listener.
+     * Retrieves the object being listened at by this listener.
      * @return Returns the object being listened at by this listener.
      */
-    public Object getObjectToListenFor() {
-        return objectToListenFor;
+    public Class<?> getObjectClass() {
+        return objectClass;
+    }
+
+    /**
+     * Retrieves the ID of the document being listened to by this listener.
+     * @return Returns the ID of the document listened to.
+     */
+    public String getDocumentID() {
+        return documentID;
     }
 
     /**

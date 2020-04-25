@@ -48,9 +48,9 @@
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-DocumentReference docRef = firestore.collection(Tutor.class.getSimpleName()).document("myPerson");
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
 try {
-    docRef.set(tutor).get();
+    docRef.set(person).get();
 } catch (InterruptedException | ExecutionException e) {
     e.printStackTrace();
 }</pre>
@@ -59,7 +59,7 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.create(tutor, error -> {
+Firestorm.create(person, error -> {
     System.out.println("Write failed.");
 });</pre>
             </div>
@@ -106,7 +106,7 @@ Firestorm.create(tutor, error -> {
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
 try {
-    docRef.set(tutor).get();
+    docRef.set(person).get();
 } catch (InterruptedException | ExecutionException e) {
     e.printStackTrace();
 }</pre>
@@ -115,7 +115,7 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.update(tutor, error -> {
+Firestorm.update(person, error -> {
     System.out.println("Update failed.");
 });</pre>
             </div>
@@ -161,11 +161,11 @@ Firestorm.update(tutor, error -> {
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-DocumentReference docRef = firestore.collection(Tutor.class.getSimpleName()).document("myPerson");
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
 try {
     DocumentSnapshot document = docRef.get().get();
     if (document.exists()) {
-        Tutor personObject = document.toObject(Tutor.class);
+        Person personObject = document.toObject(Person.class);
     } else {
         System.out.println("No such document!");
     }
@@ -177,7 +177,7 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Tutor tutor = Firestorm.get(Tutor.class, "X", error -> {
+Person person = Firestorm.get(Person.class, "X", error -> {
     System.out.println("Get failed.");
 });</pre>
             </div>
@@ -222,11 +222,11 @@ Tutor tutor = Firestorm.get(Tutor.class, "X", error -> {
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Tutor.class.getSimpleName()).get();
+ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Person.class.getSimpleName()).get();
 try {
     List&lt;QueryDocumentSnapshot&gt; documents = future.get().getDocuments();
     for (DocumentSnapshot document : documents) {
-        Tutor tutor = document.toObject(Tutor.class);
+        Person person = document.toObject(Person.class);
     }
 } catch (InterruptedException | ExecutionException e) {
     e.printStackTrace();
@@ -236,7 +236,7 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-ArrayList&lt;Tutor&gt; list = Firestorm.list(Tutor.class, 10, error -> {
+ArrayList&lt;Person&gt; list = Firestorm.list(Person.class, 10, error -> {
     System.out.println("List failed.");
 });</pre>
             </div>
@@ -281,7 +281,7 @@ ArrayList&lt;Tutor&gt; list = Firestorm.list(Tutor.class, 10, error -> {
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-ApiFuture&lt;WriteResult&gt; writeResult = firestore.collection(Tutor.class.getSimpleName()).document("myPerson").delete();
+ApiFuture&lt;WriteResult&gt; writeResult = firestore.collection(Person.class.getSimpleName()).document("myPerson").delete();
 try {
     writeResult.get();
 } catch (InterruptedException | ExecutionException e) {
@@ -292,7 +292,7 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.delete(tutor, error -> {
+Firestorm.delete(person, error -> {
     System.out.println("Delete failed.");
 });</pre>
             </div>
@@ -336,13 +336,13 @@ Firestorm.delete(tutor, error -> {
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Tutor.class.getSimpleName())
+ApiFuture&lt;QuerySnapshot&gt; future = firestore.collection(Person.class.getSimpleName())
         .whereEqualTo("age", 50)
         .get();
 try {
     List&lt;QueryDocumentSnapshot&gt; documents = future.get().getDocuments();
     for (DocumentSnapshot document : documents) {
-        Tutor tutor = document.toObject(Tutor.class);
+        Person person = document.toObject(Person.class);
     }
 } catch (InterruptedException | ExecutionException e) {
     e.printStackTrace();
@@ -352,10 +352,10 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-QueryResult&lt;Tutor&gt; result = Firestorm.filter(Tutor.class)
+QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
         .whereEqualTo("age", 50)
         .fetch();
-ArrayList&lt;Tutor&gt; items = result.getItems();</pre>
+ArrayList&lt;Person&gt; items = result.getItems();</pre>
             </div>
 
         </div>
@@ -398,14 +398,14 @@ ArrayList&lt;Tutor&gt; items = result.getItems();</pre>
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-DocumentReference docRef = firestore.collection(Tutor.class.getSimpleName()).document("myPerson");
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
 docRef.addSnapshotListener((snapshot, e) -&gt; {
     if (e != null) {
         System.err.println("Listen failed: " + e);
         return;
     }
     if (snapshot != null && snapshot.exists()) {
-        Tutor tutor = snapshot.toObject(Tutor.class);
+        Person person = snapshot.toObject(Person.class);
     } else {
         System.out.print("Current data: null");
     }
@@ -415,7 +415,7 @@ docRef.addSnapshotListener((snapshot, e) -&gt; {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.attachListener(new FirestormEventListener&lt;Tutor&gt;(tutor) {
+Firestorm.attachListener(new FirestormEventListener&lt;Person&gt;(person) {
     @Override
     public void onSuccess() {
         System.out.println("Object updated!");
@@ -469,7 +469,7 @@ Firestorm.attachListener(new FirestormEventListener&lt;Tutor&gt;(tutor) {
             <div class="col s12 m6">
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
-DocumentReference docRef = firestore.collection(Tutor.class.getSimpleName()).document("myPerson");
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("myPerson");
 ApiFuture&lt;Void&gt; futureTransaction = firestore.runTransaction(transaction -&gt; {
     DocumentSnapshot snapshot = transaction.get(docRef).get();
     long oldAge = snapshot.getLong("age");
@@ -489,9 +489,9 @@ try {
 Firestorm.runTransaction(new FirestormTransaction() {
     @Override
     public void execute() {
-        get(Tutor.class, tutor.getId());
-        tutor.setAge(20);
-        update(tutor);
+        get(Person.class, person.getId());
+        person.setAge(20);
+        update(person);
     }
     @Override
     public void onFailure(Exception e) {
@@ -546,11 +546,11 @@ Firestorm.runTransaction(new FirestormTransaction() {
                 <h6 class="center">Standard API</h6>
                 <pre class="prettyprint java red lighten-4">
 WriteBatch batch = firestore.batch();
-DocumentReference docRef = firestore.collection(Tutor.class.getSimpleName()).document("person1");
+DocumentReference docRef = firestore.collection(Person.class.getSimpleName()).document("person1");
 batch.set(docRef, person1);
-DocumentReference docRef2 = firestore.collection(Tutor.class.getSimpleName()).document("person2");
+DocumentReference docRef2 = firestore.collection(Person.class.getSimpleName()).document("person2");
 batch.update(docRef2, "age", 15);
-DocumentReference docRef3 = firestore.collection(Tutor.class.getSimpleName()).document("person3");
+DocumentReference docRef3 = firestore.collection(Person.class.getSimpleName()).document("person3");
 batch.delete(docRef3);
 ApiFuture&lt;List&lt;WriteResult&gt;&gt; future = batch.commit();
 try {
@@ -627,7 +627,7 @@ Firestorm.runBatch(new FirestormBatch() {
 try {
     //--- First page ---
 
-    CollectionReference people = firestore.collection(Tutor.class.getSimpleName());
+    CollectionReference people = firestore.collection(Person.class.getSimpleName());
     Query firstPage = people.orderBy("age").limit(25);
     ApiFuture&lt;QuerySnapshot&gt; future = firstPage.get();
     List&lt;QueryDocumentSnapshot&gt; docs = future.get().getDocuments();
@@ -655,16 +655,16 @@ try {
 //--- First page ---
 
 String lastDocumentID = null;
-QueryResult&lt;Tutor&gt; result = Paginator.next(Tutor.class, lastDocumentID, 5).orderBy("age").fetch();
-for (Tutor p : result.getItems()) {
+QueryResult&lt;Person&gt; result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+for (Person p : result.getItems()) {
     //TODO
 }
 lastDocumentID = result.getLastDocumentID();
 
 //--- Second page and on ---
 
-result = Paginator.next(Tutor.class, lastDocumentID, 5).orderBy("age").fetch();
-for (Tutor p : result.getItems()) {
+result = Paginator.next(Person.class, lastDocumentID, 5).orderBy("age").fetch();
+for (Person p : result.getItems()) {
     //TODO
 }
 lastDocumentID = result.getLastDocumentID();</pre>

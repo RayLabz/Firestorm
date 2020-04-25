@@ -88,8 +88,8 @@ public class Firestorm {
         try {
             Reflector.checkObject(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
-            reference.set(object).get();
             Reflector.setIDField(object, reference.getId());
+            reference.set(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
             onFailureListener.onFailure(e);
@@ -107,8 +107,8 @@ public class Firestorm {
         try {
             Reflector.checkObject(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
-            reference.set(object).get();
             Reflector.setIDField(object, reference.getId());
+            reference.set(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
             throw new FirestormException(e);
@@ -476,13 +476,11 @@ public class Firestorm {
     /**
      * Attaches an event listener which listens for updates to an object using its class and ID.
      *
-     * @param objectClass The class of the object.
-     * @param documentID The object's ID.
      * @param eventListener An implementation of a FirestormEventListener.
      * @return Returns a ListenerRegistration.
      */
-    public static ListenerRegistration attachListener(final Class<?> objectClass, final String documentID, final OnReferenceUpdateListener eventListener) {
-        return firestore.collection(objectClass.getSimpleName()).document(documentID).addSnapshotListener(eventListener);
+    public static ListenerRegistration attachListener(final OnReferenceUpdateListener eventListener) {
+        return firestore.collection(eventListener.getObjectClass().getSimpleName()).document(eventListener.getDocumentID()).addSnapshotListener(eventListener);
     }
 
     /**
