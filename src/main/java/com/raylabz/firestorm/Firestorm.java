@@ -3,10 +3,13 @@ package com.raylabz.firestorm;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.exception.NotInitializedException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /*
  * Firestorm is an object-oriented data access API for Firestore.
@@ -57,8 +60,10 @@ public class Firestorm {
             Reflector.setIDField(object, reference.getId());
             reference.set(object).get();
             return reference.getId();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
             onFailureListener.onFailure(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
         return null;
     }
@@ -76,8 +81,10 @@ public class Firestorm {
             Reflector.setIDField(object, reference.getId());
             reference.set(object).get();
             return reference.getId();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -101,9 +108,11 @@ public class Firestorm {
                 onFailureListener.onFailure(new FirestormException("The document with ID " + documentID + " does not exist."));
                 return null;
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             onFailureListener.onFailure(e);
             return null;
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -125,8 +134,10 @@ public class Firestorm {
             } else {
                 throw new FirestormException("The document with ID " + documentID + " does not exist.");
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -171,8 +182,10 @@ public class Firestorm {
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.set(object).get();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
             onFailureListener.onFailure(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -187,8 +200,10 @@ public class Firestorm {
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.set(object).get();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -202,8 +217,10 @@ public class Firestorm {
         final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
         try {
             reference.delete().get();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -218,8 +235,10 @@ public class Firestorm {
         final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
         try {
             reference.delete().get();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             onFailureListener.onFailure(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -235,8 +254,10 @@ public class Firestorm {
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.delete().get();
             Reflector.setIDField(object, null);
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -253,8 +274,10 @@ public class Firestorm {
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.delete().get();
             Reflector.setIDField(object, null);
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
             onFailureListener.onFailure(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -276,9 +299,11 @@ public class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             onFailureListener.onFailure(e);
             return null;
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -299,8 +324,10 @@ public class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -321,9 +348,11 @@ public class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             onFailureListener.onFailure(e);
             return null;
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -343,8 +372,10 @@ public class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -376,8 +407,10 @@ public class Firestorm {
             Reflector.checkObject(object);
             final String documentID = Reflector.getIDField(object);
             return firestore.collection(object.getClass().getSimpleName()).document(documentID);
-        } catch (Exception e) {
+        } catch (IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -403,8 +436,10 @@ public class Firestorm {
             Reflector.checkObject(eventListener.getObjectToListenFor());
             final String documentID = Reflector.getIDField(eventListener.getObjectToListenFor());
             return firestore.collection(eventListener.getObjectToListenFor().getClass().getSimpleName()).document(documentID).addSnapshotListener(eventListener);
-        } catch (Exception e) {
+        } catch (FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
             throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 
@@ -437,8 +472,10 @@ public class Firestorm {
         try {
             futureTransaction.get();
             transaction.onSuccess();
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             transaction.onFailure(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
         }
     }
 

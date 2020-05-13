@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public final class Reflector {
+final class Reflector {
 
     /**
      * Checks if the given class contains the required fields, types and annotations.
@@ -142,6 +142,13 @@ public final class Reflector {
         return false;
     }
 
+    /**
+     * Sets the ID field of an object.
+     * @param object The object to set the ID of.
+     * @param documentID The document ID to set.
+     * @throws NoSuchFieldException Thrown when the field 'id' cannot be accessed.
+     * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
+     */
     static void setIDField(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException {
         Field idField = object.getClass().getDeclaredField("id");
         boolean accessible = idField.isAccessible();
@@ -150,6 +157,13 @@ public final class Reflector {
         idField.setAccessible(accessible);
     }
 
+    /**
+     * Retrieves the ID value of an object.
+     * @param object The object to retrieve the ID value of.
+     * @return Returns a the ID of the object as a string.
+     * @throws NoSuchFieldException Thrown when the field 'id' cannot be accessed.
+     * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
+     */
     static String getIDField(final Object object) throws NoSuchFieldException, IllegalAccessException {
         Field idField = object.getClass().getDeclaredField("id");
         boolean accessible = idField.isAccessible();
