@@ -38,7 +38,7 @@ public class Firestorm {
             The initial call to Firestore has high latency so it is preferable to make a dummy request
             as soon as the object is initialized instead of waiting to make the first connection when a real request is made.
          */
-        firestore.listCollections();
+//        firestore.listCollections();
     }
 
     /**
