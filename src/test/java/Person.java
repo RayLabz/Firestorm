@@ -18,7 +18,7 @@ public class Person {
         this.ignoredField = ignoredField;
     }
 
-    private Person() {
+    protected Person() {
     }
 
     public String getFirstName() {

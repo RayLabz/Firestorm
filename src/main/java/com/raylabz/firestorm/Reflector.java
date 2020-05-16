@@ -28,30 +28,53 @@ final class Reflector {
             throw new FirestormObjectException("The class '" + clazz.getSimpleName() + "' does not have an empty (no-parameter) constructor.");
         }
 
+        Field idField = null;
+        Class<?> idFieldType = null;
+
         //Check if the field 'id' exists at all:
         try {
-            Field idField = clazz.getDeclaredField("id");
-            final Class<?> idFieldType = idField.getType();
-
-            //Check if field 'id' exists:
-            if (idFieldType != String.class) {
-                throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' must be of type String, but type " + idFieldType.getSimpleName() + " found.");
-            }
-
-            //Check if field 'id' has been annotated with @ID:
-            final ID idAnnotation = idField.getAnnotation(ID.class);
-            if (idAnnotation == null) {
-                throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' has not been annotated with @" + ID.class.getSimpleName() + ".");
-            }
-
-            //Check if the 'id' field has a public getter:
-            if (!fieldHasPublicGetter(idField, clazz)) {
-                throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' does not have a getter method called '" + Reflector.getGetterMethodName(idField) + "'.");
-            }
-
+            idField = clazz.getDeclaredField("id");
+            idFieldType = idField.getType();
         } catch (NoSuchFieldException e) {
-            throw new FirestormObjectException("A field named 'id' of type String needs to exist in class '" + clazz.getSimpleName() + "' but was not found.");
+            Class<?> superClass = clazz.getSuperclass();
+            while (superClass.getSuperclass() != null) {
+                final Field[] superClassFields = superClass.getDeclaredFields();
+                for (Field f : superClassFields) {
+                    if (f.getName().equals("id")) {
+                        idField = f;
+                        idFieldType = f.getType();
+                        break;
+                    }
+                }
+
+                if (idField != null) {
+                    break;
+                }
+                else {
+                    superClass = superClass.getSuperclass();
+                }
+            }
+            if (idField == null) {
+                throw new FirestormObjectException("A field named 'id' of type String needs to exist in class '" + clazz.getSimpleName() + "' or its parent classes but was not found.");
+            }
         }
+
+        //Check if field 'id' is String:
+        if (idFieldType != String.class) {
+            throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' must be of type String, but type " + idFieldType.getSimpleName() + " found.");
+        }
+
+        //Check if field 'id' has been annotated with @ID:
+        final ID idAnnotation = idField.getAnnotation(ID.class);
+        if (idAnnotation == null) {
+            throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' has not been annotated with @" + ID.class.getSimpleName() + ".");
+        }
+
+        //Check if the 'id' field has a public getter:
+        if (!fieldHasPublicGetter(idField, clazz)) {
+            throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' does not have a getter method called '" + Reflector.getGetterMethodName(idField) + "'.");
+        }
+
     }
 
     /**
@@ -150,11 +173,22 @@ final class Reflector {
      * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
      */
     static void setIDField(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException {
-        Field idField = object.getClass().getDeclaredField("id");
-        boolean accessible = idField.isAccessible();
-        idField.setAccessible(true);
-        idField.set(object, documentID);
-        idField.setAccessible(accessible);
+        Field idField;
+        try {
+            idField = object.getClass().getDeclaredField("id");
+        } catch (NoSuchFieldException e) {
+            idField = findUnderlyingIDField(object.getClass());
+        }
+
+        if (idField != null) {
+            boolean accessible = idField.isAccessible();
+            idField.setAccessible(true);
+            idField.set(object, documentID);
+            idField.setAccessible(accessible);
+        }
+        else {
+            throw new NoSuchFieldException();
+        }
     }
 
     /**
@@ -165,12 +199,32 @@ final class Reflector {
      * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
      */
     static String getIDField(final Object object) throws NoSuchFieldException, IllegalAccessException {
-        Field idField = object.getClass().getDeclaredField("id");
-        boolean accessible = idField.isAccessible();
-        idField.setAccessible(true);
-        final String value = (String) idField.get(object);
-        idField.setAccessible(accessible);
-        return value;
+        Field idField;
+        try {
+            idField = object.getClass().getDeclaredField("id");
+        } catch (NoSuchFieldException e) {
+            idField = findUnderlyingIDField(object.getClass());
+        }
+        if (idField != null) {
+            boolean accessible = idField.isAccessible();
+            idField.setAccessible(true);
+            final String value = (String) idField.get(object);
+            idField.setAccessible(accessible);
+            return value;
+        }
+        else {
+            throw new NoSuchFieldException();
+        }
+    }
+
+    static Field findUnderlyingIDField(Class<?> clazz) {
+        Class<?> current = clazz;
+        do {
+            try {
+                return current.getDeclaredField("id");
+            } catch (Exception ignored) {}
+        } while((current = current.getSuperclass()) != null);
+        return null;
     }
 
 }
