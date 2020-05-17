@@ -1,11 +1,10 @@
 import com.google.cloud.firestore.annotation.Exclude;
 import com.raylabz.firestorm.annotation.FirestormObject;
-import com.raylabz.firestorm.annotation.ID;
 
 @FirestormObject
 public class Person {
 
-    @ID private String id;
+    private String id;
     private String firstName;
     private String lastName;
     private int age;

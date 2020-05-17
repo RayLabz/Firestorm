@@ -1,7 +1,6 @@
 package com.raylabz.firestorm;
 
 import com.raylabz.firestorm.annotation.FirestormObject;
-import com.raylabz.firestorm.annotation.ID;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 
 import java.lang.reflect.Constructor;
@@ -64,11 +63,11 @@ final class Reflector {
             throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' must be of type String, but type " + idFieldType.getSimpleName() + " found.");
         }
 
-        //Check if field 'id' has been annotated with @ID:
-        final ID idAnnotation = idField.getAnnotation(ID.class);
-        if (idAnnotation == null) {
-            throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' has not been annotated with @" + ID.class.getSimpleName() + ".");
-        }
+//        //Check if field 'id' has been annotated with @ID:
+//        final ID idAnnotation = idField.getAnnotation(ID.class);
+//        if (idAnnotation == null) {
+//            throw new FirestormObjectException("The 'id' field of class '" + clazz.getSimpleName() + "' has not been annotated with @" + ID.class.getSimpleName() + ".");
+//        }
 
         //Check if the 'id' field has a public getter:
         if (!fieldHasPublicGetter(idField, clazz)) {
