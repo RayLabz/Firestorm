@@ -30,6 +30,7 @@ public class Test2 {
         Tutor t = new Tutor("tutor", "myTutor", 15, 15);
         Firestorm.create(t);
 
+
 //        System.out.println(t.getId());
 
     }

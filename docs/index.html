@@ -184,19 +184,29 @@ Firestorm.init();</pre>
 
             <p class="justify">
                 Firestorm allows you to create your own custom classes, which it then can interact with in Firestore.
-                Your objects must:
+                Your classes must:
             </p>
 
             <ul class="browser-default">
-                <li>Extend the default Firestorm object, called <span class="code">FirestormObject</span></li>
-                <li>Have a public empty constructor.</li>
+                <li>Be annotated with the <span class="code">@FirestormObject</span> annotation.</li>
+                <li>Have an attribute called <span class="code">id</span> of type String, or extend a class that has this field.</li>
+                <li>Have an empty (no-parameter) constructor (access modifier does not matter).</li>
             </ul>
 
-            <p>The following code shows an example on how to create a Firestorm-managed object:</p>
+            <div class="info-panel light-blue lighten-2 white-text">
+                It is preferable to avoid constructors that include the <span class="code">id</span> attribute as a parameter because the ID field
+                will be initialized once the object is written on Firestore. The ID attribute's value indicates an object that also
+                exists on Firestore. The value null for the ID (e.g. before being written or after being deleted) indicates that
+                this object does not exist on Firestore.
+            </div>
+
+            <p>The following code shows an example on how to create a class:</p>
 
             <pre class="prettyprint java">
-public class Person <mark>extends FirestormObject</mark> {
+<mark>@FirestormObject</mark>
+public class Person {
 
+    <mark>private String id;</mark>
     private String firstName;
     private String lastName;
     private int age;
@@ -207,7 +217,9 @@ public class Person <mark>extends FirestormObject</mark> {
         this.age = age;
     }
 
-    <mark>public Person() { }</mark>
+
+    <mark>private Person() {</mark>
+    <mark>}</mark>
 
     public String getFirstName() {
         return firstName;
@@ -231,6 +243,14 @@ public class Person <mark>extends FirestormObject</mark> {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }</pre>
@@ -242,21 +262,24 @@ public class Person <mark>extends FirestormObject</mark> {
                 with the <span class="code red-text text-darken-3">@Exclude</span> annotation:</p>
 
             <pre class="prettyprint java">
-public class Person extends FirestormObject {
+@FirestormObject
+public class Person {
 
+    private String id;
     private String firstName;
     private String lastName;
     private int age;
-    <mark>private String excludedField;</mark>
+    <mark>private int ignoredField;</mark>
 
-    public Person(String firstName, String lastName, int age, String excludedField) {
+    public Person(String firstName, String lastName, int age, int ignoredField) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.excludedField = excludedField;
+        this.ignoredField = ignoredField;
     }
 
-    public Person() { }
+    private Person() {
+    }
 
     public String getFirstName() {
         return firstName;
@@ -282,13 +305,21 @@ public class Person extends FirestormObject {
         this.age = age;
     }
 
-    <mark>@Exclude</mark>
-    public String getExcludedField() {
-        return excludedField;
+    public String getId() {
+        return id;
     }
 
-    public void setExcludedField(String excludedField) {
-        this.excludedField = excludedField;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    <mark>@Exclude</mark>
+    public int getIgnoredField() {
+        return ignoredField;
+    }
+
+    public void setIgnoredField(int ignoredField) {
+        this.ignoredField = ignoredField;
     }
 
 }</pre>
@@ -312,7 +343,11 @@ Firestorm.create(person);</pre>
                 retrieve this attribute and save it for reference if needed:</p>
 
             <pre class="prettyprint java">
-String personID = person.getId();</pre>
+String personID = Firestorm.create(person);</pre>
+
+            <div class="info-panel light-blue lighten-2 white-text">
+                If the <span class="code">create()</span> method returns a null ID, this is an indication that the object has not been successfully written to Firestore.
+            </div>
 
             <p>You can also attach an <span class="code">OnFailureListener</span> to this call, which will allow you
                 to define what happens when this operation fails:</p>
