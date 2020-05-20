@@ -43,14 +43,17 @@
                     rapidly develop applications that utilize Firestore's capabilities by interacting with it in an
                     object-oriented way. Firestorm uses standardized functions and complements the full flexibility of
                     Google's Firestore API.
-                    It organizes classes as Firestore collections and objects of these classes as documents in these collections.
-                    Most importantly, it aims to reduce code, improve its readability and support rapid application development.
+                    It organizes classes as Firestore collections and objects of these classes as documents in these
+                    collections.
+                    Most importantly, it aims to reduce code, improve its readability and support rapid application
+                    development.
                 </p>
             </div>
 
             <div class="row center">
                 <div class="col s12 m6 offset-m3">
-                    <p class="center">Not convinced?<br/> <a href="codeComparison.html">Check out the code comparison!</a></p>
+                    <p class="center">Not convinced?<br/> <a href="codeComparison.html">Check out the code
+                        comparison!</a></p>
                 </div>
             </div>
 
@@ -63,6 +66,11 @@
                 <li><a href="#guide">Guide</a>
                     <ul class="browser-default">
                         <li><a href="#initialization">Initialization</a>
+                            <ul class="browser-default">
+                                <li><a href="#initializationOnTheGCP">Initialization on the GCP</a></li>
+                                <li><a href="#initializationAppEngine">Google App Engine initialization</a></li>
+                            </ul>
+                        </li>
                         <li><a href="#customClasses">Custom classes</a></li>
                         <li><a href="#basicOperations">Basic operations</a>
                             <ul class="browser-default">
@@ -132,7 +140,7 @@
                 You do not need to initialize a Firestore object as this is automatically done by this method.</p>
 
             <pre class="prettyprint java">
-//Initialize Firebase (using a Service Account configuration file):
+<div style="color: grey;">//Initialize Firebase (using a Service Account configuration file):
 try {
     FileInputStream serviceAccount = new FileInputStream("path/to/serviceAccountKey.json");
     FirebaseOptions options = new FirebaseOptions.Builder()
@@ -142,7 +150,7 @@ try {
     FirebaseApp.initializeApp(options);
 } catch (IOException e) {
     e.printStackTrace();
-}
+}</div>
 
 //Initialize Firestorm:
 <mark>Firestorm.init();</mark></pre>
@@ -154,7 +162,7 @@ try {
                 you can initialize Firebase using the default service account:</p>
 
             <pre class="prettyprint java">
-//Initialize Firebase (using application default credentials):
+<div style="color: grey;">//Initialize Firebase (using application default credentials):
 try {
     FirebaseOptions options = new FirebaseOptions.Builder()
             .setCredentials(GoogleCredentials.getApplicationDefault())
@@ -163,10 +171,14 @@ try {
     FirebaseApp.initializeApp(options);
 } catch (IOException e) {
     e.printStackTrace();
-}
+}</div>
 
 //Initialize Firestorm:
 Firestorm.init();</pre>
+
+            <h5 id="initializationAppEngine">Google App Engine initialization</h5>
+
+            <a href="appEngine.html">Click here for a guide on setting up Firestorm with Google App Engine.</a>
 
             <h4 id="customClasses">Custom classes</h4>
 
@@ -303,7 +315,7 @@ Firestorm.create(person);</pre>
 String personID = person.getId();</pre>
 
             <p>You can also attach an <span class="code">OnFailureListener</span> to this call, which will allow you
-            to define what happens when this operation fails:</p>
+                to define what happens when this operation fails:</p>
 
             <pre class="prettyprint java">
 Firestorm.create(person, new OnFailureListener() {
@@ -501,9 +513,11 @@ final String lastItemID = result.getLastDocumentID();
 //Check if the result has returned and items:
 final boolean hasItems = result.hasItems();</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Firestore will automatically create indexes for simple queries.
+            <div class="info-panel light-blue lighten-2 white-text">Firestore will automatically create indexes for
+                simple queries.
                 However, some compound queries will require you to define compound Firestore indexes.
-                <a class="yellow-text" href="https://firebase.google.com/docs/firestore/query-data/indexing">Click here</a>
+                <a class="yellow-text" href="https://firebase.google.com/docs/firestore/query-data/indexing">Click
+                    here</a>
                 to learn more about composite Firebase indexes.
             </div>
 
@@ -844,7 +858,8 @@ Firestorm.runBatch(new FirestormBatch() {
             <h4 id="pagination">Pagination</h4>
 
             <p>
-                Firestorm supports easy pagination of large numbers of objects of a specified type using the <span class="code">Paginator</span>
+                Firestorm supports easy pagination of large numbers of objects of a specified type using the <span
+                    class="code">Paginator</span>
                 class.
                 The paginator's <span class="code">next()</span> method receives the type of objects to paginate and the
                 last listed document's ID. In the first call,
@@ -936,7 +951,8 @@ paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName
 
             <h4 id="json">Serialization to JSON</h4>
 
-            <p>You can easily serialize your custom objects to a JSON-formatted <span class="code">String</span> by calling <span class="code">toJson()</span>:</p>
+            <p>You can easily serialize your custom objects to a JSON-formatted <span class="code">String</span> by
+                calling <span class="code">toJson()</span>:</p>
 
             <pre class="prettyprint">
 String personJSON = person.toJson();</pre>
