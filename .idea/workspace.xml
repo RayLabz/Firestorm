@@ -10,13 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/codeComparison.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/codeComparison.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Test2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,18 +86,18 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm" />
-      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs\images" />
-      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.raylabz.firestorm" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.raylabz.firestorm" />
       <recent name="com.raylabz.firestorm.exception" />
       <recent name="" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.raylabz.firestorm" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm" />
+      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs\images" />
+      <recent name="D:\Users\hfnov\Software Development\Projects\Firestorm\docs" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Test2">
@@ -153,7 +147,7 @@
       <workItem from="1589401444369" duration="810000" />
       <workItem from="1589918619239" duration="11000" />
       <workItem from="1589968584748" duration="3353000" />
-      <workItem from="1590005064926" duration="4848000" />
+      <workItem from="1590005064926" duration="5142000" />
     </task>
     <servers />
   </component>
@@ -200,10 +194,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587719722945" />
-    <state x="739" y="286" key="FileChooserDialogImpl" timestamp="1589796835606">
+    <state x="739" y="286" key="FileChooserDialogImpl" timestamp="1590135753866">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="286" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1589796835606" />
+    <state x="739" y="286" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1590135753866" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1589831262016">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
