@@ -77,9 +77,14 @@ public abstract class FirestormBatch extends FirestormOperation {
     }
 
     public final void delete(final Class<?> objectClass, final String objectID) {
-        final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
-        batch = batch.delete(reference);
-        numOfOperations++;
+        try {
+            Reflector.checkClass(objectClass);
+            final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
+            batch = batch.delete(reference);
+            numOfOperations++;
+        } catch (FirestormObjectException e) {
+            throw new BatchException(e);
+        }
     }
 
     /**

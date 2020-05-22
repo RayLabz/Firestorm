@@ -40,11 +40,12 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @return Returns an object of type T/objectClass
      */
     public final <T> T get(final Class<T> objectClass, final String documentID) {
-        final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
         try {
+            final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
+            Reflector.checkClass(objectClass);
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
             return snapshot.toObject(objectClass);
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
             throw new TransactionException(e);
         }
     }
@@ -87,8 +88,13 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @param <T> The type of the object to delete.
      */
     public <T> void delete(final Class<T> objectClass, final String objectID) {
-        final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
-        transaction = transaction.delete(reference);
+        try {
+            Reflector.checkClass(objectClass);
+            final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
+            transaction = transaction.delete(reference);
+        } catch (FirestormObjectException e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
@@ -99,8 +105,9 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @return Returns an ArrayList of type T/objectClass.
      */
     public final <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
-        ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).limit(limit).get();
         try {
+            Reflector.checkClass(objectClass);
+            ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).limit(limit).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
             DocumentReference[] documentReferences = new DocumentReference[NUM_OF_DOCUMENTS];
@@ -117,8 +124,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
                 documentList.add(object);
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
             throw new TransactionException(e);
         }
     }
@@ -131,8 +137,9 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @return Returns an ArrayList of objects of type objectClass.
      */
     public final <T> ArrayList<T> listAll(final Class<T> objectClass) {
-        ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
         try {
+            Reflector.checkClass(objectClass);
+            ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
             DocumentReference[] documentReferences = new DocumentReference[NUM_OF_DOCUMENTS];
@@ -149,8 +156,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
                 documentList.add(object);
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
             throw new TransactionException(e);
         }
     }

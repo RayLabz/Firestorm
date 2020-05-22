@@ -62,6 +62,12 @@ try {
 Firestorm.create(person, error -> {
     System.out.println("Write failed.");
 });</pre>
+
+                <p>or shorter:</p>
+
+                <pre class="prettyprint java green lighten-4">
+Firestorm.create(person);</pre>
+
             </div>
 
         </div>
@@ -118,6 +124,11 @@ try {
 Firestorm.update(person, error -> {
     System.out.println("Update failed.");
 });</pre>
+                <p>or shorter:</p>
+
+                <pre class="prettyprint java green lighten-4">
+Firestorm.update(person);</pre>
+
             </div>
 
         </div>
@@ -177,9 +188,15 @@ try {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Person person = Firestorm.get(Person.class, "X", error -> {
+Person person = Firestorm.get(Person.class, documentID, error -> {
     System.out.println("Get failed.");
 });</pre>
+
+                <p>or shorter:</p>
+
+                <pre class="prettyprint java green lighten-4">
+Person person = Firestorm.get(Person.class, documentID);</pre>
+
             </div>
 
         </div>
@@ -239,7 +256,14 @@ try {
 ArrayList&lt;Person&gt; list = Firestorm.list(Person.class, 10, error -> {
     System.out.println("List failed.");
 });</pre>
+
+                <p>or shorter:</p>
+
+                <pre class="prettyprint java green lighten-4">
+Firestorm.create(Person.class, 10);</pre>
+
             </div>
+
 
         </div>
 
@@ -295,6 +319,12 @@ try {
 Firestorm.delete(person, error -> {
     System.out.println("Delete failed.");
 });</pre>
+
+                <p>or shorter:</p>
+
+                <pre class="prettyprint java green lighten-4">
+Firestorm.delete(person);</pre>
+
             </div>
 
         </div>
@@ -415,14 +445,14 @@ docRef.addSnapshotListener((snapshot, e) -&gt; {
             <div class="col s12 m6">
                 <h6 class="center">Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.attachListener(new FirestormEventListener&lt;Person&gt;(person) {
+Firestorm.attachListener(new OnObjectUpdateListener(person) {
     @Override
     public void onSuccess() {
-        System.out.println("Object updated!");
+        System.out.println(person);
     }
     @Override
     public void onFailure(String failureMessage) {
-        System.out.println("Failed to update object.");
+        System.err.println("Failed to update person");
     }
 });</pre>
             </div>
@@ -697,7 +727,9 @@ lastDocumentID = result.getLastDocumentID();</pre>
 
         <!------------------------------------------------------------------------------------------------------------->
 
-        <a href="index.html">Back to the guide</a>
+        <br/>
+
+        <div class="center"><a href="index.html">Back to the guide</a></div>
 
         <br/><br/>
 

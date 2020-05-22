@@ -75,6 +75,7 @@
                         <li><a href="#basicOperations">Basic operations</a>
                             <ul class="browser-default">
                                 <li><a href="#create">Create</a></li>
+                                <li><a href="#get">Get</a></li>
                                 <li><a href="#update">Update</a></li>
                                 <li><a href="#list">List</a></li>
                                 <li><a href="#listAll">List all</a></li>
@@ -97,7 +98,6 @@
                         <li><a href="#transactions">Transactions</a></li>
                         <li><a href="#batches">Batch writes</a></li>
                         <li><a href="#pagination">Pagination</a></li>
-                        <li><a href="#json">Serialization to JSON</a></li>
                     </ul>
                 </li>
                 <li><a href="#documentation">Documentation</a></li>
@@ -367,10 +367,30 @@ Firestorm.create(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
+            <h5 id="get">Get</h5>
+
+            <p>
+                You can retrieve objects from the Firestore by using <span class="code">Firestore.get()</span> and providing the class of the object and its document ID:</span>
+            </p>
+
+            <pre class="prettyprint java">
+Person person = Firestorm.get(Person.class, documentID);</pre>
+
+            <p>Using an OnFailureListener:</p>
+
+            <pre class="prettyprint java">
+Person person = Firestorm.get(Person.class, documentID, new OnFailureListener() {
+    @Override
+    public void onFailure(Exception e) {
+        System.out.println("FAILED TO GET OBJECT");
+    }
+});</pre>
+
+
             <h5 id="update">Update</h5>
 
             <p>
-                You can update objects by using <span class="code">Firestore.update()</span> and providing your object:
+                You can update objects by using <span class="code">Firestorm.update()</span> and providing your object:
             </p>
 
             <pre class="prettyprint java">
@@ -690,59 +710,47 @@ final boolean hasItems = result.hasItems();</pre>
 
             <p>Firestorm allows you to use Firestore's real-time update features by attaching listeners to objects using
                 the
-                <span class="code">attachListener()</span> method and then implementing a <span class="code">FirestormEventListener</span>.
+                <span class="code">attachListener()</span> method and then implementing an <span class="code">OnObjectUpdateListener</span>.
+                Note that to instantiate a listener you need to provide an object to listen to (in this case 'person'):
             </p>
 
             <pre class="prettyprint java">
-person.attachListener(new FirestormEventListener&lt;Person&gt;(Person.class) {
+Firestorm.attachListener(new OnObjectUpdateListener(person) {
     @Override
-    public void onSuccess(Person object) {
-        System.out.println("Object updated!");
+    public void onSuccess() {
+        System.out.println(person);
     }
 
     @Override
     public void onFailure(String failureMessage) {
-        System.out.println("Failed to update object: " + failureMessage);
+        System.err.println("Failed to update person");
     }
 });</pre>
 
-            <p>Alternatively, you can attach a listener to a Firestore document by specifying its type and document
-                ID:</p>
-
-            <pre class="prettyprint java">
-Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt;Person&gt;(Person.class) {
-    @Override
-    public void onSuccess(Person object) {
-        System.out.println("Object updated!");
-    }
-
-    @Override
-    public void onFailure(String failureMessage) {
-        System.out.println("Failed to update object: " + failureMessage);
-    }
-});</pre>
-
-            <p>You can save the listener in a variable for future reference:</p>
-
-            <pre class="prettyprint java">
-<mark>final ListenerRegistration listenerRegistration</mark> = Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt;Person&gt;(Person.class) {
-    @Override
-    public void onSuccess(Person object) {
-        System.out.println("Object updated!");
-    }
-
-    @Override
-    public void onFailure(String failureMessage) {
-        System.out.println("Failed to update object: " + failureMessage);
-    }
-});</pre>
-
-            <div class="info-panel light-blue lighten-2 white-text">Attaching a listener to an <u>object</u>
-                automatically saves it in the object's <span class="code">listeners</span> list
-                for future reference so you do not need to do that manually.
-                You can obtain the list of listeners for each object by using the method <span class="code">getListeners()</span>
-                on an object.
+            <div class="info-panel light-blue lighten-2 white-text">
+                Firestorm will automatically update your object with the new data once an update is received.
             </div>
+
+            <p>Alternatively, you can attach a listener to a Firestore reference by specifying a class and a document ID:</p>
+
+            <pre class="prettyprint java">
+Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID) {
+    @Override
+    public void onSuccess(Object object) {
+        System.out.println(object);
+    }
+
+    @Override
+    public void onFailure(String failureMessage) {
+        System.err.println("Failed to update person");
+    }
+});</pre>
+
+            <p>The <span class="code">attachListener()</span> method returns a <span class="code">ListenerRegistration</span> object.
+                You can save this object in a variable for future use (such as detaching the listener):</p>
+
+            <pre class="prettyprint java">
+<mark>final ListenerRegistration listenerRegistration</mark> = Firestorm.attachListener ...</pre>
 
             <h6 id="detachListener">Detaching listeners</h6>
 
@@ -752,17 +760,6 @@ Firestorm.attachListener(Person.class, documentID, new FirestormEventListener&lt
 
             <pre class="prettyprint java">
 person.detachListener(listenerRegistration);</pre>
-
-            <p>You can also detach all listeners from an object by using <span class="code">detachAllListeners()</span>:
-            </p>
-
-            <pre class="prettyprint java">
-person.detachAllListeners();</pre>
-
-            <p>To detach a listener that was assigned a Firestore document, you can use:</p>
-
-            <pre class="prettyprint java">
-Firestorm.detachListener(listenerRegistration);</pre>
 
             <hr/>
 
@@ -982,16 +979,6 @@ paginator = Paginator.next(Person.class, lastDocumentID, 50).whereGreaterThan("a
             <pre class="prettyprint java">
 paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");</pre>
 
-            <hr/>
-
-            <h4 id="json">Serialization to JSON</h4>
-
-            <p>You can easily serialize your custom objects to a JSON-formatted <span class="code">String</span> by
-                calling <span class="code">toJson()</span>:</p>
-
-            <pre class="prettyprint">
-String personJSON = person.toJson();</pre>
-
             <!--------------------------------------------------------------------------------------------------------->
 
             <br/>
@@ -1006,13 +993,12 @@ String personJSON = person.toJson();</pre>
             <h3 id="usage">License</h3>
 
             <p>
-                Firestorm is released under the <a href="https://github.com/RayLabz/JSec/blob/master/LICENSE">Apache 2.0
-                license</a>.
+                Firestorm is released under the <a href="https://github.com/RayLabz/Firestorm/blob/master/LICENSE">MIT license</a>.
             </p>
 
             <hr/>
 
-            <h3 id="source">Source code</h3>
+            <h3 id="sourceCode">Source code</h3>
 
             <p>
                 You can find the source code at the project's repository <a

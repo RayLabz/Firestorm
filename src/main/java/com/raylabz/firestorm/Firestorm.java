@@ -141,35 +141,6 @@ public class Firestorm {
         }
     }
 
-//    /**
-//     * Updates a document in Firestore based on the document ID and data of a managed object.
-//     *
-//     * @param object An object which provides data and the document ID for the update.
-//     * @param onFailureListener FailureListener to execute onFailure().
-//     */
-//    public static void update(final FirestormObject object, final OnFailureListener onFailureListener) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
-//        try {
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            onFailureListener.onFailure(e);
-//        }
-//    }
-//
-//    /**
-//     * Updates a document in Firestore based on the document ID and data of a managed object.
-//     *
-//     * @param object An object which provides data and the document ID for the update.
-//     */
-//    public static void update(final FirestormObject object) {
-//        final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(object.getId());
-//        try {
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-
     /**
      * Updates a document in Firestore.
      *

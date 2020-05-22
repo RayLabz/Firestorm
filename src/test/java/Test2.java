@@ -1,7 +1,8 @@
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.ListenerRegistration;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.raylabz.firestorm.Firestorm;
+import com.raylabz.firestorm.*;
 
 import java.io.FileInputStream;
 
@@ -29,10 +30,6 @@ public class Test2 {
 
         Tutor t = new Tutor("tutor", "myTutor", 15, 15);
         Firestorm.create(t);
-
-
-//        System.out.println(t.getId());
-
     }
 
 }
