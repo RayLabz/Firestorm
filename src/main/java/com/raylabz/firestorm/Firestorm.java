@@ -141,6 +141,33 @@ public class Firestorm {
         }
     }
 
+    public static boolean exists(final Class<?> objectClass, final String documentID) {
+        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            return document.exists();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new FirestormException(e);
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
+        }
+    }
+
+    public static boolean exists(final Class<?> objectClass, final String documentID, final OnFailureListener onFailureListener) {
+        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            return document.exists();
+        } catch (InterruptedException | ExecutionException e) {
+            onFailureListener.onFailure(e);
+            return false;
+        } catch (NullPointerException e) {
+            throw new NotInitializedException();
+        }
+    }
+
     /**
      * Updates a document in Firestore.
      *
@@ -358,7 +385,7 @@ public class Firestorm {
      * @return Returns a FirestormFilterable which can be used to append filter parameters.
      */
     public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
-        return new FirestormFilterable<T>(firestore.collection(objectClass.getSimpleName()), objectClass);
+        return new FirestormFilterable<>(firestore.collection(objectClass.getSimpleName()), objectClass);
     }
 
     /**
