@@ -44,7 +44,12 @@ public abstract class FirestormTransaction extends FirestormOperation implements
             final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
             Reflector.checkClass(objectClass);
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
-            return snapshot.toObject(objectClass);
+            if (snapshot.exists()) {
+                return snapshot.toObject(objectClass);
+            }
+            else {
+                return null;
+            }
         } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
             throw new TransactionException(e);
         }

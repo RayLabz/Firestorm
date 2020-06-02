@@ -131,8 +131,9 @@ public class Firestorm {
             DocumentSnapshot document = future.get();
             if (document.exists()) {
                 return document.toObject(objectClass);
-            } else {
-                throw new FirestormException("The document with ID " + documentID + " does not exist.");
+            }
+            else {
+                return null;
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new FirestormException(e);
