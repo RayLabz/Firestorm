@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseOptions;
 import com.raylabz.firestorm.*;
 
 import java.io.FileInputStream;
+import java.util.Scanner;
 
 public class Test2 {
 
@@ -30,6 +31,22 @@ public class Test2 {
 
         Tutor t = new Tutor("tutor", "myTutor", 15, 15);
         Firestorm.create(t);
+
+        Firestorm.attachListener(new OnObjectUpdateListener(t) {
+            @Override
+            public void onSuccess() {
+                System.out.println(t);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                System.err.println("Error -> " + failureMessage);
+            }
+        });
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+
     }
 
 }

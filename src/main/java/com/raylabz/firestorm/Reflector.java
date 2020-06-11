@@ -1,5 +1,6 @@
 package com.raylabz.firestorm;
 
+import com.google.common.collect.Lists;
 import com.raylabz.firestorm.annotation.FirestormObject;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 
@@ -7,6 +8,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 
 final class Reflector {
 
@@ -210,6 +213,11 @@ final class Reflector {
         }
     }
 
+    /**
+     * Finds an underlying ID fields froma superclass provided.
+     * @param clazz The superclass.
+     * @return Returns a field.
+     */
     static Field findUnderlyingIDField(Class<?> clazz) {
         Class<?> current = clazz;
         do {
@@ -219,5 +227,22 @@ final class Reflector {
         } while((current = current.getSuperclass()) != null);
         return null;
     }
+
+    /**
+     * Finds all fields from a startClasse's superclasses.
+     * @param startClass The starting class to find the ID field for.
+     * @param superClass The last super class to search in for the field.
+     * @return Returns an ArrayList of Fields.
+     */
+    public static ArrayList<Field> getSuperclassFields(Class<?> startClass, Class<?> superClass) {
+        ArrayList<Field> currentClassFields = Lists.newArrayList(startClass.getDeclaredFields());
+        Class<?> parentClass = startClass.getSuperclass();
+        if (parentClass != null && (superClass == null || !(parentClass.equals(superClass)))) {
+            List<Field> parentClassFields = (List<Field>) getSuperclassFields(parentClass, superClass);
+            currentClassFields.addAll(parentClassFields);
+        }
+        return currentClassFields;
+    }
+
 
 }

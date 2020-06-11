@@ -46,7 +46,12 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
 
         //Check ID of objectToListenFor:
         try {
-            Field idField = objectToListenFor.getClass().getDeclaredField("id");
+            Reflector.checkObject(objectToListenFor);
+            Field idField = Reflector.findUnderlyingIDField(objectToListenFor.getClass());
+            if (idField == null) {
+                onFailure("Missing ID field in class hierarchy for class '" + objectToListenFor.getClass().getSimpleName() + "'.");
+                return;
+            }
             boolean accessible = idField.isAccessible();
             idField.setAccessible(true);
             final String idValue = (String) idField.get(objectToListenFor);
@@ -54,7 +59,7 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
             if (idValue == null) {
                 return;
             }
-        } catch (IllegalAccessException | NoSuchFieldException ex) {
+        } catch (IllegalAccessException | FirestormObjectException ex) {
             onFailure(ex.getMessage());
             return;
         }
@@ -81,6 +86,9 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
                         return;
                     }
                 }
+
+                //TODO - Use getSuperclassFields() from Reflector class to find the fields of this from ALL its super classes and change their values
+
 
                 onSuccess();
 
