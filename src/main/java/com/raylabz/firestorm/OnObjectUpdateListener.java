@@ -73,6 +73,7 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
                     return;
                 }
 
+                //Retrieve values for fields for this class:
                 final Field[] declaredFields = objectToListenFor.getClass().getDeclaredFields();
                 for (Field f : declaredFields) {
                     try {
@@ -87,8 +88,20 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
                     }
                 }
 
-                //TODO - Use getSuperclassFields() from Reflector class to find the fields of this from ALL its super classes and change their values
-
+                //Retrieve values for fields for this classe's superclasses:
+                final ArrayList<Field> superclassFields = Reflector.getSuperclassFields(objectToListenFor.getClass(), Object.class);
+                for (Field f : superclassFields) {
+                    try {
+                        final boolean accessible = f.isAccessible();
+                        f.setAccessible(true);
+                        final Object valueOfFetchedObject = f.get(fetchedObject);
+                        f.set(objectToListenFor, valueOfFetchedObject);
+                        f.setAccessible(accessible);
+                    } catch (IllegalAccessException ex) {
+                        onFailure(ex.getMessage());
+                        return;
+                    }
+                }
 
                 onSuccess();
 
