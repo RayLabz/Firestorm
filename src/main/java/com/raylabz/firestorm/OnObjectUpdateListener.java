@@ -10,6 +10,7 @@ import com.sun.corba.se.impl.io.TypeMismatchException;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
 /**
@@ -76,30 +77,34 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
                 //Retrieve values for fields for this class:
                 final Field[] declaredFields = objectToListenFor.getClass().getDeclaredFields();
                 for (Field f : declaredFields) {
-                    try {
-                        final boolean accessible = f.isAccessible();
-                        f.setAccessible(true);
-                        final Object valueOfFetchedObject = f.get(fetchedObject);
-                        f.set(objectToListenFor, valueOfFetchedObject);
-                        f.setAccessible(accessible);
-                    } catch (IllegalAccessException ex) {
-                        onFailure(ex.getMessage());
-                        return;
+                    if (!Modifier.isStatic(f.getModifiers())) {
+                        try {
+                            final boolean accessible = f.isAccessible();
+                            f.setAccessible(true);
+                            final Object valueOfFetchedObject = f.get(fetchedObject);
+                            f.set(objectToListenFor, valueOfFetchedObject);
+                            f.setAccessible(accessible);
+                        } catch (IllegalAccessException ex) {
+                            onFailure(ex.getMessage());
+                            return;
+                        }
                     }
                 }
 
-                //Retrieve values for fields for this classe's superclasses:
+                //Retrieve values for non-static fields for this class' superclasses:
                 final ArrayList<Field> superclassFields = Reflector.getSuperclassFields(objectToListenFor.getClass(), Object.class);
                 for (Field f : superclassFields) {
-                    try {
-                        final boolean accessible = f.isAccessible();
-                        f.setAccessible(true);
-                        final Object valueOfFetchedObject = f.get(fetchedObject);
-                        f.set(objectToListenFor, valueOfFetchedObject);
-                        f.setAccessible(accessible);
-                    } catch (IllegalAccessException ex) {
-                        onFailure(ex.getMessage());
-                        return;
+                    if (!Modifier.isStatic(f.getModifiers())) {
+                        try {
+                            final boolean accessible = f.isAccessible();
+                            f.setAccessible(true);
+                            final Object valueOfFetchedObject = f.get(fetchedObject);
+                            f.set(objectToListenFor, valueOfFetchedObject);
+                            f.setAccessible(accessible);
+                        } catch (IllegalAccessException ex) {
+                            onFailure(ex.getMessage());
+                            return;
+                        }
                     }
                 }
 
