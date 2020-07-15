@@ -29,6 +29,7 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
     /**
      * Instantiates an OnReferenceUpdateListener.
      * @param objectClass The type of object this listener will be attached to.
+     * @param documentID The document ID of the object.
      */
     public OnReferenceUpdateListener(final Class<?> objectClass, final String documentID) {
         this.objectClass = objectClass;
@@ -84,6 +85,7 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
 
     /**
      * Implements logic upon success of data update delivery.
+     * @param object The updated object.
      */
     public abstract void onSuccess(Object object);
 
