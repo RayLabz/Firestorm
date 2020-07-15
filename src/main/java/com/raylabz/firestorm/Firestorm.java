@@ -142,6 +142,13 @@ public final class Firestorm {
         }
     }
 
+    /**
+     * Checks if a given documentID of a given class exists.
+     *
+     * @param objectClass The object class.
+     * @param documentID The document ID.
+     * @return Returns true if the document exists on Firestore, false otherwise.
+     */
     public static boolean exists(final Class<?> objectClass, final String documentID) {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -155,6 +162,14 @@ public final class Firestorm {
         }
     }
 
+    /**
+     * Checks if a given documentID of a given class exists.
+     *
+     * @param objectClass The object class.
+     * @param documentID The document ID.
+     * @param onFailureListener A failure listener.
+     * @return Returns true if the document exists on Firestore, false otherwise.
+     */
     public static boolean exists(final Class<?> objectClass, final String documentID, final OnFailureListener onFailureListener) {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -208,6 +223,7 @@ public final class Firestorm {
 
     /**
      * Deletes an object from Firestore.
+     *
      * @param objectClass The class of the object to delete.
      * @param objectID The ID of the object/document in Firestore.
      * @param <T> The type (class) of the object.
@@ -225,6 +241,7 @@ public final class Firestorm {
 
     /**
      * Deletes an object from Firestore.
+     *
      * @param objectClass The class of the object to delete.
      * @param objectID The ID of the object/document in Firestore.
      * @param <T> The type (class) of the object.
@@ -243,6 +260,7 @@ public final class Firestorm {
 
     /**
      * Deletes an object from Firestore.
+     *
      * @param object The object to delete.
      * @param <T> The type (class) of the object.
      */
@@ -262,6 +280,7 @@ public final class Firestorm {
 
     /**
      * Deletes an object from Firestore.
+     *
      * @param object The object to delete.
      * @param onFailureListener OnFailureListener to execute onFailure().
      * @param <T> The type (class) of the object.

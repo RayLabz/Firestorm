@@ -10,31 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/hfnov.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnCompletionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnCompletionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnFailureListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnFailureListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnObjectUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnObjectUpdateListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnReferenceUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnReferenceUpdateListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnSuccessListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnSuccessListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/QueryResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/QueryResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Reflector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Reflector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/annotation/FirestormObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/annotation/FirestormObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/BatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/BatchException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormObjectException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormObjectException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/NotInitializedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/NotInitializedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TransactionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TransactionException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +155,7 @@
       <workItem from="1592379126249" duration="333000" />
       <workItem from="1592379935394" duration="2898000" />
       <workItem from="1593591676939" duration="244000" />
-      <workItem from="1594842964343" duration="792000" />
+      <workItem from="1594842964343" duration="1016000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
@@ -216,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591946289730</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Improved JavaDoc.">
+      <created>1594843815932</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1594843815932</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +212,8 @@
     <MESSAGE value="Added retrieval of values from superclass fields and setting them in updated object in OnObjectUpdateListener." />
     <MESSAGE value="Added Firestorm.registeredListeners with Firestorm.registerListener, Firestorm.unregisterListener, Firestorm.getListener and Firestorm.hasListener." />
     <MESSAGE value="Added handling for non-statics only on OnObjectUpdateListener." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added handling for non-statics only on OnObjectUpdateListener." />
+    <MESSAGE value="Improved JavaDoc." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved JavaDoc." />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="181" key="#Project_Structure" timestamp="1587751353746">
@@ -252,10 +236,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587719722945" />
-    <state x="517" y="115" key="CommitChangelistDialog2" timestamp="1591946288361">
+    <state x="517" y="115" key="CommitChangelistDialog2" timestamp="1594843812830">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="517" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591946288361" />
+    <state x="517" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1594843812830" />
     <state x="739" y="286" key="FileChooserDialogImpl" timestamp="1590135753866">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -276,10 +260,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591904071360" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1591946290900">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1594843817304">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591946290900" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1594843817304" />
     <state x="771" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587765850877">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
