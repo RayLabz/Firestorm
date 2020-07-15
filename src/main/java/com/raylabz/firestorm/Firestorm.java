@@ -15,10 +15,8 @@ import java.util.concurrent.ExecutionException;
 /*
  * Firestorm is an object-oriented data access API for Firestore.
  * https://raylabz.github.io/Firestorm/
+ * @author Nicos Kasenides
  * @version 1.0.0
- *
- * @author RayLabz 2020
- * https://www.raylabz.com
  */
 
 /**
@@ -40,7 +38,7 @@ public final class Firestorm {
             The initial call to Firestore has high latency so it is preferable to make a dummy request
             as soon as the object is initialized instead of waiting to make the first connection when a real request is made.
          */
-//        firestore.listCollections();
+        firestore.listCollections();
     }
 
     /**

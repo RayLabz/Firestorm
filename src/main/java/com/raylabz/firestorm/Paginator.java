@@ -12,8 +12,9 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Enables easy pagination.
- *
  * @param <T> The type of objects returned by the paginator.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public class Paginator<T> implements Filterable<T> {
 

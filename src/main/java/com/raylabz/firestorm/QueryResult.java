@@ -6,6 +6,8 @@ import java.util.ArrayList;
 /**
  * Models a result returned from a query.
  * @param <T> The type of objects in the result.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public class QueryResult<T> {
 

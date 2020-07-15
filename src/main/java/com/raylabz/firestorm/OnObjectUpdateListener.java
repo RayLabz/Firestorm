@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 /**
  * Implements logic for Firestore update events.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public abstract class OnObjectUpdateListener implements EventListener<DocumentSnapshot> {
 

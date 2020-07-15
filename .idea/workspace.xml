@@ -10,8 +10,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/hfnov.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Filterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormBatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnCompletionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnCompletionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnFailureListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnFailureListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnObjectUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnObjectUpdateListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnReferenceUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnReferenceUpdateListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnSuccessListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnSuccessListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/QueryResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/QueryResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Reflector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Reflector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/TransactionFilterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/annotation/FirestormObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/annotation/FirestormObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/BatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/BatchException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormObjectException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/FirestormObjectException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/NotInitializedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/NotInitializedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TransactionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/exception/TransactionException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +175,11 @@
       <workItem from="1591089601757" duration="3447000" />
       <workItem from="1591890059725" duration="1800000" />
       <workItem from="1591903006439" duration="3230000" />
-      <workItem from="1591944340933" duration="1922000" />
+      <workItem from="1591944340933" duration="4981000" />
+      <workItem from="1592379126249" duration="333000" />
+      <workItem from="1592379935394" duration="2898000" />
+      <workItem from="1593591676939" duration="244000" />
+      <workItem from="1594842964343" duration="792000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
@@ -182,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591945226330</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added handling for non-statics only on OnObjectUpdateListener.">
+      <created>1591946289730</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1591946289730</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,36 +228,21 @@
     <MESSAGE value="Changed get() methods to return null when an object is not found instead of yielding an exception." />
     <MESSAGE value="Added retrieval of values from superclass fields and setting them in updated object in OnObjectUpdateListener." />
     <MESSAGE value="Added Firestorm.registeredListeners with Firestorm.registerListener, Firestorm.unregisterListener, Firestorm.getListener and Firestorm.hasListener." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Firestorm.registeredListeners with Firestorm.registerListener, Firestorm.unregisterListener, Firestorm.getListener and Firestorm.hasListener." />
+    <MESSAGE value="Added handling for non-statics only on OnObjectUpdateListener." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added handling for non-statics only on OnObjectUpdateListener." />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="181" key="#Project_Structure" timestamp="1587751353746">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="181" key="#Project_Structure/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587751353746" />
-    <state x="414" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585948481683">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="177" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585948481683" />
     <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1591891386558">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="665" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1739.939@0.0.1739.939" timestamp="1585654314310" />
     <state x="734" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591891386558" />
-    <state x="796" y="401" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585725751471">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="721" y="362" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1739.939@0.0.1739.939" timestamp="1585653039640" />
-    <state x="796" y="401" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585725751471" />
-    <state x="607" y="231" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1585422282500">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="550" y="209" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1739.939@0.0.1739.939" timestamp="1585332515939" />
-    <state x="607" y="231" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585422282500" />
     <state x="309" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1587830713587">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="362" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1739.939@0.0.1739.939" timestamp="1585656054995" />
     <state x="309" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587830713587" />
     <state x="690" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587833453004">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -233,10 +252,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="722" y="286" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587719722945" />
-    <state x="558" y="115" key="CommitChangelistDialog2" timestamp="1591945224719">
+    <state x="517" y="115" key="CommitChangelistDialog2" timestamp="1591946288361">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="558" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591945224719" />
+    <state x="517" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591946288361" />
     <state x="739" y="286" key="FileChooserDialogImpl" timestamp="1590135753866">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -244,43 +263,31 @@
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1591904071360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1696" height="248" key="GridCell.Tab.0.bottom/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591904071360" />
     <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1591904071360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1696" height="248" key="GridCell.Tab.0.center/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
     <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591904071360" />
     <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1591904071360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1696" height="248" key="GridCell.Tab.0.left/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
     <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591904071360" />
     <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1591904071360">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1696" height="248" key="GridCell.Tab.0.right/0.0.1739.939@0.0.1739.939" timestamp="1585656651893" />
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591904071360" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1591945228070">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1591946290900">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591945228070" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1591946290900" />
     <state x="771" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587765850877">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="771" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587765850877" />
-    <state x="519" y="52" width="1551" height="1028" key="dock-window-1" timestamp="1585818393978">
+    <state x="667" y="276" width="710" height="546" key="find.popup" timestamp="1594843216938">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="519" y="52" width="1551" height="1028" key="dock-window-1/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585818393978" />
-    <state x="667" y="276" width="710" height="546" key="find.popup" timestamp="1589699878788">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="667" y="276" width="710" height="546" key="find.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1589699878788" />
-    <state x="158" y="146" key="new project wizard" timestamp="1585948635560">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="158" y="146" key="new project wizard/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585948635560" />
+    <state x="667" y="276" width="710" height="546" key="find.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1594843216938" />
     <state x="702" y="145" key="refactoring.ChangeSignatureDialog" timestamp="1587767713150">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -289,10 +296,5 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1587752559097" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585753934654">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="564" y="203" width="672" height="613" key="search.everywhere.popup/0.0.1739.939@0.0.1739.939" timestamp="1585653822003" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1080@0.0.1920.1040" timestamp="1585753934654" />
   </component>
 </project>

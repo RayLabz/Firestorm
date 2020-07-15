@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Enables Firestore transactions.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public abstract class FirestormTransaction extends FirestormOperation implements Transaction.Function<Void> {
 

@@ -4,6 +4,8 @@ import com.raylabz.firestorm.exception.FirestormException;
 
 /**
  * Abstracts a Firestorm operation, its execution and callbacks.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public abstract class FirestormOperation implements OnCompletionListener {
 

@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 /**
  * A filterable used in transactions.
  * @param <T> The type of objects used in this transaction filterable.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public class TransactionFilterable<T> extends FirestormFilterable<T> {
 

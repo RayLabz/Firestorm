@@ -11,6 +11,11 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains utility methods used for reflection, mainly class and field checking.
+ * @author Nicos Kasenides
+ * @version 1.0.0
+ */
 final class Reflector {
 
     /**

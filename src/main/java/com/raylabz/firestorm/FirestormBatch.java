@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Enables Firestore batch writes.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public abstract class FirestormBatch extends FirestormOperation {
 

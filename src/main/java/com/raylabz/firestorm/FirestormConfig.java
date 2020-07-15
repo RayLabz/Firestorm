@@ -9,6 +9,8 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Stores Firestore configuration - enables quick parsing of service account files.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public class FirestormConfig {
 

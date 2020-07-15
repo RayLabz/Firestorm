@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 
 /**
  * Implements logic for Firestore update events.
+ * @author Nicos Kasenides
+ * @version 1.0.0
  */
 public abstract class OnReferenceUpdateListener implements EventListener<DocumentSnapshot> {
 
