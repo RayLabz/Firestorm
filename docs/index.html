@@ -76,6 +76,7 @@
                             <ul class="browser-default">
                                 <li><a href="#create">Create</a></li>
                                 <li><a href="#get">Get</a></li>
+                                <li><a href="#exists">Exists</a></li>
                                 <li><a href="#update">Update</a></li>
                                 <li><a href="#list">List</a></li>
                                 <li><a href="#listAll">List all</a></li>
@@ -93,6 +94,8 @@
                             <ul class="browser-default">
                                 <li><a href="#attachListener">Attaching listeners</a></li>
                                 <li><a href="#detachListener">Detaching listeners</a></li>
+                                <li><a href="#hasListener">Checking if object has an attached listener</a></li>
+                                <li><a href="#getListener">Get last attached listener</a></li>
                             </ul>
                         </li>
                         <li><a href="#transactions">Transactions</a></li>
@@ -108,29 +111,25 @@
 
             <h3 id="downloadAndImport">Download and import</h3>
 
-<!--            <p>You can easily import Firestorm in your project using Maven or Gradle:</p>-->
+            <p>You can easily import Firestorm in your project using Maven or Gradle:</p>
 
-<!--            <p><b><u>Maven:</u></b></p>-->
+            <p><b><u>Maven:</u></b></p>
 
-<!--            <pre class="prettyprint">-->
-<!--                TODO-->
-<!--            </pre>-->
+            <pre class="prettyprint">&lt;dependency&gt;
+  &lt;groupId&gt;com.raylabz&lt;/groupId&gt;
+  &lt;artifactId&gt;firestorm&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;</pre>
 
-<!--            <p><b><u>Gradle:</u></b></p>-->
+            <p><b><u>Gradle:</u></b></p>
 
-<!--            <pre class="prettyprint">implementation 'com.raylabz:firestorm:1.0.0'</pre>-->
+            <pre class="prettyprint">implementation 'com.raylabz:firestorm:1.0.0'</pre>
 
-<!--            <p>-->
-<!--                Alternatively, you can download Firestorm as a .jar library:-->
-<!--            </p>-->
+            <p>
+                Alternatively, you can download Firestorm as a .jar file:
+            </p>
 
-<!--            <a class="btn orange darken-4" href="#">Download-->
-<!--                .jar</a>-->
-
-            <div class="card-panel red lighten-3">
-                This library is still in beta - downloads and import support will be added on release.
-            </div>
-
+            <a class="btn btn-flat orange darken-3 white-text" href="https://github.com/RayLabz/Firestorm/raw/master/jar/Firestorm-1.0.0.jar">Download Jar</a>
 
             <h3 id="guide">Guide</h3>
 
@@ -332,6 +331,8 @@ public class Person {
 
             <h4 id="basicOperations">Basic operations</h4>
 
+            <!---------------------------------------------------------------------------------------------------->
+
             <h5 id="create">Create</h5>
 
             <p>
@@ -371,14 +372,18 @@ Firestorm.create(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
+            <!---------------------------------------------------------------------------------------------------->
+
             <h5 id="get">Get</h5>
 
             <p>
-                You can retrieve objects from the Firestore by using <span class="code">Firestore.get()</span> and providing the class of the object and its document ID:</span>
+                You can retrieve objects from the Firestore by using <span class="code">Firestore.get()</span> and providing the class of the object and its document ID:
             </p>
 
             <pre class="prettyprint java">
 Person person = Firestorm.get(Person.class, documentID);</pre>
+
+            <p>The <span class="code">get()</span> method will return <span class="code">null</span> when the object does not exist or Firestorm fails to fetch the object from Firestore.</p>
 
             <p>Using an OnFailureListener:</p>
 
@@ -389,6 +394,22 @@ Person person = Firestorm.get(Person.class, documentID, new OnFailureListener() 
         System.out.println("FAILED TO GET OBJECT");
     }
 });</pre>
+
+            <!---------------------------------------------------------------------------------------------------->
+
+            <h5 id="exists">Exists</h5>
+
+            <p>You can check if an object document exists on Firestore by providing its class and a document ID:</p>
+
+            <pre class="prettyprint java">
+if (Firestorm.exists(Person.class, documentID)) {
+    //TODO - Document exists...
+}
+else {
+    //TODO - Document does not exist...
+}</pre>
+
+            <!---------------------------------------------------------------------------------------------------->
 
 
             <h5 id="update">Update</h5>
@@ -410,6 +431,8 @@ Firestorm.update(person, error -> {
             <div class="info-panel light-blue lighten-2 white-text">Only changed attributes will be updated on
                 Firestore.
             </div>
+
+            <!---------------------------------------------------------------------------------------------------->
 
             <h5 id="list">List</h5>
 
@@ -442,6 +465,8 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> 
                 of objects retrieved.
             </div>
 
+            <!---------------------------------------------------------------------------------------------------->
+
             <h5 id="listAll">List all</h5>
 
             <p>
@@ -468,6 +493,8 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
             <div class="info-panel light-blue lighten-2 white-text">
                 For properly listing large numbers of objects, consider using <a class="yellow-text" href="#pagination">Pagination</a>.
             </div>
+
+            <!---------------------------------------------------------------------------------------------------->
 
             <h5 id="delete">Delete</h5>
 
@@ -513,6 +540,8 @@ DocumentReference objectReference = Firestorm.getObjectReference(Person.class, d
 CollectionReference collectionReference = Firestorm.getCollectionReference(Person.class);</pre>
 
             <hr/>
+
+            <!---------------------------------------------------------------------------------------------------->
 
             <h4 id="filtering">Filtering</h4>
 
@@ -579,6 +608,8 @@ final boolean hasItems = result.hasItems();</pre>
                     here</a>
                 to learn more about composite Firebase indexes.
             </div>
+
+            <!---------------------------------------------------------------------------------------------------->
 
             <h5 id="filtersReference">Filters reference</h5>
 
@@ -708,6 +739,8 @@ final boolean hasItems = result.hasItems();</pre>
 
             <hr/>
 
+            <!---------------------------------------------------------------------------------------------------->
+
             <h4 id="realTimeUpdates">Real-time updates</h4>
 
             <h6 id="attachListener">Attaching listeners</h6>
@@ -765,7 +798,22 @@ Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID)
             <pre class="prettyprint java">
 person.detachListener(listenerRegistration);</pre>
 
+            <h6 id="hasListener">Checking if object has an attached listener</h6>
+
+            <p>The <span class="code">Firestorm.hasListener()</span> method allows you to check if an object has an attached listener:</p>
+
+            <pre class="prettyprint java">
+Firestorm.hasListener(person);</pre>
+
+            <h6 id="getListener">Get last attached object listener</h6>
+
+            <p>The <span class="code">Firestorm.getListener()</span> method allows you to retrieve an object's last attached listener:</p>
+
+            <pre class="prettyprint java">ListenerRegistration listener = Firestorm.getListener(person);</pre>
+
             <hr/>
+
+            <!---------------------------------------------------------------------------------------------------->
 
             <h4 id="transactions">Transactions</h4>
 

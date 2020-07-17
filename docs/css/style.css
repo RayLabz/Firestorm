@@ -83,6 +83,8 @@ p {
     padding: 10px;
     border-radius: 2px;
     text-align: center;
+    width: 80%;
+    margin: auto;
 }
 
 h5 {

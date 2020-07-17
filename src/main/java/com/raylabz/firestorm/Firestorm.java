@@ -22,7 +22,14 @@ import java.util.concurrent.ExecutionException;
  */
 public final class Firestorm {
 
+    /**
+     * Static Firestore object used to make queries on Firestore.
+     */
     static Firestore firestore;
+
+    /**
+     * Stores a list of listeners registered to objects.
+     */
     private static final HashMap<Object, ListenerRegistration> registeredListeners = new HashMap<>();
 
     /**
@@ -33,7 +40,7 @@ public final class Firestorm {
 
         /* Dummy request used for initialization:
             The initial call to Firestore has high latency so it is preferable to make a dummy request
-            as soon as the object is initialized instead of waiting to make the first connection when a real request is made.
+            as soon as Firebase is initialized instead of waiting to make the first connection when an actual request is made.
          */
         firestore.listCollections();
     }
@@ -441,7 +448,7 @@ public final class Firestorm {
     }
 
     /**
-     * Registers a listener in the registeredListeners map.
+     * Utility method. Registers a listener in the registeredListeners map.
      * @param object The object being listened to.
      * @param listenerRegistration The listener of the object.
      */
@@ -460,7 +467,7 @@ public final class Firestorm {
     }
 
     /**
-     * Attaches an event listener which listens for updates to an object.
+     * Utility method. Attaches an event listener which listens for updates to an object.
      *
      * @param eventListener An implementation of a FirestormEventListener.
      * @return Returns a ListenerRegistration.
