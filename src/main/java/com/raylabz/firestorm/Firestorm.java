@@ -3,6 +3,7 @@ package com.raylabz.firestorm;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.raylabz.firestorm.exception.ClassRegistrationException;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.FirestormException;
 import com.raylabz.firestorm.exception.NotInitializedException;
@@ -51,6 +52,41 @@ public final class Firestorm {
     private Firestorm() { }
 
     /**
+     * Registers a class.
+     * @param aClass The class to register.
+     * @throws FirestormException Thrown when the class cannot be registered.
+     */
+    public static void register(Class<?> aClass) throws FirestormException {
+        try {
+            FirestormRegistry.register(aClass);
+        } catch (FirestormObjectException e) {
+            throw new FirestormException(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks if an object's class is registered.
+     * @param object The object to check the class of.
+     * @throws ClassRegistrationException Thrown when the object's class is not registered.
+     */
+    static void checkRegistration(final Object object) throws ClassRegistrationException {
+        if (!FirestormRegistry.isRegistered(object.getClass())) {
+            throw new ClassRegistrationException(object.getClass());
+        }
+    }
+
+    /**
+     * Checks if a class is registered.
+     * @param aClass The class to check.
+     * @throws ClassRegistrationException Thrown when the class is not registered.
+     */
+    static void checkRegistration(final Class<?> aClass) throws ClassRegistrationException {
+        if (!FirestormRegistry.isRegistered(aClass)) {
+            throw new ClassRegistrationException(aClass);
+        }
+    }
+
+    /**
      * Creates a Firestore document from an object.
      *
      * @param object An object containing the data to be written in Firestore.
@@ -59,15 +95,13 @@ public final class Firestorm {
      */
     public static String create(final Object object, final OnFailureListener onFailureListener) {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
             reference.set(object).get();
             return reference.getId();
-        } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             onFailureListener.onFailure(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
         return null;
     }
@@ -77,18 +111,58 @@ public final class Firestorm {
      *
      * @param object An object containing the data to be written in Firestore.
      * @return Returns the document ID of the created document.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static String create(final Object object) {
+    public static String create(final Object object) throws FirestormException {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
             reference.set(object).get();
             return reference.getId();
-        } catch (InterruptedException | ExecutionException | FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
+        }
+    }
+
+    /**
+     * Creates a Firestore document from an object with a specific ID.
+     *
+     * @param object An object containing the data to be written in Firestore.
+     * @param id The ID of the object to create.
+     * @param onFailureListener FailureListener to execute onFailure().
+     * @return Returns the document ID of the created document.
+     */
+    public static String create(final Object object, final String id, final OnFailureListener onFailureListener) {
+        try {
+            checkRegistration(object);
+            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(id);
+            Reflector.setIDField(object, reference.getId());
+            reference.set(object).get();
+            return reference.getId();
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
+            onFailureListener.onFailure(e);
+        }
+        return null;
+    }
+
+    /**
+     * Creates a Firestore document from an object.
+     *
+     * @param object An object containing the data to be written in Firestore.
+     * @param id The ID of the object to create.
+     * @return Returns the document ID of the created document.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
+     */
+    public static String create(final Object object, final String id) throws FirestormException {
+        try {
+            checkRegistration(object);
+            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(id);
+            Reflector.setIDField(object, reference.getId());
+            reference.set(object).get();
+            return reference.getId();
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
+            throw new FirestormException(e);
         }
     }
 
@@ -112,11 +186,9 @@ public final class Firestorm {
                 onFailureListener.onFailure(new FirestormException("The document with ID " + documentID + " does not exist."));
                 return null;
             }
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             onFailureListener.onFailure(e);
             return null;
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -127,8 +199,9 @@ public final class Firestorm {
      * @param documentID  The documentID of the object to retrieve.
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an object of type T (objectClass).
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static <T> T get(final Class<T> objectClass, final String documentID) {
+    public static <T> T get(final Class<T> objectClass, final String documentID) throws FirestormException {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
@@ -139,10 +212,8 @@ public final class Firestorm {
             else {
                 return null;
             }
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -152,17 +223,16 @@ public final class Firestorm {
      * @param objectClass The object class.
      * @param documentID The document ID.
      * @return Returns true if the document exists on Firestore, false otherwise.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static boolean exists(final Class<?> objectClass, final String documentID) {
+    public static boolean exists(final Class<?> objectClass, final String documentID) throws FirestormException {
         DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();
             return document.exists();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -180,11 +250,9 @@ public final class Firestorm {
         try {
             DocumentSnapshot document = future.get();
             return document.exists();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             onFailureListener.onFailure(e);
             return false;
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -196,14 +264,12 @@ public final class Firestorm {
      */
     public static void update(final Object object, final OnFailureListener onFailureListener) {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.set(object).get();
-        } catch (InterruptedException | ExecutionException | FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | IllegalAccessException | NoSuchFieldException | NotInitializedException e) {
             onFailureListener.onFailure(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -211,17 +277,16 @@ public final class Firestorm {
      * Updates a document in Firestore.
      *
      * @param object An object which provides data and the document ID for the update.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static void update(final Object object) {
+    public static void update(final Object object) throws FirestormException {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.set(object).get();
-        } catch (InterruptedException | ExecutionException | FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException | IllegalAccessException | NoSuchFieldException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -231,15 +296,14 @@ public final class Firestorm {
      * @param objectClass The class of the object to delete.
      * @param objectID The ID of the object/document in Firestore.
      * @param <T> The type (class) of the object.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static <T> void delete(final Class<T> objectClass, final String objectID) {
+    public static <T> void delete(final Class<T> objectClass, final String objectID) throws FirestormException {
         final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
         try {
             reference.delete().get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -250,15 +314,14 @@ public final class Firestorm {
      * @param objectID The ID of the object/document in Firestore.
      * @param <T> The type (class) of the object.
      * @param onFailureListener OnFailureListener to execute onFailure().
+     * @throws NotInitializedException Thrown when the reference to an object cannot be initialized.
      */
     public static <T> void delete(final Class<T> objectClass, final String objectID, final OnFailureListener onFailureListener) {
         final DocumentReference reference = firestore.collection(objectClass.getSimpleName()).document(objectID);
         try {
             reference.delete().get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             onFailureListener.onFailure(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -267,18 +330,17 @@ public final class Firestorm {
      *
      * @param object The object to delete.
      * @param <T> The type (class) of the object.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static <T> void delete(final Object object) {
+    public static <T> void delete(final Object object) throws FirestormException {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.delete().get();
             Reflector.setIDField(object, null);
-        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
+        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | ClassRegistrationException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -291,15 +353,13 @@ public final class Firestorm {
      */
     public static <T> void delete(final Object object, final OnFailureListener onFailureListener) {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final String documentID = Reflector.getIDField(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
             reference.delete().get();
             Reflector.setIDField(object, null);
-        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
+        } catch (InterruptedException | ExecutionException | IllegalAccessException | NoSuchFieldException | ClassRegistrationException | NotInitializedException e) {
             onFailureListener.onFailure(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -321,11 +381,9 @@ public final class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             onFailureListener.onFailure(e);
             return null;
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -336,8 +394,9 @@ public final class Firestorm {
      * @param limit       The maximum number of objects to return.
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
+    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) throws FirestormException {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -346,10 +405,8 @@ public final class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -370,11 +427,9 @@ public final class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             onFailureListener.onFailure(e);
             return null;
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -384,8 +439,9 @@ public final class Firestorm {
      * @param objectClass The type of the documents to filter.
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static <T> ArrayList<T> listAll(final Class<T> objectClass) {
+    public static <T> ArrayList<T> listAll(final Class<T> objectClass) throws FirestormException {
         ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -394,10 +450,8 @@ public final class Firestorm {
                 documentList.add(document.toObject(objectClass));
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -424,15 +478,21 @@ public final class Firestorm {
         return firestore.collection(objectClass.getSimpleName()).document(documentID);
     }
 
-    public static <T> DocumentReference getObjectReference(Object object) {
+    /**
+     * Retrieves a DocumentReference to an object.
+     *
+     * @param object The object to get the reference for.
+     * @param <T> The type of the object.
+     * @return Returns DocumentReference.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
+     */
+    public static <T> DocumentReference getObjectReference(Object object) throws FirestormException {
         try {
-            Reflector.checkObject(object);
+            checkRegistration(object);
             final String documentID = Reflector.getIDField(object);
             return firestore.collection(object.getClass().getSimpleName()).document(documentID);
-        } catch (IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
+        } catch (IllegalAccessException | NoSuchFieldException | ClassRegistrationException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 
@@ -471,18 +531,17 @@ public final class Firestorm {
      *
      * @param eventListener An implementation of a FirestormEventListener.
      * @return Returns a ListenerRegistration.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
      */
-    public static ListenerRegistration attachListener(final OnObjectUpdateListener eventListener) {
+    public static ListenerRegistration attachListener(final OnObjectUpdateListener eventListener) throws FirestormException {
         try {
-            Reflector.checkObject(eventListener.getObjectToListenFor());
+            checkRegistration(eventListener.getObjectToListenFor());
             final String documentID = Reflector.getIDField(eventListener.getObjectToListenFor());
             final ListenerRegistration listenerRegistration = firestore.collection(eventListener.getObjectToListenFor().getClass().getSimpleName()).document(documentID).addSnapshotListener(eventListener);
             registerListener(eventListener.getObjectToListenFor(), listenerRegistration);
             return listenerRegistration;
-        } catch (FirestormObjectException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException | ClassRegistrationException | NotInitializedException e) {
             throw new FirestormException(e);
-        } catch (NullPointerException e) {
-            throw new NotInitializedException();
         }
     }
 

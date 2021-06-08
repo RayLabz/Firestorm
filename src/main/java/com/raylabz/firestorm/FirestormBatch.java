@@ -4,10 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteBatch;
 import com.google.cloud.firestore.WriteResult;
-import com.raylabz.firestorm.exception.BatchException;
-import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.exception.FirestormObjectException;
-import com.raylabz.firestorm.exception.TooManyOperationsException;
+import com.raylabz.firestorm.exception.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -32,15 +29,16 @@ public abstract class FirestormBatch extends FirestormOperation {
     /**
      * Creates a Firestore document from an object as part of a batch write.
      * @param object The object containing the data.
+     * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void create(final Object object) {
+    public final void create(final Object object) throws BatchException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
             batch = batch.create(reference, object);
             numOfOperations++;
-        } catch (IllegalAccessException | FirestormObjectException | NoSuchFieldException e) {
+        } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException e) {
             throw new BatchException(e);
         }
     }
@@ -48,15 +46,16 @@ public abstract class FirestormBatch extends FirestormOperation {
     /**
      * Updates an object as part of a batch write.
      * @param object The object to update.
+     * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void update(final Object object) {
+    public final void update(final Object object) throws BatchException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final String id = Reflector.getIDField(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
             batch = batch.set(reference, object);
             numOfOperations++;
-        } catch (IllegalAccessException | FirestormObjectException | NoSuchFieldException e) {
+        } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException e) {
             throw new BatchException(e);
         }
     }
@@ -64,27 +63,34 @@ public abstract class FirestormBatch extends FirestormOperation {
     /**
      * Deletes an object as part of a batch write.
      * @param object The object to delete.
+     * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void delete(final Object object) {
+    public final void delete(final Object object) throws BatchException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final String id = Reflector.getIDField(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
             batch = batch.delete(reference);
             Reflector.setIDField(object, null);
             numOfOperations++;
-        } catch (IllegalAccessException | FirestormObjectException | NoSuchFieldException e) {
+        } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException e) {
             throw new BatchException(e);
         }
     }
 
-    public final void delete(final Class<?> objectClass, final String objectID) {
+    /**
+     * Deletes an object using an ID.
+     * @param objectClass The class of the object.
+     * @param objectID The object's ID.
+     * @throws BatchException Thrown when the batch execution encounters an error.
+     */
+    public final void delete(final Class<?> objectClass, final String objectID) throws BatchException {
         try {
-            Reflector.checkClass(objectClass);
+            Firestorm.checkRegistration(objectClass);
             final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
             batch = batch.delete(reference);
             numOfOperations++;
-        } catch (FirestormObjectException e) {
+        } catch (ClassRegistrationException e) {
             throw new BatchException(e);
         }
     }

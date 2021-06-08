@@ -2,6 +2,7 @@ package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.raylabz.firestorm.exception.ClassRegistrationException;
 import com.raylabz.firestorm.exception.FirestormException;
 import com.raylabz.firestorm.exception.FirestormObjectException;
 import com.raylabz.firestorm.exception.TransactionException;
@@ -22,14 +23,15 @@ public abstract class FirestormTransaction extends FirestormOperation implements
     /**
      * Creates a Firestore document from an object as part of a transaction.
      * @param object The object containing the data.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final void create(final Object object) {
+    public final void create(final Object object) throws TransactionException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
             transaction = transaction.set(reference, object);
-        } catch (FirestormObjectException | IllegalAccessException | NoSuchFieldException e) {
+        } catch (ClassRegistrationException | IllegalAccessException | NoSuchFieldException e) {
             throw new TransactionException(e);
         }
     }
@@ -39,12 +41,13 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @param objectClass The class of the object.
      * @param documentID The object's document ID.
      * @param <T> The type of the object (same with objectClass).
-     * @return Returns an object of type T/objectClass
+     * @return Returns an object of type T/objectClass.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final <T> T get(final Class<T> objectClass, final String documentID) {
+    public final <T> T get(final Class<T> objectClass, final String documentID) throws TransactionException {
         try {
             final DocumentReference documentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(documentID);
-            Reflector.checkClass(objectClass);
+            Firestorm.checkRegistration(objectClass);
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
             if (snapshot.exists()) {
                 return snapshot.toObject(objectClass);
@@ -52,7 +55,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
             else {
                 return null;
             }
-        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException e) {
             throw new TransactionException(e);
         }
     }
@@ -60,14 +63,15 @@ public abstract class FirestormTransaction extends FirestormOperation implements
     /**
      * Updates an object as part of a transaction.
      * @param object The object to update.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final void update(final Object object) {
+    public final void update(final Object object) throws TransactionException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final String id = Reflector.getIDField(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
             transaction = transaction.set(reference, object);
-        } catch (IllegalAccessException | NoSuchFieldException | FirestormObjectException e) {
+        } catch (IllegalAccessException | NoSuchFieldException | ClassRegistrationException e) {
             throw new TransactionException(e);
         }
     }
@@ -75,15 +79,16 @@ public abstract class FirestormTransaction extends FirestormOperation implements
     /**
      * Deletes an object as part of a transaction.
      * @param object The object to delete.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final void delete(final Object object) {
+    public final void delete(final Object object) throws TransactionException {
         try {
-            Reflector.checkObject(object);
+            Firestorm.checkRegistration(object);
             final String id = Reflector.getIDField(object);
             final DocumentReference reference = Firestorm.firestore.collection(object.getClass().getSimpleName()).document(id);
             transaction = transaction.delete(reference);
             Reflector.setIDField(object, null);
-        } catch (IllegalAccessException | FirestormObjectException | NoSuchFieldException e) {
+        } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException e) {
             throw new TransactionException(e);
         }
     }
@@ -93,13 +98,14 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @param objectClass The class of the object to delete.
      * @param objectID The ID of the object to delete.
      * @param <T> The type of the object to delete.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public <T> void delete(final Class<T> objectClass, final String objectID) {
+    public <T> void delete(final Class<T> objectClass, final String objectID) throws TransactionException {
         try {
-            Reflector.checkClass(objectClass);
+            Firestorm.checkRegistration(objectClass);
             final DocumentReference reference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(objectID);
             transaction = transaction.delete(reference);
-        } catch (FirestormObjectException e) {
+        } catch (ClassRegistrationException e) {
             throw new TransactionException(e);
         }
     }
@@ -110,10 +116,11 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @param limit The maximum number of objects return.
      * @param <T> The type of the object (same with objectClass).
      * @return Returns an ArrayList of type T/objectClass.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final <T> ArrayList<T> list(final Class<T> objectClass, final int limit) {
+    public final <T> ArrayList<T> list(final Class<T> objectClass, final int limit) throws TransactionException {
         try {
-            Reflector.checkClass(objectClass);
+            Firestorm.checkRegistration(objectClass);
             ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).limit(limit).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
@@ -131,7 +138,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
                 documentList.add(object);
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException e) {
             throw new TransactionException(e);
         }
     }
@@ -142,10 +149,11 @@ public abstract class FirestormTransaction extends FirestormOperation implements
      * @param objectClass The type of the documents to filter.
      * @param <T>         A type matching the type of objectClass.
      * @return Returns an ArrayList of objects of type objectClass.
+     * @throws TransactionException Thrown when the transaction encounters an error.
      */
-    public final <T> ArrayList<T> listAll(final Class<T> objectClass) {
+    public final <T> ArrayList<T> listAll(final Class<T> objectClass) throws TransactionException {
         try {
-            Reflector.checkClass(objectClass);
+            Firestorm.checkRegistration(objectClass);
             ApiFuture<QuerySnapshot> future = Firestorm.firestore.collection(objectClass.getSimpleName()).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
@@ -163,7 +171,7 @@ public abstract class FirestormTransaction extends FirestormOperation implements
                 documentList.add(object);
             }
             return documentList;
-        } catch (InterruptedException | ExecutionException | FirestormObjectException e) {
+        } catch (InterruptedException | ExecutionException | ClassRegistrationException e) {
             throw new TransactionException(e);
         }
     }

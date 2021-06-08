@@ -219,7 +219,7 @@ final class Reflector {
     }
 
     /**
-     * Finds an underlying ID fields froma superclass provided.
+     * Finds an underlying ID fields from a superclass provided.
      * @param clazz The superclass.
      * @return Returns a field.
      */
