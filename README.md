@@ -24,18 +24,18 @@ Maven:
 <dependency>
   <groupId>com.raylabz</groupId>
   <artifactId>firestorm</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 Gradle:
 ```xml
-implementation 'com.raylabz:firestorm:1.0.0'
+implementation 'com.raylabz:firestorm:1.1.0'
 ```
 
 Download as .jar file:
 
-[Download](https://github.com/RayLabz/Firestorm/raw/master/jar/Firestorm-1.0.0.jar) - (~25MB)
+[Download](https://github.com/RayLabz/Firestorm/raw/master/jar/Firestorm-1.1.0.jar) - (~25MB)
 
 ## Documentation
 
