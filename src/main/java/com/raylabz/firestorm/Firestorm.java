@@ -193,6 +193,89 @@ public final class Firestorm {
     }
 
     /**
+     * Retrieves multiple documents of a class as a list of objects.
+     * @param objectClass The class of the objects.
+     * @param ids A list of IDs of the objects to retrieve.
+     * @param <T> A type matching the type of object class.
+     * @return Returns a list of type T.
+     */
+    public static <T> List<T> getMany(final Class<T> objectClass, List<String> ids) {
+        ArrayList<T> retItems = new ArrayList<>();
+        final DocumentReference[] documentReferences = new DocumentReference[ids.size()];
+        for (int i = 0; i < documentReferences.length; i++) {
+            documentReferences[i] = (firestore.collection(objectClass.getSimpleName()).document(ids.get(i)));
+        }
+        final ApiFuture<List<DocumentSnapshot>> items = firestore.getAll(documentReferences);
+        try {
+            final List<DocumentSnapshot> documentSnapshots = items.get();
+            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+                if (documentSnapshot.exists()) {
+                    retItems.add(documentSnapshot.toObject(objectClass));
+                }
+            }
+            return retItems;
+        } catch (ExecutionException | InterruptedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Retrieves multiple documents of a class as a list of objects.
+     * @param objectClass The class of the objects.
+     * @param ids A list of IDs of the objects to retrieve.
+     * @param <T> A type matching the type of object class.
+     * @return Returns a list of type T.
+     */
+    public static <T> List<T> getMany(final Class<T> objectClass, String... ids) {
+        ArrayList<T> retItems = new ArrayList<>();
+        final DocumentReference[] documentReferences = new DocumentReference[ids.length];
+        for (int i = 0; i < documentReferences.length; i++) {
+            documentReferences[i] = (firestore.collection(objectClass.getSimpleName()).document(ids[i]));
+        }
+        final ApiFuture<List<DocumentSnapshot>> items = firestore.getAll(documentReferences);
+        try {
+            final List<DocumentSnapshot> documentSnapshots = items.get();
+            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+                if (documentSnapshot.exists()) {
+                    retItems.add(documentSnapshot.toObject(objectClass));
+                }
+            }
+            return retItems;
+        } catch (ExecutionException | InterruptedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Retrieves multiple documents of a class as a list of objects.
+     * @param objectClass The class of the objects.
+     * @param ids A list of IDs of the objects to retrieve.
+     * @param <T> A type matching the type of object class.
+     * @param onFailureListener FailureListener to execute onFailure().
+     * @return Returns a list of type T.
+     */
+    public static <T> List<T> getMany(final Class<T> objectClass, List<String> ids, OnFailureListener onFailureListener) {
+        ArrayList<T> retItems = new ArrayList<>();
+        final DocumentReference[] documentReferences = new DocumentReference[ids.size()];
+        for (int i = 0; i < documentReferences.length; i++) {
+            documentReferences[i] = (firestore.collection(objectClass.getSimpleName()).document(ids.get(i)));
+        }
+        final ApiFuture<List<DocumentSnapshot>> items = firestore.getAll(documentReferences);
+        try {
+            final List<DocumentSnapshot> documentSnapshots = items.get();
+            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+                if (documentSnapshot.exists()) {
+                    retItems.add(documentSnapshot.toObject(objectClass));
+                }
+            }
+            return retItems;
+        } catch (ExecutionException | InterruptedException e) {
+            onFailureListener.onFailure(e);
+            return null;
+        }
+    }
+
+    /**
      * Retrieves a document as an object from Firestore.
      *
      * @param objectClass The class of the object retrieved.

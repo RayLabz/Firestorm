@@ -14,10 +14,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Person.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestGetMany.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,14 +78,15 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.google.cloudcode.ide_session_index" value="20210608_0004" />
+    <property name="com.google.cloudcode.ide_session_index" value="20210812_0001" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/util" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -118,7 +122,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.TestGetMany">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Firestorm" />
@@ -140,6 +144,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestGetMany" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestGetMany" />
+      <module name="Firestorm" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -153,6 +164,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestGetMany" />
         <item itemvalue="Application.Test" />
         <item itemvalue="Application.Test2" />
         <item itemvalue="Application.Main" />
@@ -196,6 +208,13 @@
       <workItem from="1594842964343" duration="7907000" />
       <workItem from="1595336895583" duration="201000" />
       <workItem from="1623141253524" duration="8500000" />
+      <workItem from="1626252340481" duration="3352000" />
+      <workItem from="1626331696602" duration="5888000" />
+      <workItem from="1626421248421" duration="1106000" />
+      <workItem from="1626507710012" duration="75000" />
+      <workItem from="1626727546031" duration="603000" />
+      <workItem from="1628261885118" duration="1662000" />
+      <workItem from="1628761403320" duration="1751000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
