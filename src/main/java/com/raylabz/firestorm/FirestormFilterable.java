@@ -234,6 +234,32 @@ public class FirestormFilterable<T> implements Filterable<T> {
     }
 
     /**
+     * Filters by an <u>array</u> field NOT containing a list of values.
+     *
+     * @param field  The field.
+     * @param values The list of values.
+     * @return Returns a Paginator.
+     */
+    @Nonnull
+    public FirestormFilterable<T> whereNotIn(@Nonnull String field, @Nonnull List<?> values) {
+        query = query.whereNotIn(field, values);
+        return this;
+    }
+
+    /**
+     * Filters by an <u>array</u> field NOT containing a list of values.
+     *
+     * @param fieldPath The field path.
+     * @param values    The list of values.
+     * @return Returns a Paginator.
+     */
+    @Nonnull
+    public FirestormFilterable<T> whereNotIn(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
+        query = query.whereNotIn(fieldPath, values);
+        return this;
+    }
+
+    /**
      * Orders results by a field.
      * @param field The field.
      * @return Returns a filterable.

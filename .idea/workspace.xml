@@ -16,6 +16,10 @@
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FirestormFilterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Paginator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +220,8 @@
       <workItem from="1634308892533" duration="14000" />
       <workItem from="1648484683597" duration="2020000" />
       <workItem from="1649418774770" duration="764000" />
-      <workItem from="1649488204179" duration="622000" />
+      <workItem from="1649488204179" duration="1324000" />
+      <workItem from="1649542694502" duration="4013000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
@@ -302,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623146850229</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added warning for version 1.3.0">
+      <created>1649488900188</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1649488900188</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,6 +332,7 @@
     <MESSAGE value="Updated docs." />
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="Version 1.1.0: &#10;- FirestormRegistry class to register classes (check for structure once during registration instead of checking every time an object is processed).&#10;- Performance improvements.&#10;- Added FirebaseConfig and FirebaseUtils to initialize Firebase configurations easily." />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.1.0: &#10;- FirestormRegistry class to register classes (check for structure once during registration instead of checking every time an object is processed).&#10;- Performance improvements.&#10;- Added FirebaseConfig and FirebaseUtils to initialize Firebase configurations easily." />
+    <MESSAGE value="Added warning for version 1.3.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added warning for version 1.3.0" />
   </component>
 </project>

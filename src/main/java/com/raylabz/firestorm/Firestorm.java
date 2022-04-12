@@ -98,7 +98,7 @@ public final class Firestorm {
             checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
-            reference.set(object).get();
+            reference.create(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             onFailureListener.onFailure(e);
@@ -118,7 +118,7 @@ public final class Firestorm {
             checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document();
             Reflector.setIDField(object, reference.getId());
-            reference.set(object).get();
+            reference.create(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             throw new FirestormException(e);
@@ -138,7 +138,7 @@ public final class Firestorm {
             checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(id);
             Reflector.setIDField(object, reference.getId());
-            reference.set(object).get();
+            reference.create(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             onFailureListener.onFailure(e);
@@ -159,7 +159,7 @@ public final class Firestorm {
             checkRegistration(object);
             final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(id);
             Reflector.setIDField(object, reference.getId());
-            reference.set(object).get();
+            reference.create(object).get();
             return reference.getId();
         } catch (InterruptedException | ExecutionException | ClassRegistrationException | NoSuchFieldException | IllegalAccessException | NotInitializedException e) {
             throw new FirestormException(e);
