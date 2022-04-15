@@ -5,14 +5,13 @@ import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Field;
 
 /**
  * Implements logic for Firestore update events.
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class OnReferenceUpdateListener implements EventListener<DocumentSnapshot> {
+public abstract class ReferenceListener implements EventListener<DocumentSnapshot> {
 
     private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
@@ -31,7 +30,7 @@ public abstract class OnReferenceUpdateListener implements EventListener<Documen
      * @param objectClass The type of object this listener will be attached to.
      * @param documentID The document ID of the object.
      */
-    public OnReferenceUpdateListener(final Class<?> objectClass, final String documentID) {
+    public ReferenceListener(final Class<?> objectClass, final String documentID) {
         this.objectClass = objectClass;
         this.documentID = documentID;
     }

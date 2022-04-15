@@ -38,6 +38,7 @@ main {
 
 a {
     color: #D32F2F;
+    text-decoration: underline;
 }
 
 .code {
@@ -89,4 +90,8 @@ p {
 
 h5 {
     padding-top: 20px;
+}
+
+.mt50 {
+    margin-top: 50px;
 }

@@ -1,4 +1,4 @@
-//import com.raylabz.firestorm.Firestorm;
+//import com.raylabz.firestorm.*;
 //import com.raylabz.firestorm.util.FirebaseUtils;
 //
 //import java.io.IOException;
@@ -28,17 +28,46 @@
 //
 //        Firestorm.init();
 //        Firestorm.register(Person.class);
+////        Firestorm.register(Student.class);
 //
-//        Firestorm.create(new Person("1", 1, "nicos1"), "1");
-//        Firestorm.create(new Person("2", 2, "nicos2"), "2");
-//        Firestorm.create(new Person("3", 3, "nicos3"), "3");
-//        Firestorm.create(new Person("4", 4, "nicos4"), "4");
+////        for (int i = 0; i < 5; i++) {
+////            Firestorm.create(new Student("P" + i, i + 10, "Person" + i, 80 + i));
+////        }
 //
+//        //Create your filter first, using the filter() method:
+//        FirestormFilterable<Person> filterable = Firestorm.filter(Person.class)
+//                .whereGreaterThan("age", 12);
 //
-//        final List<Person> many = Firestorm.getMany(Person.class, "3", "2");
-//        for (Person person : many) {
-//            System.out.println(person.getName());
+//        //Then attach a FilterableListener that uses the filter created above:
+//        Firestorm.attachListener(new FilterableListener<Person>(filterable) {
+//            @Override
+//            public void onSuccess(List<ObjectChange<Person>> objectChanges) {
+//                for (ObjectChange<Person> objectChange : objectChanges) {
+//                    System.out.println(objectChange.getObject().toString());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(String failureMessage) {
+//                System.err.println(failureMessage);
+//            }
+//        });
+//
+//        while (true) {
+//
 //        }
+//
+////        Firestorm.create(new Person("1", 1, "nicos1"), "1");
+////        Firestorm.create(new Person("2", 2, "nicos2"), "2");
+////        Firestorm.create(new Person("3", 3, "nicos3"), "3");
+////        Firestorm.create(new Person("4", 4, "nicos4"), "4");
+////
+////
+////        final List<Person> many = Firestorm.getMany(Person.class, "3", "2");
+////        for (Person person : many) {
+////            System.out.println(person.getName());
+////        }
 //
 //
 //    }

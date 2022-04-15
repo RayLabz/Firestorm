@@ -3,11 +3,7 @@ package com.raylabz.firestorm;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
-import com.google.cloud.firestore.ListenerRegistration;
 import com.raylabz.firestorm.exception.ClassRegistrationException;
-import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.exception.FirestormObjectException;
-import com.sun.corba.se.impl.io.TypeMismatchException;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -19,7 +15,7 @@ import java.util.ArrayList;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class OnObjectUpdateListener implements EventListener<DocumentSnapshot> {
+public abstract class ObjectListener implements EventListener<DocumentSnapshot> {
 
     private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
@@ -32,7 +28,7 @@ public abstract class OnObjectUpdateListener implements EventListener<DocumentSn
      * Instantiates a FirestormEventListener.
      * @param object The object to attach the listener to.
      */
-    public OnObjectUpdateListener(final Object object) {
+    public ObjectListener(final Object object) {
         this.objectToListenFor = object;
     }
 

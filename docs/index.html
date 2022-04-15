@@ -48,6 +48,11 @@
                     Most importantly, it aims to reduce code, improve its readability and support rapid application
                     development.
                 </p>
+
+                <p class="justify col s12 m6 offset-m3">
+                    Firestorm is implemented for Java server-side and <a target="_blank" href="http://raylabz.github.io/firestorm-android">Android apps</a>.
+                    A Dart-based version of the library as a Flutter plugin is being considered.
+                </p>
             </div>
 
             <div class="row center">
@@ -94,7 +99,9 @@
                         </li>
                         <li><a href="#realTimeUpdates">Real-time updates</a>
                             <ul class="browser-default">
-                                <li><a href="#attachListener">Attaching listeners</a></li>
+                                <li><a href="#attachListenerObject">Attaching listeners to objects/documents</a></li>
+                                <li><a href="#attachListenerClass">Attaching listeners to classes/collections</a></li>
+                                <li><a href="#attachFilterable">Attaching listeners to filtered items</a></li>
                                 <li><a href="#detachListener">Detaching listeners</a></li>
                                 <li><a href="#hasListener">Checking if object has an attached listener</a></li>
                                 <li><a href="#getListener">Get last attached listener</a></li>
@@ -113,12 +120,23 @@
 
             <div class="info-panel orange darken-3 white-text text">
 
-                <p class="center-align"><i class="material-icons white-text small">warning</i></p>
+                <p class="center-align"><i class="material-icons white-text medium">warning</i></p>
 
                 <p class="center-align">
                     Firestorm is a library intended for server-side use. It uses the Firebase Admin SDK, requires service account credentials
                     that must be safely stored, and gives access to the full database.
                     Therefore, it is not intended for use in unsecure environments, such as client-side applications.
+                </p>
+
+            </div>
+
+            <div class="info-panel grey lighten-3 text">
+
+                <p class="center-align"><i class="material-icons green-text medium">android</i></p>
+
+                <p class="center-align header">
+                    If you are developing an Android app, you can use
+                    <a target="_blank" href="http://raylabz.github.io/firestorm-android"><u>Firestorm for Android</u></a>.
                 </p>
 
             </div>
@@ -132,18 +150,18 @@
             <pre class="prettyprint">&lt;dependency&gt;
   &lt;groupId&gt;com.raylabz&lt;/groupId&gt;
   &lt;artifactId&gt;firestorm&lt;/artifactId&gt;
-  &lt;version&gt;1.3.1&lt;/version&gt;
+  &lt;version&gt;1.4.0&lt;/version&gt;
 &lt;/dependency&gt;</pre>
 
             <p><b><u>Gradle:</u></b></p>
 
-            <pre class="prettyprint">implementation 'com.raylabz:firestorm:1.3.1'</pre>
+            <pre class="prettyprint">implementation 'com.raylabz:firestorm:1.4.0'</pre>
 
             <p>
                 Alternatively, you can download Firestorm as a .jar file:
             </p>
 
-            <a class="btn btn-flat orange darken-3 white-text" href="https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=com.raylabz&a=firestorm&v=1.3.1&e=jar">Download Jar</a>
+            <a class="btn btn-flat orange darken-3 white-text" href="https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=com.raylabz&a=firestorm&v=1.4.0&e=jar">Download Jar</a>
 
             <h3 id="guide">Guide</h3>
 
@@ -210,7 +228,7 @@ Firestorm.init();</pre>
                 <li>Have an empty (no-parameter) constructor (access modifier does not matter).</li>
             </ul>
 
-            <div class="info-panel light-blue lighten-2 white-text">
+            <div class="info-panel light-blue white-text">
                 It is preferable to avoid constructors that include the <span class="code">id</span> attribute as a parameter because the ID field
                 will be initialized once the object is written on Firestore. The ID attribute's value indicates an object that also
                 exists on Firestore. The value null for the ID (e.g. before being written or after being deleted) indicates that
@@ -361,7 +379,7 @@ public class Person {
             <pre class="prettyprint java">
 Firestorm.register(Person.class);</pre>
 
-            <div class="info-panel red white-text">
+            <div class="info-panel red darken-2 white-text">
                 The <span class="code">register()</span> method will throw a runtime exception when the conditions stated above are not met by the class being registered.
             </div>
 
@@ -407,7 +425,7 @@ Firestorm.create(person);</pre>
             <pre class="prettyprint java">
 String personID = Firestorm.create(person);</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">
+            <div class="info-panel light-blue white-text">
                 If the <span class="code">create()</span> method returns a null ID, this is an indication that the object has not been successfully written to Firestore.
             </div>
 
@@ -523,7 +541,7 @@ Firestorm.update(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Only changed attributes will be updated on
+            <div class="info-panel light-blue white-text">Only changed attributes will be updated on
                 Firestore.
             </div>
 
@@ -553,7 +571,7 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> 
     System.out.println("FAILED");
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Google will charge your Firestore instance by the
+            <div class="info-panel light-blue white-text">Google will charge your Firestore instance by the
                 amount of reads and writes
                 occurring on your database. This is why the <span class="code">list()</span> method forces you to limit
                 the amount
@@ -577,7 +595,7 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
     System.out.println("FAILED");
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Google will charge your project $0.30-$0.60 per
+            <div class="info-panel light-blue white-text">Google will charge your project $0.30-$0.60 per
                 million reads depending on location.
                 <a class="yellow-text" href="https://firebase.google.com/docs/firestore/pricing">Click here</a> to find
                 out more about Firebase pricing.
@@ -585,7 +603,7 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
 
             <br/>
 
-            <div class="info-panel light-blue lighten-2 white-text">
+            <div class="info-panel light-blue white-text">
                 For properly listing large numbers of objects, consider using <a class="yellow-text" href="#pagination">Pagination</a>.
             </div>
 
@@ -696,7 +714,7 @@ final String lastItemID = result.getLastDocumentID();
 //Check if the result has returned and items:
 final boolean hasItems = result.hasItems();</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">Firestore will automatically create indexes for
+            <div class="info-panel light-blue white-text">Firestore will automatically create indexes for
                 simple queries.
                 However, some compound queries will require you to define compound Firestore indexes.
                 <a class="yellow-text" href="https://firebase.google.com/docs/firestore/query-data/indexing">Click
@@ -843,7 +861,7 @@ final boolean hasItems = result.hasItems();</pre>
 
             <h4 id="realTimeUpdates">Real-time updates</h4>
 
-            <h6 id="attachListener">Attaching listeners</h6>
+            <h6 id="attachListenerObject">Attaching listeners to objects/documents</h6>
 
             <p>Firestorm allows you to use Firestore's real-time update features by attaching listeners to objects using
                 the
@@ -864,11 +882,23 @@ Firestorm.attachListener(new OnObjectUpdateListener(person) {
     }
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">
+            <p>The <span class="code">attachListener()</span> method returns a <span class="code">ListenerRegistration</span> object.
+                You can save this object in a variable for future use (such as detaching the listener):</p>
+
+            <pre class="prettyprint java">
+final ListenerRegistration listenerRegistration = Firestorm.attachListener ...</pre>
+
+            <div class="info-panel light-blue white-text">
                 Firestorm will automatically update your object with the new data once an update is received.
             </div>
 
-            <p>Alternatively, you can attach a listener to a Firestore reference by specifying a class and a document ID:</p>
+            <div class="info-panel red darken-2 white-text">
+                Listeners will listen to updates on items while the application is running, but
+                <b><u>will not block the execution of the program</u></b>. If the application is stopped,
+                the listener will also be terminated.
+            </div>
+
+            <p>Alternatively, you can attach a listener to a Firestore document reference by specifying a class and a document ID:</p>
 
             <pre class="prettyprint java">
 Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID) {
@@ -883,13 +913,67 @@ Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID)
     }
 });</pre>
 
-            <p>The <span class="code">attachListener()</span> method returns a <span class="code">ListenerRegistration</span> object.
-                You can save this object in a variable for future use (such as detaching the listener):</p>
+            <h6 id="attachListenerClass" class="mt50">Attaching listeners to classes/collections</h6>
+
+            <p class="justify">
+                Real-time listeners can also be attached to entire classes/collections. These are useful in cases where you need to
+                perform a task when objects of a certain class are modified, removed, or created. To create a class/collection update
+                listener, you can use the <span class="code">attachListener()</span> method, but instead provide a
+                <span class="code">OnCollectionUpdateListener</span>:
+            </p>
 
             <pre class="prettyprint java">
-<mark>final ListenerRegistration listenerRegistration</mark> = Firestorm.attachListener ...</pre>
+Firestorm.attachListener(new OnCollectionUpdateListener&lt;Person&gt;(Person.class) {
+    @Override
+    public void onSuccess(List&lt;ObjectChange&lt;Person&gt;&gt; objectChanges) {
+        for (ObjectChange&lt;Person&gt; objectChange : objectChanges) {
+            System.out.println(objectChange.getObject());
+        }
 
-            <h6 id="detachListener">Detaching listeners</h6>
+    }
+
+    @Override
+    public void onFailure(String failureMessage) {
+        System.err.println(failureMessage);
+    }
+});</pre>
+
+            <h6 id="attachFilterable" class="mt50">Attaching listeners to filtered items</h6>
+
+            <p>
+                You can also attach a listener to a specific selection of items, by first creating a filter using the
+                <code>filter()</code> method, and then providing the filter created to a <code>FilterableListener</code>
+                through the <code>attachListener()</code> method:
+            </p>
+
+            <pre class="prettyprint java">
+//Create your filter first, using the filter() method:
+FirestormFilterable&lt;Person&gt; filterable = Firestorm.filter(Person.class)
+        .whereGreaterThan("age", 12);
+
+//Then attach a FilterableListener that uses the filter created above:
+Firestorm.attachListener(new FilterableListener&lt;Person&gt;(filterable) {
+    @Override
+    public void onSuccess(List&lt;ObjectChange&lt;Person&gt;&gt; objectChanges) {
+        for (ObjectChange&lt;Person&gt; objectChange : objectChanges) {
+            System.out.println(objectChange.getObject().toString());
+        }
+    }
+
+    @Override
+    public void onFailure(String failureMessage) {
+        System.err.println(failureMessage);
+    }
+});</pre>
+
+            <p>
+                In the example above, Firestorm will listen to changes to objects of the type <code>Person</code>, for which the field
+                is >12. If an object's age value is altered to not match this filter (i.e. age=11), Firestorm will ignore updates
+                to this object. Conversely, if the object's age value is then changed to meet the criteria (i.e. age=13),
+                Firestorm will resume listening to updates on this object.
+            </p>
+
+            <h6 id="detachListener" class="mt50">Detaching listeners</h6>
 
             <p>You can detach a listener from an object by passing a saved <span
                     class="code">ListenerRegistration</span> instance to
@@ -898,14 +982,27 @@ Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID)
             <pre class="prettyprint java">
 person.detachListener(listenerRegistration);</pre>
 
-            <h6 id="hasListener">Checking if object has an attached listener</h6>
+            <p>You can also detach a listener from a specific object or class:</p>
 
-            <p>The <span class="code">Firestorm.hasListener()</span> method allows you to check if an object has an attached listener:</p>
+            <pre class="prettyprint java">
+person.detachListener(person);</pre>
+
+            <pre class="prettyprint java">
+person.detachListener(Person.class);</pre>
+
+            <h6 id="hasListener" class="mt50">Checking if object or class has an attached listener</h6>
+
+            <p>The <span class="code">Firestorm.hasListener()</span> method allows you to check if an object or class has an attached listener:</p>
 
             <pre class="prettyprint java">
 Firestorm.hasListener(person);</pre>
 
-            <h6 id="getListener">Get last attached object listener</h6>
+            <p>or</p>
+
+            <pre class="prettyprint java">
+Firestorm.hasListener(Person.class);</pre>
+
+            <h6 id="getListener" class="mt50">Get last attached object listener</h6>
 
             <p>The <span class="code">Firestorm.getListener()</span> method allows you to retrieve an object's last attached listener:</p>
 
@@ -974,7 +1071,7 @@ Firestorm.runTransaction(new FirestormTransaction() {
     }
 });</pre>
 
-            <div class="info-panel light-blue lighten-2 white-text">You can read more about Firestore transactions and
+            <div class="info-panel light-blue white-text">You can read more about Firestore transactions and
                 batch writes
                 <a class="yellow-text"
                    href="https://firebase.google.com/docs/firestore/manage-data/transactions">here</a>.
@@ -1099,7 +1196,7 @@ paginator = Paginator.next(Person.class, lastDocumentID);</pre>
             <pre class="prettyprint java">
 boolean hasItems = result.hasItems();</pre>
 
-            <h6>Full pagination example:</h6>
+            <h6 class="mt50">Full pagination example:</h6>
 
             <p>This example continues looping and fetching new results until there are no items left to fetch:</p>
 
@@ -1116,20 +1213,25 @@ do {
     new Scanner(System.in).nextLine();
 } while (result.hasItems());</pre>
 
-            <h6>Pagination with filtering</h6>
+            <h6 class="mt50">Pagination with filtering</h6>
 
             <p>
                 You also can use filters and ordering for paginated results:
             </p>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID, 10).whereEqualTo("age", 40);</pre>
+paginator = Paginator.next(Person.class, lastDocumentID, 10)
+                .whereEqualTo("age", 40);</pre>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID, 50).whereGreaterThan("age", 5);</pre>
+paginator = Paginator.next(Person.class, lastDocumentID, 50)
+                .whereGreaterThan("age", 5);</pre>
 
             <pre class="prettyprint java">
-paginator = Paginator.next(Person.class, lastDocumentID).whereEqualTo("firstName", "John").whereGreaterThan("age", 5).orderBy("age");</pre>
+paginator = Paginator.next(Person.class, lastDocumentID)
+                .whereEqualTo("firstName", "John")
+                .whereGreaterThan("age", 5)
+                .orderBy("age");</pre>
 
             <!--------------------------------------------------------------------------------------------------------->
 
