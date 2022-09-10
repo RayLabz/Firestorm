@@ -13,96 +13,127 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/ClassListener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FilterableListener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/ObjectChange.Type.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/ObjectChange.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/ObjectListener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/ReferenceListener.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/ClassListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/FilterableListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/ObjectChange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/artifacts/Firestorm_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/dictionaries/hfnov.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_12_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_android_annotations_4_1_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_api_common_1_10_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_client_google_api_client_1_32_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_client_google_api_client_gson_1_32_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_gax_1_66_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_gax_grpc_1_66_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_gax_httpjson_0_83_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_grpc_proto_google_cloud_firestore_v1_2_6_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_grpc_proto_google_common_protos_2_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_api_grpc_proto_google_iam_v1_1_0_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_apis_google_api_services_storage_v1_rev20210127_1_32_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_auth_google_auth_library_credentials_0_26_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_auth_google_auth_library_oauth2_http_0_26_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_auto_value_auto_value_annotations_1_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_google_cloud_core_1_95_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_google_cloud_core_grpc_1_95_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_google_cloud_core_http_1_95_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_google_cloud_firestore_2_6_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_google_cloud_storage_1_118_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_cloud_proto_google_cloud_firestore_bundle_v1_2_6_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_code_gson_gson_2_9_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_7_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_firebase_firebase_admin_8_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_guava_guava_30_1_1_android.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_http_client_google_http_client_1_39_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_http_client_google_http_client_apache_v2_1_39_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_http_client_google_http_client_appengine_1_39_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_http_client_google_http_client_gson_1_39_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_http_client_google_http_client_jackson2_1_39_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_oauth_client_google_oauth_client_1_31_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__com_google_protobuf_protobuf_java_util_3_17_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__commons_codec_commons_codec_1_15.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_alts_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_api_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_auth_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_context_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_core_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_grpclb_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_netty_shaded_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_protobuf_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_protobuf_lite_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_grpc_grpc_stub_1_39_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_buffer_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_codec_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_codec_http_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_common_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_handler_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_resolver_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_netty_netty_transport_4_1_67_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_opencensus_opencensus_api_0_28_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_opencensus_opencensus_contrib_grpc_util_0_28_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_opencensus_opencensus_contrib_http_util_0_28_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__io_perfmark_perfmark_api_0_23_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__junit_junit_4_13_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_checkerframework_checker_compat_qual_2_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_codehaus_mojo_animal_sniffer_annotations_1_20.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_conscrypt_conscrypt_openjdk_uber_2_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_slf4j_slf4j_simple_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_threeten_threetenbp_1_5_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/com_google_code_gson_gson_2_8_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Firestorm.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/codeComparison.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/codeComparison.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/allclasses-noframe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Filterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Filterable.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Firestorm.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Firestorm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormBatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormBatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormConfig.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormConfig.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormFilterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormFilterable.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormOperation.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormOperation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormRegistry.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormRegistry.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormTransaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/FirestormTransaction.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnCompletionListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnCompletionListener.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnFailureListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnFailureListener.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnObjectUpdateListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnObjectUpdateListener.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnReferenceUpdateListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnReferenceUpdateListener.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnSuccessListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/OnSuccessListener.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Paginator.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/Paginator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/QueryResult.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/QueryResult.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionFilterable.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/TransactionFilterable.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/FirestormObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/FirestormObject.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/annotation/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/BatchException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/BatchException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/ClassRegistrationException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/ClassRegistrationException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/FirestormException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/FirestormException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/FirestormObjectException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/FirestormObjectException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/NotInitializedException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/NotInitializedException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TooManyOperationsException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TooManyOperationsException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TransactionException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/TransactionException.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/exception/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/FirebaseConfig.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/FirebaseConfig.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/FirebaseUtils.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/FirebaseUtils.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/com/raylabz/firestorm/util/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/constant-values.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/deprecated-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/deprecated-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-14.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-14.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-15.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-16.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-17.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-18.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-18.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-19.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-19.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-20.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-20.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-21.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-21.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/overview-frame.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/overview-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/javadoc/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/javadoc/serialized-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/Firestorm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnObjectUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/ObjectListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/OnReferenceUpdateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/ReferenceListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestGetMany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestGetMany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jar/Firestorm-1.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/gson-2.8.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/ClassListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/Filterable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FilterableListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/Firestorm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormBatch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormFilterable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormOperation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/FirestormTransaction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/ObjectChange.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/ObjectListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/OnCompletionListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/OnFailureListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/OnSuccessListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/Paginator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/QueryResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/ReferenceListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/Reflector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/TransactionFilterable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/annotation/FirestormObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/BatchException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/ClassRegistrationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/FirestormException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/FirestormObjectException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/NotInitializedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/TooManyOperationsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/exception/TransactionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/util/FirebaseConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/raylabz/firestorm/util/FirebaseUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/Person.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/TestGetMany.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,55 +169,34 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1ZiqnoYhc8krKAV7WVcAqFHXexM" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ACTIVE_CLOUD_PROJECT_ACCOUNT" value="thunderflier@gmail.com" />
-    <property name="ACTIVE_CLOUD_PROJECT_ID" value="mars-pioneer" />
-    <property name="ACTIVE_CLOUD_PROJECT_NAME" value="Mars Pioneer" />
-    <property name="ACTIVE_CLOUD_PROJECT_NUMBER" value="1067106385077" />
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="Downloaded.Files.Path.Enabled" value="true" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.google.cloudcode.ide_session_index" value="20211015_0001" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/images" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15294118" />
-    <property name="project.structure.side.proportion" value="0.37716264" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ACTIVE_CLOUD_PROJECT_ACCOUNT&quot;: &quot;thunderflier@gmail.com&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_ID&quot;: &quot;nkasenides&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_NAME&quot;: &quot;nkasenides&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_NUMBER&quot;: &quot;819120656496&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20220910_0000&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hfnov/Software Development/Projects/Firestorm/firestorm-java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.raylabz.firestorm" />
@@ -308,6 +318,8 @@
       <workItem from="1649774305969" duration="1000" />
       <workItem from="1649962715334" duration="3575000" />
       <workItem from="1650021086580" duration="7865000" />
+      <workItem from="1662758198865" duration="664000" />
+      <workItem from="1662806485911" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
