@@ -1,0 +1,3 @@
+class FirestormException implements Exception {
+  
+}
