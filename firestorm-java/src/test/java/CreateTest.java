@@ -2,6 +2,7 @@ import com.raylabz.firestorm.FS;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class CreateTest {
 
@@ -45,14 +46,14 @@ public class CreateTest {
 //            System.err.println(error.getMessage());
 //        }).run();
 
-        FS.get(Student.class, "a").then(result -> {
-            System.out.println(result);
-        }).onError(error -> {
-            System.err.println(error.getMessage());
-        }).run();
+//        FS.get(Student.class, "a").then(result -> {
+//            System.out.println(result);
+//        }).onError(error -> {
+//            System.err.println(error.getMessage());
+//        }).run();
 
-//        Student a = FS.get(Student.class, "a").now();
-//        System.out.println(a);
+        Student a = FS.get(Student.class, "a").waitFor(2, TimeUnit.SECONDS);
+        System.out.println(a);
 
         System.out.println("hey");
 

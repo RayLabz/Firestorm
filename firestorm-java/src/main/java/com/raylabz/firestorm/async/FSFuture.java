@@ -61,12 +61,30 @@ public class FSFuture<ResultType> {
      * @param timeout The timeout.
      * @param timeUnit The time unit.
      * @return Returns {@link ResultType}.
-     * @throws ExecutionException
-     * @throws InterruptedException
-     * @throws TimeoutException
      */
-    public ResultType waitFor(long timeout, TimeUnit timeUnit) throws ExecutionException, InterruptedException, TimeoutException {
-        return future.get(timeout, timeUnit);
+    public ResultType waitFor(long timeout, TimeUnit timeUnit) {
+        try {
+            return future.get(timeout, timeUnit);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Waits for a specified amount of time for the operation to complete before proceeding. If the operation is not completed
+     * by the specified timeout, it will be dropped.
+     * @param timeout The timeout.
+     * @param timeUnit The time unit.
+     * @param callback A callback to handle a possible failure.
+     * @return Returns {@link ResultType}.
+     */
+    public ResultType waitFor(long timeout, TimeUnit timeUnit, FailureCallback callback) {
+        try {
+            return future.get(timeout, timeUnit);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            callback.execute(e);
+            return null;
+        }
     }
 
     /**

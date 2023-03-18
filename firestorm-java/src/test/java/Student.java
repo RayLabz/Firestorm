@@ -1,5 +1,4 @@
 import com.raylabz.firestorm.annotation.FirestormObject;
-import com.raylabz.firestorm.annotation.LinkedField;
 
 @FirestormObject
 public class Student extends Person {
