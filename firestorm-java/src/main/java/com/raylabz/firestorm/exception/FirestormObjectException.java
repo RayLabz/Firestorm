@@ -1,7 +1,7 @@
 package com.raylabz.firestorm.exception;
 
 /**
- * An exception thrown when a class is checked but does not conform to Firestorm guidelines for class definitions:
+ * An exception thrown when a class is checked but does not conform to com.raylabz.firestorm.Firestorm guidelines for class definitions:
  * a) The class is not annotated with @FirestormObject.
  * b) The class does not contain an ID field with type String.
  * c) The class does not have a public getter for the ID field.

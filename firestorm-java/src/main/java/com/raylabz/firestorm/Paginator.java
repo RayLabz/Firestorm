@@ -30,7 +30,7 @@ public class Paginator<T> implements Filterable<T> {
      * @param objectClass The type of objects returned by the Paginator.
      */
     private Paginator(Class<T> objectClass, final String lastDocumentID) {
-        query = Firestorm.firestore.collection(objectClass.getSimpleName());
+        query = FS.firestore.collection(objectClass.getSimpleName());
         this.objectClass = objectClass;
         this.lastDocumentID = lastDocumentID;
     }
@@ -346,7 +346,7 @@ public class Paginator<T> implements Filterable<T> {
         if (lastDocumentID != null) {
             DocumentSnapshot lastDocumentSnapshot;
             try {
-                DocumentReference lastDocumentReference = Firestorm.firestore.collection(objectClass.getSimpleName()).document(lastDocumentID);
+                DocumentReference lastDocumentReference = FS.firestore.collection(objectClass.getSimpleName()).document(lastDocumentID);
                 ApiFuture<DocumentSnapshot> future = lastDocumentReference.get();
                 lastDocumentSnapshot = future.get();
             } catch (InterruptedException | ExecutionException e) {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <link rel="shortcut icon" type="image/png" href="images/firestorm_logo.png"/>
     <meta name="theme-color" content="#e65100"/>
-    <title>Firestorm - RayLabz</title>
+    <title>com.raylabz.firestorm.Firestorm - RayLabz</title>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,13 +27,13 @@
             <h3>Code Comparison</h3>
             <div class="col s12 center" style="margin-top: 20px; margin-bottom: 30px">
                 <h4 class="center light">
-                    Firestorm aims to use object-oriented principles to simplify development. Its usefulness lies in
+                    com.raylabz.firestorm.Firestorm aims to use object-oriented principles to simplify development. Its usefulness lies in
                     dealing with in-code objects rather than raw data or Firestore references, which improves code readability
                     and facilitates rapid development with minimal performance cost.
                 </h4>
             </div>
             <p class="center">
-                This page shows a comparison of codes between Firestorm and the standard Firestore API needed to carry out basic Firestore operations.
+                This page shows a comparison of codes between com.raylabz.firestorm.Firestorm and the standard Firestore API needed to carry out basic Firestore operations.
             </p>
         </div>
 
@@ -58,16 +58,16 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.create(person, error -> {
+com.raylabz.firestorm.Firestorm.create(person, error -> {
     System.out.println("Write failed.");
 });</pre>
 
                 <p>or shorter:</p>
 
                 <pre class="prettyprint java green lighten-4">
-Firestorm.create(person);</pre>
+com.raylabz.firestorm.Firestorm.create(person);</pre>
 
             </div>
 
@@ -90,7 +90,7 @@ Firestorm.create(person);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm automatically references collections, allocates new document IDs and waits for the request
+                        com.raylabz.firestorm.Firestorm automatically references collections, allocates new document IDs and waits for the request
                         to be sent while handling errors using a listener.
                     </p>
                 </div>
@@ -120,15 +120,15 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.update(person, error -> {
+com.raylabz.firestorm.Firestorm.update(person, error -> {
     System.out.println("Update failed.");
 });</pre>
                 <p>or shorter:</p>
 
                 <pre class="prettyprint java green lighten-4">
-Firestorm.update(person);</pre>
+com.raylabz.firestorm.Firestorm.update(person);</pre>
 
             </div>
 
@@ -151,7 +151,7 @@ Firestorm.update(person);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm updates the object without the need to store <span class="code">DocumentReference</span>s
+                        com.raylabz.firestorm.Firestorm updates the object without the need to store <span class="code">DocumentReference</span>s
                         or document IDs manually. It also handles any errors using an error listener.
                     </p>
                 </div>
@@ -187,16 +187,16 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Person person = Firestorm.get(Person.class, documentID, error -> {
+Person person = com.raylabz.firestorm.Firestorm.get(Person.class, documentID, error -> {
     System.out.println("Get failed.");
 });</pre>
 
                 <p>or shorter:</p>
 
                 <pre class="prettyprint java green lighten-4">
-Person person = Firestorm.get(Person.class, documentID);</pre>
+Person person = com.raylabz.firestorm.Firestorm.get(Person.class, documentID);</pre>
 
             </div>
 
@@ -218,7 +218,7 @@ Person person = Firestorm.get(Person.class, documentID);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm retrieves the document by providing the class of the object and its document ID, while handling
+                        com.raylabz.firestorm.Firestorm retrieves the document by providing the class of the object and its document ID, while handling
                         any errors using a listener.
                     </p>
                 </div>
@@ -252,16 +252,16 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-ArrayList&lt;Person&gt; list = Firestorm.list(Person.class, 10, error -> {
+ArrayList&lt;Person&gt; list = com.raylabz.firestorm.Firestorm.list(Person.class, 10, error -> {
     System.out.println("List failed.");
 });</pre>
 
                 <p>or shorter:</p>
 
                 <pre class="prettyprint java green lighten-4">
-Firestorm.create(Person.class, 10);</pre>
+com.raylabz.firestorm.Firestorm.create(Person.class, 10);</pre>
 
             </div>
 
@@ -284,7 +284,7 @@ Firestorm.create(Person.class, 10);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm returns an array list of objects for your type, which is more versatile than handling
+                        com.raylabz.firestorm.Firestorm returns an array list of objects for your type, which is more versatile than handling
                         each object individually.
                     </p>
                 </div>
@@ -315,16 +315,16 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.delete(person, error -> {
+com.raylabz.firestorm.Firestorm.delete(person, error -> {
     System.out.println("Delete failed.");
 });</pre>
 
                 <p>or shorter:</p>
 
                 <pre class="prettyprint java green lighten-4">
-Firestorm.delete(person);</pre>
+com.raylabz.firestorm.Firestorm.delete(person);</pre>
 
             </div>
 
@@ -346,7 +346,7 @@ Firestorm.delete(person);</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm deletes the object without the need to reference its ID or type, while handling errors using a listener.
+                        com.raylabz.firestorm.Firestorm deletes the object without the need to reference its ID or type, while handling errors using a listener.
                     </p>
                 </div>
             </div>
@@ -381,9 +381,9 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
+QueryResult&lt;Person&gt; result = com.raylabz.firestorm.Firestorm.filter(Person.class)
         .whereEqualTo("age", 50)
         .fetch();
 ArrayList&lt;Person&gt; items = result.getItems();</pre>
@@ -407,7 +407,7 @@ ArrayList&lt;Person&gt; items = result.getItems();</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm allows you to filter types without the need to handle errors, while retrieving the results
+                        com.raylabz.firestorm.Firestorm allows you to filter types without the need to handle errors, while retrieving the results
                         in an ArrayList.
                     </p>
                 </div>
@@ -444,9 +444,9 @@ docRef.addSnapshotListener((snapshot, e) -&gt; {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.attachListener(new OnObjectUpdateListener(person) {
+com.raylabz.firestorm.Firestorm.attachListener(new OnObjectUpdateListener(person) {
     @Override
     public void onSuccess() {
         System.out.println(person);
@@ -477,7 +477,7 @@ Firestorm.attachListener(new OnObjectUpdateListener(person) {
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm attaches and automatically manages listeners on specific objects, while forcing you to
+                        com.raylabz.firestorm.Firestorm attaches and automatically manages listeners on specific objects, while forcing you to
                         handle success and failure scenarios. <u>It also automatically updates the data of the same object</u>,
                         without the need to manually set the new data from the updated version to the local object.
                     </p>
@@ -515,9 +515,9 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.runTransaction(new FirestormTransaction() {
+com.raylabz.firestorm.Firestorm.runTransaction(new FirestormTransaction() {
     @Override
     public void execute() {
         get(Person.class, person.getId());
@@ -553,7 +553,7 @@ Firestorm.runTransaction(new FirestormTransaction() {
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm can run a nameless transaction which implements three functions, called <span class="code">execute()</span>,
+                        com.raylabz.firestorm.Firestorm can run a nameless transaction which implements three functions, called <span class="code">execute()</span>,
                         <span class="code">onFailure()</span> and <span class="code">onSuccess()</span>. It forces the programmer
                         to handle success and failure scenarios while dealing with objects instead of snapshot fields.
                     </p>
@@ -594,9 +594,9 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
-Firestorm.runBatch(new FirestormBatch() {
+com.raylabz.firestorm.Firestorm.runBatch(new FirestormBatch() {
     @Override
     public void execute() {
         create(person1);
@@ -632,7 +632,7 @@ Firestorm.runBatch(new FirestormBatch() {
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm can run a nameless batch write which can create, update or delete documents based on
+                        com.raylabz.firestorm.Firestorm can run a nameless batch write which can create, update or delete documents based on
                         already-defined objects without the need for references. It forces the programmer to handle success
                         and failure scenarios and there is no need to manage batch commits.
                     </p>
@@ -681,7 +681,7 @@ try {
             </div>
 
             <div class="col s12 m6">
-                <h6 class="center">Firestorm</h6>
+                <h6 class="center">com.raylabz.firestorm.Firestorm</h6>
                 <pre class="prettyprint java green lighten-4">
 //--- First page ---
 
@@ -718,7 +718,7 @@ lastDocumentID = result.getLastDocumentID();</pre>
                 <div class="info-panel green lighten-1 white-text">
                     <i class="material-icons small">check</i><br/>
                     <p>
-                        Firestorm allows quick pagination of a class using inherent result limits for each paginator.
+                        com.raylabz.firestorm.Firestorm allows quick pagination of a class using inherent result limits for each paginator.
                         It automatically converts result data into objects which can then be used instantly.
                     </p>
                 </div>

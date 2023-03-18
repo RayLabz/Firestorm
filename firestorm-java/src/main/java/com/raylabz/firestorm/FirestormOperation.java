@@ -3,7 +3,7 @@ package com.raylabz.firestorm;
 import com.raylabz.firestorm.exception.FirestormException;
 
 /**
- * Abstracts a Firestorm operation, its execution and callbacks.
+ * Abstracts a com.raylabz.firestorm.Firestorm operation, its execution and callbacks.
  * @author Nicos Kasenides
  * @version 1.0.0
  */

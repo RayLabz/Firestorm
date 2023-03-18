@@ -4,6 +4,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.raylabz.firestorm.exception.ClassRegistrationException;
+import com.raylabz.firestorm.exception.IDFieldException;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -46,8 +47,8 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
 
         //Check ID of objectToListenFor:
         try {
-            Firestorm.checkRegistration(objectToListenFor);
-            Field idField = Reflector.findUnderlyingIDField(objectToListenFor.getClass());
+            FS.checkRegistration(objectToListenFor);
+            Field idField = Reflector.findIDField(objectToListenFor.getClass());
             if (idField == null) {
                 onFailure("Missing ID field in class hierarchy for class '" + objectToListenFor.getClass().getSimpleName() + "'.");
                 return;
@@ -59,7 +60,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
             if (idValue == null) {
                 return;
             }
-        } catch (IllegalAccessException | ClassRegistrationException ex) {
+        } catch (IllegalAccessException | ClassRegistrationException | IDFieldException ex) {
             onFailure(ex.getMessage());
             return;
         }

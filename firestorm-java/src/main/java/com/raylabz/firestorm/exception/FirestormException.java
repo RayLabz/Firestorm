@@ -1,7 +1,7 @@
 package com.raylabz.firestorm.exception;
 
 /**
- * Exception thrown by Firestorm.
+ * Exception thrown by com.raylabz.firestorm.Firestorm.
  * @author Nicos Kasenides
  * @version 1.0.0
  */

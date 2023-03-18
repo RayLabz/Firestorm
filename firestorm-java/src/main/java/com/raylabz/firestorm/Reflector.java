@@ -2,17 +2,22 @@ package com.raylabz.firestorm;
 
 import com.google.common.collect.Lists;
 import com.raylabz.firestorm.annotation.FirestormObject;
+import com.raylabz.firestorm.annotation.ID;
+import com.raylabz.firestorm.annotation.LinkedField;
 import com.raylabz.firestorm.exception.FirestormObjectException;
+import com.raylabz.firestorm.exception.IDFieldException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
  * Contains utility methods used for reflection, mainly class and field checking.
+ *
  * @author Nicos Kasenides
  * @version 1.0.0
  */
@@ -20,6 +25,7 @@ final class Reflector {
 
     /**
      * Checks if the given class contains the required fields, types and annotations.
+     *
      * @param clazz The class to check.
      * @throws FirestormObjectException a) when the 'id' field has not been declared, is not of type string and not annotated with @ID, b) when the class is not annotated with @FirestormObjectAnnotation.
      */
@@ -80,6 +86,7 @@ final class Reflector {
 
     /**
      * Checks if the given object and its class contain the required fields, types and annotations.
+     *
      * @param object The object to check
      * @throws FirestormObjectException a) when the 'id' field has not been declared, is not of type string and not annotated with @ID, b) when the class of this object is not annotated with @FirestormObjectAnnotation.
      */
@@ -89,6 +96,7 @@ final class Reflector {
 
     /**
      * Checks if a given method is a getter.
+     *
      * @param method The method to check.
      * @return Returns true if this method is a getter, false otherwise.
      */
@@ -107,6 +115,7 @@ final class Reflector {
 
     /**
      * Checks if a given method is a setter.
+     *
      * @param method The method to check.
      * @return Returns true if this method is a setter, false otherwise.
      */
@@ -119,6 +128,7 @@ final class Reflector {
 
     /**
      * Checks if a given field has a public getter method.
+     *
      * @param field The field to check for a getter method.
      * @param clazz The class of the field.
      * @return Returns true if a public getter was found for this field, false otherwise.
@@ -129,7 +139,7 @@ final class Reflector {
         for (Method m : publicMethods) {
             if (
                     m.getName().equals(getterMethodName) && m.getReturnType().equals(field.getType()) ||
-                    m.getName().equals(getterMethodName) && (m.getReturnType().equals(boolean.class) || m.getReturnType().equals(Boolean.class))
+                            m.getName().equals(getterMethodName) && (m.getReturnType().equals(boolean.class) || m.getReturnType().equals(Boolean.class))
             ) {
                 return true;
             }
@@ -139,6 +149,7 @@ final class Reflector {
 
     /**
      * Retrieves the Java convention-based getter method name for a given field.
+     *
      * @param field The field to retrieve the getter method name for.
      * @return Returns the getter method name for the specified field.
      */
@@ -153,6 +164,7 @@ final class Reflector {
 
     /**
      * Checks if a provided class has a no-argument constructor.
+     *
      * @param clazz The class to check.
      * @return Returns true if the class has a no-argument constructor, false otherwise.
      */
@@ -168,17 +180,18 @@ final class Reflector {
 
     /**
      * Sets the ID field of an object.
-     * @param object The object to set the ID of.
+     *
+     * @param object     The object to set the ID of.
      * @param documentID The document ID to set.
-     * @throws NoSuchFieldException Thrown when the field 'id' cannot be accessed.
+     * @throws NoSuchFieldException   Thrown when the field 'id' cannot be accessed.
      * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
      */
-    static void setIDField(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException {
+    static void setIDFieldValue(final Object object, final String documentID) throws NoSuchFieldException, IllegalAccessException, IDFieldException {
         Field idField;
         try {
             idField = object.getClass().getDeclaredField("id");
         } catch (NoSuchFieldException e) {
-            idField = findUnderlyingIDField(object.getClass());
+            idField = findIDField(object.getClass());
         }
 
         if (idField != null) {
@@ -194,17 +207,18 @@ final class Reflector {
 
     /**
      * Retrieves the ID value of an object.
+     *
      * @param object The object to retrieve the ID value of.
      * @return Returns a the ID of the object as a string.
-     * @throws NoSuchFieldException Thrown when the field 'id' cannot be accessed.
+     * @throws NoSuchFieldException   Thrown when the field 'id' cannot be accessed.
      * @throws IllegalAccessException Thrown when the field 'id' cannot be accessed.
      */
-    static String getIDField(final Object object) throws NoSuchFieldException, IllegalAccessException {
+    static String getIDFieldValue(final Object object) throws NoSuchFieldException, IllegalAccessException, IDFieldException {
         Field idField;
         try {
             idField = object.getClass().getDeclaredField("id");
         } catch (NoSuchFieldException e) {
-            idField = findUnderlyingIDField(object.getClass());
+            idField = findIDField(object.getClass());
         }
         if (idField != null) {
             boolean accessible = idField.isAccessible();
@@ -223,18 +237,38 @@ final class Reflector {
      * @param clazz The superclass.
      * @return Returns a field.
      */
-    static Field findUnderlyingIDField(Class<?> clazz) {
-        Class<?> current = clazz;
+    static Field findIDField(Class<?> clazz) throws IDFieldException {
+        Class<?> aClass = clazz;
+        ArrayList<Field> idFields = new ArrayList<>();
         do {
-            try {
-                return current.getDeclaredField("id");
-            } catch (Exception ignored) {}
-        } while((current = current.getSuperclass()) != null);
-        return null;
+            Field[] fields = aClass.getDeclaredFields();
+
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(ID.class)) {
+                    if (field.getType().equals(String.class)) {
+                        idFields.add(field);
+                    }
+                    else {
+                        throw new IDFieldException("The class '" + aClass.getName() + "' has an ID field of type '" + field.getClass().getName() + "', which is not accepted (Strings only).");
+                    }
+                }
+            }
+        } while ((aClass = aClass.getSuperclass()) != null);
+
+        if (idFields.size() > 1) { //Must have only 1 ID field!
+            throw new IDFieldException("The class '" + clazz.getName() + "' contains multiple ID fields. Only 1 ID field must exist in each class.");
+        }
+
+        if (idFields.isEmpty()) { //Must have an ID field!
+            throw new IDFieldException("The class '" + clazz.getName() + "' does not have a field marked as ID. At least one field must be marked as an ID in each class.");
+        }
+
+        return idFields.get(0);
     }
 
     /**
      * Finds all fields from a startClasse's superclasses.
+     *
      * @param startClass The starting class to find the ID field for.
      * @param superClass The last super class to search in for the field.
      * @return Returns an ArrayList of Fields.
@@ -249,5 +283,35 @@ final class Reflector {
         return currentClassFields;
     }
 
+    /**
+     * Finds all the linked fields in a class and its superclasses.
+     *
+     * @param aClass The class to check.
+     * @return Returns a set of fields.
+     */
+    public static HashSet<Field> getLinkedFields(Class<?> aClass) {
+        HashSet<Field> linkedFields = new HashSet<>();
+
+        Field[] classFields = aClass.getDeclaredFields();
+        ArrayList<Field> superclassFields = getSuperclassFields(aClass, Object.class);
+
+        //Find linked fields in this class:
+        for (Field classField : classFields) {
+            final LinkedField fieldAnnotation = classField.getAnnotation(LinkedField.class);
+            if (fieldAnnotation != null) {
+                linkedFields.add(classField);
+            }
+        }
+
+        //Find linked fields in all base classes:
+        for (Field classField : superclassFields) {
+            final LinkedField fieldAnnotation = classField.getAnnotation(LinkedField.class);
+            if (fieldAnnotation != null) {
+                linkedFields.add(classField);
+            }
+        }
+
+        return linkedFields;
+    }
 
 }

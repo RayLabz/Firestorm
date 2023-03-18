@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <link rel="shortcut icon" type="image/png" href="images/firestorm_logo.png"/>
     <meta name="theme-color" content="#e65100"/>
-    <title>Firestorm - RayLabz</title>
+    <title>com.raylabz.firestorm.Firestorm - RayLabz</title>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,7 +28,7 @@
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br>
-            <h1 class="header center orange-text text-darken-4">Firestorm</h1>
+            <h1 class="header center orange-text text-darken-4">com.raylabz.firestorm.Firestorm</h1>
             <br>
             <div class="row center">
                 <img class="responsive-img" src="images/firestorm_logo.png" width="200"/>
@@ -39,9 +39,9 @@
 
             <div class="row center">
                 <p class="justify col s12 m6 offset-m3">
-                    Firestorm is an object-oriented data access API for Google's Firestore. It enables developers to
+                    com.raylabz.firestorm.Firestorm is an object-oriented data access API for Google's Firestore. It enables developers to
                     rapidly develop applications that utilize Firestore's capabilities by interacting with it in an
-                    object-oriented way. Firestorm uses standardized functions and complements the full flexibility of
+                    object-oriented way. com.raylabz.firestorm.Firestorm uses standardized functions and complements the full flexibility of
                     Google's Firestore API, with no performance penalty.
                     It organizes classes as Firestore collections and objects of these classes as documents in these
                     collections.
@@ -50,7 +50,7 @@
                 </p>
 
                 <p class="justify col s12 m6 offset-m3">
-                    Firestorm is implemented for Java server-side and <a target="_blank" href="http://raylabz.github.io/firestorm-android">Android apps</a>.
+                    com.raylabz.firestorm.Firestorm is implemented for Java server-side and <a target="_blank" href="http://raylabz.github.io/firestorm-android">Android apps</a>.
                     A Dart-based version of the library as a Flutter plugin is being considered.
                 </p>
             </div>
@@ -123,7 +123,7 @@
                 <p class="center-align"><i class="material-icons white-text medium">warning</i></p>
 
                 <p class="center-align">
-                    Firestorm is a library intended for server-side use. It uses the Firebase Admin SDK, requires service account credentials
+                    com.raylabz.firestorm.Firestorm is a library intended for server-side use. It uses the Firebase Admin SDK, requires service account credentials
                     that must be safely stored, and gives access to the full database.
                     Therefore, it is not intended for use in unsecure environments, such as client-side applications.
                 </p>
@@ -136,14 +136,14 @@
 
                 <p class="center-align header">
                     If you are developing an Android app, you can use
-                    <a target="_blank" href="http://raylabz.github.io/firestorm-android"><u>Firestorm for Android</u></a>.
+                    <a target="_blank" href="http://raylabz.github.io/firestorm-android"><u>com.raylabz.firestorm.Firestorm for Android</u></a>.
                 </p>
 
             </div>
 
             <h3 id="downloadAndImport">Download and import</h3>
 
-            <p>You can easily import Firestorm in your project using Maven or Gradle:</p>
+            <p>You can easily import com.raylabz.firestorm.Firestorm in your project using Maven or Gradle:</p>
 
             <p><b><u>Maven:</u></b></p>
 
@@ -158,7 +158,7 @@
             <pre class="prettyprint">implementation 'com.raylabz:firestorm:1.4.0'</pre>
 
             <p>
-                Alternatively, you can download Firestorm as a .jar file:
+                Alternatively, you can download com.raylabz.firestorm.Firestorm as a .jar file:
             </p>
 
             <a class="btn btn-flat orange darken-3 white-text" href="https://oss.sonatype.org/service/local/artifact/maven/redirect?r=releases&g=com.raylabz&a=firestorm&v=1.4.0&e=jar">Download Jar</a>
@@ -167,10 +167,10 @@
 
             <h4 id="initialization">Initialization</h4>
 
-            <p>To use Firestorm, set up and initialize the Firebase Admin SDK as described <a
+            <p>To use com.raylabz.firestorm.Firestorm, set up and initialize the Firebase Admin SDK as described <a
                     href="https://firebase.google.com/docs/admin/setup">here</a>.</p>
 
-            <p>You can initialize Firestorm by calling <span class="code">Firestorm.init()</span> after initializing
+            <p>You can initialize com.raylabz.firestorm.Firestorm by calling <span class="code">com.raylabz.firestorm.Firestorm.init()</span> after initializing
                 your FirebaseApp.
                 You do not need to initialize a Firestore object as this is automatically done by this method.</p>
 
@@ -187,8 +187,8 @@ try {
     e.printStackTrace();
 }</div>
 
-//Initialize Firestorm:
-<mark>Firestorm.init();</mark></pre>
+//Initialize com.raylabz.firestorm.Firestorm:
+<mark>com.raylabz.firestorm.Firestorm.init();</mark></pre>
 
             <h5 id="initializationOnTheGCP">Initialization on the GCP</h5>
 
@@ -208,17 +208,17 @@ try {
     e.printStackTrace();
 }</div>
 
-//Initialize Firestorm:
-Firestorm.init();</pre>
+//Initialize com.raylabz.firestorm.Firestorm:
+com.raylabz.firestorm.Firestorm.init();</pre>
 
             <h5 id="initializationAppEngine">Google App Engine initialization</h5>
 
-            <a href="appEngine.html">Click here for a guide on setting up Firestorm with Google App Engine.</a>
+            <a href="appEngine.html">Click here for a guide on setting up com.raylabz.firestorm.Firestorm with Google App Engine.</a>
 
             <h4 id="customClasses">Custom classes</h4>
 
             <p class="justify">
-                Firestorm allows you to create your own custom classes, which it then can interact with in Firestore.
+                com.raylabz.firestorm.Firestorm allows you to create your own custom classes, which it then can interact with in Firestore.
                 Your classes must:
             </p>
 
@@ -364,8 +364,8 @@ public class Person {
             <h4 id="registering">Registering classes</h4>
 
             <p class="justify">
-                Before using Firestorm, you have to register your classes. This process is <u>necessary</u> as
-                Firestorm will check that your classes meet the requirements.
+                Before using com.raylabz.firestorm.Firestorm, you have to register your classes. This process is <u>necessary</u> as
+                com.raylabz.firestorm.Firestorm will check that your classes meet the requirements.
             </p>
 
             <ul class="browser-default">
@@ -374,10 +374,10 @@ public class Person {
                 <li>Each class must have an empty (no-parameter) constructor, regardless of access modifier.</li>
             </ul>
 
-            <p>You can register your class <b>after initializing Firestorm</b>, by using the <span class="code">register()</span> method, providing your class as a parameter:</p>
+            <p>You can register your class <b>after initializing com.raylabz.firestorm.Firestorm</b>, by using the <span class="code">register()</span> method, providing your class as a parameter:</p>
 
             <pre class="prettyprint java">
-Firestorm.register(Person.class);</pre>
+com.raylabz.firestorm.Firestorm.register(Person.class);</pre>
 
             <div class="info-panel red darken-2 white-text">
                 The <span class="code">register()</span> method will throw a runtime exception when the conditions stated above are not met by the class being registered.
@@ -393,11 +393,11 @@ public class FirestormContextListener implements ServletContextListener {
         //Initialize Firebase:
         ...
 
-        //Initialize Firestorm:
+        //Initialize com.raylabz.firestorm.Firestorm:
         ...
 
         //Register classes:
-        Firestorm.register(Person.class);
+        com.raylabz.firestorm.Firestorm.register(Person.class);
     }
 
 }</pre>
@@ -411,19 +411,19 @@ public class FirestormContextListener implements ServletContextListener {
             <h5 id="create">Create</h5>
 
             <p>
-                You can create objects in Firestore by using <span class="code">Firestorm.create()</span> and providing
+                You can create objects in Firestore by using <span class="code">com.raylabz.firestorm.Firestorm.create()</span> and providing
                 an instance of
                 your custom class:
             </p>
 
             <pre class="prettyprint java">
-Firestorm.create(person);</pre>
+com.raylabz.firestorm.Firestorm.create(person);</pre>
 
             <p>Creating an object will set its <span class="code">id</span> attribute which is null by default. You can
                 retrieve this attribute and save it for reference if needed:</p>
 
             <pre class="prettyprint java">
-String personID = Firestorm.create(person);</pre>
+String personID = com.raylabz.firestorm.Firestorm.create(person);</pre>
 
             <div class="info-panel light-blue white-text">
                 If the <span class="code">create()</span> method returns a null ID, this is an indication that the object has not been successfully written to Firestore.
@@ -434,7 +434,7 @@ String personID = Firestorm.create(person);</pre>
             </p>
 
             <pre class="prettyprint java">
-Firestorm.create(person, "abcde");</pre>
+com.raylabz.firestorm.Firestorm.create(person, "abcde");</pre>
 
             <div class="info-panel orange darken-3 white-text">
                 Creating an item with the same ID as another existing item of the same class will replace the existing item. Using specific IDs is not recommended.
@@ -444,7 +444,7 @@ Firestorm.create(person, "abcde");</pre>
                 to define what happens when this operation fails:</p>
 
             <pre class="prettyprint java">
-Firestorm.create(person, new OnFailureListener() {
+com.raylabz.firestorm.Firestorm.create(person, new OnFailureListener() {
     @Override
     public void onFailure(Exception e) {
         System.out.println("FAILED");
@@ -454,7 +454,7 @@ Firestorm.create(person, new OnFailureListener() {
             <p>Or briefly, using lambda expressions:</p>
 
             <pre class="prettyprint java">
-Firestorm.create(person, error -> {
+com.raylabz.firestorm.Firestorm.create(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -467,14 +467,14 @@ Firestorm.create(person, error -> {
             </p>
 
             <pre class="prettyprint java">
-Person person = Firestorm.get(Person.class, documentID);</pre>
+Person person = com.raylabz.firestorm.Firestorm.get(Person.class, documentID);</pre>
 
-            <p>The <span class="code">get()</span> method will return <span class="code">null</span> when the object does not exist or Firestorm fails to fetch the object from Firestore.</p>
+            <p>The <span class="code">get()</span> method will return <span class="code">null</span> when the object does not exist or com.raylabz.firestorm.Firestorm fails to fetch the object from Firestore.</p>
 
             <p>Using an OnFailureListener:</p>
 
             <pre class="prettyprint java">
-Person person = Firestorm.get(Person.class, documentID, new OnFailureListener() {
+Person person = com.raylabz.firestorm.Firestorm.get(Person.class, documentID, new OnFailureListener() {
     @Override
     public void onFailure(Exception e) {
         System.out.println("FAILED TO GET OBJECT");
@@ -491,12 +491,12 @@ Person person = Firestorm.get(Person.class, documentID, new OnFailureListener() 
             </p>
 
             <pre class="prettyprint java">
-List&lt;Person&gt; items = Firestorm.getMany(Person.class, documentIDs); //where documentIDs is a list of Strings</pre>
+List&lt;Person&gt; items = com.raylabz.firestorm.Firestorm.getMany(Person.class, documentIDs); //where documentIDs is a list of Strings</pre>
 
             <p>Using an OnFailureListener:</p>
 
             <pre class="prettyprint java">
-List&lt;Person&gt; items = Firestorm.getMany(Person.class, documentIDs, new OnFailureListener() {
+List&lt;Person&gt; items = com.raylabz.firestorm.Firestorm.getMany(Person.class, documentIDs, new OnFailureListener() {
     @Override
     public void onFailure(Exception e) {
         System.out.println("FAILED TO GET MANY OBJECTS");
@@ -506,7 +506,7 @@ List&lt;Person&gt; items = Firestorm.getMany(Person.class, documentIDs, new OnFa
             <p>You may also use a varags array of Strings:</p>
 
             <pre class="prettyprint java">
-List&lt;Person&gt; items = Firestorm.getMany(Person.class, "id1", "id2", "id3");</pre>
+List&lt;Person&gt; items = com.raylabz.firestorm.Firestorm.getMany(Person.class, "id1", "id2", "id3");</pre>
 
             <!---------------------------------------------------------------------------------------------------->
 
@@ -515,7 +515,7 @@ List&lt;Person&gt; items = Firestorm.getMany(Person.class, "id1", "id2", "id3");
             <p>You can check if an object document exists on Firestore by providing its class and a document ID:</p>
 
             <pre class="prettyprint java">
-if (Firestorm.exists(Person.class, documentID)) {
+if (com.raylabz.firestorm.Firestorm.exists(Person.class, documentID)) {
     //TODO - Document exists...
 }
 else {
@@ -528,16 +528,16 @@ else {
             <h5 id="update">Update</h5>
 
             <p>
-                You can update objects by using <span class="code">Firestorm.update()</span> and providing your object:
+                You can update objects by using <span class="code">com.raylabz.firestorm.Firestorm.update()</span> and providing your object:
             </p>
 
             <pre class="prettyprint java">
-Firestorm.update(person);</pre>
+com.raylabz.firestorm.Firestorm.update(person);</pre>
 
             <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
 
             <pre class="prettyprint java">
-Firestorm.update(person, error -> {
+com.raylabz.firestorm.Firestorm.update(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -550,7 +550,7 @@ Firestorm.update(person, error -> {
             <h5 id="list">List</h5>
 
             <p>
-                Firestorm supports fetching objects of a given type using the <span class="code">Firestorm.list()</span>
+                com.raylabz.firestorm.Firestorm supports fetching objects of a given type using the <span class="code">com.raylabz.firestorm.Firestorm.list()</span>
                 method
                 for up to a certain number of objects. <u>The <span class="code">list()</span> method is meant for use
                 with
@@ -560,14 +560,14 @@ Firestorm.update(person, error -> {
             </p>
 
             <pre class="prettyprint java">
-ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100);</pre>
+ArrayList&lt;Person&gt; peopleList = com.raylabz.firestorm.Firestorm.list(Person.class, 100);</pre>
 
             <p>The above code will retrieve at maximum 100 objects of type Person.</p>
 
             <p>Similarly, using an <span class="code">OnFailureListener</span>:</p>
 
             <pre class="prettyprint">
-ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> {
+ArrayList&lt;Person&gt; peopleList = com.raylabz.firestorm.Firestorm.list(Person.class, 100, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -583,15 +583,15 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.list(Person.class, 100, error -> 
             <h5 id="listAll">List all</h5>
 
             <p>
-                If you still need to fetch all objects of a given type, you can use the <span class="code">Firestorm.listAll()</span>
+                If you still need to fetch all objects of a given type, you can use the <span class="code">com.raylabz.firestorm.Firestorm.listAll()</span>
                 method, which allows you to do that without any limitations:
             </p>
 
             <pre class="prettyprint java">
-ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class);</pre>
+ArrayList&lt;Person&gt; peopleList = com.raylabz.firestorm.Firestorm.listAll(Person.class);</pre>
 
             <pre class="prettyprint">
-ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
+ArrayList&lt;Person&gt; peopleList = com.raylabz.firestorm.Firestorm.listAll(Person.class, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -612,16 +612,16 @@ ArrayList&lt;Person&gt; peopleList = Firestorm.listAll(Person.class, error -> {
             <h5 id="delete">Delete</h5>
 
             <p>
-                You can delete an object by using the <span class="code">Firestorm.delete()</span> method. Deleting an
+                You can delete an object by using the <span class="code">com.raylabz.firestorm.Firestorm.delete()</span> method. Deleting an
                 object
                 removes its <span class="code">id</span> attribute and sets it back to null.
             </p>
 
             <pre class="prettyprint java">
-Firestorm.delete(person);</pre>
+com.raylabz.firestorm.Firestorm.delete(person);</pre>
 
             <pre class="prettyprint">
-Firestorm.delete(person, error -> {
+com.raylabz.firestorm.Firestorm.delete(person, error -> {
     System.out.println("FAILED");
 });</pre>
 
@@ -640,17 +640,17 @@ DocumentReference objectReference = person.getObjectReference();</pre>
             </p>
 
             <pre class="prettyprint java">
-DocumentReference objectReference = Firestorm.getObjectReference(Person.class, documentID);</pre>
+DocumentReference objectReference = com.raylabz.firestorm.Firestorm.getObjectReference(Person.class, documentID);</pre>
 
             <h5 id="collectionReference">Obtaining collection references</h5>
 
             <p>
-                You can also obtain a reference a type's collection in Firestore by using <span class="code">Firestorm.getCollectionReference()</span>.
+                You can also obtain a reference a type's collection in Firestore by using <span class="code">com.raylabz.firestorm.Firestorm.getCollectionReference()</span>.
                 This returns a CollectionReference which can be used with the regular Firestore API.
             </p>
 
             <pre class="prettyprint java">
-CollectionReference collectionReference = Firestorm.getCollectionReference(Person.class);</pre>
+CollectionReference collectionReference = com.raylabz.firestorm.Firestorm.getCollectionReference(Person.class);</pre>
 
             <hr/>
 
@@ -659,13 +659,13 @@ CollectionReference collectionReference = Firestorm.getCollectionReference(Perso
             <h4 id="filtering">Filtering</h4>
 
             <p>
-                Firestorm allows you to easily filter results using the <span class="code">filter()</span>
+                com.raylabz.firestorm.Firestorm allows you to easily filter results using the <span class="code">filter()</span>
                 method. This method expects a type as a parameter and will return a <span class="code">FirestormFilterable</span>
                 object:
             </p>
 
             <pre class="prettyprint java">
-final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class);</pre>
+final FirestormFilterable&lt;Person&gt; filter = com.raylabz.firestorm.Firestorm.filter(Person.class);</pre>
 
             <p>
                 Items can be filtered using several methods. It is preferable to chain these methods in order
@@ -673,7 +673,7 @@ final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class);
             </p>
 
             <pre class="prettyprint java">
-final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class)
+final FirestormFilterable&lt;Person&gt; filter = com.raylabz.firestorm.Firestorm.filter(Person.class)
         .whereEqualTo("firstName", "John")
         .whereGreaterThan("age", 10)
         .orderBy("age")
@@ -685,7 +685,7 @@ final FirestormFilterable&lt;Person&gt; filter = Firestorm.filter(Person.class)
             </p>
 
             <pre class="prettyprint java">
-final QueryResult&lt;Person&gt; result = Firestorm.filter(Person.class)
+final QueryResult&lt;Person&gt; result = com.raylabz.firestorm.Firestorm.filter(Person.class)
         .whereEqualTo("firstName", "John")
         .whereGreaterThan("age", 10)
         .orderBy("age")
@@ -863,14 +863,14 @@ final boolean hasItems = result.hasItems();</pre>
 
             <h6 id="attachListenerObject">Attaching listeners to objects/documents</h6>
 
-            <p>Firestorm allows you to use Firestore's real-time update features by attaching listeners to objects using
+            <p>com.raylabz.firestorm.Firestorm allows you to use Firestore's real-time update features by attaching listeners to objects using
                 the
                 <span class="code">attachListener()</span> method and then implementing an <span class="code">OnObjectUpdateListener</span>.
                 Note that to instantiate a listener you need to provide an object to listen to (in this case 'person'):
             </p>
 
             <pre class="prettyprint java">
-Firestorm.attachListener(new OnObjectUpdateListener(person) {
+com.raylabz.firestorm.Firestorm.attachListener(new OnObjectUpdateListener(person) {
     @Override
     public void onSuccess() {
         System.out.println(person);
@@ -886,10 +886,10 @@ Firestorm.attachListener(new OnObjectUpdateListener(person) {
                 You can save this object in a variable for future use (such as detaching the listener):</p>
 
             <pre class="prettyprint java">
-final ListenerRegistration listenerRegistration = Firestorm.attachListener ...</pre>
+final ListenerRegistration listenerRegistration = com.raylabz.firestorm.Firestorm.attachListener ...</pre>
 
             <div class="info-panel light-blue white-text">
-                Firestorm will automatically update your object with the new data once an update is received.
+                com.raylabz.firestorm.Firestorm will automatically update your object with the new data once an update is received.
             </div>
 
             <div class="info-panel red darken-2 white-text">
@@ -901,7 +901,7 @@ final ListenerRegistration listenerRegistration = Firestorm.attachListener ...</
             <p>Alternatively, you can attach a listener to a Firestore document reference by specifying a class and a document ID:</p>
 
             <pre class="prettyprint java">
-Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID) {
+com.raylabz.firestorm.Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID) {
     @Override
     public void onSuccess(Object object) {
         System.out.println(object);
@@ -923,7 +923,7 @@ Firestorm.attachListener(new OnReferenceUpdateListener(Person.class, documentID)
             </p>
 
             <pre class="prettyprint java">
-Firestorm.attachListener(new OnCollectionUpdateListener&lt;Person&gt;(Person.class) {
+com.raylabz.firestorm.Firestorm.attachListener(new OnCollectionUpdateListener&lt;Person&gt;(Person.class) {
     @Override
     public void onSuccess(List&lt;ObjectChange&lt;Person&gt;&gt; objectChanges) {
         for (ObjectChange&lt;Person&gt; objectChange : objectChanges) {
@@ -948,11 +948,11 @@ Firestorm.attachListener(new OnCollectionUpdateListener&lt;Person&gt;(Person.cla
 
             <pre class="prettyprint java">
 //Create your filter first, using the filter() method:
-FirestormFilterable&lt;Person&gt; filterable = Firestorm.filter(Person.class)
+FirestormFilterable&lt;Person&gt; filterable = com.raylabz.firestorm.Firestorm.filter(Person.class)
         .whereGreaterThan("age", 12);
 
 //Then attach a FilterableListener that uses the filter created above:
-Firestorm.attachListener(new FilterableListener&lt;Person&gt;(filterable) {
+com.raylabz.firestorm.Firestorm.attachListener(new FilterableListener&lt;Person&gt;(filterable) {
     @Override
     public void onSuccess(List&lt;ObjectChange&lt;Person&gt;&gt; objectChanges) {
         for (ObjectChange&lt;Person&gt; objectChange : objectChanges) {
@@ -967,10 +967,10 @@ Firestorm.attachListener(new FilterableListener&lt;Person&gt;(filterable) {
 });</pre>
 
             <p>
-                In the example above, Firestorm will listen to changes to objects of the type <code>Person</code>, for which the field
-                is >12. If an object's age value is altered to not match this filter (i.e. age=11), Firestorm will ignore updates
+                In the example above, com.raylabz.firestorm.Firestorm will listen to changes to objects of the type <code>Person</code>, for which the field
+                is >12. If an object's age value is altered to not match this filter (i.e. age=11), com.raylabz.firestorm.Firestorm will ignore updates
                 to this object. Conversely, if the object's age value is then changed to meet the criteria (i.e. age=13),
-                Firestorm will resume listening to updates on this object.
+                com.raylabz.firestorm.Firestorm will resume listening to updates on this object.
             </p>
 
             <h6 id="detachListener" class="mt50">Detaching listeners</h6>
@@ -992,21 +992,21 @@ person.detachListener(Person.class);</pre>
 
             <h6 id="hasListener" class="mt50">Checking if object or class has an attached listener</h6>
 
-            <p>The <span class="code">Firestorm.hasListener()</span> method allows you to check if an object or class has an attached listener:</p>
+            <p>The <span class="code">com.raylabz.firestorm.Firestorm.hasListener()</span> method allows you to check if an object or class has an attached listener:</p>
 
             <pre class="prettyprint java">
-Firestorm.hasListener(person);</pre>
+com.raylabz.firestorm.Firestorm.hasListener(person);</pre>
 
             <p>or</p>
 
             <pre class="prettyprint java">
-Firestorm.hasListener(Person.class);</pre>
+com.raylabz.firestorm.Firestorm.hasListener(Person.class);</pre>
 
             <h6 id="getListener" class="mt50">Get last attached object listener</h6>
 
-            <p>The <span class="code">Firestorm.getListener()</span> method allows you to retrieve an object's last attached listener:</p>
+            <p>The <span class="code">com.raylabz.firestorm.Firestorm.getListener()</span> method allows you to retrieve an object's last attached listener:</p>
 
-            <pre class="prettyprint java">ListenerRegistration listener = Firestorm.getListener(person);</pre>
+            <pre class="prettyprint java">ListenerRegistration listener = com.raylabz.firestorm.Firestorm.getListener(person);</pre>
 
             <hr/>
 
@@ -1015,7 +1015,7 @@ Firestorm.hasListener(Person.class);</pre>
             <h4 id="transactions">Transactions</h4>
 
             <p>
-                Firestorm allows you to quickly define and run a Firestore transaction using the <span class="code">runTransaction()</span>
+                com.raylabz.firestorm.Firestorm allows you to quickly define and run a Firestore transaction using the <span class="code">runTransaction()</span>
                 method.
                 To do so, you first need to declare a new <span class="code">FirestormTransaction</span>:
             </p>
@@ -1045,12 +1045,12 @@ FirestormTransaction transaction = new FirestormTransaction() {
             <p>You can then run your transaction using the <span class="code">runTransaction()</span> method:</p>
 
             <pre class="prettyprint java">
-Firestorm.runTransaction(transaction);</pre>
+com.raylabz.firestorm.Firestorm.runTransaction(transaction);</pre>
 
             <p>Alternatively, you can directly run a nameless transaction:</p>
 
             <pre class="prettyprint java">
-Firestorm.runTransaction(new FirestormTransaction() {
+com.raylabz.firestorm.Firestorm.runTransaction(new FirestormTransaction() {
     @Override
     public void execute() {
         create(person1);
@@ -1082,7 +1082,7 @@ Firestorm.runTransaction(new FirestormTransaction() {
             <h4 id="batches">Batch writes</h4>
 
             <p>
-                Firestorm also allows you to quickly define and run batch write operations on Firestore, using the <span
+                com.raylabz.firestorm.Firestorm also allows you to quickly define and run batch write operations on Firestore, using the <span
                     class="code">runBatch()</span>
                 You can define a new batch by creating a new <span class="code">FirestormBatch</span> object:
             </p>
@@ -1110,12 +1110,12 @@ FirestormBatch batch = new FirestormBatch() {
             <p>Run a batch using the <span class="code">runBatch()</span> method:</p>
 
             <pre class="prettyprint java">
-Firestorm.runBatch(batch);</pre>
+com.raylabz.firestorm.Firestorm.runBatch(batch);</pre>
 
             <p>Alternatively, using a nameless object:</p>
 
             <pre class="prettyprint java">
-Firestorm.runBatch(new FirestormBatch() {
+com.raylabz.firestorm.Firestorm.runBatch(new FirestormBatch() {
     @Override
     public void execute() {
         create(person);
@@ -1139,7 +1139,7 @@ Firestorm.runBatch(new FirestormBatch() {
             <h4 id="pagination">Pagination</h4>
 
             <p>
-                Firestorm supports easy pagination of large numbers of objects of a specified type using the <span
+                com.raylabz.firestorm.Firestorm supports easy pagination of large numbers of objects of a specified type using the <span
                     class="code">Paginator</span>
                 class.
                 The paginator's <span class="code">next()</span> method receives the type of objects to paginate and the
@@ -1247,7 +1247,7 @@ paginator = Paginator.next(Person.class, lastDocumentID)
             <h3 id="usage">License</h3>
 
             <p>
-                Firestorm is released under the <a href="https://github.com/RayLabz/Firestorm/blob/master/LICENSE">MIT license</a>.
+                com.raylabz.firestorm.Firestorm is released under the <a href="https://github.com/RayLabz/com.raylabz.firestorm.Firestorm/blob/master/LICENSE">MIT license</a>.
             </p>
 
             <hr/>
@@ -1256,14 +1256,14 @@ paginator = Paginator.next(Person.class, lastDocumentID)
 
             <p>
                 You can find the source code at the project's repository <a
-                    href="https://github.com/RayLabz/Firestorm/">here</a>.
+                    href="https://github.com/RayLabz/com.raylabz.firestorm.Firestorm/">here</a>.
             </p>
 
             <hr/>
 
             <h3 id="bugreport">Bug reporting</h3>
 
-            <p>Please report bugs <a href="mailto:RayLabzg@gmail.com?subject=Firestorm">here</a>.</p>
+            <p>Please report bugs <a href="mailto:RayLabzg@gmail.com?subject=com.raylabz.firestorm.Firestorm">here</a>.</p>
 
             <br/><br/>
         </div>
