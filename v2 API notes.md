@@ -2,14 +2,38 @@
 
 ## Create
 
-### Synchronous
+### Create single object
 
-``com.raylabz.firestorm.Firestorm.FS.Create.id(id, object)``
+#### Synchronous
 
-``com.raylabz.firestorm.Firestorm.FS.Create.randomID(object)``
+```java 
+FS.create(object).now()
+```
 
-### Asynchronous
+```java
+FS.create(object).now(error -> {
+    //TODO
+});
+```
 
-``com.raylabz.firestorm.Firestorm.FS.Create.Async.id(id, object, callback)``
+```java
+FS.create(object).waitFor(1, TimeUnit.MINUTES);
+```
 
-``com.raylabz.firestorm.Firestorm.FS.Create.Async.randomID(object, callback)``
+**Note**:
+
+``now()`` and ``waitFor()`` return a ``WriteResult``.
+
+#### Asynchronous
+
+```java
+FS.create(object).then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
+### Get single object
+
+#### Synchronous

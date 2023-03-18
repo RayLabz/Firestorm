@@ -1,4 +1,5 @@
 import com.raylabz.firestorm.FS;
+import com.raylabz.firestorm.async.FailureCallback;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
@@ -51,6 +52,8 @@ public class CreateTest {
 //        }).onError(error -> {
 //            System.err.println(error.getMessage());
 //        }).run();
+
+        FS.create(s).waitFor(1, TimeUnit.MINUTES);
 
         Student a = FS.get(Student.class, "a").waitFor(2, TimeUnit.SECONDS);
         System.out.println(a);
