@@ -41,9 +41,7 @@ public class CreateTest {
 
         Student s = new Student("a", 18, "Nicos", 10);
 
-        FS.create(s).then(result -> {
-            System.out.println(result);
-        }).run();
+        Student a = FS.get(Student.class, "a").waitFor(1, TimeUnit.MINUTES);
 
         while (true) {}
 

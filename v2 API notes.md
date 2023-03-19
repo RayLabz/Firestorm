@@ -37,3 +37,22 @@ FS.create(object).then(result -> {
 ### Get single object
 
 #### Synchronous
+
+```java
+MyClass object = FS.get(MyClass.class, "documentID").now();
+```
+
+```java
+MyClass object = FS.get(MyClass.class, "documentID").waitFor(1, TimeUnit.MINUTES);
+```
+
+#### Asynchronous
+
+```java
+FS.get(MyClass.class, "documentID").then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
