@@ -3,6 +3,8 @@ import com.raylabz.firestorm.async.FailureCallback;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CreateTest {
@@ -19,29 +21,31 @@ public class CreateTest {
         FS.register(Person.class);
         FS.register(Student.class);
 
-        Person p = new Person("yo", 10, "Nicos");
 
-        //------------------------------------------------------
-        // ------------------ ASYNC RANDOM ID ------------------
-        //------------------------------------------------------
+        List<Student> students = FS.getMany(Student.class, "id_0", "id_1").now();
 
-//        FS.Create.Async.randomID(p, new ApiFutureCallback<WriteResult>() {
-//            @Override
-//            public void onFailure(Throwable throwable) {
-//                System.err.println(throwable.getMessage());
-//            }
-//
-//            @Override
-//            public void onSuccess(WriteResult writeResult) {
-//                System.out.println(writeResult.getUpdateTime());
-//            }
-//        });
-//
-//        System.out.println("First");
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add("id_0");
+        ids.add("id_1");
+        List<Student> students = FS.getMany(Student.class, ids).now();
 
-        Student s = new Student("a", 18, "Nicos", 10);
+        System.out.println(students);
 
-        Student a = FS.get(Student.class, "a").waitFor(1, TimeUnit.MINUTES);
+        List<Student> students1 = FS.getMany(Student.class, "id_0", "id_1").waitFor(1, TimeUnit.MINUTES);
+
+        FS.getMany(Student.class, "id_0", "id_1").then(result -> {
+            System.out.println(result);
+        }).onError(error -> {
+            System.err.println(error);
+        }).run();
+
+        FS.getMany(Student.class, ids).then(result -> {
+            System.out.println(result);
+        }).onError(error -> {
+            System.err.println(error);
+        }).run();
+
+        System.out.println("printout");
 
         while (true) {}
 

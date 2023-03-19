@@ -142,61 +142,50 @@ public final class FS {
         return FSFuture.fromAPIFuture(objectFuture);
     }
 
-    //TODO ---- CONTINUE TRANSFORMING HERE!
-
-    /**
-     * Retrieves multiple documents of a class as a list of objects.
-     * @param objectClass The class of the objects.
-     * @param ids A list of IDs of the objects to retrieve.
-     * @param <T> A type matching the type of object class.
-     * @return Returns a list of type T.
-     */
-    public static <T> List<T> getMany(final Class<T> objectClass, List<String> ids) {
-        ArrayList<T> retItems = new ArrayList<>();
+    public static <T> FSFuture<List<T>> getMany(final Class<T> aClass, List<String> ids) {
         final DocumentReference[] documentReferences = new DocumentReference[ids.size()];
         for (int i = 0; i < documentReferences.length; i++) {
-            documentReferences[i] = (firestore.collection(objectClass.getSimpleName()).document(ids.get(i)));
+            documentReferences[i] = (firestore.collection(aClass.getSimpleName()).document(ids.get(i)));
         }
-        final ApiFuture<List<DocumentSnapshot>> items = firestore.getAll(documentReferences);
-        try {
-            final List<DocumentSnapshot> documentSnapshots = items.get();
-            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+        final ApiFuture<List<DocumentSnapshot>> future = firestore.getAll(documentReferences);
+        ApiFuture<List<T>> objectListFuture = ApiFutures.transform(future, input -> {
+            ArrayList<T> retItems = new ArrayList<>();
+            for (DocumentSnapshot documentSnapshot : input) {
                 if (documentSnapshot.exists()) {
-                    retItems.add(documentSnapshot.toObject(objectClass));
+                    retItems.add(documentSnapshot.toObject(aClass));
                 }
             }
             return retItems;
-        } catch (ExecutionException | InterruptedException e) {
-            throw new FirestormException(e);
-        }
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(objectListFuture);
     }
 
     /**
      * Retrieves multiple documents of a class as a list of objects.
-     * @param objectClass The class of the objects.
-     * @param ids A list of IDs of the objects to retrieve.
+     * @param aClass The class of the objects.
+     * @param ids An array of IDs of the objects to retrieve.
      * @param <T> A type matching the type of object class.
      * @return Returns a list of type T.
      */
-    public static <T> List<T> getMany(final Class<T> objectClass, String... ids) {
-        ArrayList<T> retItems = new ArrayList<>();
+    public static <T> FSFuture<List<T>> getMany(final Class<T> aClass, String... ids) {
         final DocumentReference[] documentReferences = new DocumentReference[ids.length];
         for (int i = 0; i < documentReferences.length; i++) {
-            documentReferences[i] = (firestore.collection(objectClass.getSimpleName()).document(ids[i]));
+            documentReferences[i] = (firestore.collection(aClass.getSimpleName()).document(ids[i]));
         }
-        final ApiFuture<List<DocumentSnapshot>> items = firestore.getAll(documentReferences);
-        try {
-            final List<DocumentSnapshot> documentSnapshots = items.get();
-            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+        final ApiFuture<List<DocumentSnapshot>> future = firestore.getAll(documentReferences);
+        ApiFuture<List<T>> objectListFuture = ApiFutures.transform(future, input -> {
+            ArrayList<T> retItems = new ArrayList<>();
+            for (DocumentSnapshot documentSnapshot : input) {
                 if (documentSnapshot.exists()) {
-                    retItems.add(documentSnapshot.toObject(objectClass));
+                    retItems.add(documentSnapshot.toObject(aClass));
                 }
             }
             return retItems;
-        } catch (ExecutionException | InterruptedException e) {
-            throw new FirestormException(e);
-        }
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(objectListFuture);
     }
+
+    //TODO ---- CONTINUE TRANSFORMING HERE!
 
     /**
      * Checks if a given documentID of a given class exists.

@@ -56,3 +56,47 @@ FS.get(MyClass.class, "documentID").then(result -> {
 }).run();
 ```
 
+### Get many objects
+
+#### Synchronous
+
+With varargs:
+```java
+List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").now();
+```
+
+With ``java.util.List``:
+```java
+List<MyClass> items = FS.getMany(MyClass.class, idsList).now();
+```
+
+waitFor() with varargs:
+```java
+List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").waitFor(1, TimeUnit.MINUTES);
+```
+
+waitFor() with ``java.util.List``:
+```java
+List<MyClass> items = FS.getMany(MyClass.class, idsList).waitFor(1, TimeUnit.MINUTES);
+```
+
+#### Asynchronous
+
+With varargs:
+```java
+FS.getMany(MyClass.class, "id_0", "id_1").then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
+With ``java.util.List``:
+```java
+FS.getMany(MyClass.class, idsList).then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
