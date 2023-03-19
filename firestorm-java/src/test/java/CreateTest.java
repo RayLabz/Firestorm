@@ -41,24 +41,9 @@ public class CreateTest {
 
         Student s = new Student("a", 18, "Nicos", 10);
 
-//        FS.create(s).then(result -> {
-//            System.out.println(result.getUpdateTime());
-//        }).onError(error -> {
-//            System.err.println(error.getMessage());
-//        }).run();
-
-//        FS.get(Student.class, "a").then(result -> {
-//            System.out.println(result);
-//        }).onError(error -> {
-//            System.err.println(error.getMessage());
-//        }).run();
-
-        FS.create(s).waitFor(1, TimeUnit.MINUTES);
-
-        Student a = FS.get(Student.class, "a").waitFor(2, TimeUnit.SECONDS);
-        System.out.println(a);
-
-        System.out.println("hey");
+        FS.create(s).then(result -> {
+            System.out.println(result);
+        }).run();
 
         while (true) {}
 

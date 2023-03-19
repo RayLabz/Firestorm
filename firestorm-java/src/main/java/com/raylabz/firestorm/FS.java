@@ -138,7 +138,7 @@ public final class FS {
             } catch (NotInitializedException e) {
                 throw new FirestormException(e.getMessage());
             }
-        });
+        }, Firestorm.getSelectedExecutor());
         return FSFuture.fromAPIFuture(objectFuture);
     }
 

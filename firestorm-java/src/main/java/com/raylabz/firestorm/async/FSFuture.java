@@ -3,6 +3,7 @@ package com.raylabz.firestorm.async;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
+import com.raylabz.firestorm.Firestorm;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -116,7 +117,7 @@ public class FSFuture<ResultType> {
     }
 
     public void run() {
-        ApiFutures.addCallback(future, jointCallback);
+        ApiFutures.addCallback(future, jointCallback, Firestorm.getSelectedExecutor());
     }
 
     private void updateJointCallback() {
