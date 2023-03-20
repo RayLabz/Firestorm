@@ -22,28 +22,6 @@ public class CreateTest {
         FS.register(Student.class);
 
 
-        List<Student> students = FS.getMany(Student.class, "id_0", "id_1").now();
-
-        ArrayList<String> ids = new ArrayList<>();
-        ids.add("id_0");
-        ids.add("id_1");
-        List<Student> students = FS.getMany(Student.class, ids).now();
-
-        System.out.println(students);
-
-        List<Student> students1 = FS.getMany(Student.class, "id_0", "id_1").waitFor(1, TimeUnit.MINUTES);
-
-        FS.getMany(Student.class, "id_0", "id_1").then(result -> {
-            System.out.println(result);
-        }).onError(error -> {
-            System.err.println(error);
-        }).run();
-
-        FS.getMany(Student.class, ids).then(result -> {
-            System.out.println(result);
-        }).onError(error -> {
-            System.err.println(error);
-        }).run();
 
         System.out.println("printout");
 

@@ -185,46 +185,25 @@ public final class FS {
         return FSFuture.fromAPIFuture(objectListFuture);
     }
 
+    /**
+     * Checks if a given documentID of a given class exists.
+     *
+     * @param aClass The object class.
+     * @param id The document ID.
+     * @return Returns true if the document exists on Firestore, false otherwise.
+     */
+    public static <T> FSFuture<Boolean> exists(final Class<T> aClass, String id) {
+        DocumentReference docRef = firestore.collection(aClass.getSimpleName()).document(id);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        ApiFuture<Boolean> existsFuture = ApiFutures.transform(
+                future,
+                DocumentSnapshot::exists,
+                Firestorm.getSelectedExecutor()
+        );
+        return FSFuture.fromAPIFuture(existsFuture);
+    }
+
     //TODO ---- CONTINUE TRANSFORMING HERE!
-
-    /**
-     * Checks if a given documentID of a given class exists.
-     *
-     * @param objectClass The object class.
-     * @param documentID The document ID.
-     * @return Returns true if the document exists on Firestore, false otherwise.
-     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-     */
-    public static boolean exists(final Class<?> objectClass, final String documentID) throws FirestormException {
-        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        try {
-            DocumentSnapshot document = future.get();
-            return document.exists();
-        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-            throw new FirestormException(e);
-        }
-    }
-
-    /**
-     * Checks if a given documentID of a given class exists.
-     *
-     * @param objectClass The object class.
-     * @param documentID The document ID.
-     * @param onFailureListener A failure listener.
-     * @return Returns true if the document exists on Firestore, false otherwise.
-     */
-    public static boolean exists(final Class<?> objectClass, final String documentID, final OnFailureListener onFailureListener) {
-        DocumentReference docRef = firestore.collection(objectClass.getSimpleName()).document(documentID);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        try {
-            DocumentSnapshot document = future.get();
-            return document.exists();
-        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-            onFailureListener.onFailure(e);
-            return false;
-        }
-    }
 
 //    /**
 //     * Updates a document in Firestore.
