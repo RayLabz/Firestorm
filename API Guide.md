@@ -29,4 +29,4 @@
 
 
 
-<small>* Batch operations will overwrite objects with the same IDs.</small>
+[*] Batch operations will overwrite objects with the same IDs due to Firestore specifications.
