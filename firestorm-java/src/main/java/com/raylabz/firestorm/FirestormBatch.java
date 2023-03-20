@@ -1,31 +1,32 @@
-//package com.raylabz.firestorm;
-//
-//import com.google.api.core.ApiFuture;
-//import com.google.cloud.firestore.DocumentReference;
-//import com.google.cloud.firestore.WriteBatch;
-//import com.google.cloud.firestore.WriteResult;
-//import com.raylabz.firestorm.exception.*;
-//
-//import java.util.List;
-//import java.util.concurrent.ExecutionException;
-//
-///**
-// * Enables Firestore batch writes.
-// * @author Nicos Kasenides
-// * @version 1.0.0
-// */
-//public abstract class FirestormBatch extends FirestormOperation {
-//
-//    private int numOfOperations = 0;
-//    private WriteBatch batch;
-//
-//    /**
-//     * Initializes the batch.
-//     */
-//    public FirestormBatch() {
-//        this.batch = FS.firestore.batch();
-//    }
-//
+package com.raylabz.firestorm;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.WriteBatch;
+import com.google.cloud.firestore.WriteResult;
+import com.raylabz.firestorm.exception.*;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+/**
+ * Enables Firestore batch writes.
+ * @author Nicos Kasenides
+ * @version 1.0.0
+ */
+public abstract class FirestormBatch extends FirestormOperation {
+
+    public static final int MAX_OPERATIONS = 500;
+    private int numOfOperations = 0;
+    private WriteBatch batch;
+
+    /**
+     * Initializes the batch.
+     */
+    public FirestormBatch() {
+        this.batch = FS.firestore.batch();
+    }
+
 //    /**
 //     * Creates a Firestore document from an object as part of a batch write.
 //     * @param object The object containing the data.
@@ -95,24 +96,24 @@
 //        }
 //    }
 //
-//    /**
-//     * Performs a batch operation.
-//     */
-//    void doBatch() {
-//        if (numOfOperations > 500) {
-//            throw new TooManyOperationsException("The number of operations in a batch write cannot exceed 500.");
-//        }
-//
-//        try {
-//            managedExecute();
-//            final ApiFuture<List<WriteResult>> commitResult = batch.commit();
-//            commitResult.get();
-//        } catch (InterruptedException | ExecutionException | FirestormException e) {
-//            onFailure(e);
-//            return;
-//        }
-//
-//        onSuccess();
-//    }
-//
-//}
+    /**
+     * Performs a batch operation.
+     */
+    void doBatch() {
+        if (numOfOperations > MAX_OPERATIONS) {
+            throw new TooManyOperationsException("The number of operations in a batch write cannot exceed 500.");
+        }
+
+        try {
+            managedExecute();
+            final ApiFuture<List<WriteResult>> commitResult = batch.commit();
+            commitResult.get();
+        } catch (InterruptedException | ExecutionException | FirestormException e) {
+            onFailure(e);
+            return;
+        }
+
+        onSuccess();
+    }
+
+}

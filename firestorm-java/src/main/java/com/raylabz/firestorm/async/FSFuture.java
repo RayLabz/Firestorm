@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
 import com.raylabz.firestorm.Firestorm;
+import com.raylabz.firestorm.exception.FirestormException;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -52,7 +53,7 @@ public class FSFuture<ResultType> {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            return null;
+           throw new FirestormException(e);
         }
     }
 

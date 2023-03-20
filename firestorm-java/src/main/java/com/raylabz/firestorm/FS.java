@@ -1,6 +1,8 @@
 package com.raylabz.firestorm;
 
 import com.google.api.core.*;
+import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.raylabz.firestorm.async.FSFuture;
@@ -9,7 +11,6 @@ import com.raylabz.firestorm.exception.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * com.raylabz.firestorm.Firestorm is an object-oriented data access API for Firestore.
@@ -112,6 +113,81 @@ public final class FS {
             return FSFuture.fromAPIFuture(apiFuture);
         } catch (ClassRegistrationException | NoSuchFieldException |
                  IllegalAccessException | NotInitializedException | IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Creates multiple objects.
+     *
+     * @param objects The objects to create.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to create.
+     */
+    public static <T> FSFuture<List<WriteResult>> create(List<T> objects) {
+        try {
+            if (!objects.isEmpty()) {
+                checkRegistration(objects.get(0).getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.size()) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (int i = 0; i < documentReferences.size(); i++) {
+                    batch.set(documentReferences.get(i), objects.get(i));
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Creates multiple objects.
+     *
+     * @param objects The objects to create.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to create.
+     */
+    @SafeVarargs
+    public static <T> FSFuture<List<WriteResult>> create(T... objects) {
+        try {
+            if (objects.length != 0) {
+                checkRegistration(objects[0].getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.length) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (int i = 0; i < documentReferences.size(); i++) {
+                    batch.set(documentReferences.get(i), objects[i]);
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
             throw new FirestormException(e);
         }
     }
