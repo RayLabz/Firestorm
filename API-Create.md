@@ -3,7 +3,7 @@
 ### Synchronous
 
 ```java 
-FS.create(object).now()
+FS.create(object).now();
 ```
 
 ```java
