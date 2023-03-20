@@ -69,7 +69,7 @@ List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").waitFor(1, TimeU
 
 With varargs:
 ```java
-FS.getMany(MyClass.class, "id_0", "id_1").then(result -> {
+List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").then(result -> {
     //TODO - Success
 }).onError(error -> {
     //TODO - Error
@@ -78,7 +78,7 @@ FS.getMany(MyClass.class, "id_0", "id_1").then(result -> {
 
 With ``java.util.List``:
 ```java
-FS.getMany(MyClass.class, idsList).then(result -> {
+List<MyClass> items = FS.getMany(MyClass.class, idsList).then(result -> {
     //TODO - Success
 }).onError(error -> {
     //TODO - Error

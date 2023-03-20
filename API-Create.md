@@ -72,4 +72,26 @@ FS.create(object1, object2).waitFor(1, TimeUnit.MINUTES);
 
 ``now()`` and ``waitFor()`` return a ``List<WriteResult>``.
 
+### Asynchronous
+
+With ``java.util.List``:
+
+```java
+FS.create(objects).then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
+With varargs:
+
+```java
+FS.create(object1, object2).then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
+
 ---
