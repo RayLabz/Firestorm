@@ -23,6 +23,10 @@ public class CreateTest {
 
         ArrayList<Student> students = new ArrayList<>();
 
+        FS.get(Student.class, "").now(error -> {
+            //TODO
+        });
+
 //        for (int i = 0 ; i < 15; i++) {
 //            Student s = new Student("id_" + i, 20 + i, "Random guy " + i, i + 70);
 //            students.add(s);

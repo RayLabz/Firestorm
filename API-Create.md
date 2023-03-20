@@ -43,6 +43,12 @@ FS.create(objects).now();
 ```
 
 ```java
+FS.create(objects).now(error -> {
+    //TODO
+});
+```
+
+```java
 FS.create(objects).waitFor(1, TimeUnit.MINUTES);
 ```
 
@@ -50,6 +56,12 @@ With varargs:
 
 ```java
 FS.create(object1, object2).now();
+```
+
+```java
+FS.create(object1, object2).now(error -> {
+    //TODO
+});
 ```
 
 ```java

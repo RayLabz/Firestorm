@@ -7,6 +7,12 @@ MyClass object = FS.get(MyClass.class, "documentID").now();
 ```
 
 ```java
+MyClass object = FS.get(MyClass.class, "documentID").now(error -> {
+    //TODO
+});
+```
+
+```java
 MyClass object = FS.get(MyClass.class, "documentID").waitFor(1, TimeUnit.MINUTES);
 ```
 
@@ -26,11 +32,17 @@ FS.get(MyClass.class, "documentID").then(result -> {
 
 ### Synchronous
 
-With varargs:
 
 With ``java.util.List``:
+
 ```java
 List<MyClass> items = FS.getMany(MyClass.class, idsList).now();
+```
+
+```java
+List<MyClass> items = FS.getMany(MyClass.class, idsList).now(error -> {
+    //TODO
+});
 ```
 
 ```java
@@ -41,6 +53,12 @@ With varargs:
 
 ```java
 List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").now();
+```
+
+```java
+List<MyClass> items = FS.getMany(MyClass.class, "id_0", "id_1").now(error -> {
+    //TODO
+});
 ```
 
 ```java
