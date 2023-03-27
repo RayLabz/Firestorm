@@ -523,6 +523,27 @@ public final class FS {
     }
 
     /**
+     * Deletes ALL documents/objects of a certain type (WARNING: Destructive action).
+     *
+     * @param aClass The class/type.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type.
+     */
+    public static <T> FSFuture<List<WriteResult>> deleteType(final Class<T> aClass) {
+        try {
+            checkRegistration(aClass);
+            Iterable<DocumentReference> documents = firestore.collection(aClass.getSimpleName()).listDocuments();
+            WriteBatch batch = firestore.batch();
+            for (DocumentReference documentReference : documents) {
+                batch.delete(documentReference);
+            }
+            return FSFuture.fromAPIFuture(batch.commit());
+        } catch (ClassRegistrationException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Lists all objects/documents of a specified type up to a certain limit.
      *
      * @param aClass The class of the object.

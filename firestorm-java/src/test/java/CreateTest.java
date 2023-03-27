@@ -31,18 +31,24 @@ public class CreateTest {
 
 //        Student s = new Student("a", 20, "a", 4);
 
-        FS.runBatch(new FirestormBatch() {
-            @Override
-            public void execute() {
-                create(students.get(0));
-                create(students.get(1));
-                create(students.get(2));
-                delete(students.get(1));
-            }
-        }).then(result -> {
-            System.out.println(result);
+//        FS.runBatch(new FirestormBatch() {
+//            @Override
+//            public void execute() {
+//                create(students.get(0));
+//                create(students.get(1));
+//                create(students.get(2));
+//                delete(students.get(1));
+//            }
+//        }).then(result -> {
+//            System.out.println(result);
+//        }).onError(error -> {
+//            System.out.println(error.getMessage());
+//        }).run();
+
+        FS.deleteType(Student.class).then(result -> {
+            //TODO - Success
         }).onError(error -> {
-            System.out.println(error.getMessage());
+            //TODO - Error
         }).run();
 
         System.out.println("hi");

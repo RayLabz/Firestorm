@@ -7,7 +7,6 @@
 [Creating an object](API-Create.md#create-single-object)
 
 [Creating multiple objects](API-Create.md#create-multiple-objects)
-(Batch operations will overwrite objects with the same IDs due to Firestore specifications)
 
 ### Retrieving objects
 
@@ -27,6 +26,8 @@
 
 [Deleting multiple objects](API-Delete.md#delete-single-object)
 
+[Deleting all objects of a type](API-Delete.md#delete-all-objects-of-type)
+
 ### Listing objects of type
 
 [Listing objects of type](API-List.md)
@@ -34,6 +35,7 @@
 ### Checking if objects exist
 
 [Checking if an object exists](API-Exists.md#check-if-object-exists)
+
 
 ---
 

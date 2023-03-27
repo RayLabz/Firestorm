@@ -151,3 +151,29 @@ FS.delete(MyClass.class, "id1", "id2").then(result -> {
 ```
 
 ---
+
+## Delete all objects of type
+
+### Synchronous
+
+```java
+FS.deleteType(MyClass.class).now();
+```
+
+```java
+FS.deleteType(Student.class).waitFor(1, TimeUnit.MINUTES);
+```
+
+**Note**:
+
+``now()`` and ``waitFor()`` return a ``List<WriteResult>``.
+
+### Asynchronous
+
+```java
+FS.deleteType(MyClass.class).then(result -> {
+    //TODO - Success
+}).onError(error -> {
+    //TODO - Error
+}).run();
+```
