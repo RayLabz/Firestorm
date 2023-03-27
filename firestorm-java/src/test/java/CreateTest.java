@@ -28,16 +28,16 @@ public class CreateTest {
             students.add(s);
         }
 
-        List<WriteResult> now = FS.update(students).waitFor(1, TimeUnit.MINUTES);
-        System.out.println(now);
+//        List<WriteResult> now = FS.update(students).waitFor(1, TimeUnit.MINUTES);
+//        System.out.println(now);
+//
+//        FS.update(students).then(result -> {
+//            System.out.println(result.size());
+//        }).onError(error ->  {
+//            System.out.println(error.getMessage());
+//        }).run();
 
-        FS.update(students).then(result -> {
-            System.out.println(result.size());
-        }).onError(error ->  {
-            System.out.println(error.getMessage());
-        }).run();
-
-//        FS.create(new Student("a", 20, "a", 4), new Student("b", 21, "b", 53)).now();
+        Student s = new Student("a", 20, "a", 4);
 
 //        Student s = new Student("a", 65, "hi", 99);
 //        FS.update(s).then(result -> {
@@ -45,6 +45,12 @@ public class CreateTest {
 //        }).onError(error -> {
 //            System.err.println(error.getMessage());
 //        }).run();
+
+        FS.delete(students).then(result -> {
+            System.out.println(result.size());
+        }).onError(error -> {
+            System.err.println(error.getMessage());
+        }).run();
 
         System.out.println("printout");
 

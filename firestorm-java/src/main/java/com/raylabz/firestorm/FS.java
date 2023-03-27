@@ -11,6 +11,7 @@ import com.raylabz.firestorm.exception.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * com.raylabz.firestorm.Firestorm is an object-oriented data access API for Firestore.
@@ -373,6 +374,147 @@ public final class FS {
             }
             throw new FirestormException("Objects array cannot be empty.");
         } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes an object from Firestore.
+     *
+     * @param object  The object to delete.
+     * @return Returns a {@link WriteResult}.
+     */
+    public static FSFuture<WriteResult> delete(Object object) {
+        try {
+            final String documentID = Reflector.getIDFieldValue(object);
+            if (documentID == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
+            FSFuture<WriteResult> writeResultFSFuture = FSFuture.fromAPIFuture(reference.delete());
+            Reflector.setIDFieldValue(object, null);
+            return writeResultFSFuture;
+        } catch (IllegalAccessException | NoSuchFieldException | NotInitializedException | IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes an object from Firestore using its class and ID.
+     *
+     * @param aClass The object's class.
+     * @param id The object's ID.
+     * @param <T> The object's type.
+     * @return Returns a {@link WriteResult}.
+     */
+    public static <T> FSFuture<WriteResult> delete(final Class<T> aClass, final String id) {
+        if (id == null) {
+            throw new FirestormException("ID field cannot be null");
+        }
+        final DocumentReference reference = firestore.collection(aClass.getSimpleName()).document(id);
+        return FSFuture.fromAPIFuture(reference.delete());
+    }
+
+    /**
+     * Deletes multiple objects.
+     *
+     * @param objects The objects to delete.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to create.
+     */
+    public static <T> FSFuture<List<WriteResult>> delete(List<T> objects) {
+        try {
+            if (!objects.isEmpty()) {
+                checkRegistration(objects.get(0).getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.size()) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (DocumentReference documentReference : documentReferences) {
+                    batch.delete(documentReference);
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes multiple objects.
+     *
+     * @param objects The objects to delete.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to delete.
+     */
+    @SafeVarargs
+    public static <T> FSFuture<List<WriteResult>> delete(T... objects) {
+        try {
+            if (objects.length != 0) {
+                checkRegistration(objects[0].getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.length) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (DocumentReference documentReference : documentReferences) {
+                    batch.delete(documentReference);
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Deletes multiple objects.
+     *
+     * @param aClass The object class.
+     * @param ids The IDs of the objects to delete.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to delete.
+     */
+    public static <T> FSFuture<List<WriteResult>> delete(final Class<T> aClass, String... ids) {
+        try {
+            if (ids.length != 0) {
+                checkRegistration(aClass);
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                for (String id : ids) {
+                    documentReferences.add(firestore.collection(aClass.getSimpleName()).document(id));
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (DocumentReference documentReference : documentReferences) {
+                    batch.delete(documentReference);
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException e) {
             throw new FirestormException(e);
         }
     }

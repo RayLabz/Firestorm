@@ -20,7 +20,13 @@
 
 ## Deleting objects
 
+[Deleting an object](API-Delete.md#delete-single-object)
+
+[Deleting multiple objects](API-Delete.md#delete-single-object)
+
 ## Listing objects of type
+
+
 
 ## Checking if objects exist
 
