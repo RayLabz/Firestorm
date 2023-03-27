@@ -519,6 +519,47 @@ public final class FS {
         }
     }
 
+    /**
+     * Lists all objects/documents of a specified type up to a certain limit.
+     *
+     * @param aClass The class of the object.
+     * @param limit The limit (return up to a certain number of items).
+     * @return Returns list of {@link T}.
+     * @param <T> The type of the object.
+     */
+    public static <T> FSFuture<List<T>> list(final Class<T> aClass, int limit) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(aClass.getSimpleName()).limit(limit).get();
+        ApiFuture<List<T>> transformFuture = ApiFutures.transform(future, input -> {
+            ArrayList<T> retItems = new ArrayList<>();
+            List<QueryDocumentSnapshot> documents = input.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                retItems.add(document.toObject(aClass));
+            }
+            return retItems;
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(transformFuture);
+    }
+
+    /**
+     * Lists all objects/documents of a specified type.
+     *
+     * @param aClass The class of the object.
+     * @return Returns list of {@link T}.
+     * @param <T> The type of the object.
+     */
+    public static <T> FSFuture<List<T>> list(final Class<T> aClass) {
+        ApiFuture<QuerySnapshot> future = firestore.collection(aClass.getSimpleName()).get();
+        ApiFuture<List<T>> transformFuture = ApiFutures.transform(future, input -> {
+            ArrayList<T> retItems = new ArrayList<>();
+            List<QueryDocumentSnapshot> documents = input.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                retItems.add(document.toObject(aClass));
+            }
+            return retItems;
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(transformFuture);
+    }
+
     //TODO ---- CONTINUE TRANSFORMING HERE!
 
 //
