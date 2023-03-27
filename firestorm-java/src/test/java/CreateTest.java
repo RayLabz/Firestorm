@@ -23,15 +23,28 @@ public class CreateTest {
 
         ArrayList<Student> students = new ArrayList<>();
 
-//        for (int i = 0 ; i < 15; i++) {
-//            Student s = new Student("id_" + i, 20 + i, "Random guy " + i, i + 70);
-//            students.add(s);
-//        }
-//
-//        List<WriteResult> now = FS.create(students).waitFor(1, TimeUnit.MINUTES);
-//        System.out.println(now);
+        for (int i = 0 ; i < 15; i++) {
+            Student s = new Student("id_" + i, 20 + i, "Random guy " + i, i + 70);
+            students.add(s);
+        }
+
+        List<WriteResult> now = FS.update(students).waitFor(1, TimeUnit.MINUTES);
+        System.out.println(now);
+
+        FS.update(students).then(result -> {
+            System.out.println(result.size());
+        }).onError(error ->  {
+            System.out.println(error.getMessage());
+        }).run();
 
 //        FS.create(new Student("a", 20, "a", 4), new Student("b", 21, "b", 53)).now();
+
+//        Student s = new Student("a", 65, "hi", 99);
+//        FS.update(s).then(result -> {
+//            System.out.println(result.getUpdateTime());
+//        }).onError(error -> {
+//            System.err.println(error.getMessage());
+//        }).run();
 
         System.out.println("printout");
 

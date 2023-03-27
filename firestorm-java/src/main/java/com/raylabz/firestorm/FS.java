@@ -279,41 +279,106 @@ public final class FS {
         return FSFuture.fromAPIFuture(existsFuture);
     }
 
+    /**
+     * Updates a document in Firestore, replacing any existing objects with the same ID.
+     * If an object with this ID does not exist, it will be created.
+     *
+     * @param object The object to update.
+     * @return Returns a {@link WriteResult}.
+     */
+    public static FSFuture<WriteResult> update(final Object object) {
+        try {
+            checkRegistration(object);
+            String idFieldValue = Reflector.getIDFieldValue(object);
+            if (idFieldValue == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+            ApiFuture<WriteResult> apiFuture = reference.set(object);
+            return FSFuture.fromAPIFuture(apiFuture);
+        } catch (ClassRegistrationException | NoSuchFieldException |
+                 IllegalAccessException | NotInitializedException | IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Updates multiple objects.
+     *
+     * @param objects The objects to update.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to update.
+     */
+    public static <T> FSFuture<List<WriteResult>> update(List<T> objects) {
+        try {
+            if (!objects.isEmpty()) {
+                checkRegistration(objects.get(0).getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.size()) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (int i = 0; i < documentReferences.size(); i++) {
+                    batch.set(documentReferences.get(i), objects.get(i));
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Updates multiple objects.
+     *
+     * @param objects The objects to update.
+     * @return Returns a list of {@link WriteResult}.
+     * @param <T> The type of objects to update.
+     */
+    @SafeVarargs
+    public static <T> FSFuture<List<WriteResult>> update(T... objects) {
+        try {
+            if (objects.length != 0) {
+                checkRegistration(objects[0].getClass());
+                ArrayList<DocumentReference> documentReferences = new ArrayList<>();
+                //Find IDs:
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
+                    documentReferences.add(reference);
+                }
+                if (documentReferences.size() != objects.length) {
+                    throw new FirestormException("Objects list size must be the same as the DocumentReference list size.");
+                }
+
+                WriteBatch batch = firestore.batch();
+                for (int i = 0; i < documentReferences.size(); i++) {
+                    batch.set(documentReferences.get(i), objects[i]);
+                }
+                return FSFuture.fromAPIFuture(batch.commit());
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
     //TODO ---- CONTINUE TRANSFORMING HERE!
 
-//    /**
-//     * Updates a document in Firestore.
-//     *
-//     * @param object An object which provides data and the document ID for the update.
-//     * @param onFailureListener FailureListener to execute onFailure().
-//     */
-//    public static void update(final Object object, final OnFailureListener onFailureListener) {
-//        try {
-//            checkRegistration(object);
-//            final String documentID = Reflector.getIDFieldValue(object);
-//            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException | ClassRegistrationException | IllegalAccessException | NoSuchFieldException | NotInitializedException e) {
-//            onFailureListener.onFailure(e);
-//        }
-//    }
-//
-//    /**
-//     * Updates a document in Firestore.
-//     *
-//     * @param object An object which provides data and the document ID for the update.
-//     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-//     */
-//    public static void update(final Object object) throws FirestormException {
-//        try {
-//            checkRegistration(object);
-//            final String documentID = Reflector.getIDFieldValue(object);
-//            final DocumentReference reference = firestore.collection(object.getClass().getSimpleName()).document(documentID);
-//            reference.set(object).get();
-//        } catch (InterruptedException | ExecutionException | ClassRegistrationException | IllegalAccessException | NoSuchFieldException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
 //
 //    /**
 //     * Deletes an object from Firestore.

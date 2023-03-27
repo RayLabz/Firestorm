@@ -14,6 +14,9 @@
 
 ## Updating objects
 
+[Updating an object](API-Update.md#update-single-object)
+
+[Updating multiple objects](API-Update.md#update-multiple-objects)
 
 ## Deleting objects
 
