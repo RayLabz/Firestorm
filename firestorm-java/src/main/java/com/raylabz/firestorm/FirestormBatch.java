@@ -7,6 +7,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.*;
 
+import javax.sound.midi.MidiFileFormat;
 import java.util.List;
 
 /**
@@ -35,8 +36,11 @@ public abstract class FirestormBatch extends FirestormOperation {
     public final void create(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
-            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document();
-            Reflector.setIDFieldValue(object, reference.getId());
+            String idFieldValue = Reflector.getIDFieldValue(object);
+            if (idFieldValue == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
             batch = batch.create(reference, object);
             numOfOperations++;
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
@@ -52,8 +56,11 @@ public abstract class FirestormBatch extends FirestormOperation {
     public final void update(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
-            final String id = Reflector.getIDFieldValue(object);
-            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document(id);
+            String idFieldValue = Reflector.getIDFieldValue(object);
+            if (idFieldValue == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document(idFieldValue);
             batch = batch.set(reference, object);
             numOfOperations++;
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
@@ -69,8 +76,11 @@ public abstract class FirestormBatch extends FirestormOperation {
     public final void delete(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
-            final String id = Reflector.getIDFieldValue(object);
-            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document(id);
+            final String documentID = Reflector.getIDFieldValue(object);
+            if (documentID == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            final DocumentReference reference = FS.firestore.collection(object.getClass().getSimpleName()).document(documentID);
             batch = batch.delete(reference);
             Reflector.setIDFieldValue(object, null);
             numOfOperations++;

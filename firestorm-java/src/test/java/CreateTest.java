@@ -45,6 +45,8 @@ public class CreateTest {
             System.out.println(error.getMessage());
         }).run();
 
+        System.out.println("hi");
+
         while (true) {}
 
     }

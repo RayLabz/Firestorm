@@ -441,6 +441,9 @@ public final class FS {
                 for (DocumentReference documentReference : documentReferences) {
                     batch.delete(documentReference);
                 }
+                for (T object : objects) {
+                    Reflector.setIDFieldValue(object, null);
+                }
                 return FSFuture.fromAPIFuture(batch.commit());
             }
             throw new FirestormException("Objects array cannot be empty.");
@@ -478,6 +481,9 @@ public final class FS {
                 WriteBatch batch = firestore.batch();
                 for (DocumentReference documentReference : documentReferences) {
                     batch.delete(documentReference);
+                }
+                for (T object : objects) {
+                    Reflector.setIDFieldValue(object, null);
                 }
                 return FSFuture.fromAPIFuture(batch.commit());
             }
