@@ -7,7 +7,7 @@ import com.raylabz.firestorm.exception.FirestormException;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class FirestormOperation implements OnCompletionListener {
+public abstract class FirestormOperation {
 
     /**
      * Managed execution.

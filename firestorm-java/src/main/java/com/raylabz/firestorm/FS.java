@@ -1,8 +1,6 @@
 package com.raylabz.firestorm;
 
 import com.google.api.core.*;
-import com.google.api.gax.rpc.ApiCallContext;
-import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.raylabz.firestorm.async.FSFuture;
@@ -11,7 +9,6 @@ import com.raylabz.firestorm.exception.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * com.raylabz.firestorm.Firestorm is an object-oriented data access API for Firestore.
@@ -562,98 +559,7 @@ public final class FS {
 
     //TODO ---- CONTINUE TRANSFORMING HERE!
 
-//
-//    /**
-//     * Lists available documents of a given type.
-//     *
-//     * @param objectClass The type of the documents to filter.
-//     * @param limit       The maximum number of objects to return.
-//     * @param <T>         A type matching the type of objectClass.
-//     * @param onFailureListener OnFailureListener to execute onFailure().
-//     * @return Returns an ArrayList of objects of type objectClass.
-//     */
-//    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit, final OnFailureListener onFailureListener) {
-//        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
-//        try {
-//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-//            ArrayList<T> documentList = new ArrayList<>();
-//            for (final QueryDocumentSnapshot document : documents) {
-//                documentList.add(document.toObject(objectClass));
-//            }
-//            return documentList;
-//        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-//            onFailureListener.onFailure(e);
-//            return null;
-//        }
-//    }
-//
-//    /**
-//     * Lists available documents of a given type.
-//     *
-//     * @param objectClass The type of the documents to filter.
-//     * @param limit       The maximum number of objects to return.
-//     * @param <T>         A type matching the type of objectClass.
-//     * @return Returns an ArrayList of objects of type objectClass.
-//     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-//     */
-//    public static <T> ArrayList<T> list(final Class<T> objectClass, final int limit) throws FirestormException {
-//        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).limit(limit).get();
-//        try {
-//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-//            ArrayList<T> documentList = new ArrayList<>();
-//            for (final QueryDocumentSnapshot document : documents) {
-//                documentList.add(document.toObject(objectClass));
-//            }
-//            return documentList;
-//        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-//
-//    /**
-//     * Lists ALL available documents of a given type. May incur charges for read operations for huge numbers of documents.
-//     *
-//     * @param objectClass The type of the documents to filter.
-//     * @param <T>         A type matching the type of objectClass.
-//     * @param onFailureListener OnFailureListener to execute onFailure().
-//     * @return Returns an ArrayList of objects of type objectClass.
-//     */
-//    public static <T> ArrayList<T> listAll(final Class<T> objectClass, final OnFailureListener onFailureListener) {
-//        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
-//        try {
-//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-//            ArrayList<T> documentList = new ArrayList<>();
-//            for (final QueryDocumentSnapshot document : documents) {
-//                documentList.add(document.toObject(objectClass));
-//            }
-//            return documentList;
-//        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-//            onFailureListener.onFailure(e);
-//            return null;
-//        }
-//    }
-//
-//    /**
-//     * Lists ALL available documents of a given type. May incur charges for read operations for huge numbers of documents.
-//     *
-//     * @param objectClass The type of the documents to filter.
-//     * @param <T>         A type matching the type of objectClass.
-//     * @return Returns an ArrayList of objects of type objectClass.
-//     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-//     */
-//    public static <T> ArrayList<T> listAll(final Class<T> objectClass) throws FirestormException {
-//        ApiFuture<QuerySnapshot> future = firestore.collection(objectClass.getSimpleName()).get();
-//        try {
-//            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-//            ArrayList<T> documentList = new ArrayList<>();
-//            for (final QueryDocumentSnapshot document : documents) {
-//                documentList.add(document.toObject(objectClass));
-//            }
-//            return documentList;
-//        } catch (InterruptedException | ExecutionException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
+
 //
 //    /**
 //     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
@@ -885,14 +791,16 @@ public final class FS {
 //            throw new NotInitializedException();
 //        }
 //    }
-//
-//    /**
-//     * Runs a batch write operation.
-//     *
-//     * @param batch The batch to run.
-//     */
-//    public static void runBatch(final FirestormBatch batch) {
-//        batch.doBatch();
-//    }
+
+
+    /**
+     * Runs a batch write operation.
+     *
+     * @param batch The batch to run.
+     * @return Returns a list of {@link WriteResult}.
+     */
+    public static FSFuture<List<WriteResult>> runBatch(final FirestormBatch batch) {
+        return batch.commit();
+    }
 
 }

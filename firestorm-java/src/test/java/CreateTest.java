@@ -1,5 +1,6 @@
 import com.google.cloud.firestore.WriteResult;
 import com.raylabz.firestorm.FS;
+import com.raylabz.firestorm.FirestormBatch;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
@@ -30,18 +31,19 @@ public class CreateTest {
 
 //        Student s = new Student("a", 20, "a", 4);
 
-        FS.create(students).now();
-
-        List<Student> item = FS.list(Student.class).now();
-
-
-        FS.list(Student.class).then(result -> {
+        FS.runBatch(new FirestormBatch() {
+            @Override
+            public void execute() {
+                create(students.get(0));
+                create(students.get(1));
+                create(students.get(2));
+                delete(students.get(1));
+            }
+        }).then(result -> {
             System.out.println(result);
         }).onError(error -> {
-            System.err.println(error.getMessage());
+            System.out.println(error.getMessage());
         }).run();
-
-        System.out.println("printout");
 
         while (true) {}
 
