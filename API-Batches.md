@@ -1,5 +1,14 @@
 # Batch operations
 
+Available operations:
+
+* ``create(object)``
+* ``update(object)``
+* ``delete(object)``
+* ``delete(aClass, objectID)``
+
+**Note:** Firestore enforces a limit of 500 operations per batch.
+
 ## Synchronous
 
 ```java

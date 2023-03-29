@@ -1,6 +1,12 @@
 # Firestorm Java 11 API Guide
 
+---
+
+This is the Firestorm API for Java 11... 
+
 ## Basic operations
+
+---
 
 ### Creating objects
 
@@ -36,15 +42,28 @@
 
 [Checking if an object exists](API-Exists.md#check-if-object-exists)
 
+## Queries & filtering
 
 ---
 
-## Batch operations
+**TODO!**
 
-[Synchronous batch operations](API-Batches.md#synchronous)
+## Transactions & batch operations
 
-[Asynchronous batch operations](API-Batches.md#asynchronous)
+---
 
+[Transactions](API-Transactions.md)
 
+[Batch operations](API-Batches.md)
 
+## Pagination
 
+---
+
+**TODO!**
+
+## Listeners
+
+---
+
+**TODO!**

@@ -7,7 +7,6 @@ import com.google.cloud.firestore.WriteResult;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.*;
 
-import javax.sound.midi.MidiFileFormat;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class FirestormBatch extends FirestormOperation {
+public abstract class FirestormBatch extends FirestormOperation implements BasicWriteOperationProvider<Void, BatchException> {
 
     public static final int MAX_OPERATIONS = 500;
     private int numOfOperations = 0;
@@ -33,7 +32,7 @@ public abstract class FirestormBatch extends FirestormOperation {
      * @param object The object containing the data.
      * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void create(final Object object) throws BatchException {
+    public final Void create(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
             String idFieldValue = Reflector.getIDFieldValue(object);
@@ -46,6 +45,7 @@ public abstract class FirestormBatch extends FirestormOperation {
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
             throw new BatchException(e);
         }
+        return null;
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class FirestormBatch extends FirestormOperation {
      * @param object The object to update.
      * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void update(final Object object) throws BatchException {
+    public final Void update(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
             String idFieldValue = Reflector.getIDFieldValue(object);
@@ -66,6 +66,7 @@ public abstract class FirestormBatch extends FirestormOperation {
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
             throw new BatchException(e);
         }
+        return null;
     }
 
     /**
@@ -73,7 +74,7 @@ public abstract class FirestormBatch extends FirestormOperation {
      * @param object The object to delete.
      * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void delete(final Object object) throws BatchException {
+    public final Void delete(final Object object) throws BatchException {
         try {
             FS.checkRegistration(object);
             final String documentID = Reflector.getIDFieldValue(object);
@@ -87,6 +88,7 @@ public abstract class FirestormBatch extends FirestormOperation {
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
             throw new BatchException(e);
         }
+        return null;
     }
 
     /**
@@ -95,7 +97,7 @@ public abstract class FirestormBatch extends FirestormOperation {
      * @param objectID The object's ID.
      * @throws BatchException Thrown when the batch execution encounters an error.
      */
-    public final void delete(final Class<?> objectClass, final String objectID) throws BatchException {
+    public final <T> Void delete(final Class<T> objectClass, final String objectID) throws BatchException {
         try {
             FS.checkRegistration(objectClass);
             final DocumentReference reference = FS.firestore.collection(objectClass.getSimpleName()).document(objectID);
@@ -104,6 +106,7 @@ public abstract class FirestormBatch extends FirestormOperation {
         } catch (ClassRegistrationException e) {
             throw new BatchException(e);
         }
+        return null;
     }
 
     /**

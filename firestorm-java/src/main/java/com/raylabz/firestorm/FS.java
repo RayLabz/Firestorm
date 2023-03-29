@@ -802,22 +802,15 @@ public final class FS {
 //        return registeredObjectListeners.get(object);
 //    }
 //
-//    /**
-//     * Runs a transaction operation.
-//     *
-//     * @param transaction The transaction to run.
-//     */
-//    public static void runTransaction(final FirestormTransaction transaction) {
-//        ApiFuture<Void> futureTransaction = FS.firestore.runTransaction(transaction);
-//        try {
-//            futureTransaction.get();
-//            transaction.onSuccess();
-//        } catch (InterruptedException | ExecutionException e) {
-//            transaction.onFailure(e);
-//        } catch (NullPointerException e) {
-//            throw new NotInitializedException();
-//        }
-//    }
+    /**
+     * Runs a transaction operation.
+     *
+     * @param transaction The transaction to run.
+     */
+    public static FSFuture<Void> runTransaction(final FirestormTransaction transaction) {
+        ApiFuture<Void> futureTransaction = FS.firestore.runTransaction(transaction);
+        return FSFuture.fromAPIFuture(futureTransaction);
+    }
 
 
     /**
