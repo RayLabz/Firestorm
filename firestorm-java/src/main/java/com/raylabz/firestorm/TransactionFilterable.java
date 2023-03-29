@@ -1,10 +1,12 @@
 package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutures;
 import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.Transaction;
+import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.TransactionException;
 
 import java.util.ArrayList;
@@ -38,10 +40,10 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
      * @return An ArrayList containing the results of a filter.
      */
     @Override
-    public QueryResult<T> fetch() {
-        ApiFuture<QuerySnapshot> future = transaction.get(query);
-        try {
-            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+    public FSFuture<QueryResult<T>> fetch() {
+        ApiFuture<QuerySnapshot> future = query.get();
+        ApiFuture<QueryResult<T>> queryFuture = ApiFutures.transform(future, input -> {
+            List<QueryDocumentSnapshot> documents = input.getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
             String lastID = null;
             for (final QueryDocumentSnapshot document : documents) {
@@ -55,9 +57,8 @@ public class TransactionFilterable<T> extends FirestormFilterable<T> {
             else {
                 return new QueryResult<>(documentList, documents.get(documents.size() - 1), lastID);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            throw new TransactionException(e);
-        }
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(queryFuture);
     }
 
 }

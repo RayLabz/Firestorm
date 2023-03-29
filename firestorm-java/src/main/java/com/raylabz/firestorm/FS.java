@@ -216,7 +216,7 @@ public final class FS {
         return FSFuture.fromAPIFuture(objectFuture);
     }
 
-    public static <T> FSFuture<List<T>> getMany(final Class<T> aClass, List<String> ids) {
+    public static <T> FSFuture<List<T>> get(final Class<T> aClass, List<String> ids) {
         final DocumentReference[] documentReferences = new DocumentReference[ids.size()];
         for (int i = 0; i < documentReferences.length; i++) {
             documentReferences[i] = (firestore.collection(aClass.getSimpleName()).document(ids.get(i)));
@@ -241,7 +241,7 @@ public final class FS {
      * @param <T> A type matching the type of object class.
      * @return Returns a list of type T.
      */
-    public static <T> FSFuture<List<T>> getMany(final Class<T> aClass, String... ids) {
+    public static <T> FSFuture<List<T>> get(final Class<T> aClass, String... ids) {
         final DocumentReference[] documentReferences = new DocumentReference[ids.length];
         for (int i = 0; i < documentReferences.length; i++) {
             documentReferences[i] = (firestore.collection(aClass.getSimpleName()).document(ids[i]));
@@ -587,17 +587,17 @@ public final class FS {
     //TODO ---- CONTINUE TRANSFORMING HERE!
 
 
-//
-//    /**
-//     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
-//     *
-//     * @param objectClass The type of the documents to filter.
-//     * @param <T>         A type matching the type of objectClass.
-//     * @return Returns a FirestormFilterable which can be used to append filter parameters.
-//     */
-//    public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
-//        return new FirestormFilterable<>(firestore.collection(objectClass.getSimpleName()), objectClass);
-//    }
+
+    /**
+     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
+     *
+     * @param objectClass The type of the documents to filter.
+     * @param <T>         A type matching the type of objectClass.
+     * @return Returns a FirestormFilterable which can be used to append filter parameters.
+     */
+    public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
+        return new FirestormFilterable<>(firestore.collection(objectClass.getSimpleName()), objectClass);
+    }
 //
 //    /**
 //     * Retrieves a DocumentReference to an object.

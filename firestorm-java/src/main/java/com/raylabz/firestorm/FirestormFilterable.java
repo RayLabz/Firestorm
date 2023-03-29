@@ -1,8 +1,10 @@
 package com.raylabz.firestorm;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutures;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.cloud.firestore.*;
+import com.raylabz.firestorm.async.FSFuture;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -486,10 +488,10 @@ public class FirestormFilterable<T> implements Filterable<T> {
      * Fetches the results of a filterable.
      * @return An ArrayList containing the results of a filter.
      */
-    public QueryResult<T> fetch() {
+    public FSFuture<QueryResult<T>> fetch() {
         ApiFuture<QuerySnapshot> future = query.get();
-        try {
-            final List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        ApiFuture<QueryResult<T>> queryFuture = ApiFutures.transform(future, input -> {
+            List<QueryDocumentSnapshot> documents = input.getDocuments();
             ArrayList<T> documentList = new ArrayList<>();
             String lastID = null;
             for (final QueryDocumentSnapshot document : documents) {
@@ -503,10 +505,8 @@ public class FirestormFilterable<T> implements Filterable<T> {
             else {
                 return new QueryResult<>(documentList, documents.get(documents.size() - 1), lastID);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
+        }, Firestorm.getSelectedExecutor());
+        return FSFuture.fromAPIFuture(queryFuture);
     }
 
 }
