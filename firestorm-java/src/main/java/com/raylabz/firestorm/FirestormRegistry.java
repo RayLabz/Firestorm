@@ -1,6 +1,7 @@
 package com.raylabz.firestorm;
 
 import com.raylabz.firestorm.exception.FirestormObjectException;
+import com.raylabz.firestorm.util.Reflector;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class FirestormRegistry {
      * @param aClass The class to register.
      * @throws FirestormObjectException Thrown when the class provided does not have a valid structure.
      */
-    static void register(Class<?> aClass) throws FirestormObjectException {
+    public static void register(Class<?> aClass) throws FirestormObjectException {
         Reflector.checkClass(aClass);
         HashSet<Field> linkedFields = Reflector.getLinkedFields(aClass);
         LINKED_FIELDS.put(aClass, linkedFields);
@@ -45,7 +46,7 @@ public class FirestormRegistry {
      * @param aClass The class to check.
      * @return Returns true if the class provided is registered (and valid), false otherwise.
      */
-    static boolean isRegistered(final Class<?> aClass) {
+    public static boolean isRegistered(final Class<?> aClass) {
         return REGISTERED_CLASSES.contains(aClass);
     }
 
@@ -55,7 +56,7 @@ public class FirestormRegistry {
      * @return Returns a HashSet of Field.
      * @throws FirestormObjectException Thrown when the class is not registered.
      */
-    static HashSet<Field> getLinkedFields(Class<?> aClass) throws FirestormObjectException {
+    public static HashSet<Field> getLinkedFields(Class<?> aClass) throws FirestormObjectException {
         if (!isRegistered(aClass)) {
             throw new FirestormObjectException("Cannot get linked fields of class '" + aClass.getName() + "', as it is not registered.");
         }
@@ -71,7 +72,7 @@ public class FirestormRegistry {
      * @param aClass The class.
      * @param idField The ID field.
      */
-    static void setIDField(Class<?> aClass, Field idField) {
+    public static void setIDField(Class<?> aClass, Field idField) {
         ID_FIELDS.put(aClass, idField);
     }
 
@@ -80,7 +81,7 @@ public class FirestormRegistry {
      * @param aClass The class.
      * @return Returns a {@link Field}.
      */
-    static Field getIDField(Class<?> aClass) {
+    public static Field getIDField(Class<?> aClass) {
         return ID_FIELDS.get(aClass);
     }
 

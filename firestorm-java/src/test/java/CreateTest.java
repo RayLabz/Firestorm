@@ -1,15 +1,13 @@
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.WriteResult;
-import com.raylabz.firestorm.*;
+import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.async.RealtimeUpdateCallback;
+import com.raylabz.firestorm.firestore.FS;
+import com.raylabz.firestorm.firestore.FSFilterable;
+import com.raylabz.firestorm.firestore.FSObjectChange;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class CreateTest {
 
@@ -24,8 +22,8 @@ public class CreateTest {
             e.printStackTrace();
         }
         FS.init();
-        FS.register(Person.class);
-        FS.register(Student.class);
+        Firestorm.register(Person.class);
+        Firestorm.register(Student.class);
 
         ArrayList<Student> students = new ArrayList<>();
 
@@ -72,10 +70,10 @@ public class CreateTest {
 //            }
 //        });
 
-        FirestormFilterable<Student> age = FS.filter(Student.class).whereGreaterThan("age", 23);
+        FSFilterable<Student> age = FS.filter(Student.class).whereGreaterThan("age", 23);
         FS.attachFilterableListener(age, new RealtimeUpdateCallback<>() {
             @Override
-            public void onUpdate(List<ObjectChange<Student>> data) {
+            public void onUpdate(List<FSObjectChange<Student>> data) {
                 System.out.println(data);
             }
 

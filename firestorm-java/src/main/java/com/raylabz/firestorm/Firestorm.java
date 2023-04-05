@@ -1,5 +1,9 @@
 package com.raylabz.firestorm;
 
+import com.raylabz.firestorm.exception.ClassRegistrationException;
+import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.exception.FirestormObjectException;
+
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,6 +54,41 @@ public final class Firestorm {
      */
     public static ExecutorService getSelectedExecutor() {
         return SELECTED_EXECUTOR;
+    }
+
+    /**
+     * Registers a class.
+     * @param aClass The class to register.
+     * @throws FirestormException Thrown when the class cannot be registered.
+     */
+    public static void register(Class<?> aClass) throws FirestormException {
+        try {
+            FirestormRegistry.register(aClass);
+        } catch (FirestormObjectException e) {
+            throw new FirestormException(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks if an object's class is registered.
+     * @param object The object to check the class of.
+     * @throws ClassRegistrationException Thrown when the object's class is not registered.
+     */
+    public static void checkRegistration(final Object object) throws ClassRegistrationException {
+        if (!FirestormRegistry.isRegistered(object.getClass())) {
+            throw new ClassRegistrationException(object.getClass());
+        }
+    }
+
+    /**
+     * Checks if a class is registered.
+     * @param aClass The class to check.
+     * @throws ClassRegistrationException Thrown when the class is not registered.
+     */
+    public static void checkRegistration(final Class<?> aClass) throws ClassRegistrationException {
+        if (!FirestormRegistry.isRegistered(aClass)) {
+            throw new ClassRegistrationException(aClass);
+        }
     }
 
 }
