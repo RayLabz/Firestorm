@@ -4,8 +4,10 @@ import com.google.api.core.*;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.raylabz.firestorm.async.FSFuture;
+import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -584,10 +586,6 @@ public final class FS {
         return FSFuture.fromAPIFuture(transformFuture);
     }
 
-    //TODO ---- CONTINUE TRANSFORMING HERE!
-
-
-
     /**
      * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
      *
@@ -598,210 +596,225 @@ public final class FS {
     public static <T> FirestormFilterable<T> filter(final Class<T> objectClass) {
         return new FirestormFilterable<>(firestore.collection(objectClass.getSimpleName()), objectClass);
     }
-//
-//    /**
-//     * Retrieves a DocumentReference to an object.
-//     *
-//     * @param objectClass The type of the object.
-//     * @param documentID The object's ID.
-//     * @param <T> The type of the object.
-//     * @return Returns DocumentReference.
-//     */
-//    public static <T> DocumentReference getObjectReference(final Class<T> objectClass, final String documentID) {
-//        return firestore.collection(objectClass.getSimpleName()).document(documentID);
-//    }
-//
-//    /**
-//     * Retrieves a DocumentReference to an object.
-//     *
-//     * @param object The object to get the reference for.
-//     * @param <T> The type of the object.
-//     * @return Returns DocumentReference.
-//     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-//     */
-//    public static <T> DocumentReference getObjectReference(Object object) throws FirestormException {
-//        try {
-//            checkRegistration(object);
-//            final String documentID = Reflector.getIDFieldValue(object);
-//            return firestore.collection(object.getClass().getSimpleName()).document(documentID);
-//        } catch (IllegalAccessException | NoSuchFieldException | ClassRegistrationException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-//
-//    /**
-//     * Retrieves a CollectionReference to a type.
-//     *
-//     * @param objectClass The class of object to get a reference for.
-//     * @param <T> The Type of class.
-//     * @return Returns a CollectionReference.
-//     */
-//    public static <T> CollectionReference getCollectionReference(final Class<T> objectClass) {
-//        return firestore.collection(objectClass.getSimpleName());
-//    }
-//
-//    /**
-//     * Utility method. Registers a listener in the registeredListeners map.
-//     * @param object The object being listened to.
-//     * @param listenerRegistration The listener of the object.
-//     */
-//    private static void registerObjectListener(final Object object, final ListenerRegistration listenerRegistration) {
-//        registeredObjectListeners.put(object, listenerRegistration);
-//    }
-//
-//    /**
-//     * Unregisters a listener for an object provided.
-//     * @param object The object being listened to.
-//     */
-//    private static void unregisterObjectListener(final Object object) {
-//        final ListenerRegistration listenerRegistration = registeredObjectListeners.get(object);
-//        listenerRegistration.remove();
-//        registeredObjectListeners.remove(object);
-//    }
-//
-//    /**
-//     * Utility method. Registers a class listener in the registeredListeners map.
-//     * @param objectClass The class being listened to.
-//     * @param listenerRegistration The listener of the class.
-//     */
-//    private static void registerClassListener(final Class<?> objectClass, final ListenerRegistration listenerRegistration) {
-//        registeredClassListeners.put(objectClass, listenerRegistration);
-//    }
-//
-//    /**
-//     * Unregisters a listener for a class provided.
-//     * @param objectClass The class being listened to.
-//     */
-//    private static void unregisterClassListener(final Class<?> objectClass) {
-//        final ListenerRegistration listenerRegistration = registeredClassListeners.get(objectClass);
-//        listenerRegistration.remove();
-//        registeredClassListeners.remove(objectClass);
-//    }
-//
-//    /**
-//     * Utility method. Attaches an event listener which listens for updates to an object.
-//     *
-//     * @param eventListener An implementation of a FirestormEventListener.
-//     * @return Returns a ListenerRegistration.
-//     * @throws FirestormException Thrown when com.raylabz.firestorm.Firestorm encounters an error.
-//     */
-//    public static ListenerRegistration attachListener(final ObjectListener eventListener) throws FirestormException {
-//        try {
-//            checkRegistration(eventListener.getObjectToListenFor());
-//            final String documentID = Reflector.getIDFieldValue(eventListener.getObjectToListenFor());
-//            final ListenerRegistration listenerRegistration = firestore.collection(eventListener.getObjectToListenFor().getClass().getSimpleName()).document(documentID).addSnapshotListener(eventListener);
-//            registerObjectListener(eventListener.getObjectToListenFor(), listenerRegistration);
-//            return listenerRegistration;
-//        } catch (NoSuchFieldException | IllegalAccessException | ClassRegistrationException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-//
-//    /**
-//     * Attaches an event listener which listens for updates to an object using its class and ID.
-//     *
-//     * @param eventListener An implementation of a FirestormEventListener.
-//     * @return Returns a ListenerRegistration.
-//     */
-//    public static ListenerRegistration attachListener(final ReferenceListener eventListener) {
-//        return firestore
-//                .collection(eventListener.getObjectClass().getSimpleName())
-//                .document(eventListener.getDocumentID())
-//                .addSnapshotListener(eventListener);
-//    }
-//
-//    /**
-//     * Attaches an event listener which listens for updates to a class.
-//     * @param eventListener The collection event listener.
-//     * @param <T> The class of the listener.
-//     * @return Returns a listener registration.
-//     */
-//    public static <T> ListenerRegistration attachListener(final ClassListener<T> eventListener) {
-//        try {
-//            checkRegistration(eventListener.getObjectClass());
-//            ListenerRegistration listenerRegistration = firestore.
-//                    collection(eventListener.getObjectClass().getSimpleName())
-//                    .addSnapshotListener(eventListener);
-//            registerClassListener(eventListener.getObjectClass(), listenerRegistration);
-//            return listenerRegistration;
-//        } catch (ClassRegistrationException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-//
-//    /**
-//     * Attaches a listener to a filterable.
-//     * @param eventListener The event listener to attach.
-//     * @param <T> The type of object.
-//     * @return Returns a ListenerRegistration.
-//     */
-//    public static <T> ListenerRegistration attachListener(final FilterableListener<T> eventListener) {
-//        try {
-//            checkRegistration(eventListener.getFilterable().objectClass);
-//            return eventListener.getFilterable()
-//                    .addSnapshotListener(eventListener);
-//        } catch (ClassRegistrationException | NotInitializedException e) {
-//            throw new FirestormException(e);
-//        }
-//    }
-//
-//    /**
-//     * Detaches a listener for a specific class.
-//     * @param objectClass The class.
-//     */
-//    public static void detachListener(Class<?> objectClass) {
-//        final ListenerRegistration listenerRegistration = registeredClassListeners.get(objectClass);
-//        listenerRegistration.remove();
-//        unregisterClassListener(objectClass);
-//    }
-//
-//    /**
-//     * Unregisters a listener from an object.
-//     * @param object The object being listened to.
-//     */
-//    public static void detachListener(Object object) {
-//        final ListenerRegistration listenerRegistration = registeredObjectListeners.get(object);
-//        listenerRegistration.remove();
-//        unregisterObjectListener(listenerRegistration);
-//    }
-//
-//    /**
-//     * Detaches a specified listener from a reference.
-//     *
-//     * @param listenerRegistration The listenerRegistration to detach.
-//     */
-//    public static void detachListener(ListenerRegistration listenerRegistration) {
-//        listenerRegistration.remove();
-//    }
-//
-//    /**
-//     * Checks if a provided object has a registered listener.
-//     * @param object The object.
-//     * @return Returns true if the object has a registered listener, false otherwise.
-//     */
-//    public static boolean hasListener(Object object) {
-//        return registeredObjectListeners.get(object) != null;
-//    }
-//
-//    /**
-//     * Checks if a provided class has a registered listener.
-//     * @param objectClass The class.
-//     * @param <T> The type of class.
-//     * @return Returns true if the object has a registered listener, false otherwise.
-//     */
-//    public static <T> boolean hasListener(Class<T> objectClass) {
-//        return registeredClassListeners.get(objectClass) != null;
-//    }
-//
-//    /**
-//     * Retrieves a ListenerRegistration attached to the provided object, or null if no listener is attached.
-//     * @param object The object.
-//     * @return Returns a ListenerRegistration.
-//     */
-//    public static ListenerRegistration getListener(Object object) {
-//        return registeredObjectListeners.get(object);
-//    }
-//
+
+    /**
+     * Retrieves a DocumentReference to an object.
+     *
+     * @param objectClass The type of the object.
+     * @param documentID The object's ID.
+     * @param <T> The type of the object.
+     * @return Returns DocumentReference.
+     */
+    @Nonnull
+    public static <T> DocumentReference getObjectReference(final Class<T> objectClass, final String documentID) {
+        return firestore.collection(objectClass.getSimpleName()).document(documentID);
+    }
+
+    /**
+     * Retrieves a DocumentReference to an object.
+     *
+     * @param object The object to get the reference for.
+     * @return Returns DocumentReference.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
+     */
+    @Nonnull
+    public static DocumentReference getObjectReference(Object object) throws FirestormException {
+        try {
+            checkRegistration(object);
+            final String documentID = Reflector.getIDFieldValue(object);
+            return firestore.collection(object.getClass().getSimpleName()).document(documentID);
+        } catch (IllegalAccessException | NoSuchFieldException | ClassRegistrationException | NotInitializedException |
+                 IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Retrieves a CollectionReference to a type.
+     *
+     * @param objectClass The class of object to get a reference for.
+     * @param <T> The Type of class.
+     * @return Returns a CollectionReference.
+     */
+    public static <T> CollectionReference getCollectionReference(final Class<T> objectClass) {
+        return firestore.collection(objectClass.getSimpleName());
+    }
+
+    /**
+     * Utility method. Registers a listener in the registeredListeners map.
+     * @param object The object being listened to.
+     * @param listenerRegistration The listener of the object.
+     */
+    private static void registerObjectListener(final Object object, final ListenerRegistration listenerRegistration) {
+        registeredObjectListeners.put(object, listenerRegistration);
+    }
+
+    /**
+     * Unregisters a listener for an object provided.
+     * @param object The object being listened to.
+     */
+    private static void unregisterObjectListener(final Object object) {
+        final ListenerRegistration listenerRegistration = registeredObjectListeners.get(object);
+        listenerRegistration.remove();
+        registeredObjectListeners.remove(object);
+    }
+
+    /**
+     * Utility method. Registers a class listener in the registeredListeners map.
+     * @param objectClass The class being listened to.
+     * @param listenerRegistration The listener of the class.
+     */
+    private static void registerClassListener(final Class<?> objectClass, final ListenerRegistration listenerRegistration) {
+        registeredClassListeners.put(objectClass, listenerRegistration);
+    }
+
+    /**
+     * Unregisters a listener for a class provided.
+     * @param objectClass The class being listened to.
+     */
+    private static void unregisterClassListener(final Class<?> objectClass) {
+        final ListenerRegistration listenerRegistration = registeredClassListeners.get(objectClass);
+        listenerRegistration.remove();
+        registeredClassListeners.remove(objectClass);
+    }
+
+    /**
+     * Utility method. Attaches an event listener which listens for updates to an object.
+     *
+     * @param objectToListenFor The object to listen to changes.
+     * @param callback A callback function allowing the execution of code after a change occurs.
+     * @param <T> The type of object to listen to.
+     * @return Returns a ListenerRegistration.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
+     */
+    @Nonnull
+    public static <T> ListenerRegistration attachListener(final T objectToListenFor, final RealtimeUpdateCallback<T> callback) throws FirestormException {
+        try {
+            checkRegistration(objectToListenFor);
+            ObjectListener<T> listener = new ObjectListener<>(objectToListenFor, callback);
+            final String documentID = Reflector.getIDFieldValue(objectToListenFor);
+            final ListenerRegistration listenerRegistration = firestore.collection(objectToListenFor.getClass().getSimpleName()).document(documentID).addSnapshotListener(listener);
+            registerObjectListener(objectToListenFor, listenerRegistration);
+            return listenerRegistration;
+        } catch (NoSuchFieldException | IllegalAccessException | ClassRegistrationException | NotInitializedException |
+                 IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to an object using its class and ID.
+     *
+     * @param <T> The type of object to listen for.
+     * @param objectClass The class of the object.
+     * @param documentID The ID of the object.
+     * @param callback A callback function to execute code once an update is received.
+     * @return Returns a ListenerRegistration.
+     */
+    public static <T> ListenerRegistration attachListener(final Class<T> objectClass, final String documentID, final RealtimeUpdateCallback<T> callback) {
+        ReferenceListener<T> referenceListener = new ReferenceListener<>(objectClass, documentID, callback);
+        return firestore
+                .collection(referenceListener.getObjectClass().getSimpleName())
+                .document(referenceListener.getDocumentID())
+                .addSnapshotListener(referenceListener);
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to a class.
+     * @param objectClass The class of documents to listen to.
+     * @param callback A function to execute when an update is received.
+     * @param <T> The class of the listener.
+     * @return Returns a listener registration.
+     */
+    public static <T> ListenerRegistration attachClassListener(Class<T> objectClass, final RealtimeUpdateCallback<List<ObjectChange<T>>> callback) {
+        try {
+            checkRegistration(objectClass);
+            final ClassListener<T> classListener = new ClassListener<>(objectClass, callback);
+            ListenerRegistration listenerRegistration = firestore.
+                    collection(objectClass.getSimpleName())
+                    .addSnapshotListener(classListener);
+            registerClassListener(classListener.getObjectClass(), listenerRegistration);
+            return listenerRegistration;
+        } catch (ClassRegistrationException | NotInitializedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Attaches a listener to a filterable.
+     * @param filterable The filterable to listen to.
+     * @param callback A function to execute when an update is received.
+     * @param <T> The type of object.
+     * @return Returns a ListenerRegistration.
+     */
+    public static <T> ListenerRegistration attachFilterableListener(FirestormFilterable<T> filterable, RealtimeUpdateCallback<List<ObjectChange<T>>> callback) {
+        try {
+            checkRegistration(filterable.objectClass);
+            final FilterableListener<T> eventListener = new FilterableListener<>(filterable, callback);
+            return eventListener.getFilterable()
+                    .addSnapshotListener(eventListener);
+        } catch (ClassRegistrationException | NotInitializedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Detaches a listener for a specific class.
+     * @param objectClass The class.
+     */
+    public static void detachListener(Class<?> objectClass) {
+        final ListenerRegistration listenerRegistration = registeredClassListeners.get(objectClass);
+        listenerRegistration.remove();
+        unregisterClassListener(objectClass);
+    }
+
+    /**
+     * Unregisters a listener from an object.
+     * @param object The object being listened to.
+     */
+    public static void detachListener(Object object) {
+        final ListenerRegistration listenerRegistration = registeredObjectListeners.get(object);
+        listenerRegistration.remove();
+        unregisterObjectListener(listenerRegistration);
+    }
+
+    /**
+     * Detaches a specified listener from a reference.
+     *
+     * @param listenerRegistration The listenerRegistration to detach.
+     */
+    public static void detachListener(ListenerRegistration listenerRegistration) {
+        listenerRegistration.remove();
+    }
+
+    /**
+     * Checks if a provided object has a registered listener.
+     * @param object The object.
+     * @return Returns true if the object has a registered listener, false otherwise.
+     */
+    public static boolean hasListener(Object object) {
+        return registeredObjectListeners.get(object) != null;
+    }
+
+    /**
+     * Checks if a provided class has a registered listener.
+     * @param objectClass The class.
+     * @param <T> The type of class.
+     * @return Returns true if the object has a registered listener, false otherwise.
+     */
+    public static <T> boolean hasListener(Class<T> objectClass) {
+        return registeredClassListeners.get(objectClass) != null;
+    }
+
+    /**
+     * Retrieves a ListenerRegistration attached to the provided object, or null if no listener is attached.
+     * @param object The object.
+     * @return Returns a ListenerRegistration.
+     */
+    public static ListenerRegistration getListener(Object object) {
+        return registeredObjectListeners.get(object);
+    }
+
     /**
      * Runs a transaction operation.
      *

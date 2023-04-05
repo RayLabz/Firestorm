@@ -1,6 +1,7 @@
 package com.raylabz.firestorm;
 
 import com.google.cloud.firestore.*;
+import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Nicos Kasenides
  * @version 1.3.2
  */
-public abstract class ClassListener<T> implements EventListener<QuerySnapshot> {
+public class ClassListener<T> implements EventListener<QuerySnapshot> {
 
     /**
      * The listener is listening for changes to this object.
@@ -19,11 +20,17 @@ public abstract class ClassListener<T> implements EventListener<QuerySnapshot> {
     private final Class<T> objectClass;
 
     /**
+     * A callback to execute when an update is received.
+     */
+    private final RealtimeUpdateCallback<List<ObjectChange<T>>> callback;
+
+    /**
      * Instantiates an OnReferenceUpdateListener.
      * @param objectClass The type of object this listener will be attached to.
      */
-    public ClassListener(final Class<T> objectClass) {
+    public ClassListener(Class<T> objectClass, RealtimeUpdateCallback<List<ObjectChange<T>>> callback) {
         this.objectClass = objectClass;
+        this.callback = callback;
     }
 
     /**
@@ -34,7 +41,7 @@ public abstract class ClassListener<T> implements EventListener<QuerySnapshot> {
     @Override
     public final void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirestoreException e) {
         if (e != null) {
-            onFailure(e.getMessage());
+            callback.onError(e);
             return;
         }
 
@@ -46,11 +53,11 @@ public abstract class ClassListener<T> implements EventListener<QuerySnapshot> {
                 ObjectChange<T> objectChange = new ObjectChange<T>(document.toObject(objectClass), document, documentChange.getOldIndex(), documentChange.getNewIndex(), ObjectChange.Type.fromDocumentChangeType(documentChange.getType()));
                 objectChanges.add(objectChange);
             }
-            onSuccess(objectChanges);
+            callback.onUpdate(objectChanges);
 
         }
         else {
-            onFailure("Failed to retrieve update to collection.");
+            callback.onError(new RuntimeException("Failed to retrieve update to collection."));
         }
     }
 
@@ -61,17 +68,5 @@ public abstract class ClassListener<T> implements EventListener<QuerySnapshot> {
     public Class<?> getObjectClass() {
         return objectClass;
     }
-
-    /**
-     * Implements logic upon success of data update delivery.
-     * @param objectChanges A list of the update objectChanges.
-     */
-    public abstract void onSuccess(List<ObjectChange<T>> objectChanges);
-
-    /**
-     * Implements logic upon failure of data update delivery.
-     * @param failureMessage The message of the failure.
-     */
-    public abstract void onFailure(final String failureMessage);
 
 }

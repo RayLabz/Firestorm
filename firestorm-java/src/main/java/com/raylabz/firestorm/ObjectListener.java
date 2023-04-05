@@ -3,6 +3,7 @@ package com.raylabz.firestorm;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
+import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.ClassRegistrationException;
 import com.raylabz.firestorm.exception.IDFieldException;
 
@@ -16,21 +17,28 @@ import java.util.ArrayList;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class ObjectListener implements EventListener<DocumentSnapshot> {
+public class ObjectListener<T> implements EventListener<DocumentSnapshot> {
 
     private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
     /**
      * The listener is listening for changes to this object.
      */
-    private final Object objectToListenFor;
+    private final T objectToListenFor;
+
+    /**
+     * A callback to execute when an update is received.
+     */
+    private final RealtimeUpdateCallback<T> callback;
 
     /**
      * Instantiates a FirestormEventListener.
-     * @param object The object to attach the listener to.
+     * @param objectToListenFor The object to listen for updates.
+     * @param callback The callback function to execute code when an update is received.
      */
-    public ObjectListener(final Object object) {
-        this.objectToListenFor = object;
+    ObjectListener(T objectToListenFor, RealtimeUpdateCallback<T> callback) {
+        this.objectToListenFor = objectToListenFor;
+        this.callback = callback;
     }
 
     /**
@@ -41,7 +49,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
     @Override
     public final void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirestoreException e) {
         if (e != null) {
-            onFailure(e.getMessage());
+            callback.onError(e);
             return;
         }
 
@@ -50,7 +58,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
             FS.checkRegistration(objectToListenFor);
             Field idField = Reflector.findIDField(objectToListenFor.getClass());
             if (idField == null) {
-                onFailure("Missing ID field in class hierarchy for class '" + objectToListenFor.getClass().getSimpleName() + "'.");
+                callback.onError(new RuntimeException("Missing ID field in class hierarchy for class '" + objectToListenFor.getClass().getSimpleName() + "'."));
                 return;
             }
             boolean accessible = idField.isAccessible();
@@ -61,7 +69,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
                 return;
             }
         } catch (IllegalAccessException | ClassRegistrationException | IDFieldException ex) {
-            onFailure(ex.getMessage());
+            callback.onError(ex);
             return;
         }
 
@@ -70,7 +78,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
 
             if (fetchedObject != null) {
                 if (fetchedObject.getClass() != objectToListenFor.getClass()) {
-                    onFailure("The type of the event listener's received object does not match the type provided.");
+                    callback.onError(new RuntimeException("The type of the event listener's received object does not match the type provided."));
                     return;
                 }
 
@@ -85,7 +93,7 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
                             f.set(objectToListenFor, valueOfFetchedObject);
                             f.setAccessible(accessible);
                         } catch (IllegalAccessException ex) {
-                            onFailure(ex.getMessage());
+                            callback.onError(ex);
                             return;
                         }
                     }
@@ -102,21 +110,21 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
                             f.set(objectToListenFor, valueOfFetchedObject);
                             f.setAccessible(accessible);
                         } catch (IllegalAccessException ex) {
-                            onFailure(ex.getMessage());
+                            callback.onError(ex);
                             return;
                         }
                     }
                 }
 
-                onSuccess();
+                callback.onUpdate(objectToListenFor);
 
             }
             else {
-                onFailure("Failed to retrieve update to object.");
+                callback.onError(new RuntimeException("Failed to retrieve update to object."));
             }
         }
         else {
-            onFailure(NO_SNAPSHOT_EXISTS_MESSAGE);
+            callback.onError(new RuntimeException(NO_SNAPSHOT_EXISTS_MESSAGE));
         }
     }
 
@@ -124,19 +132,8 @@ public abstract class ObjectListener implements EventListener<DocumentSnapshot> 
      * Returns the object being listened at by this listener.
      * @return Returns the object being listened at by this listener.
      */
-    public Object getObjectToListenFor() {
+    public T getObjectToListenFor() {
         return objectToListenFor;
     }
-
-    /**
-     * Implements logic upon success of data update delivery.
-     */
-    public abstract void onSuccess();
-
-    /**
-     * Implements logic upon failure of data update delivery.
-     * @param failureMessage The message of the failure.
-     */
-    public abstract void onFailure(final String failureMessage);
 
 }

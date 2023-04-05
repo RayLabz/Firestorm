@@ -3,6 +3,7 @@ package com.raylabz.firestorm;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
+import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 
 import javax.annotation.Nullable;
 
@@ -11,14 +12,12 @@ import javax.annotation.Nullable;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public abstract class ReferenceListener implements EventListener<DocumentSnapshot> {
-
-    private static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
+public class ReferenceListener<T> implements EventListener<DocumentSnapshot> {
 
     /**
      * The listener is listening for changes to this object.
      */
-    private final Class<?> objectClass;
+    private final Class<T> objectClass;
 
     /**
      * The document ID of the object to listen to.
@@ -26,13 +25,19 @@ public abstract class ReferenceListener implements EventListener<DocumentSnapsho
     private final String documentID;
 
     /**
+     * A callback to execute when an update is received.
+     */
+    private final RealtimeUpdateCallback<T> callback;
+
+    /**
      * Instantiates an OnReferenceUpdateListener.
      * @param objectClass The type of object this listener will be attached to.
      * @param documentID The document ID of the object.
      */
-    public ReferenceListener(final Class<?> objectClass, final String documentID) {
+    public ReferenceListener(Class<T> objectClass, String documentID, RealtimeUpdateCallback<T> callback) {
         this.objectClass = objectClass;
         this.documentID = documentID;
+        this.callback = callback;
     }
 
     /**
@@ -43,25 +48,26 @@ public abstract class ReferenceListener implements EventListener<DocumentSnapsho
     @Override
     public final void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirestoreException e) {
         if (e != null) {
-            onFailure(e.getMessage());
+            callback.onError(e);
             return;
         }
 
         if (documentSnapshot != null && documentSnapshot.exists()) {
-            Object fetchedObject = documentSnapshot.toObject(objectClass);
+
+            T fetchedObject = documentSnapshot.toObject(objectClass);
 
             if (fetchedObject != null) {
 
                 if (fetchedObject.getClass() != objectClass) {
-                    onFailure("The type of the event listener's received object does not match the type provided.");
+                    callback.onError(new RuntimeException("The type of the event listener's received object does not match the type provided."));
                     return;
                 }
 
-                onSuccess(fetchedObject);
+                callback.onUpdate(fetchedObject);
 
             }
             else {
-                onFailure("Failed to retrieve update to object.");
+                callback.onError(new RuntimeException("Failed to retrieve update to object."));
             }
         }
     }
@@ -70,7 +76,7 @@ public abstract class ReferenceListener implements EventListener<DocumentSnapsho
      * Retrieves the object being listened at by this listener.
      * @return Returns the object being listened at by this listener.
      */
-    public Class<?> getObjectClass() {
+    public Class<T> getObjectClass() {
         return objectClass;
     }
 
@@ -81,17 +87,5 @@ public abstract class ReferenceListener implements EventListener<DocumentSnapsho
     public String getDocumentID() {
         return documentID;
     }
-
-    /**
-     * Implements logic upon success of data update delivery.
-     * @param object The updated object.
-     */
-    public abstract void onSuccess(Object object);
-
-    /**
-     * Implements logic upon failure of data update delivery.
-     * @param failureMessage The message of the failure.
-     */
-    public abstract void onFailure(final String failureMessage);
 
 }
