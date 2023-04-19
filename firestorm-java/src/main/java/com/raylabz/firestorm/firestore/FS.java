@@ -49,6 +49,14 @@ public final class FS {
     }
 
     /**
+     * Closes the connection to Firestore.
+     * @throws Exception Occurs when the connection cannot be closed.
+     */
+    public static void close() throws Exception {
+        firestore.close();
+    }
+
+    /**
      * Private constructor.
      */
     private FS() { }
@@ -185,6 +193,13 @@ public final class FS {
         return FSFuture.fromAPIFuture(objectFuture);
     }
 
+    /**
+     * Retrieves multiple documents based on a list of IDs.
+     * @param aClass The class of documents.
+     * @param ids The IDs list.
+     * @return Returns a future of List.
+     * @param <T> The type of object.
+     */
     public static <T> FSFuture<List<T>> get(final Class<T> aClass, List<String> ids) {
         final DocumentReference[] documentReferences = new DocumentReference[ids.size()];
         for (int i = 0; i < documentReferences.length; i++) {
@@ -247,13 +262,39 @@ public final class FS {
     }
 
     /**
+     * Checks if a given object exists.
+     *
+     * @param object The object to check.
+     * @param <T> The type of object.
+     * @return Returns true if the object exists on Firestore, false otherwise.
+     */
+    public static <T> FSFuture<Boolean> exists(final T object) throws FirestormException {
+        try {
+            String id = Reflector.getIDFieldValue(object);
+            if (id == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            DocumentReference docRef = firestore.collection(object.getClass().getSimpleName()).document(id);
+            ApiFuture<DocumentSnapshot> future = docRef.get();
+            ApiFuture<Boolean> existsFuture = ApiFutures.transform(
+                    future,
+                    DocumentSnapshot::exists,
+                    Firestorm.getSelectedExecutor()
+            );
+            return FSFuture.fromAPIFuture(existsFuture);
+        } catch (IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Updates a document in Firestore, replacing any existing objects with the same ID.
      * If an object with this ID does not exist, it will be created.
      *
      * @param object The object to update.
      * @return Returns a {@link WriteResult}.
      */
-    public static FSFuture<WriteResult> update(final Object object) {
+    public static FSFuture<WriteResult> update(final Object object) throws FirestormException {
         try {
             Firestorm.checkRegistration(object);
             String idFieldValue = Reflector.getIDFieldValue(object);
@@ -276,7 +317,7 @@ public final class FS {
      * @return Returns a list of {@link WriteResult}.
      * @param <T> The type of objects to update.
      */
-    public static <T> FSFuture<List<WriteResult>> update(List<T> objects) {
+    public static <T> FSFuture<List<WriteResult>> update(List<T> objects) throws FirestormException {
         try {
             if (!objects.isEmpty()) {
                 Firestorm.checkRegistration(objects.get(0).getClass());
@@ -314,7 +355,7 @@ public final class FS {
      * @param <T> The type of objects to update.
      */
     @SafeVarargs
-    public static <T> FSFuture<List<WriteResult>> update(T... objects) {
+    public static <T> FSFuture<List<WriteResult>> update(T... objects) throws FirestormException {
         try {
             if (objects.length != 0) {
                 Firestorm.checkRegistration(objects[0].getClass());
@@ -350,7 +391,7 @@ public final class FS {
      * @param object  The object to delete.
      * @return Returns a {@link WriteResult}.
      */
-    public static FSFuture<WriteResult> delete(Object object) {
+    public static FSFuture<WriteResult> delete(Object object) throws FirestormException {
         try {
             final String documentID = Reflector.getIDFieldValue(object);
             if (documentID == null) {
