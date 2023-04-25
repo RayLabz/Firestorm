@@ -15,12 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * com.raylabz.firestorm.Firestorm is an object-oriented data access API for Firestore.
- * <a href="https://raylabz.github.io/Firestorm/">Web guide</a>.
- * This is the main class of the com.raylabz.firestorm.Firestorm API, which allows basic interactions with the Firestore.
- * Must be initialized with a FirebaseApp object using the <i>init()</i> method before interacting with the Firestore.
- * @author Nicos Kasenides
- * @version 1.0.0
+ * FS (Firestore) provides an API that enables operations to be carried out for Firestore.
  */
 public final class FS {
 
@@ -36,7 +31,7 @@ public final class FS {
     private static final HashMap<Class<?>, ListenerRegistration> registeredClassListeners = new HashMap<>();
 
     /**
-     * Initializes com.raylabz.firestorm.Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
+     * Initializes the Firestore API for Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
      */
     public static void init() {
         firestore = FirestoreClient.getFirestore();

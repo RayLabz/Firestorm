@@ -8,6 +8,14 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Firestorm is an object-oriented data access API for Firebase's Firestore and Real-Time Database.
+ * <a href="https://raylabz.github.io/Firestorm/">Web guide</a>.
+ * This is the main class of the Firestorm API, which allows housekeeping operations.
+ * Must be initialized with a FirebaseApp object using the <i>init()</i> method before interacting with the Firestore.
+ * @author Nicos Kasenides
+ * @version 2.0.0
+ */
 public final class Firestorm {
 
     /**
