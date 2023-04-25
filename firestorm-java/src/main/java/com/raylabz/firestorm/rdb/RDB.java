@@ -2,6 +2,7 @@ package com.raylabz.firestorm.rdb;
 
 import com.google.api.core.*;
 import com.google.cloud.firestore.*;
+import com.google.common.util.concurrent.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.*;
 import com.google.firebase.database.Transaction;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -105,26 +107,23 @@ public final class RDB {
     public static <T> FSFuture<T> get(final Class<T> objectClass, final String documentID) {
         DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + documentID);
 
-        ExecutorService selectedExecutor = Firestorm.getSelectedExecutor();
-
         //TODO - Consider moving this into its own class:
         Callable<T> callable = new Callable<T>() {
 
             private T data = null;
-            private DatabaseError error = null;
 
             public T getData() {
                 return data;
             }
 
             @Override
-            public T call() throws Exception {
+            public T call() {
                 try {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                dataSnapshot.getValue(objectClass);
+                                data = dataSnapshot.getValue(objectClass);
                             }
                         }
 
@@ -133,7 +132,7 @@ public final class RDB {
                             throw new FirestormException(databaseError.getMessage());
                         }
                     });
-                    while (data == null && error == null) {
+                    while (data == null) {
                         Thread.sleep(50);
                     }
                 } catch (InterruptedException e) {
@@ -142,10 +141,7 @@ public final class RDB {
                 return data;
             }
         };
-
-        Future<T> future = selectedExecutor.submit(callable);
-
-
+        return FSFuture.fromCallable(callable);
     }
 
 

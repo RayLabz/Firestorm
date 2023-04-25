@@ -3,14 +3,11 @@ package com.raylabz.firestorm.async;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
-import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.*;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.exception.FirestormException;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 /**
  * Represents an operation that will be completed in the future.
@@ -24,12 +21,24 @@ public class FSFuture<ResultType> {
         COMPLETED,
     }
 
-    private final ApiFuture<ResultType> future;
+    public enum AsyncAPIType {
+        API_FUTURE,
+        LISTENABLE_FUTURE
+    }
+
+    private final AsyncAPIType asyncAPIType;
+    private final Future<ResultType> future;
     private ApiFutureCallback<ResultType> jointCallback = null;
     private SuccessCallback<ResultType> successCallback = null;
     private FailureCallback failureCallback = null;
 
     FSFuture(ApiFuture<ResultType> future) {
+        this.asyncAPIType = AsyncAPIType.API_FUTURE;
+        this.future = future;
+    }
+
+    FSFuture(ListenableFuture<ResultType> future) {
+        this.asyncAPIType = AsyncAPIType.LISTENABLE_FUTURE;
         this.future = future;
     }
 
@@ -120,11 +129,30 @@ public class FSFuture<ResultType> {
     }
 
     public void run() {
-        ApiFutures.addCallback(future, jointCallback, Firestorm.getSelectedExecutor());
+        switch (asyncAPIType) {
+            case API_FUTURE:
+                ApiFuture<ResultType> apiFuture = (ApiFuture<ResultType>) future;
+                ApiFutures.addCallback(apiFuture, jointCallback, Firestorm.getSelectedExecutor());
+                break;
+            case LISTENABLE_FUTURE:
+                ListenableFuture<ResultType> listenableFuture = (ListenableFuture<ResultType>) future;
+                Futures.addCallback(listenableFuture, new FutureCallback<>() {
+                    @Override
+                    public void onSuccess(ResultType resultType) {
+                        jointCallback.onSuccess(resultType);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        jointCallback.onFailure(throwable);
+                    }
+                }, Firestorm.getSelectedExecutor());
+                break;
+        }
     }
 
     private void updateJointCallback() {
-        this.jointCallback = new ApiFutureCallback<ResultType>() {
+        this.jointCallback = new ApiFutureCallback<>() {
             @Override
             public void onFailure(Throwable throwable) {
                 if (failureCallback != null) {
@@ -141,7 +169,7 @@ public class FSFuture<ResultType> {
         };
     }
 
-    ApiFuture<ResultType> getAPIFuture() {
+    Future<ResultType> getFuture() {
         return future;
     }
 
@@ -153,6 +181,18 @@ public class FSFuture<ResultType> {
      */
     public static <ResultType> FSFuture<ResultType> fromAPIFuture(ApiFuture<ResultType> apiFuture) {
         return new FSFuture<>(apiFuture);
+    }
+
+    /**
+     * Creates FSFuture from a callable.
+     * @param callable The callable object used to construct an FSFuture.
+     * @return Returns an {@link ResultType}
+     * @param <ResultType> The result type.
+     */
+    public static <ResultType> FSFuture<ResultType> fromCallable(Callable<ResultType> callable) {
+        ListeningExecutorService listeningExecutorService = MoreExecutors.listeningDecorator(Firestorm.getSelectedExecutor());
+        ListenableFuture<ResultType> listenableFuture = listeningExecutorService.submit(callable);
+        return new FSFuture<>(listenableFuture);
     }
 
 }
