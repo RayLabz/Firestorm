@@ -3,10 +3,12 @@ package com.raylabz.firestorm.async;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
+import com.google.common.util.concurrent.Futures;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.exception.FirestormException;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
