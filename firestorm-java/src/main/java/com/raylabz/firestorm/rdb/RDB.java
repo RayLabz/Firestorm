@@ -10,6 +10,7 @@ import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
+import com.raylabz.firestorm.rdb.callables.GetSingleItemCallable;
 import com.raylabz.firestorm.util.Reflector;
 
 import javax.annotation.Nonnull;
@@ -103,41 +104,8 @@ public final class RDB {
 
     public static <T> FSFuture<T> get(final Class<T> objectClass, final String documentID) {
         DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + documentID);
-        //TODO - Consider moving this into its own class:
-        Callable<T> callable = new Callable<T>() {
-
-            private T data = null;
-            public T getData() {
-                return data;
-            }
-
-            @Override
-            public T call() {
-                try {
-                    ValueEventListener valueEventListener = reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                data = dataSnapshot.getValue(objectClass);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            throw new FirestormException(databaseError.getMessage());
-                        }
-                    });
-                    while (data == null) {
-                        Thread.sleep(25);
-                    }
-                    reference.removeEventListener(valueEventListener);
-                } catch (InterruptedException e) {
-                    throw new FirestormException(e);
-                }
-                return data;
-            }
-        };
-        return FSFuture.fromCallable(callable);
+        GetSingleItemCallable<T> getSingleItemCallable = new GetSingleItemCallable<>(objectClass, reference);
+        return FSFuture.fromCallable(getSingleItemCallable);
     }
 
 
