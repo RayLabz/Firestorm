@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RDBTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //Init Firestore:
         try {
             FirebaseUtils.initialize(ServiceAccount.SERVICE_ACCOUNT);
@@ -39,8 +39,13 @@ public class RDBTest {
 //        Student student = new Student(id, 10, "TestName", 90);
 //        RDB.set(student).now();
 
-        Student now = RDB.get(Student.class, "10717cc2-b7c1-4d1b-8039-18a61fd11fff").now();
-        System.out.println(now);
+        DatabaseReference ref = RDB.getRDB().getReference("Student/10717cc2-b7c1-4d1b-8039-18a61fd11fff");
+
+        RDB.get(Student.class, "10717cc2-b7c1-4d1b-8039-18a61fd11fff").then(result -> {
+            System.out.println(result);
+        }).run();
+
+        System.out.println("hey");
 
         //TODO - Why does it not stop?!?!?! (The program hangs!!)
 
@@ -71,6 +76,8 @@ public class RDBTest {
 //            students.add(student);
 //        }
 //        RDB.set(students);
+
+        //        while (true);
 
     }
 

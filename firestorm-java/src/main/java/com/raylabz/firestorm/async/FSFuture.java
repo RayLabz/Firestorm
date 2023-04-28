@@ -28,6 +28,8 @@ public class FSFuture<ResultType> {
 
     private final AsyncAPIType asyncAPIType;
     private final Future<ResultType> future;
+    private final ExecutorService executorService;
+
     private ApiFutureCallback<ResultType> jointCallback = null;
     private SuccessCallback<ResultType> successCallback = null;
     private FailureCallback failureCallback = null;
@@ -35,11 +37,13 @@ public class FSFuture<ResultType> {
     FSFuture(ApiFuture<ResultType> future) {
         this.asyncAPIType = AsyncAPIType.API_FUTURE;
         this.future = future;
+        this.executorService = null;
     }
 
-    FSFuture(ListenableFuture<ResultType> future) {
+    FSFuture(ListenableFuture<ResultType> future, ExecutorService executorService) {
         this.asyncAPIType = AsyncAPIType.LISTENABLE_FUTURE;
         this.future = future;
+        this.executorService = executorService;
     }
 
     /**
@@ -62,7 +66,18 @@ public class FSFuture<ResultType> {
      */
     public ResultType now() {
         try {
-            return future.get();
+            switch (asyncAPIType) {
+                case API_FUTURE:
+                    return future.get();
+                case LISTENABLE_FUTURE:
+                    ResultType resultType = future.get();
+                    if (executorService != null) {
+                        executorService.shutdownNow();
+                    }
+                    return resultType;
+                default:
+                    throw new FirestormException("Unexpected asyncAPIType '" + asyncAPIType + "'");
+            }
         } catch (InterruptedException | ExecutionException e) {
            throw new FirestormException(e);
         }
@@ -77,7 +92,18 @@ public class FSFuture<ResultType> {
      */
     public ResultType waitFor(long timeout, TimeUnit timeUnit) {
         try {
-            return future.get(timeout, timeUnit);
+            switch (asyncAPIType) {
+                case API_FUTURE:
+                    return future.get(timeout, timeUnit);
+                case LISTENABLE_FUTURE:
+                    ResultType resultType = future.get(timeout, timeUnit);
+                    if (executorService != null) {
+                        executorService.shutdownNow();
+                    }
+                    return resultType;
+                default:
+                    throw new FirestormException("Unexpected asyncAPIType '" + asyncAPIType + "'");
+            }
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             return null;
         }
@@ -93,7 +119,18 @@ public class FSFuture<ResultType> {
      */
     public ResultType waitFor(long timeout, TimeUnit timeUnit, FailureCallback callback) {
         try {
-            return future.get(timeout, timeUnit);
+            switch (asyncAPIType) {
+                case API_FUTURE:
+                    return future.get(timeout, timeUnit);
+                case LISTENABLE_FUTURE:
+                    ResultType resultType = future.get(timeout, timeUnit);
+                    if (executorService != null) {
+                        executorService.shutdownNow();
+                    }
+                    return resultType;
+                default:
+                    throw new FirestormException("Unexpected asyncAPIType '" + asyncAPIType + "'");
+            }
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             callback.execute(e);
             return null;
@@ -140,13 +177,20 @@ public class FSFuture<ResultType> {
                     @Override
                     public void onSuccess(ResultType resultType) {
                         jointCallback.onSuccess(resultType);
+                        if (executorService != null) {
+                            executorService.shutdownNow();
+                        }
                     }
+
 
                     @Override
                     public void onFailure(Throwable throwable) {
                         jointCallback.onFailure(throwable);
+                        if (executorService != null) {
+                            executorService.shutdownNow();
+                        }
                     }
-                }, Firestorm.getSelectedExecutor());
+                }, executorService);
                 break;
         }
     }
@@ -190,9 +234,14 @@ public class FSFuture<ResultType> {
      * @param <ResultType> The result type.
      */
     public static <ResultType> FSFuture<ResultType> fromCallable(Callable<ResultType> callable) {
-        ListeningExecutorService listeningExecutorService = MoreExecutors.listeningDecorator(Firestorm.getSelectedExecutor());
+        //Note: RDB creates an executor for each task, these are independent of Firestorm-wide executors used in the Firestore approach.
+        ExecutorService executorService = Firestorm.isMultithreaded() ?
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()) :
+                Executors.newSingleThreadExecutor()
+                ;
+        ListeningExecutorService listeningExecutorService = MoreExecutors.listeningDecorator(executorService);
         ListenableFuture<ResultType> listenableFuture = listeningExecutorService.submit(callable);
-        return new FSFuture<>(listenableFuture);
+        return new FSFuture<>(listenableFuture, executorService);
     }
 
 }

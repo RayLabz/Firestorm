@@ -16,10 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * RDB (Firestore) provides an API that enables operations to be carried out for the Real Time Database.
@@ -106,12 +103,10 @@ public final class RDB {
 
     public static <T> FSFuture<T> get(final Class<T> objectClass, final String documentID) {
         DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + documentID);
-
         //TODO - Consider moving this into its own class:
         Callable<T> callable = new Callable<T>() {
 
             private T data = null;
-
             public T getData() {
                 return data;
             }
@@ -119,7 +114,7 @@ public final class RDB {
             @Override
             public T call() {
                 try {
-                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    ValueEventListener valueEventListener = reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
@@ -133,8 +128,9 @@ public final class RDB {
                         }
                     });
                     while (data == null) {
-                        Thread.sleep(50);
+                        Thread.sleep(25);
                     }
+                    reference.removeEventListener(valueEventListener);
                 } catch (InterruptedException e) {
                     throw new FirestormException(e);
                 }
