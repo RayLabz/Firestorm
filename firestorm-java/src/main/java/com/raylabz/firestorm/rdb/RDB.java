@@ -102,27 +102,17 @@ public final class RDB {
         throw new FirestormException("Unimplemented.");
     }
 
-    public static <T> FSFuture<T> get(final Class<T> objectClass, final String documentID) {
-        DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + documentID);
+    /**
+     * Retrieves an object from RDB.
+     * @param objectClass The object's class.
+     * @param objectID The object's ID.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of object to return.
+     */
+    public static <T> FSFuture<T> get(final Class<T> objectClass, final String objectID) {
+        DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + objectID);
         GetSingleItemCallable<T> getSingleItemCallable = new GetSingleItemCallable<>(objectClass, reference);
         return FSFuture.fromCallable(getSingleItemCallable);
     }
-
-
-//    public static <T> FSFuture<T> get(final Class<T> objectClass, final String documentID) {
-//        DatabaseReference databaseReference = rdb.getReference(objectClass.getSimpleName() + "/" + documentID);
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                T value = dataSnapshot.getValue(objectClass);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
 
 }
