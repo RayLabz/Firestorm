@@ -10,6 +10,7 @@ import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
+import com.raylabz.firestorm.rdb.callables.DeleteMultipleItemsCallable;
 import com.raylabz.firestorm.rdb.callables.GetMultipleItemsCallable;
 import com.raylabz.firestorm.rdb.callables.GetSingleItemCallable;
 import com.raylabz.firestorm.rdb.callables.ItemExistsCallable;
@@ -269,6 +270,63 @@ public final class RDB {
         } catch (NotInitializedException e) {
             throw new FirestormException(e);
         }
+    }
+
+    /**
+     * Deletes objects from the database.
+     * @param objects The objects to delete.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of the objects.
+     */
+    public static <T> FSFuture<Void> delete(List<T> objects) {
+        if (!objects.isEmpty()) {
+            try {
+                Firestorm.checkRegistration(objects.get(0).getClass());
+                ArrayList<DatabaseReference> databaseReferences = new ArrayList<>();
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    DatabaseReference reference = rdb.getReference(objects.get(0).getClass().getSimpleName()).child(idFieldValue);
+                    databaseReferences.add(reference);
+                }
+                DeleteMultipleItemsCallable<T> deleteMultipleItemsCallable = new DeleteMultipleItemsCallable<>(databaseReferences);
+                return FSFuture.fromCallable(deleteMultipleItemsCallable);
+            } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+                throw new FirestormException(e);
+            }
+        }
+        throw new FirestormException("Objects array cannot be empty.");
+    }
+
+    /**
+     * Deletes objects from the database.
+     * @param objects The objects to delete.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of the objects.
+     */
+    @SafeVarargs
+    public static <T> FSFuture<Void> delete(T... objects) {
+        if (objects.length != 0) {
+            try {
+                Firestorm.checkRegistration(objects[0].getClass());
+                ArrayList<DatabaseReference> databaseReferences = new ArrayList<>();
+                for (T object : objects) {
+                    String idFieldValue = Reflector.getIDFieldValue(object);
+                    if (idFieldValue == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    DatabaseReference reference = rdb.getReference(objects[0].getClass().getSimpleName()).child(idFieldValue);
+                    databaseReferences.add(reference);
+                }
+                DeleteMultipleItemsCallable<T> deleteMultipleItemsCallable = new DeleteMultipleItemsCallable<T>(databaseReferences);
+                return FSFuture.fromCallable(deleteMultipleItemsCallable);
+            } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+                throw new FirestormException(e);
+            }
+        }
+        throw new FirestormException("Objects array cannot be empty.");
     }
 
 }
