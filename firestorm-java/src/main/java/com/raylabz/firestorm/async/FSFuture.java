@@ -70,11 +70,18 @@ public class FSFuture<ResultType> {
                 case API_FUTURE:
                     return future.get();
                 case LISTENABLE_FUTURE:
-                    ResultType resultType = future.get();
-                    if (executorService != null) {
-                        executorService.shutdownNow();
+                    try {
+                        ResultType resultType = future.get();
+                        if (executorService != null) {
+                            executorService.shutdownNow();
+                        }
+                        return resultType;
+                    } catch (Throwable e) {
+                        if (executorService != null) {
+                            executorService.shutdownNow();
+                        }
+                        throw new FirestormException(e);
                     }
-                    return resultType;
                 default:
                     throw new FirestormException("Unexpected asyncAPIType '" + asyncAPIType + "'");
             }

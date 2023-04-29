@@ -18,6 +18,8 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
     private final Class<T> objectClass;
     private final List<T> data = new ArrayList<>();
 
+    private Throwable error = null;
+
     public GetMultipleItemsCallable(Class<T> objectClass, List<DatabaseReference> references) {
         this.references = references;
         this.objectClass = objectClass;
@@ -37,6 +39,9 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
                             T object = dataSnapshot.getValue(objectClass);
                             data.add(object);
                         }
+                        else {
+                            error = new FirestormException("Error: Reference '" + reference + "' does not exist.");
+                        }
                     }
 
                     @Override
@@ -48,7 +53,7 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
             }
 
             //Repeat every 25ms until all listeners complete:
-            while (data.size() < references.size()) {
+            while (data.size() < references.size() && error != null) {
                 Thread.sleep(25);
             }
 
@@ -57,7 +62,11 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
                 ValueEventListener valueEventListener = referenceListeners.get(reference);
                 reference.removeEventListener(valueEventListener);
             }
-        } catch (InterruptedException e) {
+
+            if (error != null) {
+                throw error;
+            }
+        } catch (Throwable e) {
             throw new FirestormException(e);
         }
         return data;

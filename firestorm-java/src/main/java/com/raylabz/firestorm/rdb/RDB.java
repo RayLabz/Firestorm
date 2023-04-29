@@ -232,4 +232,20 @@ public final class RDB {
         }
     }
 
+    public static FSFuture<Void> delete(Object object) throws FirestormException {
+        try {
+            final String documentID = Reflector.getIDFieldValue(object);
+            if (documentID == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            DatabaseReference reference = rdb.getReference(object.getClass().getSimpleName()).child(documentID);
+            ApiFuture<Void> future = reference.removeValueAsync();
+            FSFuture<Void> fsFuture = FSFuture.fromAPIFuture(future);
+            Reflector.setIDFieldValue(object, null);
+            return fsFuture;
+        } catch (IllegalAccessException | NoSuchFieldException | NotInitializedException | IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
 }

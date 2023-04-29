@@ -56,12 +56,11 @@ public class RDBTest {
 //
 //        System.out.println(students);
 
-        Boolean exists = RDB.exists(Student.class, "60098dac8-3e25-4169-a1a7-84b2b176f8a1").now();
-        System.out.println(exists);
+//        Boolean exists = RDB.exists(Student.class, "60098dac8-3e25-4169-a1a7-84b2b176f8a1").now();
+//        System.out.println(exists);
 
-        System.out.println("hey");
-
-        //TODO - Why does it not stop?!?!?! (The program hangs!!)
+        Student now = RDB.get(Student.class, "a30ca755-7033-43e4-a13d-0c44f4006041").now();
+        System.out.println(now);
 
 
 //        DatabaseReference reference = RDB.getRDB().getReference(Student.class.getSimpleName()).child("10717cc2-b7c1-4d1b-8039-18a61fd11fff");
