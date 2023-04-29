@@ -53,7 +53,7 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
             }
 
             //Repeat every 25ms until all listeners complete:
-            while (data.size() < references.size() && error != null) {
+            while (data.size() < references.size() && error == null) {
                 Thread.sleep(25);
             }
 

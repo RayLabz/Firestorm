@@ -4,6 +4,7 @@ import com.raylabz.firestorm.util.FirebaseUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class RDBTest {
@@ -19,20 +20,29 @@ public class RDBTest {
         Firestorm.register(Person.class);
         Firestorm.register(Student.class);
 
-        ArrayList<Student> students = new ArrayList<>();
+//        ArrayList<Student> students = new ArrayList<>();
+//
+//        for (int i = 0; i < 5; i++) {
+//            String id = UUID.randomUUID().toString();
+//            System.out.println(id);
+//            Student student = new Student(id, 10 + i, "TestName" + i, 90 + i);
+//            students.add(student);
+//        }
+//
+//        RDB.set(students).now();
+//
+//        Thread.sleep(1000);
 
-        for (int i = 0; i < 5; i++) {
-            String id = UUID.randomUUID().toString();
-            System.out.println(id);
-            Student student = new Student(id, 10 + i, "TestName" + i, 90 + i);
-            students.add(student);
-        }
+//        RDB.deleteAllOfType(Student.class).now();
 
-        RDB.set(students).now();
+        List<Student> list1 = RDB.list(Student.class, 2).now();
+        System.out.println(list1.size());
 
-        Thread.sleep(1000);
+        List<Student> list2 = RDB.list(Student.class).now();
+        System.out.println(list2.size());
 
-        RDB.deleteAllOfType(Student.class).now();
+        List<Student> list3 = RDB.list(Student.class, 10).now();
+        System.out.println(list3.size());
 
 //        RDB.delete(students).now();
 

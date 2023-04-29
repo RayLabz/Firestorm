@@ -6,10 +6,7 @@ import com.google.firebase.database.*;
 import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.*;
-import com.raylabz.firestorm.rdb.callables.DeleteMultipleItemsCallable;
-import com.raylabz.firestorm.rdb.callables.GetMultipleItemsCallable;
-import com.raylabz.firestorm.rdb.callables.GetSingleItemCallable;
-import com.raylabz.firestorm.rdb.callables.ItemExistsCallable;
+import com.raylabz.firestorm.rdb.callables.*;
 import com.raylabz.firestorm.util.Reflector;
 
 import javax.annotation.Nonnull;
@@ -364,6 +361,33 @@ public final class RDB {
         } catch (ClassRegistrationException e) {
             throw new FirestormException(e);
         }
+    }
+
+    /**
+     * Lists all objects of a specified type up to a certain limit.
+     *
+     * @param aClass The class of the object.
+     * @param limit The limit (return up to a certain number of items).
+     * @return Returns list of {@link T}.
+     * @param <T> The type of the object.
+     */
+    public static <T> FSFuture<List<T>> list(final Class<T> aClass, int limit) {
+        DatabaseReference classReference = rdb.getReference(aClass.getSimpleName());
+        ListItemsCallable<T> listItemsCallable = new ListItemsCallable<>(aClass, classReference, limit);
+        return FSFuture.fromCallable(listItemsCallable);
+    }
+
+    /**
+     * Lists all objects/documents of a specified type.
+     *
+     * @param aClass The class of the object.
+     * @return Returns list of {@link T}.
+     * @param <T> The type of the object.
+     */
+    public static <T> FSFuture<List<T>> list(final Class<T> aClass) {
+        DatabaseReference classReference = rdb.getReference(aClass.getSimpleName());
+        ListItemsCallable<T> listItemsCallable = new ListItemsCallable<>(aClass, classReference);
+        return FSFuture.fromCallable(listItemsCallable);
     }
 
 }
