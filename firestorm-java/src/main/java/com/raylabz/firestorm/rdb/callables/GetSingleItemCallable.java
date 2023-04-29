@@ -32,7 +32,7 @@ public class GetSingleItemCallable<T> implements Callable<T> {
                         data = dataSnapshot.getValue(objectClass);
                     }
                     else {
-                        error = new FirestormException("Error: Reference '" + reference + "' does not exist.");
+                        error = new FirestormException("Reference '" + reference + "' does not exist.");
                     }
                 }
 
@@ -47,7 +47,7 @@ public class GetSingleItemCallable<T> implements Callable<T> {
             reference.removeEventListener(valueEventListener);
 
             if (error != null) {
-                throw new FirestormException(error);
+                System.err.println(error.getMessage());
             }
         } catch (InterruptedException e) {
             throw new FirestormException(e);

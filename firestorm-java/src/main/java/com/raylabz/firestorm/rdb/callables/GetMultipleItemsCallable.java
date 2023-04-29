@@ -40,7 +40,7 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
                             data.add(object);
                         }
                         else {
-                            error = new FirestormException("Error: Reference '" + reference + "' does not exist.");
+                            error = new FirestormException("Reference '" + reference + "' does not exist.");
                         }
                     }
 
@@ -64,7 +64,7 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
             }
 
             if (error != null) {
-                throw error;
+                System.err.println(error.getMessage());
             }
         } catch (Throwable e) {
             throw new FirestormException(e);
