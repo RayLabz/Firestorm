@@ -232,6 +232,12 @@ public final class RDB {
         }
     }
 
+    /**
+     * Deletes an object from the database.
+     * @param object The object to delete.
+     * @return Returns an {@link FSFuture}.
+     * @throws FirestormException thrown when the ID of the object is null, or the operation cannot be completed.
+     */
     public static FSFuture<Void> delete(Object object) throws FirestormException {
         try {
             final String documentID = Reflector.getIDFieldValue(object);
@@ -248,6 +254,13 @@ public final class RDB {
         }
     }
 
+    /**
+     * Deletes an object from the database.
+     * @param aClass The class of the object.
+     * @param id The ID of the object.
+     * @return Returns an {@link FSFuture}.
+     * @throws FirestormException thrown when the ID of the object is null, or the operation cannot be completed.
+     */
     public static FSFuture<Void> delete(Class<?> aClass, @Nonnull String id) throws FirestormException {
         try {
             DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
