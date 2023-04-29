@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -34,15 +35,26 @@ public class RDBTest {
         Firestorm.register(Person.class);
         Firestorm.register(Student.class);
 
-        ArrayList<Student> students = new ArrayList<>();
+//        ArrayList<Student> students = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
-            String id = UUID.randomUUID().toString();
-            Student student = new Student(id, 10 + i, "TestName" + i, 90 + i);
-            students.add(student);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            String id = UUID.randomUUID().toString();
+//            System.out.println(id);
+//            Student student = new Student(id, 10 + i, "TestName" + i, 90 + i);
+//            students.add(student);
+//        }
+//
+//        RDB.set(students).now();
 
-        RDB.set(students).now();
+        List<Student> students = RDB.get(Student.class,
+                "6298dac8-3e25-4169-a1a7-84b2b176f8a1",
+                "f3305f22-514f-4b5b-b741-9dbfe11c28d5",
+                "5c9dae6b-4cb1-4b49-8952-1d977ccadaaa",
+                "f59b7b88-03ee-4b23-8122-f20f2d857a4c",
+                "a30ca755-7033-43e4-a13d-0c44f4006041"
+        ).now();
+
+        System.out.println(students);
 
         System.out.println("hey");
 

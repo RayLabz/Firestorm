@@ -10,10 +10,12 @@ import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
+import com.raylabz.firestorm.rdb.callables.GetMultipleItemsCallable;
 import com.raylabz.firestorm.rdb.callables.GetSingleItemCallable;
 import com.raylabz.firestorm.util.Reflector;
 
 import javax.annotation.Nonnull;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -160,6 +162,40 @@ public final class RDB {
         DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + objectID);
         GetSingleItemCallable<T> getSingleItemCallable = new GetSingleItemCallable<>(objectClass, reference);
         return FSFuture.fromCallable(getSingleItemCallable);
+    }
+
+    /**
+     * Retrieves multiple objects from the database using a list of IDs.
+     * @param aClass The object type.
+     * @param ids A list of IDs.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of objects.
+     */
+    public static <T> FSFuture<List<T>> get(final Class<T> aClass, List<String> ids) {
+        List<DatabaseReference> databaseReferences = new ArrayList<>();
+        for (String id : ids) {
+            DatabaseReference databaseReference = rdb.getReference(aClass.getSimpleName()).child(id);
+            databaseReferences.add(databaseReference);
+        }
+        GetMultipleItemsCallable<T> getMultipleItemsCallable = new GetMultipleItemsCallable<>(aClass, databaseReferences);
+        return FSFuture.fromCallable(getMultipleItemsCallable);
+    }
+
+    /**
+     * Retrieves multiple objects from the database using a varargs array of IDs.
+     * @param aClass The object type.
+     * @param ids A varargs array of IDs.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of objects.
+     */
+    public static <T> FSFuture<List<T>> get(final Class<T> aClass, String... ids) {
+        List<DatabaseReference> databaseReferences = new ArrayList<>();
+        for (String id : ids) {
+            DatabaseReference databaseReference = rdb.getReference(aClass.getSimpleName()).child(id);
+            databaseReferences.add(databaseReference);
+        }
+        GetMultipleItemsCallable<T> getMultipleItemsCallable = new GetMultipleItemsCallable<>(aClass, databaseReferences);
+        return FSFuture.fromCallable(getMultipleItemsCallable);
     }
 
 }
