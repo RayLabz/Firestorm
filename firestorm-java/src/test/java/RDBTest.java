@@ -1,3 +1,7 @@
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.rdb.RDB;
 import com.raylabz.firestorm.util.FirebaseUtils;
@@ -35,14 +39,39 @@ public class RDBTest {
 
 //        RDB.deleteAllOfType(Student.class).now();
 
-        List<Student> list1 = RDB.list(Student.class, 2).now();
-        System.out.println(list1.size());
+        RDB.list(Student.class).now();
 
-        List<Student> list2 = RDB.list(Student.class).now();
-        System.out.println(list2.size());
+        long t = System.currentTimeMillis();
+        Student api = RDB.get(Student.class, "043b34d2-fc7c-4438-85fc-e3f32040fd02").now();
+        System.out.println(System.currentTimeMillis() - t + "A");
 
-        List<Student> list3 = RDB.list(Student.class, 10).now();
-        System.out.println(list3.size());
+        long[] t2 = new long[1];
+        t2[0] = System.currentTimeMillis();
+        DatabaseReference databaseReference = RDB.getRDB().getReference("Student/043b34d2-fc7c-4438-85fc-e3f32040fd02");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Student s = dataSnapshot.getValue(Student.class);
+                System.out.println(System.currentTimeMillis() - t2[0] + "B");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        while(true);
+
+
+//        List<Student> list1 = RDB.list(Student.class, 2).now();
+//        System.out.println(list1.size());
+//
+//        List<Student> list2 = RDB.list(Student.class).now();
+//        System.out.println(list2.size());
+//
+//        List<Student> list3 = RDB.list(Student.class, 10).now();
+//        System.out.println(list3.size());
 
 //        RDB.delete(students).now();
 

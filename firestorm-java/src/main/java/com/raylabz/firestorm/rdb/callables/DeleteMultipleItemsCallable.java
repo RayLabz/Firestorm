@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,9 +30,8 @@ public class DeleteMultipleItemsCallable<T> implements Callable<Void> {
                 reference.removeValue((error, ref) -> completedOperations++);
             }
 
-            //Repeat every 25ms until all listeners complete:
             while (completedOperations < references.size()) {
-                Thread.sleep(25);
+                Thread.sleep(RDB.CALLABLE_UPDATE_DELAY);
             }
         } catch (Throwable e) {
             throw new FirestormException(e);

@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.concurrent.Callable;
 
@@ -33,7 +34,7 @@ public class ItemExistsCallable<T> implements Callable<Boolean> {
                 }
             });
             while (exists == null) {
-                Thread.sleep(25);
+                Thread.sleep(RDB.CALLABLE_UPDATE_DELAY);
             }
             reference.removeEventListener(valueEventListener);
         } catch (InterruptedException e) {

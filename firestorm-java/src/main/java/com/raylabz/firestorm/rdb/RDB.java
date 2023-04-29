@@ -21,9 +21,11 @@ import java.util.Map;
 public final class RDB {
 
     /**
-     * Static Firestore object used to make queries on Firestore.
+     * Static Firestore object used to make queries on Firerstore.
      */
     static FirebaseDatabase rdb;
+
+    public static final int CALLABLE_UPDATE_DELAY = 0; //The delay between updates in callables.
 
     /**
      * Stores a list of listeners registered to objects.

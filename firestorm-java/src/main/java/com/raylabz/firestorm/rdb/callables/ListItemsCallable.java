@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,9 +58,8 @@ public class ListItemsCallable<T> implements Callable<List<T>> {
 
             classReference.orderByKey().limitToFirst(limit).addListenerForSingleValueEvent(valueEventListener);
 
-            //Repeat every 25ms until all listeners complete:
             while (!doneReading && error == null) {
-                Thread.sleep(25);
+                Thread.sleep(RDB.CALLABLE_UPDATE_DELAY);
             }
 
             classReference.removeEventListener(valueEventListener);

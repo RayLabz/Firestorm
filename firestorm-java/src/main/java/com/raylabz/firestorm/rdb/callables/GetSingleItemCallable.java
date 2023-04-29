@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.exception.FirestormException;
+import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.concurrent.Callable;
 
@@ -42,7 +43,7 @@ public class GetSingleItemCallable<T> implements Callable<T> {
                 }
             });
             while (data == null && error == null) {
-                Thread.sleep(25);
+                Thread.sleep(RDB.CALLABLE_UPDATE_DELAY);
             }
             reference.removeEventListener(valueEventListener);
 
