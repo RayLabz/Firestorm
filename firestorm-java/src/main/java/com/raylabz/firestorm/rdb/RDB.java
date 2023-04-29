@@ -12,6 +12,7 @@ import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
 import com.raylabz.firestorm.rdb.callables.GetMultipleItemsCallable;
 import com.raylabz.firestorm.rdb.callables.GetSingleItemCallable;
+import com.raylabz.firestorm.rdb.callables.ItemExistsCallable;
 import com.raylabz.firestorm.util.Reflector;
 
 import javax.annotation.Nonnull;
@@ -196,6 +197,39 @@ public final class RDB {
         }
         GetMultipleItemsCallable<T> getMultipleItemsCallable = new GetMultipleItemsCallable<>(aClass, databaseReferences);
         return FSFuture.fromCallable(getMultipleItemsCallable);
+    }
+
+    /**
+     * Check if an object exists in the database.
+     * @param aClass The object class.
+     * @param id The ID of the object.
+     * @return Returns true if the object exists, false otherwise.
+     * @param <T> The type of object.
+     */
+    public static <T> FSFuture<Boolean> exists(final Class<T> aClass, String id) {
+        DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
+        ItemExistsCallable<T> itemExistsCallable = new ItemExistsCallable<>(reference);
+        return FSFuture.fromCallable(itemExistsCallable);
+    }
+
+    /**
+     * Check if an object exists in the database.
+     * @param object The object.
+     * @return Returns true if the object exists, false otherwise.
+     * @param <T> The type of object.
+     */
+    public static <T> FSFuture<Boolean> exists(final T object) {
+        try {
+            String id = Reflector.getIDFieldValue(object);
+            if (id == null) {
+                throw new FirestormException("ID field cannot be null");
+            }
+            DatabaseReference reference = rdb.getReference(object.getClass().getSimpleName()).child(id);
+            ItemExistsCallable<T> itemExistsCallable = new ItemExistsCallable<>(reference);
+            return FSFuture.fromCallable(itemExistsCallable);
+        } catch (IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
     }
 
 }
