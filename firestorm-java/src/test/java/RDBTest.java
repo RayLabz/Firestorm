@@ -1,26 +1,10 @@
-import static org.junit.Assert.*;
-
-import com.google.cloud.firestore.WriteResult;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.raylabz.firestorm.Firestorm;
-import com.raylabz.firestorm.async.FSFuture;
-import com.raylabz.firestorm.exception.FirestormException;
-import com.raylabz.firestorm.firestore.FS;
 import com.raylabz.firestorm.rdb.RDB;
 import com.raylabz.firestorm.util.FirebaseUtils;
-import org.checkerframework.checker.units.qual.A;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class RDBTest {
 
@@ -46,7 +30,11 @@ public class RDBTest {
 
         RDB.set(students).now();
 
-        RDB.delete(students).now();
+        Thread.sleep(1000);
+
+        RDB.deleteAllOfType(Student.class).now();
+
+//        RDB.delete(students).now();
 
 //        List<Student> students = RDB.get(Student.class,
 //                "6298dac8-3e25-4169-a1a7-84b2b176f8a1",

@@ -1,14 +1,10 @@
 package com.raylabz.firestorm.rdb;
 
 import com.google.api.core.*;
-import com.google.cloud.firestore.*;
-import com.google.common.util.concurrent.*;
-import com.google.firebase.cloud.FirestoreClient;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.database.*;
-import com.google.firebase.database.Transaction;
 import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
-import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 import com.raylabz.firestorm.exception.*;
 import com.raylabz.firestorm.rdb.callables.DeleteMultipleItemsCallable;
 import com.raylabz.firestorm.rdb.callables.GetMultipleItemsCallable;
@@ -17,12 +13,10 @@ import com.raylabz.firestorm.rdb.callables.ItemExistsCallable;
 import com.raylabz.firestorm.util.Reflector;
 
 import javax.annotation.Nonnull;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
 
 /**
  * RDB (Firestore) provides an API that enables operations to be carried out for the Real Time Database.
@@ -327,6 +321,49 @@ public final class RDB {
             }
         }
         throw new FirestormException("Objects array cannot be empty.");
+    }
+
+    /**
+     * Deletes objects of a particular class from the database based on an array of IDs.
+     * @param aClass The class of objects to delete.
+     * @param ids The IDs array.
+     * @return Returns an {@link  FSFuture}.
+     * @param <T> The object type.
+     */
+    public static <T> FSFuture<Void> delete(final Class<T> aClass, String... ids) {
+        if (ids.length != 0) {
+            try {
+                Firestorm.checkRegistration(aClass);
+                ArrayList<DatabaseReference> databaseReferences = new ArrayList<>();
+                for (String id : ids) {
+                    DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
+                    databaseReferences.add(reference);
+                }
+                DeleteMultipleItemsCallable<T> deleteMultipleItemsCallable = new DeleteMultipleItemsCallable<T>(databaseReferences);
+                return FSFuture.fromCallable(deleteMultipleItemsCallable);
+            } catch (ClassRegistrationException e) {
+                throw new FirestormException(e);
+            }
+        }
+        throw new FirestormException("Objects array cannot be empty.");
+    }
+
+    /**
+     * Deletes ALL objects of a certain type (WARNING: Destructive action).
+     *
+     * @param aClass The class/type.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type.
+     */
+    public static <T> FSFuture<Void> deleteAllOfType(final Class<T> aClass) {
+        try {
+            Firestorm.checkRegistration(aClass);
+            DatabaseReference reference = rdb.getReference(aClass.getSimpleName());
+            ApiFuture<Void> future = reference.removeValueAsync();
+            return FSFuture.fromAPIFuture(future);
+        } catch (ClassRegistrationException e) {
+            throw new FirestormException(e);
+        }
     }
 
 }

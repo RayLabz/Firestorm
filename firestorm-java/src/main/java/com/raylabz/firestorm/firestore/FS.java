@@ -534,7 +534,7 @@ public final class FS {
      * @return Returns a list of {@link WriteResult}.
      * @param <T> The type.
      */
-    public static <T> FSFuture<List<WriteResult>> deleteType(final Class<T> aClass) {
+    public static <T> FSFuture<List<WriteResult>> deleteAllOfType(final Class<T> aClass) {
         try {
             Firestorm.checkRegistration(aClass);
             Iterable<DocumentReference> documents = firestore.collection(aClass.getSimpleName()).listDocuments();

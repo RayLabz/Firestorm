@@ -15,13 +15,13 @@ import java.util.concurrent.*;
  */
 public class FSFuture<ResultType> {
 
-    public enum Status {
+    enum Status {
         IN_PROGRESS,
         CANCELLED,
         COMPLETED,
     }
 
-    public enum AsyncAPIType {
+    enum AsyncAPIType {
         API_FUTURE,
         LISTENABLE_FUTURE
     }
