@@ -59,10 +59,10 @@ public class RDBTest {
 //        Boolean exists = RDB.exists(Student.class, "60098dac8-3e25-4169-a1a7-84b2b176f8a1").now();
 //        System.out.println(exists);
 
-        Student now = RDB.get(Student.class, "f3305f22-514f-4b5b-b741-9dbfe11c28d5").now();
-        System.out.println(now);
+//        Student now = RDB.get(Student.class, "f3305f22-514f-4b5b-b741-9dbfe11c28d5").now();
+//        System.out.println(now);
 
-        RDB.delete(now).now();
+//        RDB.delete(Student.class, "f59b7b88-03ee-4b23-8122-f20f2d857a4c").now();
 
 
 //        DatabaseReference reference = RDB.getRDB().getReference(Student.class.getSimpleName()).child("10717cc2-b7c1-4d1b-8039-18a61fd11fff");

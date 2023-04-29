@@ -159,7 +159,7 @@ public final class RDB {
      * @return Returns an {@link FSFuture}.
      * @param <T> The type of object to return.
      */
-    public static <T> FSFuture<T> get(final Class<T> objectClass, final String objectID) {
+    public static <T> FSFuture<T> get(final Class<T> objectClass, @Nonnull final String objectID) {
         DatabaseReference reference = rdb.getReference(objectClass.getSimpleName() + "/" + objectID);
         GetSingleItemCallable<T> getSingleItemCallable = new GetSingleItemCallable<>(objectClass, reference);
         return FSFuture.fromCallable(getSingleItemCallable);
@@ -189,7 +189,7 @@ public final class RDB {
      * @return Returns an {@link FSFuture}.
      * @param <T> The type of objects.
      */
-    public static <T> FSFuture<List<T>> get(final Class<T> aClass, String... ids) {
+    public static <T> FSFuture<List<T>> get(final Class<T> aClass, @Nonnull String... ids) {
         List<DatabaseReference> databaseReferences = new ArrayList<>();
         for (String id : ids) {
             DatabaseReference databaseReference = rdb.getReference(aClass.getSimpleName()).child(id);
@@ -206,7 +206,7 @@ public final class RDB {
      * @return Returns true if the object exists, false otherwise.
      * @param <T> The type of object.
      */
-    public static <T> FSFuture<Boolean> exists(final Class<T> aClass, String id) {
+    public static <T> FSFuture<Boolean> exists(final Class<T> aClass, @Nonnull String id) {
         DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
         ItemExistsCallable<T> itemExistsCallable = new ItemExistsCallable<>(reference);
         return FSFuture.fromCallable(itemExistsCallable);
@@ -244,6 +244,16 @@ public final class RDB {
             Reflector.setIDFieldValue(object, null);
             return fsFuture;
         } catch (IllegalAccessException | NoSuchFieldException | NotInitializedException | IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    public static FSFuture<Void> delete(Class<?> aClass, @Nonnull String id) throws FirestormException {
+        try {
+            DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
+            ApiFuture<Void> future = reference.removeValueAsync();
+            return FSFuture.fromAPIFuture(future);
+        } catch (NotInitializedException e) {
             throw new FirestormException(e);
         }
     }
