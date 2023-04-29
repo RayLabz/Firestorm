@@ -34,16 +34,15 @@ public class RDBTest {
         Firestorm.register(Person.class);
         Firestorm.register(Student.class);
 
+        ArrayList<Student> students = new ArrayList<>();
 
-//        String id = UUID.randomUUID().toString();
-//        Student student = new Student(id, 10, "TestName", 90);
-//        RDB.set(student).now();
+        for (int i = 0; i < 5; i++) {
+            String id = UUID.randomUUID().toString();
+            Student student = new Student(id, 10 + i, "TestName" + i, 90 + i);
+            students.add(student);
+        }
 
-        DatabaseReference ref = RDB.getRDB().getReference("Student/10717cc2-b7c1-4d1b-8039-18a61fd11fff");
-
-        RDB.get(Student.class, "10717cc2-b7c1-4d1b-8039-18a61fd11fff").then(result -> {
-            System.out.println(result);
-        }).run();
+        RDB.set(students).now();
 
         System.out.println("hey");
 

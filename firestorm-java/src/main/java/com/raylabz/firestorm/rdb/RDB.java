@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
 /**
@@ -91,15 +92,61 @@ public final class RDB {
         }
     }
 
-    public static <T> FSFuture<List<WriteResult>> set(List<T> objects) {
-        //TODO - Implement
-        throw new FirestormException("Unimplemented.");
+    /**
+     * Sets the value of multiple objects.
+     * @param objects A list of objects.
+     * @return Returns an {@link FSFuture}
+     * @param <T> The type of object.
+     */
+    public static <T> FSFuture<Void> set(List<T> objects) {
+        try {
+            if (!objects.isEmpty()) {
+                Firestorm.checkRegistration(objects.get(0).getClass());
+                DatabaseReference classReference = rdb.getReference(objects.get(0).getClass().getSimpleName());
+                Map<String, Object> data = new HashMap<>();
+                for (T object : objects) {
+                    String id = Reflector.getIDFieldValue(object);
+                    if (id == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    data.put(id, object);
+                }
+                ApiFuture<Void> future = classReference.updateChildrenAsync(data);
+                return FSFuture.fromAPIFuture(future);
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
     }
 
+    /**
+     * Sets the value of multiple objects.
+     * @param objects A varargs array of objects.
+     * @return Returns an {@link FSFuture}.
+     * @param <T> The type of object.
+     */
     @SafeVarargs
-    public static <T> FSFuture<List<WriteResult>> set(T... objects) {
-        //TODO - Implement
-        throw new FirestormException("Unimplemented.");
+    public static <T> FSFuture<Void> set(T... objects) {
+        try {
+            if (objects.length != 0) {
+                Firestorm.checkRegistration(objects[0].getClass());
+                DatabaseReference classReference = rdb.getReference(objects[0].getClass().getSimpleName());
+                Map<String, Object> data = new HashMap<>();
+                for (T object : objects) {
+                    String id = Reflector.getIDFieldValue(object);
+                    if (id == null) {
+                        throw new FirestormException("ID field cannot be null");
+                    }
+                    data.put(id, object);
+                }
+                ApiFuture<Void> future = classReference.updateChildrenAsync(data);
+                return FSFuture.fromAPIFuture(future);
+            }
+            throw new FirestormException("Objects array cannot be empty.");
+        } catch (ClassRegistrationException | IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
     }
 
     /**
