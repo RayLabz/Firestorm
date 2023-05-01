@@ -20,10 +20,7 @@ import java.util.concurrent.Executor;
  * @author Nicos Kasenides
  * @version 1.0.0
  */
-public class FSFilterable<T> implements Filterable<T> {
-
-    protected Query query;
-    protected final Class<T> objectClass;
+public class FSFilterable<T> extends Filterable<Query, T> {
 
     /**
      * Instantiates a class of FirestormFilterable.
@@ -32,8 +29,7 @@ public class FSFilterable<T> implements Filterable<T> {
      * @param objectClass The type of objects this filterable can interact with.
      */
     public FSFilterable(Query query, final Class<T> objectClass) {
-        this.query = query;
-        this.objectClass = objectClass;
+        super(query, objectClass);
     }
 
     /**
@@ -51,8 +47,8 @@ public class FSFilterable<T> implements Filterable<T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
+    @Override
     public FSFilterable<T> whereEqualTo(@Nonnull String field, @Nullable Object value) {
         query = query.whereEqualTo(field, value);
         return this;
@@ -493,17 +489,6 @@ public class FSFilterable<T> implements Filterable<T> {
 
     /**
      * Adds an event listener to a snapshot.
-     * @param listener The listener to add.
-     * @return Returns a ListenerRegistration.
-     */
-    @Override
-    @Nonnull
-    public ListenerRegistration addSnapshotListener(@Nonnull EventListener<QuerySnapshot> listener) {
-        return query.addSnapshotListener(listener);
-    }
-
-    /**
-     * Adds an event listener to a snapshot.
      * @param executor The executor of the event.
      * @param listener The listener to add.
      * @return Returns a ListenerRegistration.
@@ -511,6 +496,16 @@ public class FSFilterable<T> implements Filterable<T> {
     @Nonnull
     public ListenerRegistration addSnapshotListener(@Nonnull Executor executor, @Nonnull EventListener<QuerySnapshot> listener) {
         return query.addSnapshotListener(executor, listener);
+    }
+
+    /**
+     * Adds an event listener to a snapshot.
+     * @param listener The listener to add.
+     * @return Returns a ListenerRegistration.
+     */
+    @Nonnull
+    public ListenerRegistration addSnapshotListener(@Nonnull EventListener<QuerySnapshot> listener) {
+        return query.addSnapshotListener(listener);
     }
 
     /**
@@ -525,7 +520,6 @@ public class FSFilterable<T> implements Filterable<T> {
      * Fetches the results of a filterable.
      * @return An ArrayList containing the results of a filter.
      */
-    @Override
     public FSFuture<FSQueryResult<T>> fetch() {
         ApiFuture<QuerySnapshot> future = query.get();
         ApiFuture<FSQueryResult<T>> queryFuture = ApiFutures.transform(future, input -> {

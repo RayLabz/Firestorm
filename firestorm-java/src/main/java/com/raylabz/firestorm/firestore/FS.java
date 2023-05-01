@@ -752,7 +752,7 @@ public final class FS {
      */
     public static <T> ListenerRegistration attachFilterableListener(FSFilterable<T> filterable, RealtimeUpdateCallback<List<FSObjectChange<T>>> callback) {
         try {
-            Firestorm.checkRegistration(filterable.objectClass);
+            Firestorm.checkRegistration(filterable.getObjectClass());
             final FSFilterableListener<T> eventListener = new FSFilterableListener<>(filterable, callback);
             return eventListener.getFilterable()
                     .addSnapshotListener(eventListener);
