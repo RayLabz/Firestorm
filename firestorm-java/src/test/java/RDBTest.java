@@ -1,7 +1,4 @@
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.rdb.RDB;
 import com.raylabz.firestorm.util.FirebaseUtils;
@@ -41,13 +38,14 @@ public class RDBTest {
 
         RDB.list(Student.class).now();
 
-        long t = System.currentTimeMillis();
-        Student api = RDB.get(Student.class, "043b34d2-fc7c-4438-85fc-e3f32040fd02").now();
-        System.out.println(System.currentTimeMillis() - t + "A");
-
+//        long t = System.currentTimeMillis();
+//        Student api = RDB.get(Student.class, "043b34d2-fc7c-4438-85fc-e3f32040fd02").now();
+//        System.out.println(System.currentTimeMillis() - t + "A");
+//
         long[] t2 = new long[1];
         t2[0] = System.currentTimeMillis();
         DatabaseReference databaseReference = RDB.getRDB().getReference("Student/043b34d2-fc7c-4438-85fc-e3f32040fd02");
+        Query query = databaseReference.equalTo(2);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,6 +58,8 @@ public class RDBTest {
 
             }
         });
+
+
 
 //        while(true);
 
