@@ -6,6 +6,7 @@ import com.google.firebase.database.*;
 import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.*;
+import com.raylabz.firestorm.firestore.FSFilterable;
 import com.raylabz.firestorm.rdb.callables.*;
 import com.raylabz.firestorm.util.Reflector;
 
@@ -390,6 +391,16 @@ public final class RDB {
         DatabaseReference classReference = rdb.getReference(aClass.getSimpleName());
         ListItemsCallable<T> listItemsCallable = new ListItemsCallable<>(aClass, classReference);
         return FSFuture.fromCallable(listItemsCallable);
+    }
+
+    /**
+     * Lists a set documents which match the filtering criteria provided. Returns a filter of all documents if no filters are used.
+     * @param objectClass The type of objects to filter.
+     * @return Returns an {@link RDBFilterable}.
+     * @param <T> The type of objects to filter.
+     */
+    public static <T> RDBFilterable<T> filter(final Class<T> objectClass) {
+        return new RDBFilterable<>(rdb.getReference().child(objectClass.getSimpleName()), objectClass);
     }
 
 }

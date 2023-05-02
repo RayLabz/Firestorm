@@ -18,14 +18,12 @@ import java.util.concurrent.ExecutionException;
  * Enables easy pagination.
  * @param <T> The type of objects returned by the paginator.
  * @author Nicos Kasenides
- * @version 1.0.0
+ * @version 2.0.0
  */
-public class FSPaginator<T> implements Filterable<T> {
+public class FSPaginator<T> extends Filterable<Query, T> {
 
     private final int DEFAULT_LIMIT = 10;
-    private final Class<T> objectClass;
     private final String lastDocumentID;
-    private Query query;
     private int limit = DEFAULT_LIMIT;
 
     /**
@@ -34,8 +32,7 @@ public class FSPaginator<T> implements Filterable<T> {
      * @param objectClass The type of objects returned by the Paginator.
      */
     private FSPaginator(Class<T> objectClass, final String lastDocumentID) {
-        query = FS.getFirestore().collection(objectClass.getSimpleName());
-        this.objectClass = objectClass;
+        super(FS.getFirestore().collection(objectClass.getSimpleName()), objectClass);
         this.lastDocumentID = lastDocumentID;
     }
 
@@ -342,8 +339,10 @@ public class FSPaginator<T> implements Filterable<T> {
         return this;
     }
 
-
-    @Override
+    /**
+     * Fetches the result.
+     * @return Returns an {@link FSFuture}.
+     */
     public FSFuture<FSQueryResult<T>> fetch() {
 
         //If there is a last document, set the query to start after it:

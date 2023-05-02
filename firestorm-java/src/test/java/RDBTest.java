@@ -44,22 +44,30 @@ public class RDBTest {
 //        Student api = RDB.get(Student.class, "043b34d2-fc7c-4438-85fc-e3f32040fd02").now();
 //        System.out.println(System.currentTimeMillis() - t + "A");
 //
-        long[] t2 = new long[1];
-        t2[0] = System.currentTimeMillis();
-        DatabaseReference databaseReference = RDB.getRDB().getReference("Student/043b34d2-fc7c-4438-85fc-e3f32040fd02");
-        Query query = databaseReference.equalTo(2);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Student s = dataSnapshot.getValue(Student.class);
-                System.out.println(System.currentTimeMillis() - t2[0] + "B");
-            }
+//        long[] t2 = new long[1];
+//        t2[0] = System.currentTimeMillis();
+//        DatabaseReference databaseReference = RDB.getRDB().getReference("Student");
+//        Query query = databaseReference.orderByChild("grade");
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//                for (DataSnapshot child : children) {
+//                    System.out.println(child.getValue(Student.class).getName());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        List<Student> students = RDB.filter(Student.class)
+                .orderByValue()
+                .fetch().now();
 
-            }
-        });
+        System.out.println(students);
 
 
 //        while(true);

@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
  * An object that enables quick use of Firestore filters without using additional DocumentReferences.
  * @param <T> The type of objects this FirestormFilterable is able to interact with.
  * @author Nicos Kasenides
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class FSFilterable<T> extends Filterable<Query, T> {
 
@@ -30,15 +30,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      */
     public FSFilterable(Query query, final Class<T> objectClass) {
         super(query, objectClass);
-    }
-
-    /**
-     * Retrieves the current query.
-     * @return Returns Query.
-     */
-    @Override
-    public Query getQuery() {
-        return query;
     }
 
     /**

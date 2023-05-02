@@ -1,14 +1,5 @@
 package com.raylabz.firestorm.api;
 
-import com.google.cloud.firestore.*;
-import com.raylabz.firestorm.firestore.FSFilterable;
-import com.raylabz.firestorm.firestore.FSQueryResult;
-import com.raylabz.firestorm.async.FSFuture;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 /**
  * Abstracts filtering functionality.
  * @param <ObjectType> The type of object being filtered.
@@ -36,7 +27,7 @@ public abstract class Filterable<QueryType, ObjectType> {
      * Retrieves the current query.
      * @return Returns Query.
      */
-    public QueryType getQuery() {
+    public final QueryType getQuery() {
         return query;
     }
 
@@ -44,7 +35,7 @@ public abstract class Filterable<QueryType, ObjectType> {
      * Retrieves the class of the objects handled by this filterable.
      * @return Returns a class.
      */
-    public Class<ObjectType> getObjectClass() {
+    public final Class<ObjectType> getObjectClass() {
         return objectClass;
     }
 

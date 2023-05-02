@@ -36,7 +36,7 @@ public class FSFilterableListener<T> extends FilterableListener<T> {
             ArrayList<FSObjectChange<T>> objectChanges = new ArrayList<>();
             for (DocumentChange documentChange : documentChanges) {
                 QueryDocumentSnapshot document = documentChange.getDocument();
-                FSObjectChange<T> objectChange = new FSObjectChange<T>(document.toObject(filterable.objectClass), document, documentChange.getOldIndex(), documentChange.getNewIndex(), FSObjectChange.Type.fromDocumentChangeType(documentChange.getType()));
+                FSObjectChange<T> objectChange = new FSObjectChange<T>(document.toObject(filterable.getObjectClass()), document, documentChange.getOldIndex(), documentChange.getNewIndex(), FSObjectChange.Type.fromDocumentChangeType(documentChange.getType()));
                 objectChanges.add(objectChange);
             }
             callback.onUpdate(objectChanges);
