@@ -48,7 +48,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @return Returns a filterable.
      */
     @Nonnull
-    @Override
     public FSFilterable<T> whereEqualTo(@Nonnull String field, @Nullable Object value) {
         query = query.whereEqualTo(field, value);
         return this;
@@ -60,7 +59,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereEqualTo(@Nonnull FieldPath fieldPath, @Nullable Object value) {
         query = query.whereEqualTo(fieldPath, value);
@@ -73,7 +71,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereLessThan(@Nonnull String field, @Nonnull Object value) {
         query = query.whereLessThan(field, value);
@@ -86,7 +83,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereLessThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereLessThan(fieldPath, value);
@@ -99,7 +95,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereLessThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
         query = query.whereLessThanOrEqualTo(field, value);
@@ -112,7 +107,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereLessThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereLessThanOrEqualTo(fieldPath, value);
@@ -125,7 +119,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereGreaterThan(@Nonnull String field, @Nonnull Object value) {
         query = query.whereGreaterThan(field, value);
@@ -138,7 +131,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereGreaterThan(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereGreaterThan(fieldPath, value);
@@ -151,7 +143,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereGreaterThanOrEqualTo(@Nonnull String field, @Nonnull Object value) {
         query = query.whereGreaterThanOrEqualTo(field, value);
@@ -164,7 +155,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereGreaterThanOrEqualTo(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereGreaterThanOrEqualTo(fieldPath, value);
@@ -177,7 +167,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereArrayContains(@Nonnull String field, @Nonnull Object value) {
         query = query.whereArrayContains(field, value);
@@ -190,7 +179,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param value The value.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereArrayContains(@Nonnull FieldPath fieldPath, @Nonnull Object value) {
         query = query.whereArrayContains(fieldPath, value);
@@ -203,7 +191,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values The list of values.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereArrayContainsAny(@Nonnull String field, @Nonnull List<?> values) {
         query = query.whereArrayContainsAny(field, values);
@@ -216,7 +203,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values The list of values.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereArrayContainsAny(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
         query = query.whereArrayContainsAny(fieldPath, values);
@@ -229,7 +215,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values The list of values.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereIn(@Nonnull String field, @Nonnull List<?> values) {
         query = query.whereIn(field, values);
@@ -242,7 +227,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values The list of values.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereIn(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
         query = query.whereIn(fieldPath, values);
@@ -256,7 +240,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values The list of values.
      * @return Returns a Paginator.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereNotIn(@Nonnull String field, @Nonnull List<?> values) {
         query = query.whereNotIn(field, values);
@@ -270,7 +253,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param values    The list of values.
      * @return Returns a Paginator.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> whereNotIn(@Nonnull FieldPath fieldPath, @Nonnull List<?> values) {
         query = query.whereNotIn(fieldPath, values);
@@ -282,7 +264,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param field The field.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> orderBy(@Nonnull String field) {
         query = query.orderBy(field);
@@ -294,7 +275,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldPath The field path.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> orderBy(@Nonnull FieldPath fieldPath) {
         query = query.orderBy(fieldPath);
@@ -307,7 +287,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param direction The direction (ascending/descending) of ordering.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> orderBy(@Nonnull String field, @Nonnull Query.Direction direction) {
         query = query.orderBy(field, direction);
@@ -320,7 +299,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param direction The direction (ascending/descending) of ordering.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> orderBy(@Nonnull FieldPath fieldPath, @Nonnull Query.Direction direction) {
         query = query.orderBy(fieldPath, direction);
@@ -332,7 +310,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param limit The maximum number of results to fetch.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> limit(int limit) {
         query = query.limit(limit);
@@ -344,7 +321,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param offset The offset.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> offset(int offset) {
         query = query.offset(offset);
@@ -356,7 +332,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param snapshot The document snapshot to start retrieving the results from.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> startAt(@Nonnull DocumentSnapshot snapshot) {
         query = query.startAt(snapshot);
@@ -368,7 +343,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldValues The field values to start the filtering results at.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> startAt(Object... fieldValues) {
         query = query.startAt(fieldValues);
@@ -380,7 +354,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fields The fields to select.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> select(String... fields) {
         query = query.select(fields);
@@ -392,7 +365,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldPaths The paths of the fields to select.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> select(FieldPath... fieldPaths) {
         query = query.select(fieldPaths);
@@ -404,7 +376,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param snapshot The document snapshot to start retrieving the results after.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> startAfter(@Nonnull DocumentSnapshot snapshot) {
         query = query.startAfter(snapshot);
@@ -416,7 +387,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldValues The field values to starting retrieving the results after.
      * @return Returns a filterable.
      */
-    @Override
     public FSFilterable<T> startAfter(Object... fieldValues) {
         query = query.startAfter(fieldValues);
         return this;
@@ -427,7 +397,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param snapshot The document snapshot to end the query before.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> endBefore(@Nonnull DocumentSnapshot snapshot) {
         query = query.endBefore(snapshot);
@@ -439,7 +408,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldValues The field values to end the query before.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> endBefore(Object... fieldValues) {
         query = query.endBefore(fieldValues);
@@ -451,7 +419,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param fieldValues The field values to end the query at.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> endAt(Object... fieldValues) {
         query = query.endAt(fieldValues);
@@ -463,7 +430,6 @@ public class FSFilterable<T> extends Filterable<Query, T> {
      * @param snapshot The document snapshot the end the query at.
      * @return Returns a filterable.
      */
-    @Override
     @Nonnull
     public FSFilterable<T> endAt(@Nonnull DocumentSnapshot snapshot) {
         query = query.endAt(snapshot);
