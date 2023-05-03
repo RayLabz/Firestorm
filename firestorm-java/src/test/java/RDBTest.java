@@ -79,13 +79,23 @@ public class RDBTest {
 //            }
 //        });
 
-        List<Student> students = RDB.filter(Student.class)
-                .whereGreaterThan("age", 50)
-                .fetch().now();
+        RDB.filter(Student.class)
+                .whereLessThanOrEqualTo("name", "TestName2")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        System.out.println("changed");
+                    }
 
-        for (Student student : students) {
-            System.out.println(student);
-        }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+//        for (Student student : students) {
+//            System.out.println(student);
+//        }
 
 
 //        while(true);

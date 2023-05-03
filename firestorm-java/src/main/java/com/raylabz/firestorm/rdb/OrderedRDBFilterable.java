@@ -66,9 +66,8 @@ public class OrderedRDBFilterable<T> extends Filterable<Query, T> {
      * @param listener The listener.
      * @return Returns a query.
      */
-    public OrderedRDBFilterable<T> addValueEventListener(ValueEventListener listener) {
-        query.addValueEventListener(listener);
-        return this;
+    public ValueEventListener addValueEventListener(ValueEventListener listener) {
+        return query.addValueEventListener(listener);
     }
 
     /**
@@ -76,9 +75,8 @@ public class OrderedRDBFilterable<T> extends Filterable<Query, T> {
      * @param listener The listener.
      * @return Returns a query.
      */
-    public OrderedRDBFilterable<T> addChildEventListener(ChildEventListener listener) {
-        query.addChildEventListener(listener);
-        return this;
+    public ChildEventListener addChildEventListener(ChildEventListener listener) {
+        return query.addChildEventListener(listener);
     }
 
     /**
