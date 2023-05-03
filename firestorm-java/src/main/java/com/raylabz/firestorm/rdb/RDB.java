@@ -26,7 +26,7 @@ public final class RDB {
      */
     static FirebaseDatabase rdb;
 
-    public static final int CALLABLE_UPDATE_DELAY = 0; //The delay between updates in callables.
+    public static final int CALLABLE_UPDATE_DELAY = 2; //The delay between updates in callables.
 
     /**
      * Stores a list of listeners registered to objects.

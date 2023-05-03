@@ -64,12 +64,12 @@ public class RDBTest {
 //        });
 
 //        DatabaseReference reference = RDB.getRDB().getReference("Student");
-//        reference.orderByChild("age").addListenerForSingleValueEvent(new ValueEventListener() {
+//        reference.startAt(50, "age").startAt(50, "grade").addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 //                for (DataSnapshot child : children) {
-//                    System.out.println(child.getValue(Student.class).getAge());
+//                    System.out.println(child.getValue(Student.class));
 //                }
 //            }
 //
@@ -80,11 +80,11 @@ public class RDBTest {
 //        });
 
         List<Student> students = RDB.filter(Student.class)
-                .orderByChild("age")
+                .whereGreaterThan("age", 50)
                 .fetch().now();
 
         for (Student student : students) {
-            System.out.println(student.getAge());
+            System.out.println(student);
         }
 
 
