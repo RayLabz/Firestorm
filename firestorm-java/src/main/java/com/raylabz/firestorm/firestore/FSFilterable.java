@@ -57,6 +57,30 @@ public class FSFilterable<T> extends Filterable<Query, T> {
     }
 
     /**
+     * Filters by value (not equal).
+     * @param field The field.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
+    @Nonnull
+    public FSFilterable<T> whereNotEqualTo(@Nonnull String field, @Nullable Object value) {
+        query = query.whereNotEqualTo(field, value);
+        return this;
+    }
+
+    /**
+     * Filters by value by field path (not equal).
+     * @param fieldPath The field path.
+     * @param value The value.
+     * @return Returns a filterable.
+     */
+    @Nonnull
+    public FSFilterable<T> whereNotEqualTo(@Nonnull FieldPath fieldPath, @Nullable Object value) {
+        query = query.whereNotEqualTo(fieldPath, value);
+        return this;
+    }
+
+    /**
      * Filters by value (less than).
      * @param field The field.
      * @param value The value.
