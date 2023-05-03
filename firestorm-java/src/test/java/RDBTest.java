@@ -80,7 +80,7 @@ public class RDBTest {
 //        });
 
         List<Student> students = RDB.filter(Student.class)
-                .limitToFirst(2)
+                .orderByChild("age")
                 .fetch().now();
 
         for (Student student : students) {

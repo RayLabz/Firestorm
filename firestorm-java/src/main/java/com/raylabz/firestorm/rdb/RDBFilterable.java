@@ -1,9 +1,6 @@
 package com.raylabz.firestorm.rdb;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import com.raylabz.firestorm.api.Filterable;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.firestore.FSFilterable;
@@ -29,7 +26,6 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      */
     public RDBFilterable(Query query, Class<T> objectClass) {
         super(query, objectClass);
-        System.out.println(query.getRef()); //TODO REMOVE
     }
 
     /**
@@ -39,7 +35,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      */
     @Nonnull
     public RDBFilterable<T> limitToFirst(int limit) {
-        query.limitToFirst(limit);
+        query = query.limitToFirst(limit);
         return this;
     }
 
@@ -50,7 +46,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      */
     @Nonnull
     public RDBFilterable<T> limitToLast(int limit) {
-        query.limitToLast(limit);
+        query = query.limitToLast(limit);
         return this;
     }
 
@@ -61,7 +57,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(double value, String key) {
-        query.startAt(value, key);
+        query = query.startAt(value, key);
         return this;
     }
 
@@ -72,7 +68,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(String value, String key) {
-        query.startAt(value, key);
+        query = query.startAt(value, key);
         return this;
     }
 
@@ -83,7 +79,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(boolean value, String key) {
-        query.startAt(value, key);
+        query = query.startAt(value, key);
         return this;
     }
 
@@ -93,7 +89,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(double value) {
-        query.startAt(value);
+        query = query.startAt(value);
         return this;
     }
 
@@ -103,7 +99,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(String value) {
-        query.startAt(value);
+        query = query.startAt(value);
         return this;
     }
 
@@ -113,7 +109,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> startAt(boolean value) {
-        query.startAt(value);
+        query = query.startAt(value);
         return this;
     }
 
@@ -123,7 +119,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(double value) {
-        query.endAt(value);
+        query = query.endAt(value);
         return this;
     }
 
@@ -133,7 +129,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(String value) {
-        query.endAt(value);
+        query = query.endAt(value);
         return this;
     }
 
@@ -143,7 +139,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(boolean value) {
-        query.endAt(value);
+        query = query.endAt(value);
         return this;
     }
 
@@ -154,7 +150,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(double value, String key) {
-        query.endAt(value, key);
+        query = query.endAt(value, key);
         return this;
     }
 
@@ -165,7 +161,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(String value, String key) {
-        query.endAt(value, key);
+        query = query.endAt(value, key);
         return this;
     }
 
@@ -176,7 +172,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> endAt(boolean value, String key) {
-        query.endAt(value, key);
+        query = query.endAt(value, key);
         return this;
     }
 
@@ -186,7 +182,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(double value) {
-        query.equalTo(value);
+        query = query.equalTo(value);
         return this;
     }
 
@@ -196,7 +192,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(String value) {
-        query.equalTo(value);
+        query = query.equalTo(value);
         return this;
     }
 
@@ -206,7 +202,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(boolean value) {
-        query.equalTo(value);
+        query = query.equalTo(value);
         return this;
     }
 
@@ -217,7 +213,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(double value, String key) {
-        query.equalTo(value, key);
+        query = query.equalTo(value, key);
         return this;
     }
 
@@ -228,7 +224,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(String value, String key) {
-        query.equalTo(value, key);
+        query = query.equalTo(value, key);
         return this;
     }
 
@@ -239,7 +235,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a Query.
      */
     public RDBFilterable<T> equalTo(boolean value, String key) {
-        query.equalTo(value, key);
+        query = query.equalTo(value, key);
         return this;
     }
 
@@ -249,7 +245,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a query.
      */
     public RDBFilterable<T> orderByChild(String path) {
-        query.orderByChild(path);
+        query = query.orderByChild(path);
         return this;
     }
 
@@ -258,7 +254,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a query.
      */
     public RDBFilterable<T> orderByKey() {
-        query.orderByKey();
+        query = query.orderByKey();
         return this;
     }
 
@@ -276,7 +272,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      * @return Returns a query.
      */
     public RDBFilterable<T> orderByPriority() {
-        query.orderByPriority();
+        query = query.orderByPriority();
         return this;
     }
 
