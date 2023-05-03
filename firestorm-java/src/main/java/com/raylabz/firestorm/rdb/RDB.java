@@ -400,7 +400,7 @@ public final class RDB {
      * @param <T> The type of objects to filter.
      */
     public static <T> RDBFilterable<T> filter(final Class<T> objectClass) {
-        return new RDBFilterable<>(rdb.getReference().child(objectClass.getSimpleName()), objectClass);
+        return new RDBFilterable<>(rdb.getReference(objectClass.getSimpleName()), objectClass);
     }
 
 }

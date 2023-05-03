@@ -38,7 +38,7 @@ public class RDBTest {
 
 //        RDB.deleteAllOfType(Student.class).now();
 
-        RDB.list(Student.class).now();
+//        RDB.list(Student.class).now();
 
 //        long t = System.currentTimeMillis();
 //        Student api = RDB.get(Student.class, "043b34d2-fc7c-4438-85fc-e3f32040fd02").now();
@@ -63,11 +63,29 @@ public class RDBTest {
 //            }
 //        });
 
+//        DatabaseReference reference = RDB.getRDB().getReference("Student");
+//        reference.orderByChild("age").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//                for (DataSnapshot child : children) {
+//                    System.out.println(child.getValue(Student.class).getAge());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
         List<Student> students = RDB.filter(Student.class)
-                .orderByValue()
+                .limitToFirst(2)
                 .fetch().now();
 
-        System.out.println(students);
+        for (Student student : students) {
+            System.out.println(student.getAge());
+        }
 
 
 //        while(true);

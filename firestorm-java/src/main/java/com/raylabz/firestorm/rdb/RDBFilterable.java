@@ -29,6 +29,7 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
      */
     public RDBFilterable(Query query, Class<T> objectClass) {
         super(query, objectClass);
+        System.out.println(query.getRef()); //TODO REMOVE
     }
 
     /**
@@ -261,14 +262,14 @@ public class RDBFilterable<T> extends Filterable<Query, T> {
         return this;
     }
 
-    /**
-     * Orders the results by value.
-     * @return Returns a query.
-     */
-    public RDBFilterable<T> orderByValue() {
-        query.orderByValue();
-        return this;
-    }
+//    /**
+//     * Orders the results by value.
+//     * @return Returns a query.
+//     */
+//    public RDBFilterable<T> orderByValue() {
+//        query.orderByValue();
+//        return this;
+//    }
 
     /**
      * Orders the results by priority.

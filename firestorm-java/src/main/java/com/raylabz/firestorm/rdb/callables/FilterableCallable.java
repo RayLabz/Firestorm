@@ -3,7 +3,9 @@ package com.raylabz.firestorm.rdb.callables;
 import com.google.firebase.database.*;
 import com.raylabz.firestorm.exception.FirestormException;
 import com.raylabz.firestorm.rdb.RDB;
+import org.checkerframework.checker.units.qual.C;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ public class FilterableCallable<T> implements Callable<List<T>> {
     private final Query query;
     private final Class<T> objectClass;
     private List<T> data = null;
+    private long numOfChildren = 0;
 
     private Throwable error = null;
 
@@ -31,7 +34,12 @@ public class FilterableCallable<T> implements Callable<List<T>> {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         if (dataSnapshot.getChildrenCount() > 0) {
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                            if (data == null) {
+                                numOfChildren = dataSnapshot.getChildrenCount();
+                                data = new ArrayList<>();
+                            }
+                            for (DataSnapshot child : children) {
                                 data.add(child.getValue(objectClass));
                             }
                         }
@@ -47,7 +55,7 @@ public class FilterableCallable<T> implements Callable<List<T>> {
 
             query.addListenerForSingleValueEvent(listener);
 
-            while (data == null && error == null) {
+            while ((data == null || data.size() < numOfChildren) && error == null) {
                 Thread.sleep(RDB.CALLABLE_UPDATE_DELAY);
             }
 
