@@ -2,6 +2,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.firebase.database.*;
 import com.raylabz.firestorm.Firestorm;
 import com.raylabz.firestorm.firestore.FS;
+import com.raylabz.firestorm.firestore.FSTransaction;
 import com.raylabz.firestorm.rdb.RDB;
 import com.raylabz.firestorm.util.FirebaseUtils;
 
@@ -23,32 +24,27 @@ public class RDBTest {
         Firestorm.register(Person.class);
         Firestorm.register(Student.class);
 
-        RDB.attachFilterableListener(RDB.filter(Student.class).limitToFirst(3), new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        DatabaseReference reference = RDB.getInstance().getReference("Student").child("0476c48c-288c-4034-9cd3-71931178188a");
+        reference.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Student value = mutableData.getValue(Student.class);
+                System.out.println(value);
+                if (value == null) {
+                    mutableData.setValue(1);
+                }
+                else {
+                    value.setGrade(88);
+                    mutableData.setValue(value);
+                }
+                return Transaction.success(mutableData);
+            }
 
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        System.out.println(dataSnapshot.getValue());
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//                System.out.println(databaseError.getMessage());
+            }
+        });
 
 
 //        ArrayList<Student> students = new ArrayList<>();

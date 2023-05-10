@@ -574,8 +574,13 @@ public final class RDB {
         return registeredObjectListeners.get(object);
     }
 
-    //TODO - Transactions
+    //TODO - Consider support for object-oriented pagination in the future.
 
-    //TODO - Paginator
+    //TODO - Consider support for object-oriented transactions in the future.
+    /*
+        Note: Transactions only work on a single node (reference) at a time, so
+        it is not very useful to carry them out in an object-oriented fashion.
+     */
+
 
 }
