@@ -15,6 +15,12 @@ public class FSQueryResult<T> {
     private final QueryDocumentSnapshot snapshot;
     private final String lastDocumentID;
 
+    /**
+     * Constructs a query result.
+     * @param items
+     * @param snapshot
+     * @param lastDocumentID
+     */
     public FSQueryResult(ArrayList<T> items, QueryDocumentSnapshot snapshot, String lastDocumentID) {
         this.items = items;
         this.snapshot = snapshot;

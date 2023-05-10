@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+/**
+ * Manages filtering operations.
+ * @param <T> The type of object used.
+ */
 public class FilterableCallable<T> implements Callable<List<T>> {
 
     private final Query query;
@@ -20,6 +24,11 @@ public class FilterableCallable<T> implements Callable<List<T>> {
 
     private Throwable error = null;
 
+    /**
+     * Constructs the callable.
+     * @param objectClass The object class.
+     * @param query The query used to construct the callable.
+     */
     public FilterableCallable(Class<T> objectClass, Query query) {
         this.query = query;
         this.objectClass = objectClass;
@@ -44,7 +53,7 @@ public class FilterableCallable<T> implements Callable<List<T>> {
                             }
                         }
                     }
-                    throw new FirestormException("Could not retrieve filterable at location '" + query.getRef() + "'.");
+                    error = new FirestormException("Item does not exist.");
                 }
 
                 @Override
@@ -71,6 +80,10 @@ public class FilterableCallable<T> implements Callable<List<T>> {
         return data;
     }
 
+    /**
+     * Retrieves the data.
+     * @return Returns a list.
+     */
     public List<T> getData() {
         return data;
     }

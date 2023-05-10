@@ -4,8 +4,13 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.raylabz.firestorm.async.RealtimeUpdateCallback;
 
+/**
+ * Implements functionality for listening to objects.
+ * @param <T> The type of object.
+ */
 public abstract class ObjectListener<T> implements EventListener<DocumentSnapshot> {
 
+    //A message shown when the object does not exist.
     protected static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
     /**

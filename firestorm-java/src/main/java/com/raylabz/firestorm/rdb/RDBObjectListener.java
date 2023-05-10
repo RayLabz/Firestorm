@@ -24,11 +24,16 @@ import java.util.ArrayList;
  */
 public class RDBObjectListener<T> implements ValueEventListener {
 
+    //A message shown when the object does not exist.
     protected static final String NO_SNAPSHOT_EXISTS_MESSAGE = "This object does not exist [No snapshot].";
 
     private final T objectToListenFor;
     private final RealtimeUpdateCallback<T> callback;
 
+    /**
+     * Handles object retrieval.
+     * @param dataSnapshot The snapshot received.
+     */
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         //Check ID of objectToListenFor:
@@ -106,11 +111,20 @@ public class RDBObjectListener<T> implements ValueEventListener {
         }
     }
 
+    /**
+     * Executes code when the operation fails.
+     * @param databaseError The error.
+     */
     @Override
     public void onCancelled(DatabaseError databaseError) {
         callback.onError(new RuntimeException(databaseError.getMessage()));
     }
 
+    /**
+     * Constructs an object listener.
+     * @param objectToListenFor The object being listened to.
+     * @param callback Calls code when the object is changed.
+     */
     public RDBObjectListener(T objectToListenFor, RealtimeUpdateCallback<T> callback) {
         this.objectToListenFor = objectToListenFor;
         this.callback = callback;

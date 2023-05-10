@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+/**
+ * Manages the retrieval of multiple items.
+ * @param <T>
+ */
 public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
 
     private final List<DatabaseReference> references;
@@ -21,6 +25,11 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
 
     private Throwable error = null;
 
+    /**
+     * Constructs a callable.
+     * @param objectClass The object class.
+     * @param references The reference list.
+     */
     public GetMultipleItemsCallable(Class<T> objectClass, List<DatabaseReference> references) {
         this.references = references;
         this.objectClass = objectClass;
@@ -72,6 +81,10 @@ public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
         return data;
     }
 
+    /**
+     * Retrieves the data.
+     * @return Returns a list.
+     */
     public List<T> getData() {
         return data;
     }

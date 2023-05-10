@@ -9,12 +9,19 @@ import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.concurrent.Callable;
 
-public class ItemExistsCallable<T> implements Callable<Boolean> {
+/**
+ * Manages item existence operations.
+ */
+public class ItemExistsCallable implements Callable<Boolean> {
 
     private final DatabaseReference reference;
 
     private Boolean exists = null;
 
+    /**
+     * Constructs the callable.
+     * @param reference The reference used in the callable.
+     */
     public ItemExistsCallable(DatabaseReference reference) {
         this.reference = reference;
     }
@@ -43,6 +50,10 @@ public class ItemExistsCallable<T> implements Callable<Boolean> {
         return exists;
     }
 
+    /**
+     * Checks if the reference exists or not.
+     * @return Returns true if the reference exists, false otherwise.
+     */
     public Boolean exists() {
         return exists;
     }

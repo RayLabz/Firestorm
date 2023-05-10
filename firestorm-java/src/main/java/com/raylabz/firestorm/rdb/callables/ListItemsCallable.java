@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+/**
+ * A callable that manages item listing.
+ * @param <T> The object type.
+ */
 public class ListItemsCallable<T> implements Callable<List<T>> {
 
     private final DatabaseReference classReference;
@@ -23,12 +27,23 @@ public class ListItemsCallable<T> implements Callable<List<T>> {
 
     private Throwable error = null;
 
+    /**
+     * Constructs a callable.
+     * @param objectClass The object class.
+     * @param classReference The reference.
+     * @param limit The number of objects to retrieve.
+     */
     public ListItemsCallable(Class<T> objectClass, DatabaseReference classReference, int limit) {
         this.classReference = classReference;
         this.objectClass = objectClass;
         this.limit = limit;
     }
 
+    /**
+     * Constructs a callable.
+     * @param objectClass The object class.
+     * @param classReference The reference
+     */
     public ListItemsCallable(Class<T> objectClass, DatabaseReference classReference) {
         this.classReference = classReference;
         this.objectClass = objectClass;
@@ -73,6 +88,10 @@ public class ListItemsCallable<T> implements Callable<List<T>> {
         return data;
     }
 
+    /**
+     * Retrieves the data.
+     * @return Returns a list.
+     */
     public List<T> getData() {
         return data;
     }

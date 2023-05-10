@@ -24,7 +24,8 @@ public final class RDB {
      */
     static FirebaseDatabase rdb;
 
-    public static final int CALLABLE_UPDATE_DELAY = 2; //The delay between updates in callables.
+    //The delay between updates in callables.
+    public static final int CALLABLE_UPDATE_DELAY = 2;
 
     /**
      * Stores a list of listeners registered to objects.
@@ -201,7 +202,7 @@ public final class RDB {
      */
     public static <T> FSFuture<Boolean> exists(final Class<T> aClass, @Nonnull String id) {
         DatabaseReference reference = rdb.getReference(aClass.getSimpleName()).child(id);
-        ItemExistsCallable<T> itemExistsCallable = new ItemExistsCallable<>(reference);
+        ItemExistsCallable itemExistsCallable = new ItemExistsCallable(reference);
         return FSFuture.fromCallable(itemExistsCallable);
     }
 
@@ -218,7 +219,7 @@ public final class RDB {
                 throw new FirestormException("ID field cannot be null");
             }
             DatabaseReference reference = rdb.getReference(object.getClass().getSimpleName()).child(id);
-            ItemExistsCallable<T> itemExistsCallable = new ItemExistsCallable<>(reference);
+            ItemExistsCallable itemExistsCallable = new ItemExistsCallable(reference);
             return FSFuture.fromCallable(itemExistsCallable);
         } catch (IDFieldException | NoSuchFieldException | IllegalAccessException e) {
             throw new FirestormException(e);

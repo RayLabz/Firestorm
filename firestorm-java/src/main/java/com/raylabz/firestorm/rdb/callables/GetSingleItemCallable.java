@@ -10,6 +10,10 @@ import com.raylabz.firestorm.rdb.RDB;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Manages single item operations.
+ * @param <T> The object type.
+ */
 public class GetSingleItemCallable<T> implements Callable<T> {
 
     private final DatabaseReference reference;
@@ -18,6 +22,11 @@ public class GetSingleItemCallable<T> implements Callable<T> {
 
     private Throwable error = null;
 
+    /**
+     * Constructs the callable.
+     * @param objectClass The object class.
+     * @param reference The reference.
+     */
     public GetSingleItemCallable(Class<T> objectClass, DatabaseReference reference) {
         this.reference = reference;
         this.objectClass = objectClass;
@@ -56,6 +65,10 @@ public class GetSingleItemCallable<T> implements Callable<T> {
         return data;
     }
 
+    /**
+     * Retrieves the data.
+     * @return Returns an object.
+     */
     public T getData() {
         return data;
     }
