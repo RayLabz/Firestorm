@@ -32,7 +32,7 @@ public class FSPaginator<T> extends Filterable<Query, T> {
      * @param objectClass The type of objects returned by the Paginator.
      */
     private FSPaginator(Class<T> objectClass, final String lastDocumentID) {
-        super(FS.getFirestore().collection(objectClass.getSimpleName()), objectClass);
+        super(FS.getInstance().collection(objectClass.getSimpleName()), objectClass);
         this.lastDocumentID = lastDocumentID;
     }
 
@@ -347,7 +347,7 @@ public class FSPaginator<T> extends Filterable<Query, T> {
 
         //If there is a last document, set the query to start after it:
         if (lastDocumentID != null) {
-            DocumentReference lastDocumentReference = FS.getFirestore().collection(objectClass.getSimpleName()).document(lastDocumentID);
+            DocumentReference lastDocumentReference = FS.getInstance().collection(objectClass.getSimpleName()).document(lastDocumentID);
             try {
                 DocumentSnapshot lastDocumentSnapshot = lastDocumentReference.get().get();
                 if (lastDocumentSnapshot != null) {

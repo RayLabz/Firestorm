@@ -40,7 +40,7 @@ public abstract class FSTransaction extends FirestormOperation
             if (idFieldValue == null) {
                 throw new FirestormException("ID field cannot be null");
             }
-            final DocumentReference reference = FS.getFirestore().collection(object.getClass().getSimpleName()).document(idFieldValue);
+            final DocumentReference reference = FS.getInstance().collection(object.getClass().getSimpleName()).document(idFieldValue);
             transaction = transaction.set(reference, object);
         } catch (ClassRegistrationException | IllegalAccessException | NoSuchFieldException | IDFieldException e) {
             throw new TransactionException(e);
@@ -58,7 +58,7 @@ public abstract class FSTransaction extends FirestormOperation
      */
     public final <T> T get(final Class<T> objectClass, final String documentID) throws TransactionException {
         try {
-            final DocumentReference documentReference = FS.getFirestore().collection(objectClass.getSimpleName()).document(documentID);
+            final DocumentReference documentReference = FS.getInstance().collection(objectClass.getSimpleName()).document(documentID);
             DocumentSnapshot snapshot = transaction.get(documentReference).get();
             if (snapshot.exists()) {
                 return snapshot.toObject(objectClass);
@@ -83,7 +83,7 @@ public abstract class FSTransaction extends FirestormOperation
             if (idFieldValue == null) {
                 throw new FirestormException("ID field cannot be null");
             }
-            final DocumentReference reference = FS.getFirestore().collection(object.getClass().getSimpleName()).document(idFieldValue);
+            final DocumentReference reference = FS.getInstance().collection(object.getClass().getSimpleName()).document(idFieldValue);
             transaction = transaction.set(reference, object);
         } catch (IllegalAccessException | NoSuchFieldException | ClassRegistrationException | IDFieldException e) {
             throw new TransactionException(e);
@@ -103,7 +103,7 @@ public abstract class FSTransaction extends FirestormOperation
             if (documentID == null) {
                 throw new FirestormException("ID field cannot be null");
             }
-            final DocumentReference reference = FS.getFirestore().collection(object.getClass().getSimpleName()).document(documentID);
+            final DocumentReference reference = FS.getInstance().collection(object.getClass().getSimpleName()).document(documentID);
             transaction = transaction.delete(reference);
             Reflector.setIDFieldValue(object, null);
         } catch (IllegalAccessException | ClassRegistrationException | NoSuchFieldException | IDFieldException e) {
@@ -122,7 +122,7 @@ public abstract class FSTransaction extends FirestormOperation
     public <T> Void delete(final Class<T> objectClass, final String objectID) throws TransactionException {
         try {
             Firestorm.checkRegistration(objectClass);
-            final DocumentReference reference = FS.getFirestore().collection(objectClass.getSimpleName()).document(objectID);
+            final DocumentReference reference = FS.getInstance().collection(objectClass.getSimpleName()).document(objectID);
             transaction = transaction.delete(reference);
         } catch (ClassRegistrationException e) {
             throw new TransactionException(e);
@@ -141,7 +141,7 @@ public abstract class FSTransaction extends FirestormOperation
     public final <T> List<T> list(final Class<T> objectClass, final int limit) throws TransactionException {
         try {
             Firestorm.checkRegistration(objectClass);
-            ApiFuture<QuerySnapshot> future = FS.getFirestore().collection(objectClass.getSimpleName()).limit(limit).get();
+            ApiFuture<QuerySnapshot> future = FS.getInstance().collection(objectClass.getSimpleName()).limit(limit).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
             DocumentReference[] documentReferences = new DocumentReference[NUM_OF_DOCUMENTS];
@@ -174,7 +174,7 @@ public abstract class FSTransaction extends FirestormOperation
     public final <T> ArrayList<T> list(final Class<T> objectClass) throws TransactionException {
         try {
             Firestorm.checkRegistration(objectClass);
-            ApiFuture<QuerySnapshot> future = FS.getFirestore().collection(objectClass.getSimpleName()).get();
+            ApiFuture<QuerySnapshot> future = FS.getInstance().collection(objectClass.getSimpleName()).get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             final int NUM_OF_DOCUMENTS = documents.size();
             DocumentReference[] documentReferences = new DocumentReference[NUM_OF_DOCUMENTS];
@@ -203,7 +203,7 @@ public abstract class FSTransaction extends FirestormOperation
      * @return Returns an ArrayList of objects of type T/objectClass, matching the provided filters.
      */
     public final <T> FSTransactionFilterable<T> filter(final Class<T> objectClass) {
-        return new FSTransactionFilterable<>(FS.getFirestore().collection(objectClass.getSimpleName()), objectClass, transaction);
+        return new FSTransactionFilterable<>(FS.getInstance().collection(objectClass.getSimpleName()), objectClass, transaction);
     }
 
     /**

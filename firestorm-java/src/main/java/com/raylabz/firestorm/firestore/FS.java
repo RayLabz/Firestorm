@@ -60,7 +60,7 @@ public final class FS {
      * Retrieves the firestore object being managed by Firestorm.
      * @return Returns a Firestore.
      */
-    public static Firestore getFirestore() {
+    public static Firestore getInstance() {
         return firestore;
     }
 

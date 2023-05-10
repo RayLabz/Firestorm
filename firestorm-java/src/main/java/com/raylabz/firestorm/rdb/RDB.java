@@ -1,12 +1,10 @@
 package com.raylabz.firestorm.rdb;
 
 import com.google.api.core.*;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.database.*;
 import com.raylabz.firestorm.*;
 import com.raylabz.firestorm.async.FSFuture;
 import com.raylabz.firestorm.exception.*;
-import com.raylabz.firestorm.firestore.FSFilterable;
 import com.raylabz.firestorm.rdb.callables.*;
 import com.raylabz.firestorm.util.Reflector;
 
@@ -31,8 +29,8 @@ public final class RDB {
     /**
      * Stores a list of listeners registered to objects.
      */
-//    private static final HashMap<Object, ListenerRegistration> registeredObjectListeners = new HashMap<>();
-//    private static final HashMap<Class<?>, ListenerRegistration> registeredClassListeners = new HashMap<>();
+    private static final HashMap<Object, ValueEventListener> registeredObjectListeners = new HashMap<>();
+    private static final HashMap<Class<?>, ChildEventListener> registeredClassListeners = new HashMap<>();
 
     /**
      * Initializes the Real-Time Database API for Firestorm <b><u>after Firebase has been initialized</u></b> using <i>Firebase.initializeApp()</i>.
@@ -65,7 +63,7 @@ public final class RDB {
      * Retrieves the real-time database object being managed by Firestorm.
      * @return Returns a {@link FirebaseDatabase}.
      */
-    public static FirebaseDatabase getRDB() {
+    public static FirebaseDatabase getInstance() {
         return rdb;
     }
 
@@ -402,5 +400,182 @@ public final class RDB {
     public static <T> RDBFilterable<T> filter(final Class<T> objectClass) {
         return new RDBFilterable<>(rdb.getReference(objectClass.getSimpleName()), objectClass);
     }
+
+    /**
+     * Utility method. Registers a listener in the registeredListeners map.
+     * @param object The object being listened to.
+     * @param listenerRegistration The listener of the object.
+     */
+    private static void registerObjectListener(final Object object, final ValueEventListener listenerRegistration) {
+        registeredObjectListeners.put(object, listenerRegistration);
+    }
+
+    /**
+     * Unregisters a listener for an object provided.
+     * @param object The object being listened to.
+     */
+    private static void unregisterObjectListener(final Object object) {
+        registeredObjectListeners.remove(object);
+    }
+
+    /**
+     * Utility method. Registers a class listener in the registeredListeners map.
+     * @param objectClass The class being listened to.
+     * @param listenerRegistration The listener of the class.
+     */
+    private static void registerClassListener(final Class<?> objectClass, final ChildEventListener listenerRegistration) {
+        registeredClassListeners.put(objectClass, listenerRegistration);
+    }
+
+    /**
+     * Unregisters a listener for a class provided.
+     * @param objectClass The class being listened to.
+     */
+    private static void unregisterClassListener(final Class<?> objectClass) {
+        registeredClassListeners.remove(objectClass);
+    }
+
+    //------------------------------------------
+    /**
+     * Utility method. Attaches an event listener which listens for updates to an object.
+     *
+     * @param objectToListenFor The object to listen to changes.
+     * @param callback A callback function allowing the execution of code after a change occurs.
+     * @param <T> The type of object to listen to.
+     * @return Returns a {@link ValueEventListener}.
+     * @throws FirestormException Thrown when Firestorm encounters an error.
+     */
+    @Nonnull
+    public static <T> ValueEventListener attachListener(final T objectToListenFor, final ValueEventListener callback) throws FirestormException {
+        try {
+            Firestorm.checkRegistration(objectToListenFor);
+            final String documentID = Reflector.getIDFieldValue(objectToListenFor);
+            final ValueEventListener listenerRegistration = rdb
+                    .getReference(objectToListenFor.getClass().getSimpleName())
+                    .child(documentID)
+                    .addValueEventListener(callback);
+            registerObjectListener(objectToListenFor, listenerRegistration);
+            return listenerRegistration;
+        } catch (NoSuchFieldException | IllegalAccessException | ClassRegistrationException | NotInitializedException |
+                 IDFieldException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to an object using its class and ID.
+     *
+     * @param <T> The type of object to listen for.
+     * @param objectClass The class of the object.
+     * @param documentID The ID of the object.
+     * @param callback A callback function to execute code once an update is received.
+     * @return Returns a {@link ValueEventListener}.
+     */
+    public static <T> ValueEventListener attachListener(final Class<T> objectClass, final String documentID, final ValueEventListener callback) {
+        try {
+            Firestorm.checkRegistration(objectClass);
+            return rdb
+                    .getReference(objectClass.getSimpleName())
+                    .child(documentID)
+                    .addValueEventListener(callback);
+        } catch (ClassRegistrationException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Attaches an event listener which listens for updates to a class.
+     * @param objectClass The class of documents to listen to.
+     * @param callback A function to execute when an update is received.
+     * @param <T> The class of the listener.
+     * @return Returns a {@link ValueEventListener}.
+     */
+    public static <T> ChildEventListener attachClassListener(Class<T> objectClass, final ChildEventListener callback) {
+        try {
+            Firestorm.checkRegistration(objectClass);
+            ChildEventListener listenerRegistration = rdb
+                    .getReference(objectClass.getSimpleName())
+                    .addChildEventListener(callback);
+            registerClassListener(objectClass, listenerRegistration);
+            return listenerRegistration;
+        } catch (ClassRegistrationException | NotInitializedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Attaches a listener to a filterable.
+     * @param filterable The filterable to listen to.
+     * @param callback A function to execute when an update is received.
+     * @param <T> The type of object.
+     * @return Returns a ListenerRegistration.
+     */
+    public static <T> ChildEventListener attachFilterableListener(RDBFilterable<T> filterable, ChildEventListener callback) {
+        try {
+            Firestorm.checkRegistration(filterable.getObjectClass());
+            return filterable.getQuery().addChildEventListener(callback);
+        } catch (ClassRegistrationException | NotInitializedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Detaches a listener for a specific class.
+     * @param objectClass The class.
+     */
+    public static void detachListener(Class<?> objectClass) {
+        DatabaseReference classReference = rdb.getReference(objectClass.getSimpleName());
+        ChildEventListener listener = registeredClassListeners.get(objectClass);
+        classReference.removeEventListener(listener);
+        unregisterClassListener(objectClass);
+    }
+
+    /**
+     * Unregisters a listener from an object.
+     * @param object The object being listened to.
+     */
+    public static void detachListener(Object object) {
+        try {
+            String idFieldValue = Reflector.getIDFieldValue(object);
+            DatabaseReference objectReference = rdb.getReference(object.getClass().getSimpleName()).child(idFieldValue);
+            ValueEventListener listener = registeredObjectListeners.get(object);
+            objectReference.removeEventListener(listener);
+            unregisterObjectListener(objectReference);
+        } catch (IDFieldException | NoSuchFieldException | IllegalAccessException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
+     * Checks if a provided object has a registered listener.
+     * @param object The object.
+     * @return Returns true if the object has a registered listener, false otherwise.
+     */
+    public static boolean hasListener(Object object) {
+        return registeredObjectListeners.get(object) != null;
+    }
+
+    /**
+     * Checks if a provided class has a registered listener.
+     * @param objectClass The class.
+     * @param <T> The type of class.
+     * @return Returns true if the object has a registered listener, false otherwise.
+     */
+    public static <T> boolean hasListener(Class<T> objectClass) {
+        return registeredClassListeners.get(objectClass) != null;
+    }
+
+    /**
+     * Retrieves a ListenerRegistration attached to the provided object, or null if no listener is attached.
+     * @param object The object.
+     * @return Returns a {@link ValueEventListener}.
+     */
+    public static ValueEventListener getListener(Object object) {
+        return registeredObjectListeners.get(object);
+    }
+
+    //TODO - Transactions
+
+    //TODO - Paginator
 
 }

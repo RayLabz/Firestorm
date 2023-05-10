@@ -23,6 +23,34 @@ public class RDBTest {
         Firestorm.register(Person.class);
         Firestorm.register(Student.class);
 
+        RDB.attachFilterableListener(RDB.filter(Student.class).limitToFirst(3), new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        System.out.println(dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 //        ArrayList<Student> students = new ArrayList<>();
 //
 //        for (int i = 0; i < 5; i++) {
@@ -79,19 +107,19 @@ public class RDBTest {
 //            }
 //        });
 
-        RDB.filter(Student.class)
-                .whereLessThanOrEqualTo("name", "TestName2")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        System.out.println("changed");
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+//        RDB.filter(Student.class)
+//                .whereLessThanOrEqualTo("name", "TestName2")
+//                .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        System.out.println("changed");
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
 
 //        for (Student student : students) {
 //            System.out.println(student);
@@ -158,7 +186,7 @@ public class RDBTest {
 //        }
 //        RDB.set(students);
 
-        //        while (true);
+        while (true);
 
     }
 
