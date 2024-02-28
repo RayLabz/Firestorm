@@ -2,11 +2,9 @@
 
 ---
 
-This is the Firestorm API for Java 11... 
+This is the Firestorm API for Java 11+.
 
 ## Basic operations
-
----
 
 ### Creating objects
 

@@ -8,6 +8,7 @@ Available operations:
 * ``delete(aClass, objectID)``
 
 **Note:** Firestore enforces a limit of 500 operations per batch.
+If more 500 operations are defined within a batch, Firestorm will reject the entire batch.
 
 ## Synchronous
 

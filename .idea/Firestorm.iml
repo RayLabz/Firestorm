@@ -6,6 +6,36 @@
       <excludeFolder url="file://$MODULE_DIR$/firestorm-dart/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/firestorm-dart/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/firestorm-dart/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_ui_2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_ui_2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_ui_2/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week8_examples/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week8_examples/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week8_examples/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firestorm_flutter/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firestorm_flutter/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firestorm_flutter/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/cloud_firestore/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/challenge_ui/build" />
+      <excludeFolder url="file://$MODULE_DIR$/challenge_ui/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/challenge_ui/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/example/windows/flutter/ephemeral/.plugin_symlinks/firebase_core/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/build" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/firestorm-flutter/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
