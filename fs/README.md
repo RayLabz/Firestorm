@@ -1,7 +1,5 @@
 # Firestorm - Firestore API Guide
 
----
-
 ## Contents
 
 * [Basic (CRUD) operations](#basic-operations)
@@ -9,8 +7,6 @@
 * [Transactions & batch operations](#transactions--batch-operations)
 * [Pagination](#pagination)
 * [Listeners](#listeners)
-
----
 
 ## Basic operations
 
