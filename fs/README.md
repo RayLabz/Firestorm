@@ -12,35 +12,46 @@
 
 Firestorm supports basic (CRUD) operations on data.
 
-[Read the guide for basic operations](basic-operations.md)
+[Create](basic-operations.md#creating-objects) | 
+[Get](basic-operations.md#retrieving-objects) |
+[Update](basic-operations.md#updating-objects) |
+[Delete](basic-operations.md#deleting-objects) |
+[Exists](basic-operations.md#checking-if-objects-exist) |
+[List objects of type](basic-operations.md#listing-objects-of-type)
+
+[Full guide](basic-operations.md)
 
 ## Queries & filtering/sorting
 
 Firestorm supports data queries and filtering/sorting.
 
-[Read the guide for queries](queries.md)
+[Synchronous queries](queries.md#synchronous) |
+[Asynchronous queries](queries.md#asynchronous) |
+[Query function reference](queries.md#query-function-reference) 
+
 
 ## Transactions & batch operations
 
 Firestorm also supports transactions and batch operations.
 
-[Read the guide for transactions](API-Transactions.md)
+[Synchronous transactions](API-Transactions.md#synchronous) |
+[Asynchronous transactions](API-Transactions.md#asynchronous)
 
-[Read the guide for batch operations](API-Batches.md)
+[Synchronous batch ops](API-Batches.md#synchronous) |
+[Asynchronous batch ops](API-Batches.md#asynchronous)
 
 ## Pagination
 
 Firestorm supports easily paginating data and retrieving multiple pages of long lists of data, one page at a time.
 
-[Read the guide for pagination](pagination.md)
+[Synchronous pagination](pagination.md#synchronous) |
+[Asynchronous pagination](pagination.md#asynchronous)
 
 ## Listeners
 
 Firestorm supports real-time updates on database objects by using object, class, and filter listeners.
 
-[Object listeners](listeners-objects.md)
-
-[Class listeners](listeners-classes.md)
-
+[Object listeners](listeners-objects.md) |
+[Class listeners](listeners-classes.md) |
 [Filterable listeners](listeners-filterables.md)
 
