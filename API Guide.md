@@ -17,6 +17,7 @@ This guide provides instructions on how to set up and use Firestorm in Java 11+.
 5. [Using the database APIs](#using-the-database-apis)
    1. [Firestore API](#firestore-api)
    2. [Real-time database API](#real-time-database-api)
+6. [Multithreading](#multithreading)
 
 
 ## Setting up
@@ -101,6 +102,9 @@ Classes which are managed by Firestorm must meet several requirements:
 
 > The suggested way to provide access to data is to use private attributes with accessor (setter & getter) methods.
 > If a field is marked as private and has no accessor methods, Firestorm will not be able to read or modify its data.
+
+> You can generate a randomized RFC4122 ID using `Firestorm.randomID()`. The method returns a 32 character string-based ID containing
+> letters and numbers.
 
 ### Example
 
@@ -200,3 +204,12 @@ Firestorm supports operations on Firestore and the Real-time database through th
 ### Real-time database API
 
 [Real-time database API Guide](rdb/README.md)
+
+## Multithreading
+
+Firestorm supports multithreading for several operations, which can improve performance and reduce loading times, especially
+when retrieving large collections of objects. By default, multithreading is disabled, and can be enabled using  `Firestorm.enableMultithreading()`,
+or disabled using `Firestorm.disableMultithreading()`.
+
+> Some platforms may not support multithreading. In such cases, consult the documentation for these platforms before
+> enabling multithreaded mode.

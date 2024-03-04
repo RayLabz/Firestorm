@@ -54,4 +54,3 @@ Firestorm supports real-time updates on database objects by using object, class,
 [Object listeners](listeners-objects.md) |
 [Class listeners](listeners-classes.md) |
 [Filterable listeners](listeners-filterables.md)
-

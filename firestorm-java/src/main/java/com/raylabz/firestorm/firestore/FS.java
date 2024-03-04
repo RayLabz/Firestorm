@@ -839,4 +839,8 @@ public final class FS {
         return batch.commit();
     }
 
+    //TODO - Implement getCollections based on firestore.listCollections
+
+    //TODO - Enable caching?
+
 }

@@ -25,23 +25,6 @@ public class Testing {
         Firestorm.register(Student.class);
         Firestorm.register(Book.class);
 
-        //Create filterable:
-        FSFilterable<Person> filterable = FS.filter(Person.class)
-                .whereEqualTo("age", 30);
-
-        //Create listener:
-        ListenerRegistration listener = FS.attachFilterableListener(filterable, new RealtimeUpdateCallback<List<FSObjectChange<Person>>>() {
-            @Override
-            public void onUpdate(List<FSObjectChange<Person>> data) {
-                System.out.println(data); //TODO - Handle onUpdate()
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                System.err.println(t.getMessage()); //TODO - Handle onError()
-            }
-        });
-
 
     }
 
