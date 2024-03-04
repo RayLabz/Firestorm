@@ -54,3 +54,14 @@ Firestorm supports real-time updates on database objects by using object, class,
 [Object listeners](listeners-objects.md) |
 [Class listeners](listeners-classes.md) |
 [Filterable listeners](listeners-filterables.md)
+
+## Utilities
+
+### Firestore instance
+
+Firestorm provides the full flexibility of Firestore's original API by allowing access to the Firestore 
+instance using `FS.getInstance()`. This can allow full access to the Firestore API without any limitations.
+
+### Connection closing
+
+If you would like to close the connection to Firestore, you can do so by using `FS.close()`.

@@ -521,6 +521,22 @@ public final class RDB {
     }
 
     /**
+     * Attaches a listener to a filterable.
+     * @param filterable The filterable to listen to.
+     * @param callback A function to execute when an update is received.
+     * @param <T> The type of object.
+     * @return Returns a ListenerRegistration.
+     */
+    public static <T> ChildEventListener attachFilterableListener(OrderedRDBFilterable<T> filterable, ChildEventListener callback) {
+        try {
+            Firestorm.checkRegistration(filterable.getObjectClass());
+            return filterable.getQuery().addChildEventListener(callback);
+        } catch (ClassRegistrationException | NotInitializedException e) {
+            throw new FirestormException(e);
+        }
+    }
+
+    /**
      * Detaches a listener for a specific class.
      * @param objectClass The class.
      */

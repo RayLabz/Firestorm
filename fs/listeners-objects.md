@@ -40,8 +40,8 @@ ListenerRegistration listener = FS.attachListener(object, new RealtimeUpdateCall
 
 ## Detaching a listener
 
-You can remove a listener by storing a reference to the listener and then calling `listener.remove()`.
+You can remove a listener by storing a reference to the listener and then calling `FS.detachListener()`.
 
 ```java
-listener.remove();
+FS.detachListener(listener);
 ```
