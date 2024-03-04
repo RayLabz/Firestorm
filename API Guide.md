@@ -14,11 +14,10 @@ This guide provides instructions on how to set up and use Firestorm in Java 11+.
    1. [Example](#example)
    2. [Excluding attributes](#excluding-attributes)
 4. [Registering a class](#registering-a-class)
-5. [Basic (CRUD) operations](#basic-operations)
-6. [Queries & filtering/sorting](#queries--filteringsorting)
-7. [Transactions & batch operations](#transactions--batch-operations)
-8. [Pagination](#pagination)
-9. [Listeners](#listeners)
+5. [Using the database APIs](#using-the-database-apis)
+   1. [Firestore API](#firestore-api)
+   2. [Real-time database API](#real-time-database-api)
+
 
 ## Setting up
 
@@ -96,11 +95,9 @@ Classes which are managed by Firestorm must meet several requirements:
 * Have an attribute called `id`, of type `String`, or extend a class that has this field.
 * Have an empty (no-parameter) constructor. The access modified does not matter (_the constructor can be set to `private` for safety_).
 
-> The `id` attribute is automatically managed by Firestorm.
-> It is preferable to avoid constructors that include the `id` attribute as a parameter because the ID field will
-> be initialized once the object is written on Firestore/Real-Time Database. 
 > The ID attribute's value indicates an object that also exists on the database. 
-> The value `null` for the ID (e.g. before being written or after being deleted) indicates that this object does not exist.
+> The value `null` for the ID (e.g. before being written or after being deleted) indicates that this object does not exist
+> on the database.
 
 > The suggested way to provide access to data is to use private attributes with accessor (setter & getter) methods.
 > If a field is marked as private and has no accessor methods, Firestorm will not be able to read or modify its data.
@@ -165,7 +162,7 @@ public class Person {
 
 ### Excluding attributes
 
-Attributes can be excluded by using the `@Exclude` annotation on the variables getter method:
+Attributes can be excluded by using the `@Exclude` annotation on the variable's getter method:
 
 ```java
 @Exclude
@@ -189,36 +186,17 @@ You can register your class after initializing Firestorm, by using the `Firestor
 Firestorm.register(MyClass.class);
 ```
 
+> Attempting to run an operation with an unregistered class will cause a `ClassRegistrationException`.
+
 ---
+## Using the database APIs
 
-## Basic operations
+Firestorm supports operations on Firestore and the Real-time database through their respective APIs. Click on the below links to learn about each API.
 
-Firestorm supports basic (CRUD) operations on data. 
+### Firestore API
 
-[Read the guide for basic operations](basic-operations.md)
+[Firestore API Guide](fs/README.md)
 
-## Queries & filtering/sorting
+### Real-time database API
 
-Firestorm supports data queries and filtering/sorting.
-
-_A guide for queries and filtering is still in the making._ 
-
-## Transactions & batch operations
-
-Firestorm also supports transactions and batch operations.
-
-[Read the guide for transactions](API-Transactions.md)
-
-[Read the guide for batch operations](API-Batches.md)
-
-## Pagination
-
-Firestorm supports easily paginating data and retrieving multiple pages of long lists of data, one page at a time.
-
-_A guide for paginators is still in the making._
-
-## Listeners
-
-Firestorm supports real-time updates on database objects by using object and class listeners.
-
-_A guide for listeners is still in the making._
+[Real-time database API Guide](rdb/README.md)

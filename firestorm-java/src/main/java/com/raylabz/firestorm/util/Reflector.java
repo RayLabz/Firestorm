@@ -49,27 +49,43 @@ public final class Reflector {
             idField = clazz.getDeclaredField("id");
             idFieldType = idField.getType();
         } catch (NoSuchFieldException e) {
-            Class<?> superClass = clazz.getSuperclass();
-            while (superClass.getSuperclass() != null) {
-                final Field[] superClassFields = superClass.getDeclaredFields();
-                for (Field f : superClassFields) {
-                    if (f.getName().equals("id")) {
-                        idField = f;
-                        idFieldType = f.getType();
+
+            //If not, then try to find it based on annotation @ID:
+            try {
+                idField = findIDField(clazz);
+                idFieldType = idField.getType();
+            } catch (IDFieldException e2) {
+
+                //If no id field or @ID marked field exist, try to find it from the superclass:
+                Class<?> superClass = clazz.getSuperclass();
+                while (superClass.getSuperclass() != null) {
+                    final Field[] superClassFields = superClass.getDeclaredFields();
+                    for (Field f : superClassFields) {
+                        if (f.getName().equals("id")) {
+                            idField = f;
+                            idFieldType = f.getType();
+                            break;
+                        }
+                        if (idField == null) {
+                            try {
+                                idField = findIDField(superClass);
+                                idFieldType = idField.getType();
+                            } catch (IDFieldException ignored) { }
+                        }
+                    }
+
+                    if (idField != null) {
                         break;
                     }
+                    else {
+                        superClass = superClass.getSuperclass();
+                    }
                 }
+                if (idField == null) {
+                    throw new FirestormObjectException("A field named 'id' of type String needs to exist in class '" + clazz.getSimpleName() + "' or its parent classes but was not found.");
+                }
+            }
 
-                if (idField != null) {
-                    break;
-                }
-                else {
-                    superClass = superClass.getSuperclass();
-                }
-            }
-            if (idField == null) {
-                throw new FirestormObjectException("A field named 'id' of type String needs to exist in class '" + clazz.getSimpleName() + "' or its parent classes but was not found.");
-            }
         }
 
         //Check if field 'id' is String:
