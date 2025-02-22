@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 
 /**
  * Manages the retrieval of multiple items.
- * @param <T>
+ * @param <T> The object class.
  */
 public class GetMultipleItemsCallable<T> implements Callable<List<T>> {
 

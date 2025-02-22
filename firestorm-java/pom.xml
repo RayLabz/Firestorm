@@ -6,7 +6,11 @@
 
     <groupId>com.raylabz</groupId>
     <artifactId>firestorm</artifactId>
-    <version>2.0.0-alpha</version>
+    <version>2.0.0</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A Firestore/Real-Time database data access API and ORM tool for Java and Dart applications.</description>
+    <url>https://github.com/RayLabz/Firestorm/</url>
 
     <build>
         <plugins>
@@ -17,6 +21,16 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
                 </configuration>
             </plugin>
 
@@ -79,12 +93,6 @@
     </build>
 
     <packaging>jar</packaging>
-
-    <name>com.raylabz.firestorm.Firestorm</name>
-    <description>
-        An object-oriented data access API for Google's Firestore and Real-time database.
-    </description>
-    <url>http://maven.apache.org</url>
 
     <licenses>
         <license>
