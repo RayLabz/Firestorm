@@ -9,8 +9,5 @@
         <module name="firestorm" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="firestorm" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

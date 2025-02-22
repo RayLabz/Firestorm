@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Firestorm.iml" filepath="$PROJECT_DIR$/.idea/Firestorm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firestorm-java/firestorm.iml" filepath="$PROJECT_DIR$/firestorm-java/firestorm.iml" />
     </modules>
   </component>
 </project>
