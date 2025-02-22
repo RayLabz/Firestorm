@@ -1,0 +1,15 @@
+name: firestorm
+description: A Firestore and Realtime Database ORM and data API access tool for Dart and Flutter.
+version: 0.0.1
+repository: https://github.com/RayLabz/Firestorm/tree/master/firestorm-dart
+
+environment:
+  sdk: ^3.2.0
+
+# Add regular dependencies here.
+dependencies:
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^5.0.0
+  test: ^1.24.0
