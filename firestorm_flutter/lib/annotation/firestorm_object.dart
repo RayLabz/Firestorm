@@ -1,0 +1,5 @@
+class FirestormObject {
+
+  const FirestormObject();
+
+}

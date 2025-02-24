@@ -24,12 +24,12 @@ applications that utilize Firestore's capabilities by interacting with it in an 
         <a href="firestorm-java/java-api-guide.md">View the guide</a>
     </div>
     <div style="width: 45%; border: 1px solid black; padding: 10px; margin: 1%; display: inline-block; background-color: #a8deff;">
-            <h2>Dart</h2>
+            <h2>Flutter</h2>
             <p>
-                Firestorm for Dart enables developers to utilize the Firestorm API in <b>Dart and Flutter</b> projects.<br/>
+                Firestorm for Flutter enables developers to utilize the Firestorm API in <b>Flutter</b> projects.<br/>
                 <u>It is currently under development and will be available soon.</u> <br/><br/>
             </p>
-            <a href="firestorm-dart/dart-api-guide.md">View the guide</a>
+            <a href="firestorm_flutter/flutter-api-guide.md">View the guide</a>
         </div>
 </div>
 
