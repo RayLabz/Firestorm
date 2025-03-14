@@ -1,13 +1,8 @@
 builders:
-#  firestorm_builder:
-#    import: "package:firestorm/gen/firestorm_builder.dart"
-#    builder_factories: ["firestormBuilder"]
-#    build_extensions: {".dart": [".g.dart"]}
-#    auto_apply: dependents
-#    build_to: source
-  allElementsBuilder:
-    import: "package:firestorm/gen/all_elements_builder.dart"
-    builder_factories: ["allElementsBuilder"]
-    build_extensions: {".dart": [".g.dart"]}
+  firestorm_builder:
+    import: "package:firestorm/gen/builder.dart"
+    builder_factories: ["firestormBuilder"]
+    build_extensions:
+      "$lib$": ["generated/firestorm_models.dart"]
     auto_apply: dependents
     build_to: source
