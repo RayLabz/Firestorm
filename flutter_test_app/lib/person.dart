@@ -1,4 +1,4 @@
-import 'package:firestorm/annotation/firestorm_object.dart';
+import 'package:firestorm/annotations/firestorm_object.dart';
 
 @FirestormObject()
 class Person {
