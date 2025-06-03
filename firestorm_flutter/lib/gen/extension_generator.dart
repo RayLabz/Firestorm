@@ -42,7 +42,8 @@ class ExtensionGenerator {
 
       if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
-          classBuffer.writeln("\t\t\t '${param.name}': null,"); //set excluded to null
+          //Do nothing, this is kept for reference.
+          // classBuffer.writeln("\t\t\t '${param.name}': null,"); //set excluded to null
         }
         else {
           throw InvalidClassException(aClass.name); //cannot have excluded without nullable
