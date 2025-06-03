@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/exceptions/null_id_exception.dart';
@@ -47,6 +48,28 @@ class FS {
     return ref.set(map);
   }
 
+  /// Creates multiple documents in Firestore from a list of objects.
+  /// Uses a batch operation for efficiency.
+  static Future<void> createMany<T>(List<T> objects) async {
+    WriteBatch batch = firestore.batch();
+    for (var object in objects) {
+      final serializer = _serializers[object.runtimeType];
+
+      if (serializer == null) {
+        throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
+      }
+      final map = serializer(object);
+      if (map["id"].isEmpty) {
+        throw NullIDException(map);
+      }
+
+      final DocumentReference documentReference = firestore.collection(T.toString()).doc(map["id"]);
+
+      batch.set(documentReference, serializer(object));
+    }
+    return batch.commit();
+  }
+
   /// Reads a document from Firestore and converts it to the specified type.
   static Future<T> get<T>(String documentID) async {
     final deserializer = _deserializers[T];
@@ -60,6 +83,13 @@ class FS {
     }
     T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;
     return object;
+  }
+
+  /// Checks if a document exists in Firestore.
+  static Future<bool> exists<T>(Type type, String documentID) async {
+    DocumentReference ref = firestore.collection(type.toString()).doc(documentID);
+    DocumentSnapshot snapshot = await ref.get();
+    return snapshot.exists;
   }
 
 }

@@ -13,18 +13,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/annotation/firestorm_object.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/exception/firestorm_object_exception.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/firestorm_registry.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/reflector.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/util/reflector_support.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/test/person.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm-flutter/firestorm/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/exception/firestorm_exception.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/exception/firestorm_exception.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/firestorm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/lib/firestorm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm-flutter/firestorm/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm-flutter/firestorm/test/firestorm_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm-flutter/firestorm/test/firestorm_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_android_annotations_4_1_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_9_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_15.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_13_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_simple_1_7_36.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +68,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;nkasenides&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/RayLabz/Firestorm/&quot;,
+    &quot;accountId&quot;: &quot;5275fec2-9649-49a4-8b74-9278e6b087df&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/raylabz/firestorm/ClassListener.java" root0="FORCE_HIGHLIGHTING" />
@@ -74,6 +92,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="1ZiqnoYhc8krKAV7WVcAqFHXexM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -82,22 +103,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ACTIVE_CLOUD_PROJECT_ACCOUNT": "thunderflier@gmail.com",
-    "ACTIVE_CLOUD_PROJECT_ID": "nkasenides",
-    "ACTIVE_CLOUD_PROJECT_NAME": "nkasenides",
-    "ACTIVE_CLOUD_PROJECT_NUMBER": "819120656496",
-    "WebServerToolWindowFactoryState": "false",
-    "com.google.cloudcode.ide_session_index": "20220910_0001",
-    "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "C:/Users/hfnov/Software Development/Projects/Firestorm/firestorm-flutter/firestorm",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ACTIVE_CLOUD_PROJECT_ACCOUNT&quot;: &quot;thunderflier@gmail.com&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_ID&quot;: &quot;nkasenides&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_NAME&quot;: &quot;nkasenides&quot;,
+    &quot;ACTIVE_CLOUD_PROJECT_NUMBER&quot;: &quot;819120656496&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20220910_0001&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hfnov/Software Development/Projects/Firestorm/firestorm-java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.raylabz.firestorm" />
@@ -167,6 +192,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -222,6 +255,8 @@
       <workItem from="1662758198865" duration="664000" />
       <workItem from="1662806485911" duration="2000" />
       <workItem from="1662806723349" duration="2571000" />
+      <workItem from="1748933055678" duration="8813000" />
+      <workItem from="1748983802169" duration="808000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>

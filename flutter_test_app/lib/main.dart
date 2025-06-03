@@ -26,6 +26,22 @@ main() async {
     {"Math": 90, "Science": 85},
   );
 
+  ComputingStudent student2 = ComputingStudent(
+    "456",
+    "Alice",
+    "Johnson",
+    22,
+    1.65,
+    false,
+    ["Bob", "Charlie"],
+    "XYZ456",
+    "School of Arts",
+    "Graphic Design",
+    null,
+    Address("2", "Second St", "Metropolis"),
+    {"Art": 95, "History": 88},
+  );
+
   await FS.init();
   registerClasses();
 
@@ -33,10 +49,20 @@ main() async {
   //   print("Student created!");
   // },);
 
-  FS.get<ComputingStudent>("123").then((value) {
-    print(value.firstname);
-    print(value.grades['Science']);
-  },);
+  // FS.get<ComputingStudent>("123").then((value) {
+  //   print(value.firstname);
+  //   print(value.grades['Science']);
+  // },);
+
+  // FS.createMany([student, student2]).then((_) {
+  //   print("Students created!");
+  // });
+
+  // FS.exists(ComputingStudent, "123").then((exists) {
+  //   print("Does student with ID '123' exist? $exists");
+  // });
+
+
 
   runApp(Container());
 }
