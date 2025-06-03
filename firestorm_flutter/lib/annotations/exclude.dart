@@ -1,0 +1,5 @@
+class Exclude {
+
+  const Exclude();
+
+}

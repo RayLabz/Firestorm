@@ -17,7 +17,8 @@ main() async {
     ["Jane", "Doe"],
     "ABC123",
     "School of Computing",
-    "Software Engineering"
+    "Software Engineering",
+    "abcd1234"
   );
 
   registerClasses();

@@ -1,4 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:firestorm/exceptions/invalid_class_exception.dart';
 
 /// Generates a Dart extension for the given class name.
 class ExtensionGenerator {
@@ -15,18 +17,38 @@ class ExtensionGenerator {
     classBuffer.writeln("\t Map<String, dynamic> toMap() {");
     classBuffer.writeln("\t\t return {");
 
-    //Class fields:
-    for (final field in aClass.fields) {
-      classBuffer.writeln("\t\t\t '${field.name}': this.${field.name},");
-    }
+    ConstructorElement constructorElement = aClass.unnamedConstructor!;
+    List<ParameterElement> params = constructorElement.parameters;
 
-    //Find fields of parent classes and process:
-    for (final parent in aClass.allSupertypes) {
-      for (final parentField in parent.element.fields) {
-        if (parentField.name != "hashCode" && parentField.name != "runtimeType") {
-          classBuffer.writeln(
-              "\t\t\t '${parentField.name}': ${parentField.name},");
+    //Fields:
+    for (ParameterElement param in params) {
+      FieldElement? matchingField = aClass.getField(param.displayName); //match to field
+
+      for (final parent in aClass.allSupertypes) { //Find field in parent classes
+        for (final parentField in parent.element.fields) {
+          if (parentField.name != "hashCode" &&
+              parentField.name == param.name &&
+              parentField.name != "runtimeType") {
+            matchingField = parentField; //set matching field to parent field
+            break;
+          }
         }
+      }
+
+      if (matchingField == null) {
+        throw InvalidClassException(aClass.name);
+      }
+
+      if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
+        if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
+          classBuffer.writeln("\t\t\t '${param.name}': null,"); //set excluded to null
+        }
+        else {
+          throw InvalidClassException(aClass.name); //cannot have excluded without nullable
+        }
+      }
+      else {
+        classBuffer.writeln("\t\t\t '${param.name}': this.${param.name},"); //not excluded (normal)
       }
     }
 
@@ -37,18 +59,37 @@ class ExtensionGenerator {
     classBuffer.writeln("\tstatic ${aClass.name} fromMap(Map<String, dynamic> map) {");
     classBuffer.writeln("\t\t return ${aClass.name}(");
 
-    //Class fields:
-    for (final field in aClass.fields) {
-      classBuffer.writeln("\t\t\t map['${field.name}'],"); //TODO - Type conversions, e.g. toDouble, toInt etc.
-    }
+    //Constructor parameters:
+    for (ParameterElement param in params) {
 
-    //Find fields of parent classes and process:
-    for (final parent in aClass.allSupertypes) {
-      for (final parentField in parent.element.fields) {
-        if (parentField.name != "hashCode" && parentField.name != "runtimeType") {
-          classBuffer.writeln("\t\t\t map['${parentField
-              .name}'],"); //TODO - Type conversions, e.g. toDouble, toInt etc.
+      FieldElement? matchingField = aClass.getField(param.displayName); //match to field
+
+      for (final parent in aClass.allSupertypes) { //Find field in parent classes
+        for (final parentField in parent.element.fields) {
+          if (parentField.name != "hashCode" &&
+              parentField.name == param.name &&
+              parentField.name != "runtimeType") {
+            matchingField = parentField; //set matching field to parent field
+            break;
+          }
         }
+      }
+
+      if (matchingField == null) {
+        throw InvalidClassException(aClass.name);
+      }
+
+      if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
+        if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
+          classBuffer.writeln("\t\t\t null,"); //set excluded to null
+        }
+        else {
+          throw InvalidClassException(aClass.name); //cannot have excluded without nullable
+        }
+      }
+      else {
+        //TODO - Type conversions, e.g. toDouble, toInt etc.
+        classBuffer.writeln("\t\t\t map['${param.name}'],"); //not excluded (normal)
       }
     }
 
