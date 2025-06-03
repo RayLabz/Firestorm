@@ -88,8 +88,7 @@ class ExtensionGenerator {
         }
       }
       else {
-        //TODO - Type conversions, e.g. toDouble, toInt etc.
-        classBuffer.writeln("\t\t\t map['${param.name}'],"); //not excluded (normal)
+        classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
       }
     }
 
