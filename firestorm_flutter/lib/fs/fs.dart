@@ -48,15 +48,15 @@ class FS {
   }
 
   /// Reads a document from Firestore and converts it to the specified type.
-  static Future<T> get<T>(Type objectClass, String documentID) async {
-    final deserializer = _deserializers[objectClass];
+  static Future<T> get<T>(String documentID) async {
+    final deserializer = _deserializers[T];
     if (deserializer == null) {
-      throw UnsupportedError('Deserializer not registered for type: $objectClass');
+      throw UnsupportedError('Deserializer not registered for type: $T');
     }
-    DocumentReference ref = firestore.collection(objectClass.toString()).doc(documentID);
+    DocumentReference ref = firestore.collection(T.toString()).doc(documentID);
     DocumentSnapshot snapshot = await ref.get();
     if (!snapshot.exists) {
-      return Future.error('Document with ID $documentID does not exist in collection ${objectClass.toString()}');
+      return Future.error('Document with ID $documentID does not exist in collection ${T.toString()}');
     }
     T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;
     return object;

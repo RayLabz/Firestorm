@@ -33,7 +33,7 @@ main() async {
   //   print("Student created!");
   // },);
 
-  FS.get<ComputingStudent>(ComputingStudent, "123").then((value) {
+  FS.get<ComputingStudent>("123").then((value) {
     print(value.firstname);
     print(value.grades['Science']);
   },);
