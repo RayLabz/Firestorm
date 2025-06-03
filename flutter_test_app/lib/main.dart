@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/fs.dart';
+import 'package:firestorm/type/fs_types.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test_app/computing_student.dart';
 import 'package:flutter_test_app/generated/firestorm_models.dart';
+
+import 'address.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +21,8 @@ main() async {
     "ABC123",
     "School of Computing",
     "Software Engineering",
-    "abcd1234"
+    "abcd1234",
+    Address("1", "Main St", "Springfield")
   );
 
   registerClasses();
@@ -26,7 +30,6 @@ main() async {
   FS.create(student).then((_) {
     print("Student created!");
   },);
-
 
   runApp(Container());
 }

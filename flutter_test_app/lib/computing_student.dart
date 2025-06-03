@@ -1,6 +1,9 @@
 import 'package:firestorm/annotations/exclude.dart';
 import 'package:firestorm/annotations/firestorm_object.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test_app/student.dart';
+
+import 'address.dart';
 
 @FirestormObject()
 class ComputingStudent extends Student {
@@ -8,6 +11,7 @@ class ComputingStudent extends Student {
   @Exclude()
   String? password;
   String pathway;
+  Address address;
 
   ComputingStudent(
       super.id,
@@ -20,7 +24,8 @@ class ComputingStudent extends Student {
       super.studentID,
       super.school,
       this.pathway,
-      this.password
+      this.password,
+      this.address
     );
 
 }

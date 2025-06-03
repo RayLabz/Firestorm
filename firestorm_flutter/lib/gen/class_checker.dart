@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:colorful_text/colorful_text.dart';
+import 'package:firestorm/type/fs_types.dart';
 
 class ClassChecker {
 
@@ -65,17 +66,38 @@ class ClassChecker {
     return resultClasses;
   }
 
+  static List<ClassElement> checkClassesForValidTypes(final List<ClassElement> classes) {
+    List<ClassElement> resultClasses = [];
+    for (final aClass in classes) {
+      bool isValid = true;
+      for (final field in aClass.fields) {
+        if (!FSTypes.isTypeSupported(field.type)) {
+          print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It has an unsupported type in field '${field.name}'.", ColorfulText.red));
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid) {
+        resultClasses.add(aClass);
+      }
+    }
+    return resultClasses;
+  }
+
   static List<ClassElement> filter(final Iterable<ClassElement> classes) {
     //Find annotated classes:
-    List<ClassElement> annotatedClasses = findAnnotatedClasses(classes);
+    List<ClassElement> validClasses = findAnnotatedClasses(classes);
 
     //Filter out classes that do not have a public no-argument constructor:
     // annotatedClasses = findClassesWithPublicNoArgConstructor(annotatedClasses);
 
     //Filter out classes that do not have an ID field of type String:
-    annotatedClasses = findClassesWithIDField(annotatedClasses);
+    validClasses = findClassesWithIDField(validClasses);
 
-    return annotatedClasses;
+    //Check classes for valid types:
+    validClasses = checkClassesForValidTypes(validClasses);
+
+    return validClasses;
   }
 
 }

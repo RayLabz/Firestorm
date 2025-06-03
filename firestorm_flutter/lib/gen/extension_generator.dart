@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:firestorm/exceptions/invalid_class_exception.dart';
 
 /// Generates a Dart extension for the given class name.
@@ -48,7 +49,14 @@ class ExtensionGenerator {
         }
       }
       else {
-        classBuffer.writeln("\t\t\t '${param.name}': this.${param.name},"); //not excluded (normal)
+        //If this is a user-defined type, expand it using it own toMap():
+        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType) {
+          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name}.toMap(),"); //call toMap() on user-defined type
+        }
+        else {
+          //Otherwise, just use the attribute:
+          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name},"); //not excluded (normal)
+        }
       }
     }
 
@@ -88,7 +96,13 @@ class ExtensionGenerator {
         }
       }
       else {
-        classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
+        //If this is a user-defined type, use its own fromMap():
+        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType) {
+          classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(map['${param.name}'] as Map<String, dynamic>),"); //call fromMap() on user-defined type
+        }
+        else {
+          classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
+        }
       }
     }
 
