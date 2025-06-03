@@ -102,7 +102,19 @@ class ExtensionGenerator {
           classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(map['${param.name}'] as Map<String, dynamic>),"); //call fromMap() on user-defined type
         }
         else {
-          classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
+          if (param.type.isDartCoreList) {
+            final listType = param.type as InterfaceType;
+            DartType elementType = listType.typeArguments[0];
+            classBuffer.writeln("\t\t\t map['${param.name}'].cast<${elementType.getDisplayString()}>(),"); //cast to List<elementType>
+          }
+          else if (param.type.isDartCoreMap) {
+            final listType = param.type as InterfaceType;
+            DartType valueType = listType.typeArguments[1];
+            classBuffer.writeln("\t\t\t map['${param.name}'].cast<String, ${valueType.getDisplayString()}>(),"); //cast to Map<String, valueType>
+          }
+          else {
+            classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
+          }
         }
       }
     }

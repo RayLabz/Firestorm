@@ -48,6 +48,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 'school': this.school,
 			 'pathway': this.pathway,
 			 'address': this.address.toMap(),
+			 'grades': this.grades,
 		 };
 	 }
 	static ComputingStudent fromMap(Map<String, dynamic> map) {
@@ -58,12 +59,13 @@ extension ComputingStudentModel on ComputingStudent {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'] as List<String>,
+			 map['friends'].cast<String>(),
 			 map['studentID'] as String,
 			 map['school'] as String,
 			 map['pathway'] as String,
 			 null,
 			 AddressModel.fromMap(map['address'] as Map<String, dynamic>),
+			 map['grades'].cast<String, int>(),
 		 );
 	 }
 }
@@ -90,7 +92,7 @@ extension PersonModel on Person {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'] as List<String>,
+			 map['friends'].cast<String>(),
 		 );
 	 }
 }
@@ -119,7 +121,7 @@ extension StudentModel on Student {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'] as List<String>,
+			 map['friends'].cast<String>(),
 			 map['studentID'] as String,
 			 map['school'] as String,
 		 );
@@ -135,19 +137,38 @@ final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
 	Student: (object) => (object as Student).toMap(),
 };
 
+final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {
+	Address: (map) => AddressModel.fromMap(map),
+	ComputingStudent: (map) => ComputingStudentModel.fromMap(map),
+	Person: (map) => PersonModel.fromMap(map),
+	Student: (map) => StudentModel.fromMap(map),
+};
+
 Map<String, dynamic> convertToMap(dynamic object) {
-	final handler = toMapRegistry[object.runtimeType];
-	if (handler != null) {
-		return handler(object);
+	final serializer = toMapRegistry[object.runtimeType];
+	if (serializer != null) {
+		return serializer(object);
 	}
-	throw UnsupportedError('toMap not implemented for type: ${object.runtimeType}');
+	throw UnsupportedError('toMap() not implemented for type: ${object.runtimeType}');
+}
+
+T convertFromMap<T>(Map<String, dynamic> map) {
+	final deserializer = fromMapRegistry[T];
+	if (deserializer == null) {
+		throw UnsupportedError('fromMap() not implemented for type: ${T.toString()}');
+	}
+	return deserializer(map) as T;
 }
 
 registerClasses() {
-	FS.register<Address>((object) => object.toMap());
-	FS.register<ComputingStudent>((object) => object.toMap());
-	FS.register<Person>((object) => object.toMap());
-	FS.register<Student>((object) => object.toMap());
+	FS.registerSerializer<Address>((object) => object.toMap());
+	FS.registerDeserializer<Address>((map) => AddressModel.fromMap(map));
+	FS.registerSerializer<ComputingStudent>((object) => object.toMap());
+	FS.registerDeserializer<ComputingStudent>((map) => ComputingStudentModel.fromMap(map));
+	FS.registerSerializer<Person>((object) => object.toMap());
+	FS.registerDeserializer<Person>((map) => PersonModel.fromMap(map));
+	FS.registerSerializer<Student>((object) => object.toMap());
+	FS.registerDeserializer<Student>((map) => StudentModel.fromMap(map));
 }
 
 

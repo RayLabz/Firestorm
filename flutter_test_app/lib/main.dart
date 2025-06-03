@@ -22,13 +22,20 @@ main() async {
     "School of Computing",
     "Software Engineering",
     "abcd1234",
-    Address("1", "Main St", "Springfield")
+    Address("1", "Main St", "Springfield"),
+    {"Math": 90, "Science": 85},
   );
 
-  registerClasses();
   await FS.init();
-  FS.create(student).then((_) {
-    print("Student created!");
+  registerClasses();
+
+  // FS.create(student).then((_) {
+  //   print("Student created!");
+  // },);
+
+  FS.get<ComputingStudent>(ComputingStudent, "123").then((value) {
+    print(value.firstname);
+    print(value.grades['Science']);
   },);
 
   runApp(Container());

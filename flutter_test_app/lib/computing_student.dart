@@ -12,6 +12,7 @@ class ComputingStudent extends Student {
   String? password;
   String pathway;
   Address address;
+  Map<String, int> grades;
 
   ComputingStudent(
       super.id,
@@ -25,7 +26,8 @@ class ComputingStudent extends Student {
       super.school,
       this.pathway,
       this.password,
-      this.address
+      this.address,
+      this.grades
     );
 
 }
