@@ -1,5 +1,6 @@
 class RDBTypes {
 
+  ///Checks if the given variable is a supported Real-Time Database type.
   static bool isSupportedRDBType(variable) {
     if (variable is String) {
       return true;

@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firestorm/fs/fs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test_app/computing_student.dart';
 import 'package:flutter_test_app/generated/firestorm_models.dart';
 
-main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   ComputingStudent student = ComputingStudent(
     "123",
     "John",
@@ -15,6 +20,12 @@ main() {
     "Software Engineering"
   );
 
-  student.toMap();
+  registerClasses();
+  await FS.init();
+  FS.create(student).then((_) {
+    print("Student created!");
+  },);
 
+
+  runApp(Container());
 }

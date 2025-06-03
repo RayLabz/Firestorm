@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FSTypes {
 
+  ///Checks if the given variable is a supported Firestore type.
   static bool isSupportedFSType(variable) {
     if (variable is String) {
       return true;
