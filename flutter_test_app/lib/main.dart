@@ -42,27 +42,78 @@ main() async {
     {"Art": 95, "History": 88},
   );
 
+  ComputingStudent student3 = ComputingStudent(
+    "789",
+    "Bob",
+    "Brown",
+    23,
+    1.80,
+    true,
+    ["Alice", "Charlie"],
+    "LMN789",
+    "School of Engineering",
+    "Civil Engineering",
+    null,
+    Address("3", "Third St", "Gotham"),
+    {"Physics": 92, "Chemistry": 89},
+  );
+
   await FS.init();
   registerClasses();
 
-  // FS.create(student).then((_) {
+  // FS.create.one(student3).then((_) {
   //   print("Student created!");
   // },);
-
-  // FS.get<ComputingStudent>("123").then((value) {
+  //
+  // FS.get.one<ComputingStudent>("123").then((value) {
   //   print(value.firstname);
   //   print(value.grades['Science']);
   // },);
-
-  // FS.createMany([student, student2]).then((_) {
+  //
+  // FS.create.many([student2, student]).then((_) {
   //   print("Students created!");
   // });
-
-  // FS.exists(ComputingStudent, "123").then((exists) {
+  //
+  // FS.exists.one(ComputingStudent, "123").then((exists) {
   //   print("Does student with ID '123' exist? $exists");
   // });
+  //
+  // FS.get.many<ComputingStudent>(["123", "456"]).then((students) {
+  //   for (var student in students) {
+  //     print("Student ID: ${student.id}, Name: ${student.firstname} ${student.lastname}");
+  //   }
+  // });
+  //
+  // student.height = 100;
+  // FS.update.one(student).then((_) {
+  //   print("Student updated!");
+  // });
+  //
+  // student.height = 200;
+  // student2.height = 300;
+  // FS.update.many([student, student2]).then((_) {
+  //   print("Students updated!");
+  // });
+  //
+  // FS.delete.oneWithID(ComputingStudent, "789").then((_) {
+  //   print("Student with ID '789' deleted!");
+  // });
+  //
+  // FS.delete.one(student3).then((_) {
+  //   print("Student deleted!");
+  // });
+  //
+  // FS.delete.manyWithIDs(ComputingStudent, ["456", "789"]).then((_) {
+  //   print("Students with IDs '456' and '789' deleted!");
+  // });
+  //
+  // FS.delete.many([student, student2]).then((_) {
+  //   print("Students deleted!");
+  // });
 
-
+  // FS.delete.all(ComputingStudent, iAmSure: true).then((_) {
+  //   print("All ComputingStudents deleted!");
+  // });
 
   runApp(Container());
 }

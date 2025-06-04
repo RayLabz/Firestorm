@@ -2,24 +2,30 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/exceptions/null_id_exception.dart';
+import 'package:firestorm/fs/fs_exist_delegate.dart';
+import 'package:firestorm/fs/fs_get_delegate.dart';
+import 'package:firestorm/fs/fs_listen_delegate.dart';
 
 import '../firestorm.dart';
-
+import 'fs_create_delegate.dart';
+import 'fs_delete_delegate.dart';
+import 'fs_list_delegate.dart';
+import 'fs_update_delegate.dart';
 
 class FS {
 
   static late FirebaseFirestore firestore;
-  static final Map<Type, Serializer> _serializers = {};
-  static final Map<Type, dynamic Function(Map<String, dynamic>)> _deserializers = {};
+  static final Map<Type, Serializer> serializers = {};
+  static final Map<Type, dynamic Function(Map<String, dynamic>)> deserializers = {};
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
   static void registerSerializer<T>(Map<String, dynamic> Function(T obj) function) {
-    _serializers[T] = (dynamic obj) => function(obj as T);
+    serializers[T] = (dynamic obj) => function(obj as T);
   }
 
   /// Registers a deserializer for a specific type. Needed for dynamically deserializing objects.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
-    _deserializers[T] = fromMap;
+    deserializers[T] = fromMap;
   }
 
   /// Initializes the Firestore instance. This should be called before any other Firestore operations.
@@ -33,63 +39,35 @@ class FS {
     return firestore;
   }
 
-  /// Creates a document in Firestore from the given object.
-  static Future<void> create(dynamic object) async {
-    final serializer = _serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
-    }
-    final map = serializer(object);
-    String id = map["id"];
-    if (id.isEmpty) {
-      throw NullIDException(map);
-    }
-    DocumentReference ref = firestore.collection(object.runtimeType.toString()).doc(id);
-    return ref.set(map);
-  }
+  //Operation delegates:
+  static final FSCreateDelegate create = FSCreateDelegate();
+  static final FSGetDelegate get = FSGetDelegate();
+  static final FSUpdateDelegate update = FSUpdateDelegate();
+  static final FSDeleteDelegate delete = FSDeleteDelegate();
+  static final FSListDelegate list = FSListDelegate();
+  static final FSExistDelegate exists = FSExistDelegate();
+  static final FSListenDelegate listen = FSListenDelegate();
 
-  /// Creates multiple documents in Firestore from a list of objects.
-  /// Uses a batch operation for efficiency.
-  static Future<void> createMany<T>(List<T> objects) async {
-    WriteBatch batch = firestore.batch();
-    for (var object in objects) {
-      final serializer = _serializers[object.runtimeType];
 
-      if (serializer == null) {
-        throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
-      }
-      final map = serializer(object);
-      if (map["id"].isEmpty) {
-        throw NullIDException(map);
-      }
 
-      final DocumentReference documentReference = firestore.collection(T.toString()).doc(map["id"]);
+  //TODO - Get object reference (class & id)
 
-      batch.set(documentReference, serializer(object));
-    }
-    return batch.commit();
-  }
+  //TODO - Get object reference (object)
 
-  /// Reads a document from Firestore and converts it to the specified type.
-  static Future<T> get<T>(String documentID) async {
-    final deserializer = _deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('Deserializer not registered for type: $T');
-    }
-    DocumentReference ref = firestore.collection(T.toString()).doc(documentID);
-    DocumentSnapshot snapshot = await ref.get();
-    if (!snapshot.exists) {
-      return Future.error('Document with ID $documentID does not exist in collection ${T.toString()}');
-    }
-    T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;
-    return object;
-  }
+  //TODO - Get collection reference (class)
 
-  /// Checks if a document exists in Firestore.
-  static Future<bool> exists<T>(Type type, String documentID) async {
-    DocumentReference ref = firestore.collection(type.toString()).doc(documentID);
-    DocumentSnapshot snapshot = await ref.get();
-    return snapshot.exists;
-  }
+  //TODO - Run transaction
+
+  //TODO - Run batch
+
+  //TODO-LATER - Get collections list (firestore.listCollections)
+
+  //TODO-LATER - Enable caching
+
+
+
+
+
+
 
 }
