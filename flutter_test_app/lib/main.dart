@@ -115,5 +115,19 @@ main() async {
   //   print("All ComputingStudents deleted!");
   // });
 
+  // var documentFromObject = FS.reference.documentFromObject(student);
+  // print(documentFromObject);
+
+  // var documentFromID = FS.reference.documentFromID(ComputingStudent, "123");
+  // print(documentFromID);
+
+  // var documentFromPath = FS.reference.documentFromPath("students/123");
+  // print(documentFromPath);
+
+  // var collection = FS.reference.collection(ComputingStudent);
+  // print(collection);
+
+  
+
   runApp(Container());
 }

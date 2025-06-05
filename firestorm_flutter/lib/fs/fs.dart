@@ -5,6 +5,7 @@ import 'package:firestorm/exceptions/null_id_exception.dart';
 import 'package:firestorm/fs/fs_exist_delegate.dart';
 import 'package:firestorm/fs/fs_get_delegate.dart';
 import 'package:firestorm/fs/fs_listen_delegate.dart';
+import 'package:firestorm/fs/fs_reference_delegate.dart';
 
 import '../firestorm.dart';
 import 'fs_create_delegate.dart';
@@ -46,15 +47,8 @@ class FS {
   static final FSDeleteDelegate delete = FSDeleteDelegate();
   static final FSListDelegate list = FSListDelegate();
   static final FSExistDelegate exists = FSExistDelegate();
+  static final FSReferenceDelegate reference = FSReferenceDelegate();
   static final FSListenDelegate listen = FSListenDelegate();
-
-
-
-  //TODO - Get object reference (class & id)
-
-  //TODO - Get object reference (object)
-
-  //TODO - Get collection reference (class)
 
   //TODO - Run transaction
 
