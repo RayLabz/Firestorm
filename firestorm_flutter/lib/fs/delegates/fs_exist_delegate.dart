@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'fs.dart';
+import '../fs.dart';
 
 /// A delegate class to check if a document exists in Firestore.
 class FSExistDelegate {

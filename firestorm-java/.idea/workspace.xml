@@ -13,7 +13,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_transaction_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction_create_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction_delete_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction_get_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction_handler.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/transactions/fs_transaction_update_delegate.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_create_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_create_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_delete_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_delete_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_exist_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_exist_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_get_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_get_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_list_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_list_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_listen_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_listen_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_reference_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_reference_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_transaction_delegate.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs_update_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_update_delegate.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,26 +103,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ACTIVE_CLOUD_PROJECT_ACCOUNT&quot;: &quot;thunderflier@gmail.com&quot;,
-    &quot;ACTIVE_CLOUD_PROJECT_ID&quot;: &quot;nkasenides&quot;,
-    &quot;ACTIVE_CLOUD_PROJECT_NAME&quot;: &quot;nkasenides&quot;,
-    &quot;ACTIVE_CLOUD_PROJECT_NUMBER&quot;: &quot;819120656496&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20220910_0001&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/hfnov/Software Development/Projects/Firestorm/firestorm-java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ACTIVE_CLOUD_PROJECT_ACCOUNT": "thunderflier@gmail.com",
+    "ACTIVE_CLOUD_PROJECT_ID": "nkasenides",
+    "ACTIVE_CLOUD_PROJECT_NAME": "nkasenides",
+    "ACTIVE_CLOUD_PROJECT_NUMBER": "819120656496",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.google.cloudcode.ide_session_index": "20250605_0000",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Nicos/Development/firestorm/firestorm-java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.raylabz.firestorm" />
@@ -178,8 +198,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -240,6 +260,7 @@
       <workItem from="1662806723349" duration="2571000" />
       <workItem from="1748933055678" duration="8813000" />
       <workItem from="1748983802169" duration="3470000" />
+      <workItem from="1749137639205" duration="2401000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>
@@ -368,5 +389,9 @@
     <MESSAGE value="1.3.1 - Paginator and Filterable include the new whereNotIn method. Create method uses Firestore's create() function instead of set()." />
     <MESSAGE value="Logo Update" />
     <option name="LAST_COMMIT_MESSAGE" value="Logo Update" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

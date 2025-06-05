@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'fs.dart';
+import '../fs.dart';
 
 /// A delegate class to read documents from Firestore.
 class FSGetDelegate {
@@ -9,7 +9,7 @@ class FSGetDelegate {
   Future<T> one<T>(String documentID) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
-      throw UnsupportedError('Deserializer not registered for type: $T');
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
     DocumentReference ref = FS.firestore.collection(T.toString()).doc(documentID);
     DocumentSnapshot snapshot = await ref.get();
@@ -24,7 +24,7 @@ class FSGetDelegate {
   Future<List<T>> many<T>(List<String> documentIDs) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
-      throw UnsupportedError('Deserializer not registered for type: $T');
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
     List<T> objects = [];
     List<DocumentReference> refs = documentIDs.map((id) => FS.firestore.collection(T.toString()).doc(id)).toList();

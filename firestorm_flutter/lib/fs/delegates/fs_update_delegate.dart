@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../exceptions/null_id_exception.dart';
-import 'fs.dart';
+import '../../exceptions/null_id_exception.dart';
+import '../fs.dart';
 
 /// A delegate class to updates documents on Firestore.
 class FSUpdateDelegate {
@@ -10,7 +10,7 @@ class FSUpdateDelegate {
   Future<void> one<T>(T object) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
-      throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
+      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     if (map["id"].isEmpty) {
@@ -28,7 +28,7 @@ class FSUpdateDelegate {
     }
     final serializer = FS.serializers[objects[0].runtimeType];
     if (serializer == null) {
-      throw UnsupportedError('Serializer not registered for type: ${objects[0].runtimeType}');
+      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
     WriteBatch batch = FS.firestore.batch();
     for (var object in objects) {

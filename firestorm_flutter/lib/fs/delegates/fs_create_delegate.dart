@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../exceptions/null_id_exception.dart';
-import 'fs.dart';
+import '../../exceptions/null_id_exception.dart';
+import '../fs.dart';
 
 /// A delegate class to create documents in Firestore.
 class FSCreateDelegate {
@@ -10,7 +10,7 @@ class FSCreateDelegate {
   Future<void> one(dynamic object) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
-      throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
+      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
@@ -32,7 +32,7 @@ class FSCreateDelegate {
       final serializer = FS.serializers[object.runtimeType];
 
       if (serializer == null) {
-        throw UnsupportedError('Serializer not registered for type: ${object.runtimeType}');
+        throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
       }
       final map = serializer(object);
       if (map["id"].isEmpty) {

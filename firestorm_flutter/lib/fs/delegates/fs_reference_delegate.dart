@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../exceptions/null_id_exception.dart';
-import 'fs.dart';
+import '../../exceptions/null_id_exception.dart';
+import '../fs.dart';
 
+/// Delegate for getting a reference to a document or collection.
 class FSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
