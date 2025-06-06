@@ -11,6 +11,7 @@ import 'delegates/fs_create_delegate.dart';
 import 'delegates/fs_delete_delegate.dart';
 import 'delegates/fs_exist_delegate.dart';
 import 'delegates/fs_list_delegate.dart';
+import 'delegates/fs_transaction_delegate.dart';
 import 'delegates/fs_update_delegate.dart';
 
 class FS {
@@ -49,6 +50,7 @@ class FS {
   static final FSExistDelegate exists = FSExistDelegate();
   static final FSReferenceDelegate reference = FSReferenceDelegate();
   static final FSListenDelegate listen = FSListenDelegate();
+  static final FSTransactionDelegate transaction = FSTransactionDelegate();
 
   //TODO - Run transactions
   // hey() {

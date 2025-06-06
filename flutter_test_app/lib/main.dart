@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/fs.dart';
+import 'package:firestorm/fs/transactions/fs_transaction_handler.dart';
 import 'package:firestorm/type/fs_types.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test_app/computing_student.dart';
@@ -127,7 +128,12 @@ main() async {
   // var collection = FS.reference.collection(ComputingStudent);
   // print(collection);
 
-  
+  FS.transaction.run((tx) {
+    tx.create.one(student);
+    tx.create.one(student2);
+    return tx.create.one(student3);
+  });
+
 
   runApp(Container());
 }
