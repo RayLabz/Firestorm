@@ -4,7 +4,6 @@ import 'fs_transaction_handler.dart';
 class FSTransactionInliner extends FSTransactionHandler {
   final Future<void> Function(FSTransactionHandler tx) _logic;
 
-  /// Creates a new instance of [FSTransactionInliner].
   FSTransactionInliner(this._logic);
 
   @override

@@ -128,12 +128,17 @@ main() async {
   // var collection = FS.reference.collection(ComputingStudent);
   // print(collection);
 
-  FS.transaction.run((tx) {
-    tx.create.one(student);
-    tx.create.one(student2);
-    return tx.create.one(student3);
-  });
+  // FS.transaction.run((tx) {
+  //   tx.create.one(student);
+  //   tx.create.one(student2);
+  //   return tx.create.one(student3);
+  // });
 
+  FS.batch.run((batch) {
+    batch.create.one(student);
+    batch.create.one(student2);
+    batch.create.one(student3);
+  },);
 
   runApp(Container());
 }

@@ -11,7 +11,7 @@ import '../transactions/fs_transaction_update_delegate.dart';
 class FSTransactionDelegate {
 
   /// Runs a transaction in Firestore.
-  Future<void> run(Future<void> Function(FSTransactionHandler tx) handler,
+  Future<void> run(Future<void> Function(FSTransactionHandler transaction) handler,
       {int maxAttempts = 5, Duration timeout = const Duration(seconds: 30)}) async {
     await FS.firestore.runTransaction((tx) async {
       final inliner = FSTransactionInliner(handler);

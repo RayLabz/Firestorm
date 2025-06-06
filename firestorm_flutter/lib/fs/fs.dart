@@ -7,6 +7,7 @@ import 'package:firestorm/fs/delegates/fs_listen_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_reference_delegate.dart';
 
 import '../firestorm.dart';
+import 'delegates/fs_batch_delegate.dart';
 import 'delegates/fs_create_delegate.dart';
 import 'delegates/fs_delete_delegate.dart';
 import 'delegates/fs_exist_delegate.dart';
@@ -51,18 +52,7 @@ class FS {
   static final FSReferenceDelegate reference = FSReferenceDelegate();
   static final FSListenDelegate listen = FSListenDelegate();
   static final FSTransactionDelegate transaction = FSTransactionDelegate();
-
-  //TODO - Run transactions
-  // hey() {
-  //   FS.firestore.runTransaction((transaction) {
-  //     transaction.get(...);
-  //     transaction.set(...);
-  //     transaction.update(...);
-  //     transaction.delete(...);
-  //   }, maxAttempts: 5, timeout: Duration(seconds: 30));
-  // }
-
-  //TODO - Run batch
+  static final FSBatchDelegate batch = FSBatchDelegate();
 
   //TODO-LATER - Get collections list (firestore.listCollections)
 
