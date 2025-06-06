@@ -13,13 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/batch/fs_batch.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/batch/fs_batch_create_delegate.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/batch/fs_batch_delete_delegate.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/batch/fs_batch_update_delegate.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_batch_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/converters/converter.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/converters/query_document_to_object_converter.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_get_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_get_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_list_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_list_delegate.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +247,7 @@
       <workItem from="1662806723349" duration="2571000" />
       <workItem from="1748933055678" duration="8813000" />
       <workItem from="1748983802169" duration="3470000" />
-      <workItem from="1749137639205" duration="5491000" />
+      <workItem from="1749137639205" duration="7034000" />
     </task>
     <task id="LOCAL-00001" summary="Added exists() method.">
       <created>1591048192588</created>

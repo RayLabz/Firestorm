@@ -134,11 +134,23 @@ main() async {
   //   return tx.create.one(student3);
   // });
 
-  FS.batch.run((batch) {
-    batch.create.one(student);
-    batch.create.one(student2);
-    batch.create.one(student3);
-  },);
+  // FS.batch.run((batch) {
+  //   batch.create.one(student);
+  //   batch.create.one(student2);
+  //   batch.create.one(student3);
+  // },);
+
+  // FS.list.allOfClass<ComputingStudent>(ComputingStudent).then((value) {
+  //   value.forEach((element) {
+  //     print(element.firstname);
+  //   },);
+  // },);
+
+  // FS.list.ofClass<ComputingStudent>(ComputingStudent).then((value) {
+  //   value.forEach((element) {
+  //     print(element.firstname);
+  //   },);
+  // },);
 
   runApp(Container());
 }

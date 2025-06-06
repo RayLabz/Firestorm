@@ -21,6 +21,7 @@ class FSGetDelegate {
   }
 
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.
+  /// //TODO - Consider the use of Multithreading.
   Future<List<T>> many<T>(List<String> documentIDs) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
