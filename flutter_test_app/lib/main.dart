@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/fs.dart';
@@ -110,14 +112,38 @@ main() async {
   // await FS.delete.all(ComputingStudent, iAmSure: true);
   // await FS.create.many(ComputingStudent.generateStudents(10));
   // print("Studs created");
-  FS.list.filter<ComputingStudent>(ComputingStudent)
-  .whereIn("school", ["School of Computing", "School of Engineering"])
-  // .whereNotEqualTo("school", "School of Computing")
-  .fetch().then((value) {
-    value.items.forEach((element) {
-      print("${element.firstname} (${element.school})");
-    },);
-  },);
+  // FS.list.filter<ComputingStudent>(ComputingStudent)
+  // .whereIn("school", ["School of Computing", "School of Engineering"])
+  // // .whereNotEqualTo("school", "School of Computing")
+  // .fetch().then((value) {
+  //   value.items.forEach((element) {
+  //     print("${element.firstname} (${element.school})");
+  //   },);
+  // },);
+
+  // ComputingStudent student = ComputingStudent.generateRandomStudent();
+  // await FS.create.one(student);
+  //
+  // StreamSubscription<ComputingStudent?> streamSubscription =
+  //     FS.listen.toObject(student,
+  //     // onCreate: (object) {
+  //     //   print(object.firstname);
+  //     // },
+  //     onChange: (object) {
+  //       print("On change! ${object.firstname}");
+  //     },);
+
+  FS.listen.toID<ComputingStudent>(ComputingStudent, "849",
+    onCreate: (object) {
+      print("On create! ${object.firstname}");
+    },
+    onChange: (object) {
+      print("On change! ${object.firstname}");
+    },
+    onDelete: () {
+      print("On delete!");
+    },
+  );
 
   runApp(Container());
 }
