@@ -3,34 +3,6 @@ import 'package:analyzer/dart/element/type.dart';
 
 class FSTypes {
 
-  ///Checks if the given variable is a supported Firestore type.
-  // static bool isVariableSupportedType(variable) {
-  //   if (variable is String) {
-  //     return true;
-  //   } else if (variable is int) {
-  //     return true;
-  //   } else if (variable is double) {
-  //     return true;
-  //   } else if (variable is bool) {
-  //     return true;
-  //   } else if (variable is DateTime) {
-  //     return true;
-  //   } else if (variable is Map<String, dynamic>) {
-  //     return true;
-  //   } else if (variable is List) {
-  //     return true;
-  //   } else if (variable is DocumentReference) {
-  //     return true;
-  //   } else if (variable is GeoPoint) {
-  //     return true;
-  //   } else if (variable == null) {
-  //     return true;
-  //   } else if (variable is Uint8List) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   ///Checks if the given Dart type is supported by Firestore.
   static bool isTypeSupported(DartType type) {
 
@@ -45,7 +17,6 @@ class FSTypes {
         type.getDisplayString() == 'GeoPoint' ||
         type.getDisplayString() == 'Uint8List'
     ) {
-      // print('Type ${type.getDisplayString()} is supported by Firestore. (PRIMITIVE)'); //todo remove
       return true;
     }
 
@@ -54,7 +25,6 @@ class FSTypes {
       final listType = type as InterfaceType;
       if (listType.typeArguments.length == 1 &&
           isTypeSupported(listType.typeArguments[0])) {
-        // print('Type ${type.getDisplayString()} is supported by Firestore. (LIST)'); //todo remove
         return true;
       }
     }
@@ -65,16 +35,13 @@ class FSTypes {
       if (mapType.typeArguments.length == 2 &&
           mapType.typeArguments[0].isDartCoreString &&
           isTypeSupported(mapType.typeArguments[1])) {
-        // print('Type ${type.getDisplayString()} is supported by Firestore. (MAP)'); //todo remove
         return true;
       }
     }
 
     //check user-defined types:
     else if (type.element != null && !type.element!.library!.isDartCore && type is InterfaceType) {
-      // print("Checking user-defined type: ${type.getDisplayString()}"); //todo remove
       final element = type.element;
-      // print("Element: ${element.name} ${element.runtimeType}"); //todo remove
       if (element is ClassElement) {
         List<FieldElement> allFields = [];
         allFields.addAll(element.fields);
@@ -84,16 +51,10 @@ class FSTypes {
           }
         }
 
-        // print("Found ${allFields.length} fields in class ${element.name} and its parents."); //todo remove
-
         List<bool> fieldsSupported = [];
         for (var field in allFields) {
-          // print("Checking field: ${field.name} of type ${field.type.getDisplayString()}"); //todo remove
           if (!field.isStatic) {
             bool b = isTypeSupported(field.type);
-            if (!b) {
-              // print("Field ${field.name} of type ${field.type.getDisplayString()} is NOT supported by Firestore."); //todo remove
-            }
             fieldsSupported.add(b);
           }
         }
@@ -104,6 +65,7 @@ class FSTypes {
             return false;
           }
         }
+
         return true;
       }
     }
