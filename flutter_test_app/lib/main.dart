@@ -133,7 +133,7 @@ main() async {
   //       print("On change! ${object.firstname}");
   //     },);
 
-  FS.listen.toID<ComputingStudent>(ComputingStudent, "849",
+  FS.listen.toIDs<ComputingStudent>(ComputingStudent, ["849", "73105"],
     onCreate: (object) {
       print("On create! ${object.firstname}");
     },

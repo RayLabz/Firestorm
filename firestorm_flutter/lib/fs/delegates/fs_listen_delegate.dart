@@ -8,7 +8,7 @@ typedef ObjectListener<T> = void Function(T object, );
 
 class FSListenDelegate {
 
-  /// Registers a listener for changes to a specific object in Firestore.
+  /// Listens to changes in an object.
   StreamSubscription<T?> toObject<T>(
     dynamic object, {
     void Function(T object)? onCreate,
@@ -22,10 +22,10 @@ class FSListenDelegate {
     }
 
     final docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
-    return handleListeners(docRef, deserializer, onDelete, onNull, onCreate, onChange);
+    return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
-  /// Registers a listener for changes to a specific object in Firestore.
+  /// Listens to changes in an object using its ID and type.
   StreamSubscription<T?> toID<T>(
       Type type, String id, {
         void Function(T object)? onCreate,
@@ -39,10 +39,51 @@ class FSListenDelegate {
     }
 
     final docRef = FS.firestore.collection(type.toString()).doc(id);
-    return handleListeners(docRef, deserializer, onDelete, onNull, onCreate, onChange);
+    return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
-  StreamSubscription<T?> handleListeners<T>(
+  /// Listens to changes in multiple objects.
+  List<StreamSubscription<T?>> toObjects<T>(
+      List<dynamic> objects, {
+        void Function(T object)? onCreate,
+        void Function(T object)? onChange,
+        void Function()? onDelete,
+        void Function()? onNull,
+      }) {
+    Deserializer? deserializer = FS.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+    List<StreamSubscription<T?>> subscriptions = [];
+    for (final object in objects) {
+      final docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+      subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
+    }
+    return subscriptions;
+  }
+
+  /// Listens to changes in multiple objects using their IDs and type.
+  List<StreamSubscription<T?>> toIDs<T>(
+      Type type, List<String> ids, {
+        void Function(T object)? onCreate,
+        void Function(T object)? onChange,
+        void Function()? onDelete,
+        void Function()? onNull,
+      }) {
+    Deserializer? deserializer = FS.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+
+    List<StreamSubscription<T?>> subscriptions = [];
+    for (final String id in ids) {
+      final docRef = FS.firestore.collection(type.toString()).doc(id);
+      subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
+    }
+    return subscriptions;
+  }
+
+  StreamSubscription<T?> _handleDocumentListener<T>(
       DocumentReference docRef,
       Deserializer deserializer,
       Function()? onDelete,
@@ -81,9 +122,4 @@ class FSListenDelegate {
     });
   }
 
-
-
-  //TODO - Register class listener
-
-  //TODO - Unregister class listener
 }
