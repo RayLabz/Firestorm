@@ -8,7 +8,7 @@ class FSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
   DocumentReference<Map<String, dynamic>> documentFromID(Type type, String documentID) {
-    return FS.getInstance().collection(type.toString()).doc(documentID);
+    return FS.firestore.collection(type.toString()).doc(documentID);
   }
 
   /// Returns a reference to a document using an object.
@@ -16,7 +16,7 @@ class FSReferenceDelegate {
     if (object == null) {
       throw NullIDException("Cannot get document reference from null object");
     }
-    return FS.getInstance().collection(object.runtimeType.toString()).doc(object.id);
+    return FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
   }
 
   /// Returns a reference to a document using its path.
@@ -27,12 +27,12 @@ class FSReferenceDelegate {
     if (!path.contains("/")) {
       throw NullIDException("Cannot get document reference from invalid path: $path");
     }
-    return FS.getInstance().doc(path);
+    return FS.firestore.doc(path);
   }
 
   /// Returns a reference to a collection using its class.
   CollectionReference<Map<String, dynamic>> collection(Type type) {
-    return FS.getInstance().collection(type.toString());
+    return FS.firestore.collection(type.toString());
   }
 
 }
