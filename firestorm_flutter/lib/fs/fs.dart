@@ -15,11 +15,14 @@ import 'delegates/fs_list_delegate.dart';
 import 'delegates/fs_transaction_delegate.dart';
 import 'delegates/fs_update_delegate.dart';
 
+typedef Serializer = Map<String, dynamic> Function(dynamic); //Used to dynamically serialize objects
+typedef Deserializer = dynamic Function(Map<String, dynamic> map); //Used to dynamically deserialize objects
+
 class FS {
 
   static late FirebaseFirestore firestore;
   static final Map<Type, Serializer> serializers = {};
-  static final Map<Type, dynamic Function(Map<String, dynamic>)> deserializers = {};
+  static final Map<Type, Deserializer> deserializers = {};
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
   static void registerSerializer<T>(Map<String, dynamic> Function(T obj) function) {

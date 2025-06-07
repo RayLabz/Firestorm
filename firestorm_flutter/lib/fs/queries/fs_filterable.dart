@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestorm/filterable.dart';
 
+import '../../firestorm.dart';
+import '../fs.dart';
+import 'fs_query_result.dart';
+
 /// An item that helps with filtering objects from Firestore queries.
-class FSFilterable<T> extends Filterable<Query, T> {
+class FSFilterable<T> extends Filterable<Query> {
 
   FSFilterable(super.query, super.type);
 
@@ -102,41 +106,43 @@ class FSFilterable<T> extends Filterable<Query, T> {
     return this;
   }
 
-  // Stream<T> stream() {
-  //   Stream<QuerySnapshot<Object?>> snapshots = query.snapshots();
-  //   Stream<T> objectStream = Stream.empty();
-  //
-  //
-  //   return this;
-  // }
+  /// Streams the results of the query as a stream of type T.
+  Stream<T> stream() async* {
+    Deserializer? deserializer = FS.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No serializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+    Stream<QuerySnapshot<Object?>> snapshots = query.snapshots();
+    await for (QuerySnapshot<Object?> snapshot in snapshots) {
+      for (QueryDocumentSnapshot<Object?> doc in snapshot.docs) {
+        yield deserializer(doc.data() as Map<String, dynamic>);
+      }
+    }
+  }
 
+  /// Fetches the results of the query.
+  Future<FSQueryResult<T>> fetch() async {
+    Deserializer? deserializer = FS.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+    QuerySnapshot snapshot = await query.get();
+    List<T> results = [];
+    List<QueryDocumentSnapshot> docs = snapshot.docs;
+    String? lastID;
+    for (QueryDocumentSnapshot doc in docs) {
+      T object = deserializer(doc.data() as Map<String, dynamic>);
+      results.add(object);
+      lastID = doc.id;
+    }
+    if (results.isEmpty) { //if empty, just return empty list
+      return FSQueryResult<T>(results, null, null);
+    }
+    else {
+      return FSQueryResult<T>(results, docs[docs.length - 1], lastID);
+    }
+  }
 
-
-
-  //
-  // /**
-  //  * Streams the query to an observer.
-  //  * @param responseObserver The observer to stream the query to.
-  //  */
-  // public void stream(@Nonnull ApiStreamObserver<DocumentSnapshot> responseObserver) {
-  // query.stream(responseObserver);
-  // }
-  //
-  // /**
-  //  * Retrieves the query snapshot.
-  //  * @return Returns an ApiFuture of type QuerySnapshot.
-  //  */
-  // @Nonnull
-  // public ApiFuture<QuerySnapshot> get() {
-  // return query.get();
-  // }
-  //
-  // /**
-  //  * Adds an event listener to a snapshot.
-  //  * @param executor The executor of the event.
-  //  * @param listener The listener to add.
-  //  * @return Returns a ListenerRegistration.
-  //  */
   // @Nonnull
   // public ListenerRegistration addSnapshotListener(@Nonnull Executor executor, @Nonnull EventListener<QuerySnapshot> listener) {
   // return query.addSnapshotListener(executor, listener);
@@ -152,37 +158,7 @@ class FSFilterable<T> extends Filterable<Query, T> {
   // return query.addSnapshotListener(listener);
   // }
   //
-  // /**
-  //  * Retrieves a hash code for the query.
-  //  * @return Returns an integer hash code.
-  //  */
-  // public int hashCode() {
-  // return query.hashCode();
-  // }
   //
-  // /**
-  //  * Fetches the results of a filterable.
-  //  * @return An ArrayList containing the results of a filter.
-  //  */
-  // public FSFuture<FSQueryResult<T>> fetch() {
-  // ApiFuture<QuerySnapshot> future = query.get();
-  // ApiFuture<FSQueryResult<T>> queryFuture = ApiFutures.transform(future, input -> {
-  // List<QueryDocumentSnapshot> documents = input.getDocuments();
-  // ArrayList<T> documentList = new ArrayList<>();
-  // String lastID = null;
-  // for (final QueryDocumentSnapshot document : documents) {
-  // T object = document.toObject(objectClass);
-  // documentList.add(object);
-  // lastID = document.getId();
-  // }
-  // if (documentList.isEmpty()) {
-  // return new FSQueryResult<>(documentList, null, null);
-  // }
-  // else {
-  // return new FSQueryResult<>(documentList, documents.get(documents.size() - 1), lastID);
-  // }
-  // }, Firestorm.getSelectedExecutor());
-  // return FSFuture.fromAPIFuture(queryFuture);
-  // }
+
 
 }

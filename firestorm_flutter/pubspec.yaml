@@ -17,6 +17,7 @@ dependencies:
   analyzer: ^7.3.0
   build: ^2.4.2
   colorful_text: ^1.0.0
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:

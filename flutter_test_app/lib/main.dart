@@ -11,53 +11,7 @@ import 'address.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ComputingStudent student = ComputingStudent(
-    "123",
-    "John",
-    "Smith",
-    21,
-    1.77,
-    true,
-    ["Jane", "Doe"],
-    "ABC123",
-    "School of Computing",
-    "Software Engineering",
-    "abcd1234",
-    Address("1", "Main St", "Springfield"),
-    {"Math": 90, "Science": 85},
-  );
 
-  ComputingStudent student2 = ComputingStudent(
-    "456",
-    "Alice",
-    "Johnson",
-    22,
-    1.65,
-    false,
-    ["Bob", "Charlie"],
-    "XYZ456",
-    "School of Arts",
-    "Graphic Design",
-    null,
-    Address("2", "Second St", "Metropolis"),
-    {"Art": 95, "History": 88},
-  );
-
-  ComputingStudent student3 = ComputingStudent(
-    "789",
-    "Bob",
-    "Brown",
-    23,
-    1.80,
-    true,
-    ["Alice", "Charlie"],
-    "LMN789",
-    "School of Engineering",
-    "Civil Engineering",
-    null,
-    Address("3", "Third St", "Gotham"),
-    {"Physics": 92, "Chemistry": 89},
-  );
 
   await FS.init();
   registerClasses();
@@ -152,7 +106,18 @@ main() async {
   //   },);
   // },);
 
-
+  //filter test:
+  // await FS.delete.all(ComputingStudent, iAmSure: true);
+  // await FS.create.many(ComputingStudent.generateStudents(10));
+  // print("Studs created");
+  FS.list.filter<ComputingStudent>(ComputingStudent)
+  .whereIn("school", ["School of Computing", "School of Engineering"])
+  // .whereNotEqualTo("school", "School of Computing")
+  .fetch().then((value) {
+    value.items.forEach((element) {
+      print("${element.firstname} (${element.school})");
+    },);
+  },);
 
   runApp(Container());
 }

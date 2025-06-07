@@ -1,14 +1,14 @@
 /// A type that helps with filtering objects from database queries.
-abstract class Filterable<QueryType, ObjectType> {
+abstract class Filterable<QueryType> {
 
   QueryType _query;
 
-  final ObjectType _type;
+  final Type _type;
 
   /// Creates a new filterable.
   Filterable(this._query, this._type);
 
-  ObjectType get type => _type;
+  Type get type => _type;
 
   QueryType get query => _query;
 
