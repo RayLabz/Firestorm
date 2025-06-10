@@ -7,14 +7,20 @@ import '../fs.dart';
 class FSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
-  DocumentReference<Map<String, dynamic>> documentFromID(Type type, String documentID) {
+  DocumentReference<Map<String, dynamic>> documentFromID(Type type, String documentID, { String? subcollection }) {
+    if (subcollection != null) {
+      return FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    }
     return FS.firestore.collection(type.toString()).doc(documentID);
   }
 
   /// Returns a reference to a document using an object.
-  DocumentReference<Map<String, dynamic>> documentFromObject(dynamic object) {
+  DocumentReference<Map<String, dynamic>> documentFromObject(dynamic object, { String? subcollection }) {
     if (object == null) {
       throw NullIDException("Cannot get document reference from null object");
+    }
+    if (subcollection != null) {
+      return FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
     }
     return FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
   }
@@ -31,7 +37,10 @@ class FSReferenceDelegate {
   }
 
   /// Returns a reference to a collection using its class.
-  CollectionReference<Map<String, dynamic>> collection(Type type) {
+  CollectionReference<Map<String, dynamic>> collection(Type type, { String? subcollection }) {
+    if (subcollection != null) {
+      return FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection);
+    }
     return FS.firestore.collection(type.toString());
   }
 

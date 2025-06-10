@@ -11,7 +11,7 @@ class FSTransactionCreateDelegate {
   FSTransactionCreateDelegate.init(this._tx);
 
   /// Creates a document in Firestore from the given object.
-  Future<Transaction> one(dynamic object) async {
+  Future<Transaction> one(dynamic object, { String? subcollection }) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -22,6 +22,9 @@ class FSTransactionCreateDelegate {
       throw NullIDException(map);
     }
     DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(id);
+    if (subcollection != null) {
+      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+    }
     return _tx.set(ref, map);
   }
 

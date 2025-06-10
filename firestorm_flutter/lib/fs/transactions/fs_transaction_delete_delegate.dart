@@ -11,7 +11,7 @@ class FSTransactionDeleteDelegate {
   FSTransactionDeleteDelegate.init(this._tx);
 
   /// Deletes a document from Firestore using an object.
-  Future<Transaction> one<T>(T object) async {
+  Future<Transaction> one<T>(T object, { String? subcollection }) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -21,6 +21,9 @@ class FSTransactionDeleteDelegate {
       throw NullIDException(map);
     }
     DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+    if (subcollection != null) {
+      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+    }
     return _tx.delete(ref);
   }
 

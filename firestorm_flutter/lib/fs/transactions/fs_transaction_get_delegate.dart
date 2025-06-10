@@ -10,12 +10,15 @@ class FSTransactionGetDelegate {
   FSTransactionGetDelegate.init(this._tx);
 
   /// Reads a document from Firestore and converts it to the specified type, while in a transaction.
-  Future<T> one<T>(String documentID) async {
+  Future<T> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
     DocumentReference ref = FS.firestore.collection(T.toString()).doc(documentID);
+    if (subcollection != null) {
+      ref = FS.firestore.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    }
     DocumentSnapshot snapshot =  await _tx.get(ref);
     if (!snapshot.exists) {
       return Future.error('Document with ID $documentID does not exist in collection ${T.toString()}');

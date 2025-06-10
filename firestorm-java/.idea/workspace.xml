@@ -12,7 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="" />
+    <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/delegates/fs_subcollection_delegate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/subcollections/fs_subcollection_create_delegate.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/fs.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

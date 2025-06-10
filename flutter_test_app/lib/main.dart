@@ -145,5 +145,19 @@ main() async {
   //   },
   // );
 
+  // FS.create.one(ComputingStudent.generateRandomStudent(), subcollection: "good").then((value) {
+  //
+  // },);
+
+  // FS.listen.toID<ComputingStudent>(ComputingStudent, "31761", subcollection: "good", onCreate: (object) {
+  //   print("On create! ${object.firstname}");
+  // }, onChange: (object) {
+  //   print("On change! ${object.firstname}");
+  // }, onDelete: () {
+  //   print("On delete!");
+  // });
+
+
+
   runApp(Container());
 }

@@ -1,7 +1,5 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firestorm/exceptions/null_id_exception.dart';
 import 'package:firestorm/fs/delegates/fs_get_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_listen_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_reference_delegate.dart';
@@ -82,12 +80,14 @@ class FS {
     }
   }
 
-  //TODO-Subcollections?
+  /// Enables network access for Firestore.
+  static Future<void> enableNetwork() async {
+    await firestore.enableNetwork();
+  }
 
-
-
-
-
-
+  /// Disables network access for Firestore.
+  static Future<void> disableNetwork() async {
+    await firestore.disableNetwork();
+  }
 
 }

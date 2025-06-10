@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../fs.dart';
 
-typedef ObjectListener<T> = void Function(T object, );
+/// A specialized type definition for a function that executes when an object is changed.
+typedef ObjectListener<T> = void Function(T object);
 
+/// A delegate class to listen to changes in Firestore documents.
 class FSListenDelegate {
 
   /// Listens to changes in an object.
@@ -15,13 +17,17 @@ class FSListenDelegate {
     void Function(T object)? onChange,
     void Function()? onDelete,
     void Function()? onNull,
+    String? subcollection,
   }) {
     Deserializer? deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    final docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+    var docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+    if (subcollection != null) {
+      docRef = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+    }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -32,13 +38,17 @@ class FSListenDelegate {
         void Function(T object)? onChange,
         void Function()? onDelete,
         void Function()? onNull,
+        String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    final docRef = FS.firestore.collection(type.toString()).doc(id);
+    var docRef = FS.firestore.collection(type.toString()).doc(id);
+    if (subcollection != null) {
+      docRef = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+    }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -49,6 +59,7 @@ class FSListenDelegate {
         void Function(T object)? onChange,
         void Function()? onDelete,
         void Function()? onNull,
+        String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
     if (deserializer == null) {
@@ -56,7 +67,10 @@ class FSListenDelegate {
     }
     List<StreamSubscription<T?>> subscriptions = [];
     for (final object in objects) {
-      final docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+      var docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+      if (subcollection != null) {
+        docRef = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+      }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;
@@ -69,6 +83,7 @@ class FSListenDelegate {
         void Function(T object)? onChange,
         void Function()? onDelete,
         void Function()? onNull,
+        String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
     if (deserializer == null) {
@@ -77,7 +92,10 @@ class FSListenDelegate {
 
     List<StreamSubscription<T?>> subscriptions = [];
     for (final String id in ids) {
-      final docRef = FS.firestore.collection(type.toString()).doc(id);
+      var docRef = FS.firestore.collection(type.toString()).doc(id);
+      if (subcollection != null) {
+        docRef = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+      }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;
@@ -89,7 +107,7 @@ class FSListenDelegate {
       Function()? onDelete,
       Function()? onNull,
       Function(T object)? onCreate,
-      Function(T object)? onChange
+      Function(T object)? onChange,
       ) {
     T? previous; //keeps track if this object previously existed.
 

@@ -11,7 +11,7 @@ class FSBatchCreateDelegate {
   FSBatchCreateDelegate.init(this._batch);
 
   /// Creates a document in Firestore from the given object.
-  one(dynamic object) async {
+  one(dynamic object, { String? subcollection }) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -22,6 +22,9 @@ class FSBatchCreateDelegate {
       throw NullIDException(map);
     }
     DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(id);
+    if (subcollection != null) {
+      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+    }
     _batch.set(ref, map);
   }
 

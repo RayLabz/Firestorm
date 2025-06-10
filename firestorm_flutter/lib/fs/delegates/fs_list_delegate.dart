@@ -7,7 +7,7 @@ import '../queries/fs_filterable.dart';
 class FSListDelegate {
 
   /// Lists a limited number of items of a specific type without a query.
-  Future<List<T>> ofClass<T>(Type type, { int limit = 10 }) async {
+  Future<List<T>> ofClass<T>(Type type, { int limit = 10, String? subcollection }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
     }
@@ -17,7 +17,12 @@ class FSListDelegate {
       throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    final Query<Map<String, dynamic>> query = FS.firestore.collection(type.toString()).limit(limit);
+    var collectionReference = FS.firestore.collection(type.toString());
+    if (subcollection != null) {
+      collectionReference = collectionReference.doc(subcollection).collection(subcollection);
+    }
+
+    final Query<Map<String, dynamic>> query = collectionReference.limit(limit);
     var querySnapshot = await query.get();
     List<T> objects = [];
 
@@ -29,7 +34,7 @@ class FSListDelegate {
   }
 
   /// Lists all items of a specific type.
-  Future<List<T>> allOfClass<T>(Type type) async {
+  Future<List<T>> allOfClass<T>(Type type, { String? subcollection }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
     }
@@ -39,7 +44,11 @@ class FSListDelegate {
       throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    final Query<Map<String, dynamic>> query = FS.firestore.collection(type.toString());
+    var collectionReference = FS.firestore.collection(type.toString());
+    if (subcollection != null) {
+      collectionReference = collectionReference.doc(subcollection).collection(subcollection);
+    }
+    final Query<Map<String, dynamic>> query = collectionReference;
     var querySnapshot = await query.get();
     List<T> objects = [];
 
@@ -51,10 +60,12 @@ class FSListDelegate {
   }
 
   /// Applies a filter to a specific type of items and returns a list of items.
-  FSFilterable<T> filter<T>(Type type) {
-    return FSFilterable<T>(FS.firestore.collection(type.toString()), type);
+  FSFilterable<T> filter<T>(Type type, { String? subcollection }) {
+    var collectionReference = FS.firestore.collection(type.toString());
+    if (subcollection != null) {
+      collectionReference = collectionReference.doc(subcollection).collection(subcollection);
+    }
+    return FSFilterable<T>(collectionReference, type);
   }
-
-  //TODO - Filter with subcollections?
 
 }
