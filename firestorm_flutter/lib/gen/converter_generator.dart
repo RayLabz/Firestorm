@@ -1,20 +1,21 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:firestorm/gen/valid_class_holder.dart';
 
 class RegistryGenerator {
 
-  static String generateConverterFunctions(StringBuffer converterBuffer, final Set<ClassElement> classes) {
+  static String generateConverterFunctions(StringBuffer converterBuffer, final ValidClassHolder holder) {
 
     //Registry (map):
     converterBuffer.writeln("// - - - - - - - Registry - - - - - - -");
     converterBuffer.writeln("final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {");
-    for (final aClass in classes) {
+    for (final aClass in holder.getAllValidClasses()) {
       converterBuffer.writeln("\t${aClass.displayName}: (object) => (object as ${aClass.displayName}).toMap(),");
     }
     converterBuffer.writeln("};");
     converterBuffer.writeln();
 
     converterBuffer.writeln("final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {");
-    for (final aClass in classes) {
+    for (final aClass in holder.getAllValidClasses()) {
       converterBuffer.writeln("\t${aClass.displayName}: (map) => ${aClass.displayName}Model.fromMap(map),");
     }
     converterBuffer.writeln("};");
@@ -42,9 +43,15 @@ class RegistryGenerator {
 
     //Generate serializer registrations for each class:
     converterBuffer.writeln("registerClasses() {");
-    for (final aClass in classes) {
+    //Firestore:
+    for (final aClass in holder.fsValidClasses) {
       converterBuffer.writeln("\tFS.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
       converterBuffer.writeln("\tFS.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
+    }
+    //Realtime Database:
+    for (final aClass in holder.rdbValidClasses) {
+      converterBuffer.writeln("\tRDB.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
+      converterBuffer.writeln("\tRDB.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
     }
     converterBuffer.writeln("}");
     converterBuffer.writeln();

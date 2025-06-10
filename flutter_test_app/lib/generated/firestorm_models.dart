@@ -8,10 +8,12 @@
 
 
 import 'package:firestorm/fs/fs.dart';
+import 'package:firestorm/rdb/rdb.dart';
 import 'package:flutter_test_app/address.dart';
 import 'package:flutter_test_app/computing_student.dart';
 import 'package:flutter_test_app/person.dart';
 import 'package:flutter_test_app/student.dart';
+import 'package:flutter_test_app/crazy.dart';
 
 // - - - - - - - FirestormObject Address - - - - - - -
 
@@ -152,6 +154,31 @@ extension StudentModel on Student {
 
 }
 
+// - - - - - - - FirestormObject Crazy - - - - - - -
+
+extension CrazyModel on Crazy {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = false;
+
+	 Map<String, dynamic> toMap() {
+		 return {
+			 'id': this.id,
+			 'ha': this.ha,
+			 'dateTime': this.dateTime,
+		 };
+	 }
+
+	static Crazy fromMap(Map<String, dynamic> map) {
+		 return Crazy(
+			 map['id'] as String,
+			 map['ha'] as int,
+			 map['dateTime'] as DateTime,
+		 );
+	 }
+
+}
+
 
 // - - - - - - - Registry - - - - - - -
 final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
@@ -159,6 +186,7 @@ final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
 	ComputingStudent: (object) => (object as ComputingStudent).toMap(),
 	Person: (object) => (object as Person).toMap(),
 	Student: (object) => (object as Student).toMap(),
+	Crazy: (object) => (object as Crazy).toMap(),
 };
 
 final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {
@@ -166,6 +194,7 @@ final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {
 	ComputingStudent: (map) => ComputingStudentModel.fromMap(map),
 	Person: (map) => PersonModel.fromMap(map),
 	Student: (map) => StudentModel.fromMap(map),
+	Crazy: (map) => CrazyModel.fromMap(map),
 };
 
 Map<String, dynamic> convertToMap(dynamic object) {
@@ -189,10 +218,20 @@ registerClasses() {
 	FS.registerDeserializer<Address>((map) => AddressModel.fromMap(map));
 	FS.registerSerializer<ComputingStudent>((object) => object.toMap());
 	FS.registerDeserializer<ComputingStudent>((map) => ComputingStudentModel.fromMap(map));
+	FS.registerSerializer<Crazy>((object) => object.toMap());
+	FS.registerDeserializer<Crazy>((map) => CrazyModel.fromMap(map));
 	FS.registerSerializer<Person>((object) => object.toMap());
 	FS.registerDeserializer<Person>((map) => PersonModel.fromMap(map));
 	FS.registerSerializer<Student>((object) => object.toMap());
 	FS.registerDeserializer<Student>((map) => StudentModel.fromMap(map));
+	RDB.registerSerializer<Address>((object) => object.toMap());
+	RDB.registerDeserializer<Address>((map) => AddressModel.fromMap(map));
+	RDB.registerSerializer<ComputingStudent>((object) => object.toMap());
+	RDB.registerDeserializer<ComputingStudent>((map) => ComputingStudentModel.fromMap(map));
+	RDB.registerSerializer<Person>((object) => object.toMap());
+	RDB.registerDeserializer<Person>((map) => PersonModel.fromMap(map));
+	RDB.registerSerializer<Student>((object) => object.toMap());
+	RDB.registerDeserializer<Student>((map) => StudentModel.fromMap(map));
 }
 
 

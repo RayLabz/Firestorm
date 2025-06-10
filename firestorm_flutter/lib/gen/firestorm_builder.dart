@@ -33,6 +33,7 @@ class FirestormBuilder implements Builder {
     HeaderGenerator.generateHeader(headerBuffer);
 
     importsBuffer.writeln("import 'package:firestorm/fs/fs.dart';");
+    importsBuffer.writeln("import 'package:firestorm/rdb/rdb.dart';");
 
     final Map<AssetId, Iterable<ClassElement>> allClasses = {};
     final Map<ClassElement, AssetId> assetIDs = {};
@@ -79,7 +80,7 @@ class FirestormBuilder implements Builder {
     }
 
     //Generate the converter functions
-    RegistryGenerator.generateConverterFunctions(converterBuffer, allFilesClassHolder.getAllValidClasses());
+    RegistryGenerator.generateConverterFunctions(converterBuffer, allFilesClassHolder);
 
     //Add everything into the file buffer
     fileBuffer.writeln(headerBuffer.toString());

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../firestorm.dart';
 import '../fs.dart';
 
 /// A specialized type definition for a function that executes when an object is changed.

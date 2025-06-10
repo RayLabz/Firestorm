@@ -1,4 +1,5 @@
 import 'package:firestorm/fs/fs.dart';
+import 'package:firestorm/rdb/rdb.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test_app/generated/firestorm_models.dart';
 
@@ -9,9 +10,10 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await FS.init();
+  await RDB.init();
   registerClasses();
 
-  FS.create.one(ComputingStudent.generateRandomStudent()).then((value) => print("nice!"),);
+  // RDB.create.one(ComputingStudent.generateRandomStudent()).then((value) => print("Hey!"),);
 
   runApp(Container());
 }

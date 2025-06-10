@@ -6,8 +6,7 @@ class Crazy {
   String id;
   int ha;
   DateTime dateTime;
-  Text text;
 
-  Crazy(this.id, this.ha, this.dateTime, this.text);
+  Crazy(this.id, this.ha, this.dateTime);
 
 }

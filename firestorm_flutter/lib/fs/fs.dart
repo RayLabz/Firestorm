@@ -14,9 +14,6 @@ import 'delegates/fs_list_delegate.dart';
 import 'delegates/fs_transaction_delegate.dart';
 import 'delegates/fs_update_delegate.dart';
 
-typedef Serializer = Map<String, dynamic> Function(dynamic); //Used to dynamically serialize objects
-typedef Deserializer = dynamic Function(Map<String, dynamic> map); //Used to dynamically deserialize objects
-
 /// The main class for Firestorm, providing access to Firestore and various operations.
 class FS {
 

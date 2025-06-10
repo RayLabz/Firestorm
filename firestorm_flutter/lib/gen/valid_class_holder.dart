@@ -3,10 +3,10 @@ import 'package:analyzer/dart/element/element.dart';
 /// A holder for valid classes that can be used in Firestorm.
 class ValidClassHolder {
 
-  final Set<ClassElement> rdbValidClasses;
   final Set<ClassElement> fsValidClasses;
+  final Set<ClassElement> rdbValidClasses;
 
-  ValidClassHolder(this.rdbValidClasses, this.fsValidClasses);
+  ValidClassHolder(this.fsValidClasses, this.rdbValidClasses);
 
   ValidClassHolder.empty() : fsValidClasses = {}, rdbValidClasses = {};
 
