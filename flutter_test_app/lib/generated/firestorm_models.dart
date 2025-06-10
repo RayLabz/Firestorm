@@ -16,6 +16,10 @@ import 'package:flutter_test_app/student.dart';
 // - - - - - - - FirestormObject Address - - - - - - -
 
 extension AddressModel on Address {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
 	 Map<String, dynamic> toMap() {
 		 return {
 			 'id': this.id,
@@ -23,6 +27,7 @@ extension AddressModel on Address {
 			 'city': this.city,
 		 };
 	 }
+
 	static Address fromMap(Map<String, dynamic> map) {
 		 return Address(
 			 map['id'] as String,
@@ -30,11 +35,16 @@ extension AddressModel on Address {
 			 map['city'] as String,
 		 );
 	 }
+
 }
 
 // - - - - - - - FirestormObject ComputingStudent - - - - - - -
 
 extension ComputingStudentModel on ComputingStudent {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
 	 Map<String, dynamic> toMap() {
 		 return {
 			 'id': this.id,
@@ -51,6 +61,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 'grades': this.grades,
 		 };
 	 }
+
 	static ComputingStudent fromMap(Map<String, dynamic> map) {
 		 return ComputingStudent(
 			 map['id'] as String,
@@ -68,11 +79,16 @@ extension ComputingStudentModel on ComputingStudent {
 			 map['grades'].cast<String, int>(),
 		 );
 	 }
+
 }
 
 // - - - - - - - FirestormObject Person - - - - - - -
 
 extension PersonModel on Person {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
 	 Map<String, dynamic> toMap() {
 		 return {
 			 'id': this.id,
@@ -84,6 +100,7 @@ extension PersonModel on Person {
 			 'friends': this.friends,
 		 };
 	 }
+
 	static Person fromMap(Map<String, dynamic> map) {
 		 return Person(
 			 map['id'] as String,
@@ -95,11 +112,16 @@ extension PersonModel on Person {
 			 map['friends'].cast<String>(),
 		 );
 	 }
+
 }
 
 // - - - - - - - FirestormObject Student - - - - - - -
 
 extension StudentModel on Student {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
 	 Map<String, dynamic> toMap() {
 		 return {
 			 'id': this.id,
@@ -113,6 +135,7 @@ extension StudentModel on Student {
 			 'school': this.school,
 		 };
 	 }
+
 	static Student fromMap(Map<String, dynamic> map) {
 		 return Student(
 			 map['id'] as String,
@@ -126,6 +149,7 @@ extension StudentModel on Student {
 			 map['school'] as String,
 		 );
 	 }
+
 }
 
 

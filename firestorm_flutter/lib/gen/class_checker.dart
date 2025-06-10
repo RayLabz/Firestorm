@@ -1,7 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:colorful_text/colorful_text.dart';
+import 'package:firestorm/gen/valid_class_holder.dart';
 import 'package:firestorm/type/fs_types.dart';
+import 'package:firestorm/type/rdb_types.dart';
 
+/// A utility class to check Dart classes for specific criteria related to Firestorm objects.
 class ClassChecker {
 
   ///Finds all classes annotated with @FirestormObject in the provided iterable of ClassElements.
@@ -66,13 +69,14 @@ class ClassChecker {
     return resultClasses;
   }
 
-  static List<ClassElement> checkClassesForValidTypes(final List<ClassElement> classes) {
-    List<ClassElement> resultClasses = [];
+  ///Checks if the classes have valid types for Firestore.
+  static Set<ClassElement> checkClassesForValidFSTypes(final List<ClassElement> classes) {
+    Set<ClassElement> resultClasses = {};
     for (final aClass in classes) {
       bool isValid = true;
       for (final field in aClass.fields) {
         if (!FSTypes.isTypeSupported(field.type)) {
-          print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It has an unsupported type in field '${field.name}'.", ColorfulText.red));
+          print(ColorfulText.paint("Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field '${field.name}' for Firestore.", ColorfulText.red));
           isValid = false;
           break;
         }
@@ -84,7 +88,28 @@ class ClassChecker {
     return resultClasses;
   }
 
-  static List<ClassElement> filter(final Iterable<ClassElement> classes) {
+  ///Checks if the classes have valid RDB types.
+  static Set<ClassElement> checkClassesForValidRDBTypes(final List<ClassElement> classes) {
+    Set<ClassElement> resultClasses = {};
+    for (final aClass in classes) {
+      bool isValid = true;
+      for (final field in aClass.fields) {
+        if (!RDBTypes.isTypeSupported(field.type)) {
+          print(ColorfulText.paint("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.", ColorfulText.red));
+          isValid = false;
+          break;
+        }
+      }
+      if (isValid) {
+        resultClasses.add(aClass);
+      }
+    }
+    return resultClasses;
+  }
+
+  ///Filters the provided iterable of ClassElements to find valid classes for Firestorm.
+  ///Returns a ValidClassHolder containing two lists: one for Firestore valid classes and one for RDB valid classes.
+  static ValidClassHolder filter(final Iterable<ClassElement> classes) {
     //Find annotated classes:
     List<ClassElement> validClasses = findAnnotatedClasses(classes);
 
@@ -95,9 +120,11 @@ class ClassChecker {
     validClasses = findClassesWithIDField(validClasses);
 
     //Check classes for valid types:
-    validClasses = checkClassesForValidTypes(validClasses);
+    Set<ClassElement> fsValidClasses = checkClassesForValidFSTypes(validClasses);
+    Set<ClassElement> rdbValidClasses = checkClassesForValidRDBTypes(validClasses);
 
-    return validClasses;
+    //Return a ValidClassHolder with the valid classes:
+    return ValidClassHolder(fsValidClasses, rdbValidClasses);
   }
 
 }

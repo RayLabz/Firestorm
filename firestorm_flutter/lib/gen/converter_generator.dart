@@ -2,7 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 
 class RegistryGenerator {
 
-  static String generateConverterFunctions(StringBuffer converterBuffer, final List<ClassElement> classes) {
+  static String generateConverterFunctions(StringBuffer converterBuffer, final Set<ClassElement> classes) {
 
     //Registry (map):
     converterBuffer.writeln("// - - - - - - - Registry - - - - - - -");

@@ -7,12 +7,35 @@ import 'package:firestorm/exceptions/invalid_class_exception.dart';
 class ExtensionGenerator {
 
   /// Generates a Dart extension for the given class name.
-  static String generateExtension(final StringBuffer classBuffer, final ClassElement aClass) {
+  static String generateExtension(
+      final StringBuffer classBuffer,
+      final ClassElement aClass,
+      final bool hasFSSupport,
+      final bool hasRDBSupport
+      ) {
     classBuffer.writeln("// - - - - - - - FirestormObject ${aClass.name} - - - - - - -");
     classBuffer.writeln();
 
     //Generate extension class
     classBuffer.writeln("extension ${aClass.name}Model on ${aClass.name} {");
+
+    classBuffer.writeln();
+
+    //Generate static fields for Firestore & RDB support
+    if (hasFSSupport) {
+      classBuffer.writeln("\tstatic final bool fsSupport = true;");
+    }
+    else {
+      classBuffer.writeln("\tstatic final bool fsSupport = false;");
+    }
+
+    if (hasRDBSupport) {
+      classBuffer.writeln("\tstatic final bool rdbSupport = true;");
+    }
+    else {
+      classBuffer.writeln("\tstatic final bool rdbSupport = false;");
+    }
+    classBuffer.writeln();
 
     //Generate toMap() method
     classBuffer.writeln("\t Map<String, dynamic> toMap() {");
@@ -63,6 +86,7 @@ class ExtensionGenerator {
 
     classBuffer.writeln("\t\t };");
     classBuffer.writeln("\t }");
+    classBuffer.writeln();
 
     //Generate fromMap() method
     classBuffer.writeln("\tstatic ${aClass.name} fromMap(Map<String, dynamic> map) {");
@@ -121,6 +145,7 @@ class ExtensionGenerator {
 
     classBuffer.writeln("\t\t );");
     classBuffer.writeln("\t }");
+    classBuffer.writeln();
 
     //End extension class
     classBuffer.writeln("}");
