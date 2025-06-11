@@ -123,7 +123,7 @@ class ExtensionGenerator {
       else {
         //If this is a user-defined type, use its own fromMap():
         if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType) {
-          classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(map['${param.name}'] as Map<String, dynamic>),"); //call fromMap() on user-defined type
+          classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),"); //call fromMap() on user-defined type
         }
         else {
           if (param.type.isDartCoreList) {

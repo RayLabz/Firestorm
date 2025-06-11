@@ -77,7 +77,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 map['school'] as String,
 			 map['pathway'] as String,
 			 null,
-			 AddressModel.fromMap(map['address'] as Map<String, dynamic>),
+			 AddressModel.fromMap(Map<String, dynamic>.from(map['address'] as Map)),
 			 map['grades'].cast<String, int>(),
 		 );
 	 }

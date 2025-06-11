@@ -1,0 +1,68 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firestorm/exceptions/no_document_exception.dart';
+import 'package:flutter/foundation.dart';
+
+import '../rdb.dart';
+
+/// A delegate class to read documents from Firestore.
+class RDBGetDelegate {
+
+  /// Reads a document from Firestore and converts it to the specified type.
+  Future<T> one<T>(String documentID, { String? subcollection }) async {
+    final deserializer = RDB.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+    String path = RDB.constructPathForClassAndID(T, documentID, subcollection: subcollection);
+    DataSnapshot snapshot = await RDB.rdb.ref(path).get();
+    if (snapshot.exists) {
+      Map<dynamic, dynamic> rawData = Map<dynamic, dynamic>.from(snapshot.value as Map);
+      // print(rawData);
+      Map<String, dynamic> data = {};
+      for (var key in rawData.keys) {
+        // Convert all values to String if they are not already.
+        data[key.toString()] = rawData[key];
+      }
+      // print(data);
+
+      T object = deserializer(data) as T;
+      return object;
+    } else {
+      throw NoDocumentException(path);
+    }
+  }
+
+  /// Reads multiple documents from Firestore and converts them to a list of the specified type.
+  /// //TODO - Consider the use of Multithreading.
+  Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
+    final deserializer = RDB.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+    List<T> objects = [];
+    List<String> paths = [];
+
+    for (String documentID in documentIDs) {
+      String path = RDB.constructPathForClassAndID(T, documentID, subcollection: subcollection);
+      paths.add(path);
+    }
+
+    //Convert paths to a list of futures, process simultaneously, and wait for all to complete:
+    Iterable<Future<dynamic>> futures = paths.map((path) => one<T>(path, subcollection: subcollection));
+
+    List<dynamic> list = await Future.wait(futures);
+    for (var object in list) {
+      if (object is T) {
+        objects.add(object);
+      } else {
+        throw UnsupportedError('Expected type $T but got ${object.runtimeType}');
+      }
+    }
+    return objects;
+  }
+
+
+}

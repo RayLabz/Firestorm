@@ -32,6 +32,8 @@ main() async {
   //   print("Deleted");
   // });
 
+  await FS.get.one<ComputingStudent>("17153").then((value) => print(value.address.city),);
+  await RDB.get.one<ComputingStudent>("16472").then((value) => print(value.address.city),);
 
 
   runApp(Container());

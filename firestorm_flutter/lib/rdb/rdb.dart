@@ -4,6 +4,7 @@ import 'package:firestorm/rdb/delegates/rdb_delete_delegate.dart';
 
 import '../firestorm.dart';
 import 'delegates/rdb_create_delegate.dart';
+import 'delegates/rdb_get_delegate.dart';
 
 /// The main class for Firestorm, providing access to Firestore and various operations.
 class RDB {
@@ -14,7 +15,7 @@ class RDB {
 
   //Operation delegates:
   static final RDBCreateDelegate create = RDBCreateDelegate();
-  // static final RDBGetDelegate get = RDBGetDelegate();
+  static final RDBGetDelegate get = RDBGetDelegate();
   static final RDBDeleteDelegate delete = RDBDeleteDelegate();
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
