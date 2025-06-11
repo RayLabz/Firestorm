@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firestorm/rdb/delegates/rdb_delete_delegate.dart';
+import 'package:firestorm/rdb/delegates/rdb_list_delegate.dart';
 
 import '../firestorm.dart';
 import 'delegates/rdb_create_delegate.dart';
@@ -19,6 +20,7 @@ class RDB {
   static final RDBGetDelegate get = RDBGetDelegate();
   static final RDBDeleteDelegate delete = RDBDeleteDelegate();
   static final RDBExistDelegate exists = RDBExistDelegate();
+  static final RDBListDelegate list = RDBListDelegate();
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
   /// NOTE: This function is called by generated code in the target Flutter app.
@@ -45,7 +47,15 @@ class RDB {
     if (subcollection == null) {
       return "${type.toString()}/$id";
     }
-    return "${type.toString()}/$subcollection/$id";
+    return "${type.toString()}:$subcollection/$id";
+  }
+
+  /// Constructs a path for a class.
+  static String constructPathForClass(Type type, {String? subcollection}) {
+    if (subcollection == null) {
+      return type.toString();
+    }
+    return "${type.toString()}:$subcollection";
   }
 
   /// Enables local caching for Firestore data.

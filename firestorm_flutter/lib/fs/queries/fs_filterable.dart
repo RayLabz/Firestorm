@@ -143,22 +143,4 @@ class FSFilterable<T> extends Filterable<Query> {
     }
   }
 
-  // @Nonnull
-  // public ListenerRegistration addSnapshotListener(@Nonnull Executor executor, @Nonnull EventListener<QuerySnapshot> listener) {
-  // return query.addSnapshotListener(executor, listener);
-  // }
-  //
-  // /**
-  //  * Adds an event listener to a snapshot.
-  //  * @param listener The listener to add.
-  //  * @return Returns a ListenerRegistration.
-  //  */
-  // @Nonnull
-  // public ListenerRegistration addSnapshotListener(@Nonnull EventListener<QuerySnapshot> listener) {
-  // return query.addSnapshotListener(listener);
-  // }
-  //
-  //
-
-
 }

@@ -13,8 +13,17 @@ main() async {
   await RDB.init();
   registerClasses();
 
-  bool x = await RDB.exists.one(ComputingStudent, '16472');
-  print(x);
+  // await RDB.create.many(ComputingStudent.generateStudents(3), subcollection: "topClass");
+
+  // RDB.list.filter<ComputingStudent>(ComputingStudent, subcollection: "topClass")
+  // .orderByChild("height")
+  // .startAt(1.70)
+  // .endAt(1.90)
+  // .
+  // .fetch()
+  // .then((value) {
+  //   value.items.forEach((element) => print(element.height),);
+  // },);
 
   runApp(Container());
 }
