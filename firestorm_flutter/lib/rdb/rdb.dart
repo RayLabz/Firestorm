@@ -4,6 +4,7 @@ import 'package:firestorm/rdb/delegates/rdb_delete_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_list_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_listen_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_reference_delegate.dart';
+import 'package:flutter/foundation.dart';
 
 import '../firestorm.dart';
 import 'delegates/rdb_create_delegate.dart';
@@ -71,37 +72,13 @@ class RDB {
   }
 
   /// Enables local caching for Firestore data.
-  // static enableCaching() async {
-  //   //WEB:
-  //   if (kIsWeb) {
-  //     await firestore.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
-  //   }
-  //   //MOBILE (iOS & Android)
-  //   else {
-  //     firestore.settings = const Settings(persistenceEnabled: true);
-  //   }
-  // }
+  static enableCaching() async {
+      rdb.setPersistenceEnabled(true);
+  }
 
   /// Disables local caching for Firestore data.
-  // static disableCaching() async {
-  //   //WEB:
-  //   if (kIsWeb) {
-  //     print("!!! Disabling caching is not supported on web. Caching is always on once enabled. You must restart your app and avoid calling enableCaching().");
-  //   }
-  //   //MOBILE (iOS & Android)
-  //   else {
-  //     firestore.settings = const Settings(persistenceEnabled: false);
-  //   }
-  // }
-
-  /// Enables network access for Firestore.
-  // static Future<void> enableNetwork() async {
-  //   await firestore.enableNetwork();
-  // }
-
-  /// Disables network access for Firestore.
-  // static Future<void> disableNetwork() async {
-  //   await firestore.disableNetwork();
-  // }
+  static disableCaching() async {
+    rdb.setPersistenceEnabled(false);
+  }
 
 }
