@@ -17,12 +17,13 @@ main() async {
   await RDB.create.many(students);
   print("Created.");
 
-  students[0].firstname = "Nicos";
-  students[1].firstname = "Kasenides";
-  students[2].firstname = "Panayiota";
-
-  await RDB.update.many(students);
-  print("Updated");
+  RDB.listen.toObjects<ComputingStudent>(students, onCreate: (object) {
+    print("Created: ${object.id}");
+  }, onChange: (object) {
+    print("Changed: ${object.id}");
+  }, onDelete: () {
+    print("Deleted");
+  });
 
   runApp(Container());
 }
