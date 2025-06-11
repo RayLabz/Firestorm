@@ -13,17 +13,16 @@ main() async {
   await RDB.init();
   registerClasses();
 
-  // await RDB.create.many(ComputingStudent.generateStudents(3), subcollection: "topClass");
+  List<ComputingStudent> students = ComputingStudent.generateStudents(3);
+  await RDB.create.many(students);
+  print("Created.");
 
-  // RDB.list.filter<ComputingStudent>(ComputingStudent, subcollection: "topClass")
-  // .orderByChild("height")
-  // .startAt(1.70)
-  // .endAt(1.90)
-  // .
-  // .fetch()
-  // .then((value) {
-  //   value.items.forEach((element) => print(element.height),);
-  // },);
+  students[0].firstname = "Nicos";
+  students[1].firstname = "Kasenides";
+  students[2].firstname = "Panayiota";
+
+  await RDB.update.many(students);
+  print("Updated");
 
   runApp(Container());
 }

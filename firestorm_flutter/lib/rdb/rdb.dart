@@ -7,6 +7,7 @@ import '../firestorm.dart';
 import 'delegates/rdb_create_delegate.dart';
 import 'delegates/rdb_exist_delegate.dart';
 import 'delegates/rdb_get_delegate.dart';
+import 'delegates/rdb_update_delegate.dart';
 
 /// The main class for Firestorm, providing access to Firestore and various operations.
 class RDB {
@@ -21,6 +22,7 @@ class RDB {
   static final RDBDeleteDelegate delete = RDBDeleteDelegate();
   static final RDBExistDelegate exists = RDBExistDelegate();
   static final RDBListDelegate list = RDBListDelegate();
+  static final RDBUpdateDelegate update = RDBUpdateDelegate();
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
   /// NOTE: This function is called by generated code in the target Flutter app.
