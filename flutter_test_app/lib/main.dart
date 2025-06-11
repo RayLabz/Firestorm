@@ -13,11 +13,8 @@ main() async {
   await RDB.init();
   registerClasses();
 
-  await RDB.get.many<ComputingStudent>(["16472", "27106"]).then((value) {
-    value.forEach((element) {
-      print("ID: ${element.id}, City: ${element.address.city}");
-    });
-  });
+  bool x = await RDB.exists.one(ComputingStudent, '16472');
+  print(x);
 
   runApp(Container());
 }
