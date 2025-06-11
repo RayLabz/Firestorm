@@ -53,6 +53,12 @@ class FS {
     firestore = FirebaseFirestore.instance;
   }
 
+  /// Initializes the Firestore instance with custom options.
+  static initWithOptions(FirebaseOptions options) async {
+    await Firebase.initializeApp(options: options);
+    firestore = FirebaseFirestore.instance;
+  }
+
   /// Enables local caching for Firestore data.
   static enableCaching() async {
     //WEB:

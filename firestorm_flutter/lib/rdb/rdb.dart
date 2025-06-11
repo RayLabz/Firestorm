@@ -42,9 +42,15 @@ class RDB {
     deserializers[T] = fromMap;
   }
 
-  /// Initializes the Firestore instance. This should be called before any other Firestore operations.
+  /// Initializes the RDB instance. This should be called before any other Firestore operations.
   static init() async {
     await Firebase.initializeApp();
+    rdb = FirebaseDatabase.instance;
+  }
+
+  /// Initializes the RDB instance with custom options.
+  static initWithOptions(FirebaseOptions options) async {
+    await Firebase.initializeApp(options: options);
     rdb = FirebaseDatabase.instance;
   }
 
