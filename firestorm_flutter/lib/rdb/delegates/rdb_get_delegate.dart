@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firestorm/exceptions/no_document_exception.dart';
+import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 import 'package:flutter/foundation.dart';
 
 import '../rdb.dart';
@@ -19,17 +20,8 @@ class RDBGetDelegate {
     String path = RDB.constructPathForClassAndID(T, documentID, subcollection: subcollection);
     DataSnapshot snapshot = await RDB.rdb.ref(path).get();
     if (snapshot.exists) {
-      Map<dynamic, dynamic> rawData = Map<dynamic, dynamic>.from(snapshot.value as Map);
-      // print(rawData);
-      Map<String, dynamic> data = {};
-      for (var key in rawData.keys) {
-        // Convert all values to String if they are not already.
-        data[key.toString()] = rawData[key];
-      }
-      // print(data);
-
-      T object = deserializer(data) as T;
-      return object;
+      final Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot);
+      return deserializer(data) as T;
     } else {
       throw NoDocumentException(path);
     }
@@ -51,7 +43,7 @@ class RDBGetDelegate {
     }
 
     //Convert paths to a list of futures, process simultaneously, and wait for all to complete:
-    Iterable<Future<dynamic>> futures = paths.map((path) => one<T>(path, subcollection: subcollection));
+    Iterable<Future<dynamic>> futures = documentIDs.map((documentID) => one<T>(documentID, subcollection: subcollection));
 
     List<dynamic> list = await Future.wait(futures);
     for (var object in list) {

@@ -72,7 +72,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'].cast<String>(),
+			 map['friends'] != null ? map['friends'].cast<String>() : [],
 			 map['studentID'] as String,
 			 map['school'] as String,
 			 map['pathway'] as String,

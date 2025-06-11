@@ -1,7 +1,7 @@
 import 'package:firestorm/rdb/rdb.dart';
 
-import '../exceptions/null_id_exception.dart';
-import '../firestorm.dart';
+import '../../exceptions/null_id_exception.dart';
+import '../../firestorm.dart';
 
 ///Emulates a write batch (similar to Firestore), for the RDB.
 class RDBWriteBatch {

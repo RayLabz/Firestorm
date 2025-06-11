@@ -1,4 +1,4 @@
-import 'package:firestorm/rdb/rdb_write_batch.dart';
+import 'package:firestorm/rdb/helpers/rdb_write_batch.dart';
 
 import '../../exceptions/null_id_exception.dart';
 import '../rdb.dart';
