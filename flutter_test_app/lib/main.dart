@@ -14,6 +14,25 @@ main() async {
   registerClasses();
 
   // RDB.create.one(ComputingStudent.generateRandomStudent()).then((value) => print("Hey!"),);
+  // FS.list.allOfClass<ComputingStudent>(ComputingStudent).then((value) {
+  //   value.forEach((element) => print('"${element.id}",'),);
+  // },);
+
+  // List<ComputingStudent> students = [
+  //   ComputingStudent.generateRandomStudent(),
+  //   ComputingStudent.generateRandomStudent(),
+  //   ComputingStudent.generateRandomStudent(),
+  // ];
+  //
+  //
+  // await RDB.create.many(students);
+  // print("Created");
+  // Future.delayed(Duration(seconds: 2), () async {
+  //   await RDB.delete.manyWithIDs(ComputingStudent, students.map((e) => e.id).toList());
+  //   print("Deleted");
+  // });
+
+
 
   runApp(Container());
 }

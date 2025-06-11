@@ -13,14 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_create_delegate.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/rdb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/converter_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/converter_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/firestorm_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/firestorm_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/valid_class_holder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/gen/valid_class_holder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flutter_test_app/lib/crazy.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_test_app/lib/crazy.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flutter_test_app/lib/generated/firestorm_models.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../flutter_test_app/lib/generated/firestorm_models.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/rdb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/rdb.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

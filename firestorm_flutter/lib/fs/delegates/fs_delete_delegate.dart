@@ -79,22 +79,28 @@ class FSDeleteDelegate {
 
   /// Deletes all documents of a specific type from Firestore.
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
-    QuerySnapshot snapshot;
-    if (subcollection == null) {
-      snapshot = await FS.firestore.collection(type.toString()).get();
+    if (iAmSure) {
+      QuerySnapshot snapshot;
+      if (subcollection == null) {
+        snapshot = await FS.firestore.collection(type.toString()).get();
+      }
+      else {
+        snapshot =
+        await FS.firestore.collection(type.toString()).doc(subcollection)
+            .collection(subcollection)
+            .get();
+      }
+      if (snapshot.docs.isEmpty) return;
+      if (snapshot.docs.length > 500) {
+        throw ArgumentError(
+            'Batch limit exceeded. Maximum 500 documents allowed.');
+      }
+      WriteBatch batch = FS.firestore.batch();
+      for (QueryDocumentSnapshot doc in snapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      return await batch.commit();
     }
-    else {
-      snapshot = await FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).get();
-    }
-    if (snapshot.docs.isEmpty) return;
-    if (snapshot.docs.length > 500) {
-      throw ArgumentError('Batch limit exceeded. Maximum 500 documents allowed.');
-    }
-    WriteBatch batch = FS.firestore.batch();
-    for (QueryDocumentSnapshot doc in snapshot.docs) {
-      batch.delete(doc.reference);
-    }
-    return await batch.commit();
   }
 
 }
