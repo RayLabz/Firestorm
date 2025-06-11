@@ -134,7 +134,7 @@ class ExtensionGenerator {
           else if (param.type.isDartCoreMap) {
             final listType = param.type as InterfaceType;
             DartType valueType = listType.typeArguments[1];
-            classBuffer.writeln("\t\t\t map['${param.name}'].cast<String, ${valueType.getDisplayString()}>(),"); //cast to Map<String, valueType>
+            classBuffer.writeln("\t\t\t map['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},"); //cast to Map<String, valueType>
           }
           else {
             classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
