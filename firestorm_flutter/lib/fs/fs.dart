@@ -93,4 +93,9 @@ class FS {
     await firestore.disableNetwork();
   }
 
+  /// Configures Firestore to use the emulator instead of the real database.
+  static enableEmulator(final String host, final int port) {
+    firestore.useFirestoreEmulator(host, port);
+  }
+
 }

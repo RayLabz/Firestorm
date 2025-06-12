@@ -81,4 +81,9 @@ class RDB {
     rdb.setPersistenceEnabled(false);
   }
 
+  /// Configures RDB to use the emulator instead of the real database.
+  static enableEmulator(final String host, final int port) {
+    rdb.useDatabaseEmulator(host, port);
+  }
+
 }
