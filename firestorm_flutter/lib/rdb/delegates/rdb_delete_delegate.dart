@@ -1,3 +1,4 @@
+import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 import 'package:firestorm/rdb/helpers/rdb_write_batch.dart';
 
 import '../../exceptions/null_id_exception.dart';
@@ -49,23 +50,24 @@ class RDBDeleteDelegate {
     return batch.deleteWithIDs(type, documentIDs, subcollection: subcollection);
   }
 
-  /// Deletes all documents of a specific type from Firestore.
+  /// Deletes all documents of a specific type from RDB.
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
       //Get the objects of this type:
       final reference = RDB.rdb.ref(type.toString());
       final snapshot = await reference.once();
       if (snapshot.snapshot.value == null) {
-        return; // No documents to delete
+        return;
       }
 
+      Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot.snapshot);
       final Map<String, dynamic> updates = {};
 
-      final data = snapshot.snapshot.value as Map<String, dynamic>;
       data.forEach((key, value) {
-        String path = RDB.constructPathForClassAndID(type, key, subcollection: subcollection);
+        String path = key.toString();
         updates[path] = null; // Mark for deletion
       });
+
       // Perform the deletion in a single update operation:
       return await reference.update(updates);
     }

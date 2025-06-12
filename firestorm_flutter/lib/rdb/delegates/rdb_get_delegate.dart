@@ -46,10 +46,13 @@ class RDBGetDelegate {
 
     List<dynamic> list = await Future.wait(futures);
     for (var object in list) {
-      if (object is T) {
-        objects.add(object);
-      } else {
-        throw UnsupportedError('Expected type $T but got ${object.runtimeType}');
+      if (object != null) {
+        if (object is T) {
+          objects.add(object);
+        } else {
+          throw UnsupportedError(
+              'Expected type $T but got ${object.runtimeType}');
+        }
       }
     }
     return objects;

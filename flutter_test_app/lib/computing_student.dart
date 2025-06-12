@@ -87,4 +87,17 @@ class ComputingStudent extends Student {
     return List.generate(numberOfStudents, (index) => generateRandomStudent());
   }
 
+  @override
+  String toString() {
+    return firstname;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! ComputingStudent) {
+      return false;
+    }
+    return id == other.id;
+  }
+
 }
