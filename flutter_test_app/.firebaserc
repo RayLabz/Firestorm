@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "firestorm-demo-c2400-default-rtdb"
+    "default": "firestorm-demo"
   }
 }

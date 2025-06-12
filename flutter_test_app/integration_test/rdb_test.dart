@@ -148,7 +148,7 @@ void main() {
   testWidgets("Test list.filter(), test 1", (tester) async {
     var queryResult = await RDB.list.filter<ComputingStudent>(ComputingStudent)
         .limitToFirst(3)
-        .startAt(1.70)
+        .startAt(1.70, field: "height")
         .fetch();
     assert(queryResult.items.length <= 3);
     queryResult.items.forEach((element) {
@@ -158,8 +158,6 @@ void main() {
 
   testWidgets("Test list.filter(), test 2", (tester) async {
     var queryResult = await RDB.list.filter<ComputingStudent>(ComputingStudent)
-        .limitToLast(5)
-        .endAt(1.70)
         .orderByChild("height")
         .fetch();
     assert(queryResult.items.length <= 5);

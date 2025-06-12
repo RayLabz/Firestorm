@@ -3,10 +3,16 @@
     ".read": true,
     ".write": true,
     "ComputingStudent": {
-      ".indexOn": ["height", "age"]
+      ".indexOn": ["height", "age"],
+      "$studentId": {
+        ".validate": true
+      }
     },
     "ComputingStudent:topClass": {
-      ".indexOn": ["height", "age"]
+      ".indexOn": ["height", "age"],
+      "$studentId": {
+        ".validate": true
+      }
     }
   }
 }
