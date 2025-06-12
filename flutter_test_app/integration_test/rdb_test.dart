@@ -111,7 +111,6 @@ void main() {
     await RDB.create.many(students);
     await RDB.delete.all(ComputingStudent, iAmSure: true);
     List<ComputingStudent> result = await RDB.get.many<ComputingStudent>(students.map((e) => e.id).toList());
-    print(result);
     assert(result.isEmpty);
   });
 
@@ -129,6 +128,52 @@ void main() {
   });
 
   /* ----- TEST LIST/FILTER ----- */
+  testWidgets("Test list.allOfClass()", (tester) async {
+    await RDB.delete.all(ComputingStudent, iAmSure: true);
+    await RDB.create.many(students);
+    List<ComputingStudent> result = await RDB.list.allOfClass(ComputingStudent);
+    assert(result.length == students.length);
+  });
+
+  testWidgets("Test list.ofClass() without limit", (tester) async {
+    List<ComputingStudent> result = await RDB.list.ofClass(ComputingStudent);
+    assert(result.length == students.length);
+  });
+
+  testWidgets("Test list.ofClass() with limit", (tester) async {
+    List<ComputingStudent> result = await RDB.list.ofClass(ComputingStudent, limit: 3);
+    assert(result.length <= 3);
+  });
+
+  testWidgets("Test list.filter(), test 1", (tester) async {
+    var queryResult = await RDB.list.filter<ComputingStudent>(ComputingStudent)
+        .limitToFirst(3)
+        .startAt(1.70)
+        .fetch();
+    assert(queryResult.items.length <= 3);
+    queryResult.items.forEach((element) {
+      assert(element.height >= 1.70);
+    },);
+  });
+
+  testWidgets("Test list.filter(), test 2", (tester) async {
+    var queryResult = await RDB.list.filter<ComputingStudent>(ComputingStudent)
+        .limitToLast(5)
+        .endAt(1.70)
+        .orderByChild("height")
+        .fetch();
+    assert(queryResult.items.length <= 5);
+    queryResult.items.forEach((element) {
+      assert(element.height <= 1.70);
+    },);
+
+    //check sort:
+    for (int i = 0; i < queryResult.items.length - 1; i++) {
+      if (i + 1 < queryResult.items.length) {
+        assert(queryResult.items[i].height <= queryResult.items[i + 1].height);
+      }
+    }
+  });
 
 
   /* ----------------------------------------------------------------------*/

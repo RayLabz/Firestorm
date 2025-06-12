@@ -1,6 +1,12 @@
 {
   "rules": {
     ".read": true,
-    ".write": true
+    ".write": true,
+    "ComputingStudent": {
+      ".indexOn": ["height", "age"]
+    },
+    "ComputingStudent:topClass": {
+      ".indexOn": ["height", "age"]
+    }
   }
 }

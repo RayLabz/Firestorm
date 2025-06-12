@@ -49,8 +49,10 @@ class RDBListDelegate {
     final DataSnapshot snapshot = await query.get();
     if (snapshot.exists) {
       for (final childSnapshot in snapshot.children) {
-        final Map<String, dynamic> map = RDBDeserializationHelper.snapshotToMap(childSnapshot);
-        objects.add(deserializer(map));
+        if (childSnapshot.exists) {
+          final Map<String, dynamic> map = RDBDeserializationHelper.snapshotToMap(childSnapshot);
+          objects.add(deserializer(map));
+        }
       }
     }
     return objects;
