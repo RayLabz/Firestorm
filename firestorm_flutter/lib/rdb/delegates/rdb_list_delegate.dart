@@ -29,9 +29,6 @@ class RDBListDelegate {
         objects.add(deserializer(map));
       }
     }
-    else {
-      throw NoDocumentException("No data found for type: $type at path: $path");
-    }
     return objects;
   }
 
@@ -55,9 +52,6 @@ class RDBListDelegate {
         final Map<String, dynamic> map = RDBDeserializationHelper.snapshotToMap(childSnapshot);
         objects.add(deserializer(map));
       }
-    }
-    else {
-      throw NoDocumentException("No data found for type: $type at path: $path");
     }
     return objects;
   }

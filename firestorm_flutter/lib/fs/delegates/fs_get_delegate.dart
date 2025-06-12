@@ -9,7 +9,7 @@ import '../fs.dart';
 class FSGetDelegate {
 
   /// Reads a document from Firestore and converts it to the specified type.
-  Future<T> one<T>(String documentID, { String? subcollection }) async {
+  Future<T?> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
@@ -22,7 +22,7 @@ class FSGetDelegate {
 
     DocumentSnapshot snapshot = await ref.get();
     if (!snapshot.exists) {
-      return Future.error('Document with ID $documentID does not exist in collection ${T.toString()}');
+      return null;
     }
     T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;
     return object;
@@ -48,8 +48,6 @@ class FSGetDelegate {
       if (snapshot.exists) {
         T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;
         objects.add(object);
-      } else {
-        print('Document with ID ${snapshot.id} does not exist in collection ${T.toString()}');
       }
     }
     return objects;

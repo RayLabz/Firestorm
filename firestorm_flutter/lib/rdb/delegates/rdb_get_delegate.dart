@@ -12,7 +12,7 @@ import '../rdb.dart';
 class RDBGetDelegate {
 
   /// Reads a document from Firestore and converts it to the specified type.
-  Future<T> one<T>(String documentID, { String? subcollection }) async {
+  Future<T?> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = RDB.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
@@ -22,9 +22,8 @@ class RDBGetDelegate {
     if (snapshot.exists) {
       final Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot);
       return deserializer(data) as T;
-    } else {
-      throw NoDocumentException(path);
     }
+    return null;
   }
 
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.

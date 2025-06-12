@@ -28,7 +28,9 @@ class FSListDelegate {
 
     //TODO - Consider the use of Multithreading
     for (var doc in querySnapshot.docs) {
-      objects.add(deserializer(doc.data()));
+      if (doc.exists) {
+        objects.add(deserializer(doc.data()));
+      }
     }
     return objects;
   }
@@ -54,7 +56,9 @@ class FSListDelegate {
 
     //TODO - Consider the use of Multithreading
     for (var doc in querySnapshot.docs) {
-      objects.add(deserializer(doc.data()));
+      if (doc.exists) {
+        objects.add(deserializer(doc.data()));
+      }
     }
     return objects;
   }

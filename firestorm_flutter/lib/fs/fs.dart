@@ -94,7 +94,7 @@ class FS {
   }
 
   /// Configures Firestore to use the emulator instead of the real database.
-  static enableEmulator(final String host, final int port) {
+  static useEmulator(final String host, final int port) {
     firestore.useFirestoreEmulator(host, port);
   }
 
