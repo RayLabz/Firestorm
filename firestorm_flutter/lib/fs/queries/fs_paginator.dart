@@ -13,7 +13,7 @@ class FSPaginator<T> {
   Query query;
 
   /// Creates a paginator for Firestore queries.
-  FSPaginator({ this.lastDocumentID, this.numOfDocuments = 10, this.subcollection }) : query = FS.instance.collection(T.toString()) {
+  FSPaginator({ this.lastDocumentID, this.numOfDocuments = 10, this.subcollection }) : query = FS.reference.collection(T, subcollection: subcollection) {
     query = query.orderBy("id");
   }
 
