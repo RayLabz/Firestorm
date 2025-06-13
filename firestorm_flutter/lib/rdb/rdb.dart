@@ -15,7 +15,7 @@ import 'delegates/rdb_update_delegate.dart';
 /// The main class for Firestorm, providing access to Firestore and various operations.
 class RDB {
 
-  static late FirebaseDatabase rdb;
+  static late FirebaseDatabase instance;
   static final Map<Type, Serializer> serializers = {};
   static final Map<Type, Deserializer> deserializers = {};
 
@@ -46,13 +46,13 @@ class RDB {
   /// Initializes the RDB instance. This should be called before any other Firestore operations.
   static init() async {
     await Firebase.initializeApp();
-    rdb = FirebaseDatabase.instance;
+    instance = FirebaseDatabase.instance;
   }
 
   /// Initializes the RDB instance with custom options.
   static initWithOptions(FirebaseOptions options) async {
     await Firebase.initializeApp(options: options);
-    rdb = FirebaseDatabase.instance;
+    instance = FirebaseDatabase.instance;
   }
 
   /// Constructs a path for a RDB object based on its type and ID.
@@ -73,17 +73,17 @@ class RDB {
 
   /// Enables local caching for Firestore data.
   static enableCaching() async {
-      rdb.setPersistenceEnabled(true);
+      instance.setPersistenceEnabled(true);
   }
 
   /// Disables local caching for Firestore data.
   static disableCaching() async {
-    rdb.setPersistenceEnabled(false);
+    instance.setPersistenceEnabled(false);
   }
 
   /// Configures RDB to use the emulator instead of the real database.
   static useEmulator(final String host, final int port) {
-    rdb.useDatabaseEmulator(host, port);
+    instance.useDatabaseEmulator(host, port);
   }
 
 }

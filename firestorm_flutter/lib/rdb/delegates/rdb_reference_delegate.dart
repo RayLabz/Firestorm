@@ -8,7 +8,7 @@ class RDBReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
   DatabaseReference documentFromID(Type type, String documentID, { String? subcollection }) {
-    return RDB.rdb.ref(RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection));
+    return RDB.instance.ref(RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection));
   }
 
   /// Returns a reference to a document using an object.
@@ -16,7 +16,7 @@ class RDBReferenceDelegate {
     if (object == null) {
       throw NullIDException("Cannot get document reference from null object");
     }
-    return RDB.rdb.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+    return RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
   }
 
   /// Returns a reference to a document using its path.
@@ -27,12 +27,12 @@ class RDBReferenceDelegate {
     if (!path.contains("/")) {
       throw NullIDException("Cannot get document reference from invalid path: $path");
     }
-    return RDB.rdb.ref(path);
+    return RDB.instance.ref(path);
   }
 
   /// Returns a reference to a collection using its class.
   DatabaseReference collection(Type type, { String? subcollection }) {
-    return RDB.rdb.ref(RDB.constructPathForClass(type, subcollection: subcollection));
+    return RDB.instance.ref(RDB.constructPathForClass(type, subcollection: subcollection));
   }
 
 }

@@ -13,7 +13,7 @@ class FSTransactionDelegate {
   /// Runs a transaction in Firestore.
   Future<void> run(Future<void> Function(FSTransactionHandler transaction) handler,
       {int maxAttempts = 5, Duration timeout = const Duration(seconds: 30)}) async {
-    await FS.firestore.runTransaction((tx) async {
+    await FS.instance.runTransaction((tx) async {
       final inliner = FSTransactionInliner(handler);
       inliner.create = FSTransactionCreateDelegate.init(tx);
       inliner.get = FSTransactionGetDelegate.init(tx);

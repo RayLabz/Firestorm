@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/delegates/fs_get_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_listen_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_reference_delegate.dart';
+import 'package:firestorm/fs/queries/fs_paginator.dart';
 import 'package:flutter/foundation.dart';
 
 import '../firestorm.dart';
@@ -17,7 +18,7 @@ import 'delegates/fs_update_delegate.dart';
 /// The main class for Firestorm, providing access to Firestore and various operations.
 class FS {
 
-  static late FirebaseFirestore firestore;
+  static late FirebaseFirestore instance;
   static final Map<Type, Serializer> serializers = {};
   static final Map<Type, Deserializer> deserializers = {};
 
@@ -32,6 +33,11 @@ class FS {
   static final FSListenDelegate listen = FSListenDelegate();
   static final FSTransactionDelegate transaction = FSTransactionDelegate();
   static final FSBatchDelegate batch = FSBatchDelegate();
+
+  /// Creates a paginator for Firestore queries.
+  static FSPaginator<T> paginate<T>({ String? lastDocumentID, int limit = 10, String? subcollection }) {
+    return FSPaginator<T>(lastDocumentID: lastDocumentID, numOfDocuments: limit, subcollection: subcollection);
+  }
 
   /// Registers a serializer for a specific type. Needed for dynamically serializing objects.
   /// NOTE: This function is called by generated code in the target Flutter app.
@@ -50,24 +56,24 @@ class FS {
   /// Initializes the Firestore instance. This should be called before any other Firestore operations.
   static init() async {
     await Firebase.initializeApp();
-    firestore = FirebaseFirestore.instance;
+    instance = FirebaseFirestore.instance;
   }
 
   /// Initializes the Firestore instance with custom options.
   static initWithOptions(FirebaseOptions options) async {
     await Firebase.initializeApp(options: options);
-    firestore = FirebaseFirestore.instance;
+    instance = FirebaseFirestore.instance;
   }
 
   /// Enables local caching for Firestore data.
   static enableCaching() async {
     //WEB:
     if (kIsWeb) {
-      await firestore.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+      await instance.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
     }
     //MOBILE (iOS & Android)
     else {
-      firestore.settings = const Settings(persistenceEnabled: true);
+      instance.settings = const Settings(persistenceEnabled: true);
     }
   }
 
@@ -79,23 +85,23 @@ class FS {
     }
     //MOBILE (iOS & Android)
     else {
-      firestore.settings = const Settings(persistenceEnabled: false);
+      instance.settings = const Settings(persistenceEnabled: false);
     }
   }
 
   /// Enables network access for Firestore.
   static Future<void> enableNetwork() async {
-    await firestore.enableNetwork();
+    await instance.enableNetwork();
   }
 
   /// Disables network access for Firestore.
   static Future<void> disableNetwork() async {
-    await firestore.disableNetwork();
+    await instance.disableNetwork();
   }
 
   /// Configures Firestore to use the emulator instead of the real database.
   static useEmulator(final String host, final int port) {
-    firestore.useFirestoreEmulator(host, port);
+    instance.useFirestoreEmulator(host, port);
   }
 
 }

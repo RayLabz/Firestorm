@@ -17,7 +17,7 @@ class FSListDelegate {
       throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = FS.firestore.collection(type.toString());
+    var collectionReference = FS.instance.collection(type.toString());
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -46,7 +46,7 @@ class FSListDelegate {
       throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = FS.firestore.collection(type.toString());
+    var collectionReference = FS.instance.collection(type.toString());
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -65,7 +65,7 @@ class FSListDelegate {
 
   /// Applies a filter to a specific type of items and returns a list of items.
   FSFilterable<T> filter<T>(Type type, { String? subcollection }) {
-    var collectionReference = FS.firestore.collection(type.toString());
+    var collectionReference = FS.instance.collection(type.toString());
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }

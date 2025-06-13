@@ -25,7 +25,7 @@ class RDBWriteBatch {
       updates[path] = map;
     }
 
-    await RDB.rdb.ref().update(updates);
+    await RDB.instance.ref().update(updates);
   }
 
   /// Updates objects in the RDB using a single operation.
@@ -47,7 +47,7 @@ class RDBWriteBatch {
       updates[path] = map;
     }
 
-    await RDB.rdb.ref().update(updates);
+    await RDB.instance.ref().update(updates);
   }
 
   /// Deletes objects in the RDB using a single operation.
@@ -68,7 +68,7 @@ class RDBWriteBatch {
       objectsToDelete[RDB.constructPathForClassAndID(object.runtimeType, map["id"], subcollection: subcollection)] = null;
     }
 
-    await RDB.rdb.ref().update(objectsToDelete);
+    await RDB.instance.ref().update(objectsToDelete);
   }
 
   /// Deletes objects in the RDB using a single operation.
@@ -80,7 +80,7 @@ class RDBWriteBatch {
       objectsToDelete[RDB.constructPathForClassAndID(type, id, subcollection: subcollection)] = null;
     }
 
-    await RDB.rdb.ref().update(objectsToDelete);
+    await RDB.instance.ref().update(objectsToDelete);
   }
 
 }

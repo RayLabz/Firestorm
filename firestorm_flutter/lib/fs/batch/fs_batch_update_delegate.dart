@@ -20,9 +20,9 @@ class FSBatchUpdateDelegate {
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
     return _batch.update(ref, map);
   }

@@ -16,9 +16,9 @@ class FSUpdateDelegate {
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
     await ref.update(map);
   }
@@ -33,7 +33,7 @@ class FSUpdateDelegate {
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
-    WriteBatch batch = FS.firestore.batch();
+    WriteBatch batch = FS.instance.batch();
     for (var object in objects) {
       if (object.runtimeType != T) {
         throw ArgumentError('All objects must be of type $T');
@@ -42,9 +42,9 @@ class FSUpdateDelegate {
       if (map["id"].isEmpty) {
         throw NullIDException(map);
       }
-      DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+      DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
       if (subcollection != null) {
-        ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
       batch.update(ref, map);
     }

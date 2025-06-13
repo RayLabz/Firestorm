@@ -21,7 +21,7 @@ class RDBListDelegate {
 
     List<T> objects = [];
     final String path = RDB.constructPathForClass(type, subcollection: subcollection);
-    final Query query = RDB.rdb.ref(path).limitToFirst(limit);
+    final Query query = RDB.instance.ref(path).limitToFirst(limit);
     final DataSnapshot snapshot = await query.get();
     if (snapshot.exists) {
       for (final childSnapshot in snapshot.children) {
@@ -45,7 +45,7 @@ class RDBListDelegate {
 
     List<T> objects = [];
     final String path = RDB.constructPathForClass(type, subcollection: subcollection);
-    final Query query = RDB.rdb.ref(path);
+    final Query query = RDB.instance.ref(path);
     final DataSnapshot snapshot = await query.get();
     if (snapshot.exists) {
       for (final childSnapshot in snapshot.children) {
@@ -61,7 +61,7 @@ class RDBListDelegate {
   /// Applies a filter to a specific type of items and returns a list of items.
   RDBFilterable<T> filter<T>(Type type, { String? subcollection }) {
     final String path = RDB.constructPathForClass(type, subcollection: subcollection);
-    DatabaseReference reference = RDB.rdb.ref(path);
+    DatabaseReference reference = RDB.instance.ref(path);
     return RDBFilterable<T>(reference, type);
   }
 

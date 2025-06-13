@@ -25,7 +25,7 @@ class RDBListenDelegate {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    DatabaseReference docRef = RDB.rdb.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -43,7 +43,7 @@ class RDBListenDelegate {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    DatabaseReference docRef = RDB.rdb.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
+    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -62,7 +62,7 @@ class RDBListenDelegate {
     }
     List<StreamSubscription<T?>> subscriptions = [];
     for (final object in objects) {
-      DatabaseReference docRef = RDB.rdb.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;
@@ -84,7 +84,7 @@ class RDBListenDelegate {
 
     List<StreamSubscription<T?>> subscriptions = [];
     for (final String id in ids) {
-      DatabaseReference docRef = RDB.rdb.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
+      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;

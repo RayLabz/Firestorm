@@ -9,14 +9,14 @@ class RDBExistDelegate {
       return false;
     }
     String path = RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection);
-    final snapshot = await RDB.rdb.ref(path).get();
+    final snapshot = await RDB.instance.ref(path).get();
     return snapshot.exists;
   }
 
   /// Checks if a document exists in the RDB using its type and ID.
   Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection }) async {
     String path = RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection);
-    final snapshot = await RDB.rdb.ref(path).get();
+    final snapshot = await RDB.instance.ref(path).get();
     return snapshot.exists;
   }
 

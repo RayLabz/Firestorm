@@ -17,7 +17,7 @@ class FSBatchDelegate {
 
   /// Runs a batch in Firestore.
   Future<void> run(void Function(FSBatchHandler batch) batchHandler) async {
-    final batch = FS.firestore.batch();
+    final batch = FS.instance.batch();
     final inliner = FSBatchInliner(batchHandler);
     inliner.create = FSBatchCreateDelegate.init(batch);
     inliner.update = FSBatchUpdateDelegate.init(batch);

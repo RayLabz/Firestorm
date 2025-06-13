@@ -16,10 +16,10 @@ class FSDeleteDelegate {
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
 
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
 
     return await ref.delete();
@@ -36,15 +36,15 @@ class FSDeleteDelegate {
       throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
 
-    WriteBatch batch = FS.firestore.batch();
+    WriteBatch batch = FS.instance.batch();
     for (T object in objects) {
       final map = serializer(object);
       if (map["id"].isEmpty) {
         throw NullIDException(map);
       }
-      DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+      DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
       if (subcollection != null) {
-        ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
       batch.delete(ref);
     }
@@ -53,9 +53,9 @@ class FSDeleteDelegate {
 
   /// Deletes a document from Firestore by its type and document ID.
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) async {
-    DocumentReference ref = FS.firestore.collection(type.toString()).doc(documentID);
+    DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
     if (subcollection != null) {
-      ref = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+      ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
     }
     return await ref.delete();
   }
@@ -66,11 +66,11 @@ class FSDeleteDelegate {
     if (documentIDs.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
     }
-    WriteBatch batch = FS.firestore.batch();
+    WriteBatch batch = FS.instance.batch();
     for (String id in documentIDs) {
-      DocumentReference ref = FS.firestore.collection(type.toString()).doc(id);
+      DocumentReference ref = FS.instance.collection(type.toString()).doc(id);
       if (subcollection != null) {
-        ref = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+        ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
       }
       batch.delete(ref);
     }
@@ -82,11 +82,11 @@ class FSDeleteDelegate {
     if (iAmSure) {
       QuerySnapshot snapshot;
       if (subcollection == null) {
-        snapshot = await FS.firestore.collection(type.toString()).get();
+        snapshot = await FS.instance.collection(type.toString()).get();
       }
       else {
         snapshot =
-        await FS.firestore.collection(type.toString()).doc(subcollection)
+        await FS.instance.collection(type.toString()).doc(subcollection)
             .collection(subcollection)
             .get();
       }
@@ -95,7 +95,7 @@ class FSDeleteDelegate {
         throw ArgumentError(
             'Batch limit exceeded. Maximum 500 documents allowed.');
       }
-      WriteBatch batch = FS.firestore.batch();
+      WriteBatch batch = FS.instance.batch();
       for (QueryDocumentSnapshot doc in snapshot.docs) {
         batch.delete(doc.reference);
       }
