@@ -13,17 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6bbec1f-5213-46ab-8b5e-83f54a9aaed7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/fs/queries/fs_paginator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_create_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_create_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_delete_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_delete_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_exist_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_exist_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_get_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_get_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_list_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_list_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_listen_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_listen_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_reference_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_reference_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_update_delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/delegates/rdb_update_delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/rdb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../firestorm_flutter/lib/rdb/rdb.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
