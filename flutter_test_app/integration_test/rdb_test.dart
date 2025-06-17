@@ -156,6 +156,7 @@ void main() {
     },);
   });
 
+  //Note: Does not work with emulator due to index setup.
   testWidgets("Test list.filter(), test 2", (tester) async {
     var queryResult = await RDB.list.filter<ComputingStudent>(ComputingStudent)
         .limitToLast(5)
@@ -174,9 +175,6 @@ void main() {
       }
     }
   });
-
-
-
 
   /* ----------------------------------------------------------------------*/
 
