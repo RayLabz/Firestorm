@@ -13,7 +13,7 @@ void main() {
 
   //Emulator settings
   const String emulatorHost = "127.0.0.1";
-  const int emulatorPort = 9000;
+  const int emulatorPort = 8080;
 
   //Test data
   final ComputingStudent student = ComputingStudent.generateRandomStudent();
@@ -147,8 +147,9 @@ void main() {
 
   testWidgets("Test list.filter(), test 1", (tester) async {
     var queryResult = await FS.list.filter<ComputingStudent>(ComputingStudent)
-        .limit(3)
+        .orderBy("height")
         .startAt([1.70])
+        .limit(3)
         .fetch();
     assert(queryResult.items.length <= 3);
     queryResult.items.forEach((element) {
@@ -159,9 +160,9 @@ void main() {
   //Note: Does not work with emulator due to index setup.
   testWidgets("Test list.filter(), test 2", (tester) async {
     var queryResult = await FS.list.filter<ComputingStudent>(ComputingStudent)
-        .limit(5)
-        .endAt([1.70])
         .orderBy("height")
+        .endAt([1.70])
+        .limit(5)
         .fetch();
     assert(queryResult.items.length <= 5);
     queryResult.items.forEach((element) {
