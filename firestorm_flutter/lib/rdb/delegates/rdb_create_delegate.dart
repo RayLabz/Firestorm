@@ -18,7 +18,7 @@ class RDBCreateDelegate {
       throw NullIDException(map);
     }
 
-    final reference = RDB.rdb.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id));
+    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id));
     return reference.set(map);
   }
 

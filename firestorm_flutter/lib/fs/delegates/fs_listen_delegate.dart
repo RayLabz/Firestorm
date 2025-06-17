@@ -25,9 +25,9 @@ class FSListenDelegate {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    var docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+    var docRef = FS.instance.collection(object.runtimeType.toString()).doc(object.id);
     if (subcollection != null) {
-      docRef = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+      docRef = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
     }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
@@ -46,9 +46,9 @@ class FSListenDelegate {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    var docRef = FS.firestore.collection(type.toString()).doc(id);
+    var docRef = FS.instance.collection(type.toString()).doc(id);
     if (subcollection != null) {
-      docRef = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+      docRef = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
@@ -68,9 +68,9 @@ class FSListenDelegate {
     }
     List<StreamSubscription<T?>> subscriptions = [];
     for (final object in objects) {
-      var docRef = FS.firestore.collection(object.runtimeType.toString()).doc(object.id);
+      var docRef = FS.instance.collection(object.runtimeType.toString()).doc(object.id);
       if (subcollection != null) {
-        docRef = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+        docRef = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
       }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
@@ -93,9 +93,9 @@ class FSListenDelegate {
 
     List<StreamSubscription<T?>> subscriptions = [];
     for (final String id in ids) {
-      var docRef = FS.firestore.collection(type.toString()).doc(id);
+      var docRef = FS.instance.collection(type.toString()).doc(id);
       if (subcollection != null) {
-        docRef = FS.firestore.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+        docRef = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
       }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }

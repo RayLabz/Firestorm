@@ -17,9 +17,9 @@ class FSCreateDelegate {
     if (id.isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(id);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(id);
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
     return ref.set(map);
   }
@@ -30,7 +30,7 @@ class FSCreateDelegate {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
-    WriteBatch batch = FS.firestore.batch();
+    WriteBatch batch = FS.instance.batch();
     for (var object in objects) {
       final serializer = FS.serializers[object.runtimeType];
 
@@ -42,9 +42,9 @@ class FSCreateDelegate {
         throw NullIDException(map);
       }
 
-      DocumentReference documentReference = FS.firestore.collection(T.toString()).doc(map["id"]);
+      DocumentReference documentReference = FS.instance.collection(T.toString()).doc(map["id"]);
       if (subcollection != null) {
-        documentReference = FS.firestore.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        documentReference = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
 
       batch.set(documentReference, serializer(object));

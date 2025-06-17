@@ -15,9 +15,9 @@ class FSTransactionGetDelegate {
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
-    DocumentReference ref = FS.firestore.collection(T.toString()).doc(documentID);
+    DocumentReference ref = FS.instance.collection(T.toString()).doc(documentID);
     if (subcollection != null) {
-      ref = FS.firestore.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+      ref = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
     }
     DocumentSnapshot snapshot =  await _tx.get(ref);
     if (!snapshot.exists) {

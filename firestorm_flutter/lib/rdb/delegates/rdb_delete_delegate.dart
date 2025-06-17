@@ -19,7 +19,7 @@ class RDBDeleteDelegate {
       throw NullIDException(map);
     }
 
-    final reference = RDB.rdb.ref(RDB.constructPathForClassAndID(object.runtimeType, id, subcollection: subcollection));
+    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, id, subcollection: subcollection));
     return reference.remove();
   }
 
@@ -36,7 +36,7 @@ class RDBDeleteDelegate {
   /// Deletes a document from RDB by its type and document ID.
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) async {
     String path = RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection);
-    final reference = RDB.rdb.ref(path);
+    final reference = RDB.instance.ref(path);
     return reference.remove();
   }
 
@@ -54,7 +54,7 @@ class RDBDeleteDelegate {
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
       //Get the objects of this type:
-      final reference = RDB.rdb.ref(type.toString());
+      final reference = RDB.instance.ref(type.toString());
       final snapshot = await reference.once();
       if (snapshot.snapshot.value == null) {
         return;

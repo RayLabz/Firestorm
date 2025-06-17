@@ -20,9 +20,9 @@ class FSTransactionDeleteDelegate {
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
     return _tx.delete(ref);
   }
@@ -53,7 +53,7 @@ class FSTransactionDeleteDelegate {
 
   /// Deletes a document from Firestore by its type and document ID.
   Future<Transaction> oneWithID(Type type, String documentID) async {
-    DocumentReference ref = FS.firestore.collection(type.toString()).doc(documentID);
+    DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
     return _tx.delete(ref);
   }
 

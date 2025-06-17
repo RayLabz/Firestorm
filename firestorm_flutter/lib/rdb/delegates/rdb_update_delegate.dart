@@ -18,7 +18,7 @@ class RDBUpdateDelegate {
       throw NullIDException(map);
     }
     final String path = RDB.constructPathForClassAndID(object.runtimeType, map["id"], subcollection: subcollection);
-    DatabaseReference ref = RDB.rdb.ref(path);
+    DatabaseReference ref = RDB.instance.ref(path);
     await ref.update(map);
   }
 

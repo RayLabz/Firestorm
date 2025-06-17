@@ -21,9 +21,9 @@ class FSBatchCreateDelegate {
     if (id.isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.firestore.collection(object.runtimeType.toString()).doc(id);
+    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(id);
     if (subcollection != null) {
-      ref = FS.firestore.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
     _batch.set(ref, map);
   }

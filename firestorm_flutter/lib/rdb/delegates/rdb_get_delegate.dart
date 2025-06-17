@@ -18,7 +18,7 @@ class RDBGetDelegate {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
     String path = RDB.constructPathForClassAndID(T, documentID, subcollection: subcollection);
-    DataSnapshot snapshot = await RDB.rdb.ref(path).get();
+    DataSnapshot snapshot = await RDB.instance.ref(path).get();
     if (snapshot.exists) {
       final Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot);
       return deserializer(data) as T;
