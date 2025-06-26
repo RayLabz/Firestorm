@@ -34,12 +34,12 @@ class FSCreateDelegate {
      return;
     }
 
-    final serializer = FS.serializers[T];
+    final serializer = FS.serializers[objects[0].runtimeType];
 
     if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${T}. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
-    final map = serializer(T);
+    final map = serializer(objects[0].runtimeType);
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
