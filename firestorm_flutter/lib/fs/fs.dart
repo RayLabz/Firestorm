@@ -104,4 +104,9 @@ class FS {
     instance.useFirestoreEmulator(host, port);
   }
 
+  /// Shuts down the Firestore instance. If used again, a new instance has to be created by calling [FS.init()]
+  static Future<void> shutdown() {
+    return instance.terminate();
+  }
+
 }

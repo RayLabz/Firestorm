@@ -86,4 +86,9 @@ class RDB {
     instance.useDatabaseEmulator(host, port);
   }
 
+  /// Shuts down the RDB instance. If used again, a new instance has to be created by calling [RDB.init()]
+  static Future<void> shutdown() {
+    return instance.goOffline();
+  }
+
 }
