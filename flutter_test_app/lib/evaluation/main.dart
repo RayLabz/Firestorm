@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_app/evaluation/create/eval_create_fsapi.dart';
 import 'package:flutter_test_app/evaluation/create/eval_create_many_firestorm.dart';
 import 'package:flutter_test_app/evaluation/create/eval_create_many_fsapi.dart';
-import 'package:flutter_test_app/evaluation/create/eval_get_firestorm.dart';
-import 'package:flutter_test_app/evaluation/create/eval_get_fsapi.dart';
-import 'package:flutter_test_app/evaluation/create/eval_update_fsapi.dart';
-import 'package:flutter_test_app/evaluation/create/eval_update_many_fsapi.dart';
+import 'package:flutter_test_app/evaluation/get/eval_get_fsapi.dart';
+import 'package:flutter_test_app/evaluation/update/eval_update_fsapi.dart';
+import 'package:flutter_test_app/evaluation/update/eval_update_many_fsapi.dart';
 
 import '../generated/firestorm_models.dart';
 import 'create/eval_create_firestorm.dart';
-import 'create/eval_delete_firestorm.dart';
-import 'create/eval_delete_fsapi.dart';
-import 'create/eval_delete_many_firestorm.dart';
-import 'create/eval_delete_many_fsapi.dart';
-import 'create/eval_get_many_firestorm.dart';
-import 'create/eval_get_many_fsapi.dart';
-import 'create/eval_update_firestorm.dart';
-import 'create/eval_update_many_firestorm.dart';
+import 'delete/eval_delete_firestorm.dart';
+import 'delete/eval_delete_fsapi.dart';
+import 'delete/eval_delete_many_firestorm.dart';
+import 'delete/eval_delete_many_fsapi.dart';
+import 'get/eval_get_firestorm.dart';
+import 'get/eval_get_many_firestorm.dart';
+import 'get/eval_get_many_fsapi.dart';
+import 'update/eval_update_firestorm.dart';
+import 'update/eval_update_many_firestorm.dart';
 
 main() async {
 
