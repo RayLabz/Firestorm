@@ -39,13 +39,14 @@ class FSCreateDelegate {
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
-    final map = serializer(objects[0].runtimeType);
-    if (map["id"].isEmpty) {
-      throw NullIDException(map);
-    }
 
     WriteBatch batch = FS.instance.batch();
     for (var object in objects) {
+
+      final map = serializer(object);
+      if (map["id"].isEmpty) {
+        throw NullIDException(map);
+      }
 
       DocumentReference documentReference = FS.instance.collection(T.toString()).doc(map["id"]);
       if (subcollection != null) {
