@@ -7,12 +7,18 @@ import 'package:flutter_test_app/evaluation/create/eval_create_many_fsapi.dart';
 import 'package:flutter_test_app/evaluation/create/eval_get_firestorm.dart';
 import 'package:flutter_test_app/evaluation/create/eval_get_fsapi.dart';
 import 'package:flutter_test_app/evaluation/create/eval_update_fsapi.dart';
+import 'package:flutter_test_app/evaluation/create/eval_update_many_fsapi.dart';
 
 import '../generated/firestorm_models.dart';
 import 'create/eval_create_firestorm.dart';
 import 'create/eval_delete_firestorm.dart';
 import 'create/eval_delete_fsapi.dart';
+import 'create/eval_delete_many_firestorm.dart';
+import 'create/eval_delete_many_fsapi.dart';
+import 'create/eval_get_many_firestorm.dart';
+import 'create/eval_get_many_fsapi.dart';
 import 'create/eval_update_firestorm.dart';
+import 'create/eval_update_many_firestorm.dart';
 
 main() async {
 
@@ -34,6 +40,12 @@ main() async {
 
   CreateManyEvaluationAPI createManyEvaluationAPI = CreateManyEvaluationAPI();
   CreateManyEvaluationFirestorm createManyEvaluationFirestorm = CreateManyEvaluationFirestorm();
+  GetManyEvaluationAPI getManyEvaluationAPI = GetManyEvaluationAPI();
+  GetManyEvaluationFS getManyEvaluationFS = GetManyEvaluationFS();
+  UpdateManyEvaluationAPI updateManyEvaluationAPI = UpdateManyEvaluationAPI();
+  UpdateManyEvaluationFS updateManyEvaluationFS = UpdateManyEvaluationFS();
+  DeleteManyEvaluationAPI deleteManyEvaluationAPI = DeleteManyEvaluationAPI();
+  DeleteManyEvaluationFS deleteManyEvaluationFS = DeleteManyEvaluationFS();
 
   //Run:
 
@@ -54,9 +66,20 @@ main() async {
   // deleteEvaluationFS.run();
 
   //create many
-  FS.enableMultithreading();
-  createManyEvaluationAPI.run();
-  createManyEvaluationFirestorm.run();
+  // createManyEvaluationAPI.run();
+  // createManyEvaluationFirestorm.run();
+
+  //get many
+  // getManyEvaluationAPI.run();
+  // getManyEvaluationFS.run();
+
+  //update many
+  // updateManyEvaluationAPI.run();
+  // updateManyEvaluationFS.run();
+
+  //delete many
+  deleteManyEvaluationAPI.run();
+  deleteManyEvaluationFS.run();
 
   runApp(Container());
 }

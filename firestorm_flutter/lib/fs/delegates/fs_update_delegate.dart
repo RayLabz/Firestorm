@@ -7,7 +7,7 @@ import '../fs.dart';
 class FSUpdateDelegate {
 
   /// Updates a document in Firestore with the given object.
-  Future<void> one<T>(T object, { String? subcollection }) async {
+  Future<void> one<T>(T object, { String? subcollection }) {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -20,11 +20,11 @@ class FSUpdateDelegate {
     if (subcollection != null) {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
-    await ref.update(map);
+    return ref.update(map);
   }
 
   /// Updates multiple documents in Firestore with a list of objects.
-  Future<void> many<T>(List<T> objects, { String? subcollection }) async {
+  Future<void> many<T>(List<T> objects, { String? subcollection }) {
     if (objects.isEmpty) return Future.value();
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');

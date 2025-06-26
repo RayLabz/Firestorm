@@ -26,12 +26,12 @@ class FSCreateDelegate {
 
   /// Creates multiple documents in Firestore from a list of objects.
   /// Uses a batch operation for efficiency.
-  Future<void> many<T>(List<T> objects, { String? subcollection }) async {
+  Future<void> many<T>(List<T> objects, { String? subcollection }) {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
     if (objects.isEmpty) {
-     return;
+     return Future.value();
     }
 
     final serializer = FS.serializers[objects[0].runtimeType];

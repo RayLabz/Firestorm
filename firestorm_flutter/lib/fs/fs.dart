@@ -21,7 +21,7 @@ class FS {
   static late FirebaseFirestore instance;
   static final Map<Type, Serializer> serializers = {};
   static final Map<Type, Deserializer> deserializers = {};
-  static bool multithreadingEnabled = false;
+  // static bool multithreadingEnabled = false;
 
   //Operation delegates:
   static final FSCreateDelegate create = FSCreateDelegate();
@@ -104,18 +104,18 @@ class FS {
   static useEmulator(final String host, final int port) {
     instance.useFirestoreEmulator(host, port);
   }
-
-  /// Enables multithreading for Firestore operations.
-  static enableMultithreading() {
-    if (kIsWeb) {
-      throw UnsupportedError('Multithreading is not supported on web.');
-    }
-  }
-
-  /// Disables multithreading for Firestore operations.
-  static disableMultithreading() {
-    multithreadingEnabled = false;
-  }
+  //
+  // /// Enables multithreading for Firestore operations.
+  // static enableMultithreading() {
+  //   if (kIsWeb) {
+  //     throw UnsupportedError('Multithreading is not supported on web.');
+  //   }
+  // }
+  //
+  // /// Disables multithreading for Firestore operations.
+  // static disableMultithreading() {
+  //   multithreadingEnabled = false;
+  // }
 
   /// Shuts down the Firestore instance. If used again, a new instance has to be created by calling [FS.init()]
   static Future<void> shutdown() {

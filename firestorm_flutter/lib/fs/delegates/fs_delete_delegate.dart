@@ -7,7 +7,7 @@ import '../fs.dart';
 class FSDeleteDelegate {
 
   /// Deletes a document from Firestore using an object.
-  Future<void> one<T>(T object, { String? subcollection }) async {
+  Future<void> one<T>(T object, { String? subcollection }) {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -22,42 +22,37 @@ class FSDeleteDelegate {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
 
-    return await ref.delete();
+    return ref.delete();
   }
 
   /// Deletes multiple documents from Firestore using a list of objects.
-  Future<void> many<T>(List<T> objects, { String? subcollection }) async {
-    if (objects.isEmpty) return;
+  Future<void> many<T>(List<T> objects, { String? subcollection }) {
+    if (objects.isEmpty) return Future.value();
     if (objects.length > 500) {
       throw ArgumentError('Batch delete limit exceeded. Maximum 500 objects allowed.');
     }
-    final serializer = FS.serializers[objects[0].runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
-    }
 
-    WriteBatch batch = FS.instance.batch();
-    for (T object in objects) {
-      final map = serializer(object);
-      if (map["id"].isEmpty) {
-        throw NullIDException(map);
+    List<Future<void>> futures = [];
+    for (dynamic object in objects) {
+      if (object.id == null) {
+        continue; //skip
       }
-      DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+      DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(object.id);
       if (subcollection != null) {
-        ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
       }
-      batch.delete(ref);
+      futures.add(ref.delete());
     }
-    return await batch.commit();
+    return Future.wait(futures);
   }
 
   /// Deletes a document from Firestore by its type and document ID.
-  Future<void> oneWithID(Type type, String documentID, { String? subcollection }) async {
+  Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
     DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
     if (subcollection != null) {
       ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
     }
-    return await ref.delete();
+    return ref.delete();
   }
 
   /// Deletes multiple documents from Firestore by their type and a list of document IDs.
@@ -74,7 +69,7 @@ class FSDeleteDelegate {
       }
       batch.delete(ref);
     }
-    return await batch.commit();
+    return batch.commit();
   }
 
   /// Deletes all documents of a specific type from Firestore.
@@ -90,7 +85,7 @@ class FSDeleteDelegate {
             .collection(subcollection)
             .get();
       }
-      if (snapshot.docs.isEmpty) return;
+      if (snapshot.docs.isEmpty) return Future.value();
       if (snapshot.docs.length > 500) {
         throw ArgumentError(
             'Batch limit exceeded. Maximum 500 documents allowed.');
@@ -99,7 +94,7 @@ class FSDeleteDelegate {
       for (QueryDocumentSnapshot doc in snapshot.docs) {
         batch.delete(doc.reference);
       }
-      return await batch.commit();
+      return batch.commit();
     }
   }
 
