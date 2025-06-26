@@ -14,15 +14,19 @@ main() async {
   await RDB.init();
   registerClasses();
 
-  FSPaginator<ComputingStudent> paginator = FS.paginate<ComputingStudent>();
+  // ComputingStudent computingStudent = ComputingStudent.generateRandomStudent();
+  // await FS.create.one(computingStudent);
+  // print("Created: ${computingStudent.id}");
 
-  var fsQueryResult = await paginator.next();
-  print("Printing page 1");
-  fsQueryResult.items.forEach((element) => print(element.id),);
-
-  fsQueryResult = await paginator.next();
-  print("Printing page 2");
-  fsQueryResult.items.forEach((element) => print(element.id),);
+  // FSPaginator<ComputingStudent> paginator = FS.paginate<ComputingStudent>();
+  //
+  // var fsQueryResult = await paginator.next();
+  // print("Printing page 1");
+  // fsQueryResult.items.forEach((element) => print(element.id),);
+  //
+  // fsQueryResult = await paginator.next();
+  // print("Printing page 2");
+  // fsQueryResult.items.forEach((element) => print(element.id),);
 
   // List<ComputingStudent> students = ComputingStudent.generateStudents(3);
   // await RDB.create.many(students);

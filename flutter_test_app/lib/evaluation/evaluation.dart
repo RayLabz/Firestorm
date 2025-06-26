@@ -6,9 +6,6 @@ abstract class EvaluationRuntime {
   setup() {}
 
   ///Runs the evaluation.
-  run(List<String>? args);
-
-  ///Shuts down the environment.
-  shutdown() {}
+  run({List<String>? args});
 
 }

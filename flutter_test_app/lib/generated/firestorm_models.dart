@@ -11,6 +11,8 @@ import 'package:firestorm/fs/fs.dart';
 import 'package:firestorm/rdb/rdb.dart';
 import 'package:flutter_test_app/address.dart';
 import 'package:flutter_test_app/computing_student.dart';
+import 'package:flutter_test_app/evaluation/car.dart';
+import 'package:flutter_test_app/evaluation/motorcycle.dart';
 import 'package:flutter_test_app/person.dart';
 import 'package:flutter_test_app/student.dart';
 import 'package:flutter_test_app/crazy.dart';
@@ -78,7 +80,61 @@ extension ComputingStudentModel on ComputingStudent {
 			 map['pathway'] as String,
 			 null,
 			 AddressModel.fromMap(Map<String, dynamic>.from(map['address'] as Map)),
-			 map['grades'].cast<String, int>(),
+			 map['grades'] != null ? map['grades'].cast<String, int>() : {},
+		 );
+	 }
+
+}
+
+// - - - - - - - FirestormObject Car - - - - - - -
+
+extension CarModel on Car {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
+	 Map<String, dynamic> toMap() {
+		 return {
+			 'id': this.id,
+			 'brand': this.brand,
+			 'model': this.model,
+			 'doors': this.doors,
+		 };
+	 }
+
+	static Car fromMap(Map<String, dynamic> map) {
+		 return Car(
+			 map['id'] as String,
+			 map['brand'] as String,
+			 map['model'] as String,
+			 map['doors'] as int,
+		 );
+	 }
+
+}
+
+// - - - - - - - FirestormObject Motorcycle - - - - - - -
+
+extension MotorcycleModel on Motorcycle {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
+	 Map<String, dynamic> toMap() {
+		 return {
+			 'id': this.id,
+			 'brand': this.brand,
+			 'model': this.model,
+			 'type': this.type,
+		 };
+	 }
+
+	static Motorcycle fromMap(Map<String, dynamic> map) {
+		 return Motorcycle(
+			 map['id'] as String,
+			 map['brand'] as String,
+			 map['model'] as String,
+			 map['type'] as String,
 		 );
 	 }
 
@@ -111,7 +167,7 @@ extension PersonModel on Person {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'].cast<String>(),
+			 map['friends'] != null ? map['friends'].cast<String>() : [],
 		 );
 	 }
 
@@ -146,7 +202,7 @@ extension StudentModel on Student {
 			 map['age'] as int,
 			 map['height'] as double,
 			 map['isEmployed'] as bool,
-			 map['friends'].cast<String>(),
+			 map['friends'] != null ? map['friends'].cast<String>() : [],
 			 map['studentID'] as String,
 			 map['school'] as String,
 		 );
@@ -184,6 +240,8 @@ extension CrazyModel on Crazy {
 final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
 	Address: (object) => (object as Address).toMap(),
 	ComputingStudent: (object) => (object as ComputingStudent).toMap(),
+	Car: (object) => (object as Car).toMap(),
+	Motorcycle: (object) => (object as Motorcycle).toMap(),
 	Person: (object) => (object as Person).toMap(),
 	Student: (object) => (object as Student).toMap(),
 	Crazy: (object) => (object as Crazy).toMap(),
@@ -192,6 +250,8 @@ final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
 final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {
 	Address: (map) => AddressModel.fromMap(map),
 	ComputingStudent: (map) => ComputingStudentModel.fromMap(map),
+	Car: (map) => CarModel.fromMap(map),
+	Motorcycle: (map) => MotorcycleModel.fromMap(map),
 	Person: (map) => PersonModel.fromMap(map),
 	Student: (map) => StudentModel.fromMap(map),
 	Crazy: (map) => CrazyModel.fromMap(map),
@@ -220,6 +280,10 @@ registerClasses() {
 	FS.registerDeserializer<ComputingStudent>((map) => ComputingStudentModel.fromMap(map));
 	FS.registerSerializer<Crazy>((object) => object.toMap());
 	FS.registerDeserializer<Crazy>((map) => CrazyModel.fromMap(map));
+	FS.registerSerializer<Car>((object) => object.toMap());
+	FS.registerDeserializer<Car>((map) => CarModel.fromMap(map));
+	FS.registerSerializer<Motorcycle>((object) => object.toMap());
+	FS.registerDeserializer<Motorcycle>((map) => MotorcycleModel.fromMap(map));
 	FS.registerSerializer<Person>((object) => object.toMap());
 	FS.registerDeserializer<Person>((map) => PersonModel.fromMap(map));
 	FS.registerSerializer<Student>((object) => object.toMap());
@@ -228,6 +292,10 @@ registerClasses() {
 	RDB.registerDeserializer<Address>((map) => AddressModel.fromMap(map));
 	RDB.registerSerializer<ComputingStudent>((object) => object.toMap());
 	RDB.registerDeserializer<ComputingStudent>((map) => ComputingStudentModel.fromMap(map));
+	RDB.registerSerializer<Car>((object) => object.toMap());
+	RDB.registerDeserializer<Car>((map) => CarModel.fromMap(map));
+	RDB.registerSerializer<Motorcycle>((object) => object.toMap());
+	RDB.registerDeserializer<Motorcycle>((map) => MotorcycleModel.fromMap(map));
 	RDB.registerSerializer<Person>((object) => object.toMap());
 	RDB.registerDeserializer<Person>((map) => PersonModel.fromMap(map));
 	RDB.registerSerializer<Student>((object) => object.toMap());

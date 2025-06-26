@@ -1,5 +1,62 @@
-main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firestorm/fs/fs.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test_app/evaluation/create/eval_create_fsapi.dart';
+import 'package:flutter_test_app/evaluation/create/eval_create_many_firestorm.dart';
+import 'package:flutter_test_app/evaluation/create/eval_create_many_fsapi.dart';
+import 'package:flutter_test_app/evaluation/create/eval_get_firestorm.dart';
+import 'package:flutter_test_app/evaluation/create/eval_get_fsapi.dart';
+import 'package:flutter_test_app/evaluation/create/eval_update_fsapi.dart';
 
+import '../generated/firestorm_models.dart';
+import 'create/eval_create_firestorm.dart';
+import 'create/eval_delete_firestorm.dart';
+import 'create/eval_delete_fsapi.dart';
+import 'create/eval_update_firestorm.dart';
 
+main() async {
 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FS.init();
+  FS.useEmulator("127.0.0.1", 8080);
+  registerClasses();
+
+  //Evaluations:
+  CreateEvaluationAPI createEvaluationAPI = CreateEvaluationAPI();
+  CreateEvaluationFS createEvaluationFS = CreateEvaluationFS();
+  GetEvaluationAPI getEvaluationAPI = GetEvaluationAPI();
+  GetEvaluationFS getEvaluationFS = GetEvaluationFS();
+  UpdateEvaluationAPI updateEvaluationAPI = UpdateEvaluationAPI();
+  UpdateEvaluationFS updateEvaluationFS = UpdateEvaluationFS();
+  DeleteEvaluationAPI deleteEvaluationAPI = DeleteEvaluationAPI();
+  DeleteEvaluationFS deleteEvaluationFS = DeleteEvaluationFS();
+
+  CreateManyEvaluationAPI createManyEvaluationAPI = CreateManyEvaluationAPI();
+  CreateManyEvaluationFirestorm createManyEvaluationFirestorm = CreateManyEvaluationFirestorm();
+
+  //Run:
+
+  //create
+  // createEvaluationAPI.run();
+  // createEvaluationFS.run();
+
+  //get
+  // getEvaluationAPI.run();
+  // getEvaluationFS.run();
+
+  //update
+  // updateEvaluationAPI.run();
+  // updateEvaluationFS.run();
+
+  //delete
+  // deleteEvaluationAPI.run();
+  // deleteEvaluationFS.run();
+
+  //create many
+  FS.enableMultithreading();
+  createManyEvaluationAPI.run();
+  createManyEvaluationFirestorm.run();
+
+  runApp(Container());
 }

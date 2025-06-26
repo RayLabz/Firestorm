@@ -30,17 +30,22 @@ class FSCreateDelegate {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
+    if (objects.isEmpty) {
+     return;
+    }
+
+    final serializer = FS.serializers[T];
+
+    if (serializer == null) {
+      throw UnsupportedError('No serializer found for type: ${T}. Consider re-generating Firestorm data classes.');
+    }
+    final map = serializer(T);
+    if (map["id"].isEmpty) {
+      throw NullIDException(map);
+    }
+
     WriteBatch batch = FS.instance.batch();
     for (var object in objects) {
-      final serializer = FS.serializers[object.runtimeType];
-
-      if (serializer == null) {
-        throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
-      }
-      final map = serializer(object);
-      if (map["id"].isEmpty) {
-        throw NullIDException(map);
-      }
 
       DocumentReference documentReference = FS.instance.collection(T.toString()).doc(map["id"]);
       if (subcollection != null) {
