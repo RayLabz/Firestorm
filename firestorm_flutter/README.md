@@ -17,7 +17,10 @@ and the Flutter guide for
 
 <p align="center">
     <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and Realtime Database</i>
-    <img src="media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200"/>
+</p>
+
+<p align="center">
+   <img src="media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200"/>
 </p>
 
 Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool for Firebase's <a target="_blank" href="https://firebase.google.com/docs/firestore">Firestore</a>
@@ -155,6 +158,35 @@ The guide covers the following topics:
 - How to use transactions and batch writes for Firestore.
 - How to use advanced features such as offline persistence, queries, and more.
 - How to use Firestorm with custom classes and inheritance.
+
+## Feature support
+
+Even though Firestorm provides a unified API for both Firestore and Realtime Database, it is important to note that the two databases have different capabilities and limitations. Firestorm aims to provide a consistent interface while respecting the unique features of each database.
+- **Firestore**: A NoSQL document database that allows for complex queries, offline support, and real-time updates.
+- **Realtime Database**: A cloud-hosted NoSQL database that provides real-time synchronization and is optimized for low-latency data access.
+
+| Feature          | Firestore | Realtime Database |
+|------------------|---------|-----------------|
+| Basic operations (CRUD) | ✅       | ✅               |
+| Subcollections    | ✅       | ✅               |
+| Real-time Listeners | ✅       | ✅               |
+| Offline Support  | ✅       | ✅               |
+| Batch Writes     | ✅       | ❌               |
+| Queries          | Complex | Basic only      |
+| Transactions     | ✅       | ❌               |
+| Pagination       | ✅       | ❌               |
+
+
+## Platform support
+| Platform | Firestore | Realtime Database |
+|----------|-----------|-------------------|
+| Android  | ✅         | ✅                 |
+| iOS      | ✅       | ✅                 |
+| Web      | ✅       | ✅                 |
+| Windows  | ✅       | ❌                 |
+| macOS    | ✅       | ✅                 |
+| Linux    | ❌        | ❌                |
+
 
 ## Information
 
