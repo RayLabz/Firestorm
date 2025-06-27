@@ -50,36 +50,36 @@ main() async {
   //Run:
 
   //create
-  // createEvaluationAPI.run();
-  // createEvaluationFS.run();
+  // await createEvaluationAPI.run();
+  // await createEvaluationFS.run();
 
   //get
-  // getEvaluationAPI.run();
-  // getEvaluationFS.run();
+  // await getEvaluationAPI.run();
+  // await getEvaluationFS.run();
 
   //update
-  // updateEvaluationAPI.run();
-  // updateEvaluationFS.run();
+  // await updateEvaluationAPI.run();
+  // await updateEvaluationFS.run();
 
   //delete
-  // deleteEvaluationAPI.run();
-  // deleteEvaluationFS.run();
+  // await deleteEvaluationAPI.run();
+  // await deleteEvaluationFS.run();
 
   //create many
-  // createManyEvaluationAPI.run();
-  // createManyEvaluationFirestorm.run();
+  // await createManyEvaluationAPI.run();
+  // await createManyEvaluationFirestorm.run();
 
   //get many
-  // getManyEvaluationAPI.run();
-  // getManyEvaluationFS.run();
+  // await getManyEvaluationAPI.run();
+  // await getManyEvaluationFS.run();
 
   //update many
-  // updateManyEvaluationAPI.run();
-  // updateManyEvaluationFS.run();
+  // await updateManyEvaluationAPI.run();
+  // await updateManyEvaluationFS.run();
 
   //delete many
-  // deleteManyEvaluationAPI.run();
-  // deleteManyEvaluationFS.run();
+  // await deleteManyEvaluationAPI.run();
+  // await deleteManyEvaluationFS.run();
 
   runApp(Container());
 }

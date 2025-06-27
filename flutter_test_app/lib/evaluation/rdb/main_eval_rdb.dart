@@ -78,8 +78,8 @@ main() async {
   // await updateManyEvaluationFRDB.run();
 
   //delete many
-  await deleteManyEvaluationRDBAPI.run();
-  await deleteManyEvaluationFRDB.run();
+  // await deleteManyEvaluationRDBAPI.run();
+  // await deleteManyEvaluationFRDB.run();
 
   runApp(Container());
 }
