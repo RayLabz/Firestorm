@@ -11,11 +11,18 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages). 
 -->
 
-# Firestorm for Dart & Flutter
+<div align="center">
+    <h1> Firestorm for Dart & Flutter</h1>
+</div>
 
-Firestorm is a data access and ORM tool for Firebase's <a href="https://firebase.google.com/docs/firestore">Firestore</a>
-and <a href="https://firebase.google.com/docs/database">Real-Time Database</a>. It is designed to enable the rapid 
-development of applications using these two datastores by providing a simple and intuitive API for interacting with data.
+<p align="center">
+    <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and Realtime Database</i>
+    <img src="media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200"/>
+</p>
+
+Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool for Firebase's <a target="_blank" href="https://firebase.google.com/docs/firestore">Firestore</a>
+and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. It is designed to enable the rapid 
+development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.
 
 Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase packages for Dart:
 
@@ -24,13 +31,23 @@ Firestorm is designed to be used with Dart and Flutter, and is built on top of t
 - <a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a>
 
 The primary aim of Firestorm is to _reduce development effort and time_ by providing an easy to use API for interacting with
-data in these datastores in an _object-oriented_ way, with _minimal to no overheads_ in terms of performance or flexibility.
+these datastores in an _object-oriented_ way, and with _minimal to no overheads_ in terms of performance or flexibility.
+
+Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a>
+(developer alias <a target="_blank" href="https://github.com/raylabz">RayLabz</a>) 
+at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
+
+[![pub package](https://img.shields.io/pub/v/firestorm.svg)](https://pub.dev/packages/firestorm)
+[![GitHub issues](https://img.shields.io/github/issues/RayLabz/Firestorm.svg)]()
+![GitHub stars](https://img.shields.io/github/stars/RayLabz/Firestorm.svg?style=social&label=Star)
+![GitHub license](https://img.shields.io/github/license/RayLabz/Firestorm.svg)
 
 ## Features
 
 1. An easy-to-use data access API.
-2. Object-oriented data access. 
-3. Automatic serialization and deserialization of data.
+2. Object-oriented data access with support for custom classes and inheritance.
+3. Built-in datastore type safety.
+3. Automatic serialization and deserialization of data from/to objects.
 4. Easy access to advanced features such as real-time updates, offline persistence, transactions, batch writes, and more.
 5. Support for both Firestore and Real-Time Database.
 6. Support for both plain Dart and Flutter projects.
@@ -39,28 +56,108 @@ data in these datastores in an _object-oriented_ way, with _minimal to no overhe
 
 ### Installation
 
-Install Firestorm by using the command line:
+Install/import Firestorm by running the following commands in your project folder terminal:
 
+Flutter projects:
+```bash
+flutter pub add firestorm
+```
+
+Plain Dart projects:
 ```bash
 dart pub add firestorm
 ```
 
--- OR --
+--- OR ---
 
 By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.0.1
+  firestorm: ^0.1.0
 ```
 
-## Using Firestorm
+## Getting started with Firestorm for Flutter
 
-TODO
+After importing Firestorm in your project, you can start using it by following these steps:
+1. **Configure the `google-services.json` file to your project.**
+   - For Android, place it in `android/app/`.
+   - For iOS, place it in `ios/Runner/`.
+   - For web, place it in `web/`.
+   - For desktop, place it in `linux/`, `macos/`, or `windows/` as appropriate.
+   - For more information on how to generate this file, refer to the official Firebase documentation for [Android](https://firebase.google.com/docs/android/setup), [iOS](https://firebase.google.com/docs/ios/setup), and [Web](https://firebase.google.com/docs/web/setup).
+2. **Create your custom data classes**
+    - <a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define custom classes.
+3. **Run build_runner to perform checks and generate `firestorm_models.dart`**:
+    - For Flutter, run:
+      ```bash
+      flutter pub run build_runner build --delete-conflicting-outputs
+      ```
+    - For plain Dart, run:
+      ```bash
+      dart run build_runner build --delete-conflicting-outputs
+      ```
+This will generate a file called `firestorm_models.dart` in the `lib/generated/` directory of your project.
+This file contains the generated code for your custom classes and is required for Firestorm to work with them.
 
+4. **Initialize Firestorm in your application.**
+   - For Flutter, you can do this in the `main()` function:
+     ```dart
+     import 'package:firebase_core/firebase_core.dart';
+     import 'package:firestorm/firestorm.dart';
+
+     void main() async {
+       WidgetsFlutterBinding.ensureInitialized(); //Ensures Flutter is initialized before Firebase
+       await FS.init(); //Initialize Firestorm to use Firestore
+       await RDB.init(); //Initialize Firestorm to use Realtime Database
+       registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
+       
+       runApp(MyApp()); //Run your app normally here.
+     }
+     ```
+   - For plain Dart, you can do this in the `main()` function:
+     ```dart
+     import 'package:firebase_core/firebase_core.dart';
+     import 'package:firestorm/firestorm.dart';
+
+     void main() async {
+       await FS.init(); //Initialize Firestorm to use Firestore
+       await RDB.init(); //Initialize Firestorm to use Realtime Database
+       registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
+       
+       // Run your code here...
+     }
+     ```
+     
+> [!TIP]
+> If you are using Firestorm with both Firestore and Realtime Database, you need to initialize both `FS` and `RDB`. If you only need one of them, you can initialize only the one you need.
+
+5. **Import the generated `firestorm_models.dart` file in your code (main.dart)**:
+   - This file contains the generated code for your custom classes and is required for Firestorm to work with them.
+   - You can import it like this:
+     ```dart
+     import '<your_project>/generated/firestorm_models.dart';
+     ```
+6. **Start using Firestorm in your code**
+    - You can now start using Firestorm to interact with Firestore or Realtime Database.
+    - For example, you can create, read, update, and delete documents in Firestore or Realtime Database using your custom classes.
+    - For more information on how to use Firestorm, refer to the [API Guide](api-guide.md).
+
+### Summary
+<img src="media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;"/>
 ---
 
+## API Guide
+For a detailed guide on how to use Firestorm, refer to the [API Guide](api-guide.md).
+The guide covers the following topics:
+- How to create, read, update, and delete documents in Firestore and Realtime Database.
+- How to use real-time updates with Firestorm.
+- How to use transactions and batch writes for Firestore.
+- How to use advanced features such as offline persistence, queries, and more.
+- How to use Firestorm with custom classes and inheritance.
+
 ## Information
+
 
 ### Requirements
 
@@ -71,7 +168,7 @@ TODO
 No known issues.
 
 > [!CAUTION]
-> Firestorm is currently under development and may contain bugs or issues. Please report any issues on our [GitHub repository](https://github.com/RayLabz/Firestorm/issues).
+> Firestorm is still an experimental tool and may contain bugs or issues. Please report any issues on our [GitHub repository](https://github.com/RayLabz/Firestorm/issues).
 
 ### Bug reports and feature requests
 
@@ -79,5 +176,5 @@ If you find a bug or have a feature request, [please report it on our GitHub rep
 
 ## License
 
-Firestorm is released under the Apache 2.0 License. See the [LICENSE](../LICENSE) file for more information.
+Firestorm is open-source and is released under the Apache 2.0 License. See the [LICENSE](../LICENSE) file for more information.
 

@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:firestorm/gen/class_checker.dart';
 
 class FSTypes {
 
@@ -17,6 +18,11 @@ class FSTypes {
         type.getDisplayString() == 'GeoPoint' ||
         type.getDisplayString() == 'Uint8List'
     ) {
+      return true;
+    }
+
+    //enums:
+    else if (ClassChecker.isEnumType(type)) {
       return true;
     }
 

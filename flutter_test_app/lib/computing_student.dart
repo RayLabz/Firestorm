@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test_app/student.dart';
 
 import 'address.dart';
+import 'custom_color.dart';
 
 @FirestormObject()
 class ComputingStudent extends Student {
@@ -15,6 +16,7 @@ class ComputingStudent extends Student {
   String pathway;
   Address address;
   Map<String, int> grades;
+  CustomColor favoriteColor;
 
   ComputingStudent(
       super.id,
@@ -29,7 +31,8 @@ class ComputingStudent extends Student {
       this.pathway,
       this.password,
       this.address,
-      this.grades
+      this.grades,
+      this.favoriteColor
     );
 
   static String generateRandomSubject() {
@@ -61,6 +64,7 @@ class ComputingStudent extends Student {
     final pathway = generateRandomPathway();
     final password = "password$id";
     final address = Address(id, "Street $id", "City $id");
+    final color = CustomColor.values[random.nextInt(CustomColor.values.length)];
     final grades = {
       generateRandomSubject(): random.nextInt(100),
       generateRandomSubject(): random.nextInt(100),
@@ -80,6 +84,7 @@ class ComputingStudent extends Student {
       password,
       address,
       grades,
+      color
     );
   }
 

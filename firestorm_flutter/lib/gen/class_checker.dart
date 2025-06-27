@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:colorful_text/colorful_text.dart';
 import 'package:firestorm/gen/valid_class_holder.dart';
 import 'package:firestorm/type/fs_types.dart';
@@ -125,6 +126,12 @@ class ClassChecker {
 
     //Return a ValidClassHolder with the valid classes:
     return ValidClassHolder(fsValidClasses, rdbValidClasses);
+  }
+
+  /// Checks if the given DartType is an enum.
+  static bool isEnumType(DartType type) {
+    return type is InterfaceType &&
+        type.element is EnumElement;
   }
 
 }

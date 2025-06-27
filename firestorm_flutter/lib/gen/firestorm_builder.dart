@@ -12,6 +12,7 @@ import 'class_checker.dart';
 import 'converter_generator.dart';
 import 'extension_generator.dart';
 
+/// A builder that generates Firestorm model extensions and converter functions
 class FirestormBuilder implements Builder {
 
   @override
@@ -37,6 +38,7 @@ class FirestormBuilder implements Builder {
 
     final Map<AssetId, Iterable<ClassElement>> allClasses = {};
     final Map<ClassElement, AssetId> assetIDs = {};
+    final Map<EnumElement, AssetId> enumAssetIds = {};
 
     //Read the classes from the files and store in allClasses map:
     await for (final input in buildStep.findAssets(Glob('lib/**.dart'))) { //iterates through all .dart files
@@ -46,9 +48,16 @@ class FirestormBuilder implements Builder {
       final libraryElement = await buildStep.resolver.libraryFor(input);
       final libraryReader = LibraryReader(libraryElement);
       allClasses[input] = libraryReader.classes;
+
       for (final aClass in libraryReader.classes) {
         assetIDs[aClass] = input; //Map each class to its AssetId
       }
+
+      //enums:
+      for (final aClass in libraryReader.enums) {
+        enumAssetIds[aClass] = input; //Map each enum to its AssetId
+      }
+
     }
 
     //Perform filtering
@@ -77,6 +86,11 @@ class FirestormBuilder implements Builder {
           allFilesClassHolder.hasFSSupport(validClass),
           allFilesClassHolder.hasRDBSupport(validClass)
       );
+    }
+
+    //Generate imports for enums:
+    for (final assetID in enumAssetIds.values) {
+      ImportGenerator.generateImports(importsBuffer, assetID);
     }
 
     //Generate the converter functions

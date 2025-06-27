@@ -1,6 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 
+import '../gen/class_checker.dart';
+
 class RDBTypes {
 
   ///Checks if the given Dart type is supported by Firestore.
@@ -23,6 +25,10 @@ class RDBTypes {
           isTypeSupported(listType.typeArguments[0])) {
         return true;
       }
+    }
+
+    else if (ClassChecker.isEnumType(type)) {
+      return true;
     }
 
     //maps, must have String keys and supported values

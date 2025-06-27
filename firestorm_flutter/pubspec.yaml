@@ -1,7 +1,7 @@
 name: firestorm
 description: "A data access API and ORM tool for Firebase Firestore and Real-Time database"
-version: 0.0.1
-homepage: "https://github.com/RayLabz/Firestorm"
+version: 0.1.0
+homepage: "https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter"
 
 environment:
   sdk: ^3.2.0

@@ -16,6 +16,7 @@ import 'package:flutter_test_app/evaluation/data/motorcycle.dart';
 import 'package:flutter_test_app/person.dart';
 import 'package:flutter_test_app/student.dart';
 import 'package:flutter_test_app/crazy.dart';
+import 'package:flutter_test_app/custom_color.dart';
 
 // - - - - - - - FirestormObject Address - - - - - - -
 
@@ -63,6 +64,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 'pathway': this.pathway,
 			 'address': this.address.toMap(),
 			 'grades': this.grades,
+			 'favoriteColor': this.favoriteColor.toString(),
 		 };
 	 }
 
@@ -81,6 +83,7 @@ extension ComputingStudentModel on ComputingStudent {
 			 null,
 			 AddressModel.fromMap(Map<String, dynamic>.from(map['address'] as Map)),
 			 map['grades'] != null ? map['grades'].cast<String, int>() : {},
+			 CustomColor.values.firstWhere((e) => e.toString() == map['favoriteColor'] as String),
 		 );
 	 }
 

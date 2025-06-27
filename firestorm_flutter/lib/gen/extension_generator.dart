@@ -3,6 +3,8 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:firestorm/exceptions/invalid_class_exception.dart';
 
+import 'class_checker.dart';
+
 /// Generates a Dart extension for the given class name.
 class ExtensionGenerator {
 
@@ -74,9 +76,14 @@ class ExtensionGenerator {
       }
       else {
         //If this is a user-defined type, expand it using it own toMap():
-        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType) {
+        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType && !ClassChecker.isEnumType(matchingField.type)) {
           classBuffer.writeln("\t\t\t '${param.name}': this.${param.name}.toMap(),"); //call toMap() on user-defined type
         }
+        //enum:
+        else if (ClassChecker.isEnumType(matchingField.type)) {
+          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name}.toString(),"); //not excluded (normal, enum)
+        }
+        //other:
         else {
           //Otherwise, just use the attribute:
           classBuffer.writeln("\t\t\t '${param.name}': this.${param.name},"); //not excluded (normal)
@@ -122,7 +129,7 @@ class ExtensionGenerator {
       }
       else {
         //If this is a user-defined type, use its own fromMap():
-        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType) {
+        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType && !ClassChecker.isEnumType(matchingField.type)) {
           classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),"); //call fromMap() on user-defined type
         }
         else {
@@ -135,6 +142,9 @@ class ExtensionGenerator {
             final listType = param.type as InterfaceType;
             DartType valueType = listType.typeArguments[1];
             classBuffer.writeln("\t\t\t map['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},"); //cast to Map<String, valueType>
+          }
+          else if (ClassChecker.isEnumType(param.type)) {
+            classBuffer.writeln("\t\t\t ${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),"); //(normal, enum)
           }
           else {
             classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
