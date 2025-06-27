@@ -174,6 +174,8 @@ No known issues.
 
 If you find a bug or have a feature request, [please report it on our GitHub repository](https://github.com/RayLabz/Firestorm/issues).
 
+View the [change log](CHANGELOG.md) for the latest updates and changes to Firestorm.
+
 ## License
 
 Firestorm is open-source and is released under the Apache 2.0 License. See the [LICENSE](../LICENSE) file for more information.

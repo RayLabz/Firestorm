@@ -106,3 +106,24 @@ class Person {
   
 }
 ```
+
+## Support for enums
+Firestorm supports enums as attributes in classes. Enums will be stored as their string representation in the database.
+
+```dart
+import 'package:firestorm/firestorm.dart';
+enum WeaponType { //---> Do NOT annoatate enums
+  sword,
+  bow,
+  gun,
+}
+@FirestormObject()
+class Weapon {
+  
+  String id;
+  WeaponType type;  //---> Enum as an attribute
+  
+  Weapon(this.id, this.type);
+  
+}
+```
