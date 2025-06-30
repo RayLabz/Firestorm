@@ -10,7 +10,7 @@ class FSTransactionGetDelegate {
   FSTransactionGetDelegate.init(this._tx);
 
   /// Reads a document from Firestore and converts it to the specified type, while in a transaction.
-  Future<T> one<T>(String documentID, { String? subcollection }) async {
+  Future<T?> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
