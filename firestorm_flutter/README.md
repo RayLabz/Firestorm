@@ -49,6 +49,7 @@ at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
 - [API Guide](#api-guide)
 - [Feature support](#feature-support)
 - [Platform support](#platform-support)
+- [Performance](#performance)
 - [Information](#information)
   - [Requirements](#requirements)
   - [Known issues](#known-issues)
@@ -197,6 +198,15 @@ Even though Firestorm provides a unified API for both Firestore and Realtime Dat
 | macOS    | ✅       | ✅                 |
 | Linux    | ❌        | ❌                |
 
+
+## Performance
+A primary consideration for Firestorm is efficient and minimal overheads.
+It uses the official Firebase packages for Dart, which are optimized for performance. Where
+necessary, it utilizes various techniques such as multithreading and multiplexing to ensure that
+the API is efficient and does not introduce unnecessary overheads. Firestorm's API is designed to
+be easy to use while its operations run at high performance.
+
+You can find the performance benchmarks and comparisons in the [performance](performance.md) section.
 
 ## Information
 
