@@ -27,12 +27,6 @@ Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool fo
 and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. It is designed to enable the rapid 
 development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.
 
-Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase packages for Dart:
-
-- <a href="https://pub.dev/packages/firebase_core">firebase_core</a>
-- <a href="https://pub.dev/packages/firebase_database">firebase_database</a>
-- <a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a>
-
 The primary aim of Firestorm is to _reduce development effort and time_ by providing an easy to use API for interacting with
 these datastores in an _object-oriented_ way, and with _minimal to no overheads_ in terms of performance or flexibility.
 
@@ -209,6 +203,14 @@ Even though Firestorm provides a unified API for both Firestore and Realtime Dat
 ### Requirements
 
 - Dart 3.2 or higher
+
+Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase packages for Dart:
+
+- <a href="https://pub.dev/packages/firebase_core">firebase_core</a>
+- <a href="https://pub.dev/packages/firebase_database">firebase_database</a>
+- <a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a>
+
+You do not need to add these packages manually, as Firestorm will automatically add them as dependencies when you install it.
 
 ### Known issues
 
