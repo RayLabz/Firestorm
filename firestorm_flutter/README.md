@@ -45,15 +45,31 @@ at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
 ![GitHub stars](https://img.shields.io/github/stars/RayLabz/Firestorm.svg?style=social&label=Star)
 ![GitHub license](https://img.shields.io/github/license/RayLabz/Firestorm.svg)
 
+---
+
+## Contents
+- [Features](#features)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+- [Getting started with Firestorm for Flutter](#getting-started-with-firestorm-for-flutter)
+- [API Guide](#api-guide)
+- [Feature support](#feature-support)
+- [Platform support](#platform-support)
+- [Information](#information)
+  - [Requirements](#requirements)
+  - [Known issues](#known-issues)
+  - [Bug reports and feature requests](#bug-reports-and-feature-requests)
+- [License](#license)
+
 ## Features
 
 1. An easy-to-use data access API.
 2. Object-oriented data access with support for custom classes and inheritance.
 3. Built-in datastore type safety.
-3. Automatic serialization and deserialization of data from/to objects.
-4. Easy access to advanced features such as real-time updates, offline persistence, transactions, batch writes, and more.
-5. Support for both Firestore and Real-Time Database.
-6. Support for both plain Dart and Flutter projects.
+4. Automatic serialization and deserialization of data from/to objects.
+5. Easy access to advanced features such as real-time updates, offline persistence, transactions, batch writes, and more.
+6. Support for both Firestore and Real-Time Database.
+7. Support for both plain Dart and Flutter projects.
 
 ## Getting started
 
@@ -83,14 +99,14 @@ dependencies:
 ## Getting started with Firestorm for Flutter
 
 After importing Firestorm in your project, you can start using it by following these steps:
-1. **Configure the `google-services.json` file to your project.**
+1. **Configure the `google-services.json` file in your project.**
    - For Android, place it in `android/app/`.
    - For iOS, place it in `ios/Runner/`.
    - For web, place it in `web/`.
    - For desktop, place it in `linux/`, `macos/`, or `windows/` as appropriate.
    - For more information on how to generate this file, refer to the official Firebase documentation for [Android](https://firebase.google.com/docs/android/setup), [iOS](https://firebase.google.com/docs/ios/setup), and [Web](https://firebase.google.com/docs/web/setup).
 2. **Create your custom data classes**
-    - <a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define custom classes.
+    - <a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define your data classes.
 3. **Run build_runner to perform checks and generate `firestorm_models.dart`**:
     - For Flutter, run:
       ```bash
@@ -157,7 +173,6 @@ The guide covers the following topics:
 - How to use real-time updates with Firestorm.
 - How to use transactions and batch writes for Firestore.
 - How to use advanced features such as offline persistence, queries, and more.
-- How to use Firestorm with custom classes and inheritance.
 
 ## Feature support
 
