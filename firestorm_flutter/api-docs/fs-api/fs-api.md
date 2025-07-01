@@ -110,23 +110,19 @@ await FS.update.many(people);
 await FS.delete.one(person);
 ```
 
+#### Single object using its ID with `delete.oneWithID()`:
+```dart
+await FS.delete.oneWithID(Person, "person-id");
+```
+
 #### Multiple objects (list) using `delete.many()`:
 ```dart
 await FS.delete.many(people);
 ```
 
-[Back to contents](#contents)
-
----
-
-#### Single object with ID using `delete.oneWithID()`:
+#### Many objects using their ID with `delete.manyWithID()`:
 ```dart
-await FS.delete.oneWithID("person-id");
-```
-
-#### Multiple objects (list) with IDs using `delete.manyWithIDs()`:
-```dart
-await FS.delete.manyWithIDs(["person-id-1", "person-id-2"]);
+await FS.delete.manyWithID(Person, ["person-id-1", "person-id-2"]);
 ```
 
 #### All objects of a type using `delete.all()`:
@@ -171,7 +167,7 @@ bool exists = await FS.exists.one<Person>(person);
 
 #### Single object using its ID `exists.oneWithID()`:
 ```dart
-bool exists = await FS.exists.one(Person, "person-id");
+bool exists = await FS.exists.oneWithID(Person, "person-id");
 ```
 
 [Back to contents](#contents)
