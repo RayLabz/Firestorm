@@ -1,7 +1,26 @@
 name: firestorm
-description: "A data access API and ORM tool for Firebase's Firestore and Realtime Database"
+description: "A data access API and ODM tool for Firebase's Firestore and Realtime Database"
 version: 0.1.0
-homepage: "https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter"
+homepage: "https://pub.dev/packages/firestorm/"
+repository: "https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter"
+documentation: "https://raylabz.github.io/Firestorm/flutter-api/"
+
+platforms:
+  android:
+  ios:
+  macos:
+  web:
+  windows:
+
+funding:
+  - https://buymeacoffee.com/nkasenides
+
+topics:
+  - firebase
+  - orm
+  - odm
+  - firestore
+  - database
 
 environment:
   sdk: ^3.2.0
