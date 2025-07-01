@@ -1,17 +1,16 @@
 # Firestorm
 
-<p style="font-size: large; font-weight: lighter">An object-oriented data access API and ORM tool for Google's Firestore</p>
+<p style="font-size: large; font-weight: lighter">An object-oriented data access API and ORM tool for Google's Firestore and Realtime Database</p>
 
 <p style="text-align: justify">
-Firestorm is an object-oriented data management API and ORM tool for Google's Firestore.It enables developers to create 
-applications that utilize Firestore's capabilities by interacting with it in an object-oriented manner. Firestorm uses
- standardized functions and complements the full flexibility of Google's Firestore API. It organizes classes as Firestore
-  collections and objects of these classes as documents in these collections. Its aims are to reduce code, 
+Firestorm is an object-oriented data management API and ORM tool for Google's Firestore and Realtime Database. It enables developers to create 
+applications that utilize database capabilities by interacting with them in an object-oriented manner. Firestorm uses
+ standardized functions and complements the Firestore and Realtime Database APIs. Its aims are to reduce code, 
   improve its readability, and support Rapid Application Development.
 </p>
 
 <p>
- Firestorm is currently available as a <b>Java</b> library, with current development expanding it to <b>Dart and Flutter</b>.
+ Firestorm is currently available for <b>Java</b> & <b>Dart and Flutter</b>.
 </p>
 
 <div style="text-align: center;">
@@ -26,14 +25,9 @@ applications that utilize Firestore's capabilities by interacting with it in an 
     <div style="width: 45%; border: 1px solid black; padding: 10px; margin: 1%; display: inline-block; background-color: #a8deff;">
             <h2>Flutter</h2>
             <p>
-                Firestorm for Flutter enables developers to utilize the Firestorm API in <b>Flutter</b> projects.<br/>
-                <u>It is currently under development and will be available soon.</u> <br/><br/>
+                Firestorm for Flutter enables developers to utilize Firestorm API in <b>Flutter & Dart</b> projects.<br/>
+                 <br/><br/><br/>
             </p>
-            <a href="firestorm_flutter/flutter-api-guide.md">View the guide</a>
+            <a href="firestorm_flutter">View the guide</a>
         </div>
 </div>
-
-
-## Contributing to Firestorm
-
-If you are interested in collaborating to improve Firestorm, [send us a message](mailto:raylabzg@gmail.com).
