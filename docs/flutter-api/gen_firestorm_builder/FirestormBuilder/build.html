@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the build method from the FirestormBuilder class, for the Dart programming language.">
+  <title>build method - FirestormBuilder class - firestorm_builder library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">firestorm</a></li>
+    <li><a href="../../gen_firestorm_builder">gen\firestorm_builder.dart</a></li>
+    <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
+    <li class="self-crumb">build method</li>
+  </ol>
+  <div class="self-name">build</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="gen_firestorm_builder&#47;FirestormBuilder-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">build</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">build</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="build-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/2.4.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">override</span></div>
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Generates the outputs for a given <a href="https://pub.dev/documentation/build/2.4.2/build/BuildStep-class.html">BuildStep</a>.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+Future&lt;void&gt; build(BuildStep buildStep) async {
+
+  &#47;&#47;Buffers:
+  final fileBuffer = StringBuffer();
+  final headerBuffer = StringBuffer();
+  final importsBuffer = StringBuffer();
+  final classBuffer = StringBuffer();
+  final converterBuffer = StringBuffer();
+
+  &#47;&#47;Generate header
+  HeaderGenerator.generateHeader(headerBuffer);
+
+  importsBuffer.writeln(&quot;import &#39;package:firestorm&#47;fs&#47;fs.dart&#39;;&quot;);
+  importsBuffer.writeln(&quot;import &#39;package:firestorm&#47;rdb&#47;rdb.dart&#39;;&quot;);
+
+  final Map&lt;AssetId, Iterable&lt;ClassElement&gt;&gt; allClasses = {};
+  final Map&lt;ClassElement, AssetId&gt; assetIDs = {};
+  final Map&lt;EnumElement, AssetId&gt; enumAssetIds = {};
+
+  &#47;&#47;Read the classes from the files and store in allClasses map:
+  await for (final input in buildStep.findAssets(Glob(&#39;lib&#47;**.dart&#39;))) { &#47;&#47;iterates through all .dart files
+    if (!await buildStep.resolver.isLibrary(input)) {
+      continue;
+    }
+    final libraryElement = await buildStep.resolver.libraryFor(input);
+    final libraryReader = LibraryReader(libraryElement);
+    allClasses[input] = libraryReader.classes;
+
+    for (final aClass in libraryReader.classes) {
+      assetIDs[aClass] = input; &#47;&#47;Map each class to its AssetId
+    }
+
+    &#47;&#47;enums:
+    for (final aClass in libraryReader.enums) {
+      enumAssetIds[aClass] = input; &#47;&#47;Map each enum to its AssetId
+    }
+
+  }
+
+  &#47;&#47;Perform filtering
+  &#47;&#47;1. @FirestormObject annotation
+  &#47;&#47;2. public no-arg constructor
+  &#47;&#47;3. ID field
+  &#47;&#47;4. Firestore or Realtime Database support (type checks)
+
+  ValidClassHolder allFilesClassHolder = ValidClassHolder.empty();
+  for (final pair in allClasses.entries) {
+    final Iterable&lt;ClassElement&gt; allClasses = pair.value;
+    var fileClassHolder = ClassChecker.filter(allClasses);
+    allFilesClassHolder.join(fileClassHolder);
+  }
+
+  &#47;&#47;For every valid class, generate necessary imports and its extension:
+  for (final validClass in allFilesClassHolder.getAllValidClasses()) {
+
+    &#47;&#47;Add into the import buffer, if there are any classes in this file
+    ImportGenerator.generateImports(importsBuffer, assetIDs[validClass]!);
+
+    &#47;&#47;Generate extensions:
+    ExtensionGenerator.generateExtension(
+        classBuffer,
+        validClass,
+        allFilesClassHolder.hasFSSupport(validClass),
+        allFilesClassHolder.hasRDBSupport(validClass)
+    );
+  }
+
+  &#47;&#47;Generate imports for enums:
+  for (final assetID in enumAssetIds.values) {
+    ImportGenerator.generateImports(importsBuffer, assetID);
+  }
+
+  &#47;&#47;Generate the converter functions
+  RegistryGenerator.generateConverterFunctions(converterBuffer, allFilesClassHolder);
+
+  &#47;&#47;Add everything into the file buffer
+  fileBuffer.writeln(headerBuffer.toString());
+  fileBuffer.writeln(importsBuffer.toString());
+  fileBuffer.writeln(classBuffer.toString());
+  fileBuffer.writeln(converterBuffer.toString());
+
+  final formattedOutput = fileBuffer.toString();
+
+  final outputId = AssetId(buildStep.inputId.package, &#39;lib&#47;generated&#47;firestorm_models.dart&#39;);
+  await buildStep.writeAsString(outputId, formattedOutput);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">firestorm</a></li>
+    <li><a href="../../gen_firestorm_builder">firestorm_builder</a></li>
+    <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
+    <li class="self-crumb">build method</li>
+</ol>
+
+    <h5>FirestormBuilder class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    firestorm
+      0.1.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
