@@ -158,6 +158,7 @@ This file contains the generated code for your custom classes and is required fo
 
 ### Summary
 <img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;"/>
+
 ---
 
 ## API Guide
