@@ -13,21 +13,18 @@ applications that utilize database capabilities by interacting with them in an o
  Firestorm is currently available for <b>Java</b> & <b>Dart and Flutter</b>.
 </p>
 
-<div style="text-align: center;">
-    <div style="width: 45%; border: 1px solid black; padding: 10px; margin: 1%; display: inline-block; background-color: #ffd398;">
-        <h2>Java</h2>
-        <p>
-            Firestorm for Java enables developers to interact with Google's Firestore in Java applications
-            It is available as a Maven dependency and can be imported into any Java project (except Android projects).
-        </p>
-        <a href="firestorm-java/java-api-guide.md">View the guide</a>
-    </div>
-    <div style="width: 45%; border: 1px solid black; padding: 10px; margin: 1%; display: inline-block; background-color: #a8deff;">
-            <h2>Flutter</h2>
-            <p>
-                Firestorm for Flutter enables developers to utilize Firestorm API in <b>Flutter & Dart</b> projects.<br/>
-                 <br/><br/><br/>
-            </p>
-            <a href="firestorm_flutter">View the guide</a>
-        </div>
-</div>
+## Java (pure)
+Firestorm for Java enables developers to create **pure Java** apps/backends that interact with Google's Firestore  and 
+Realtime Database. It is available as a Maven dependency and can be imported into any Java project but **not Android**.
+
+[Firestorm for Java](firestorm-java/java-api-guide.md)
+
+## Android (Java)
+Firestorm for Android is a client-side port of Firestorm for **Android** apps.
+
+[Firestorm for Android](https://github.com/RayLabz/Firestorm-Android)
+
+## Dart & Flutter
+Firestorm for Flutter enables developers to utilize Firestorm in cross-platform <b>Flutter & Dart</b> projects.
+
+[Firestorm for Dart & Flutter](firestorm_flutter)
