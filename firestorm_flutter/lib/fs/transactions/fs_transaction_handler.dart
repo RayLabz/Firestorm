@@ -1,6 +1,5 @@
 import 'package:firestorm/fs/transactions/fs_transaction_create_delegate.dart';
 
-import '../fs.dart';
 import 'fs_transaction_delete_delegate.dart';
 import 'fs_transaction_get_delegate.dart';
 import 'fs_transaction_update_delegate.dart';

@@ -1,19 +1,11 @@
 /// A type that helps with filtering objects from database queries.
 abstract class Filterable<QueryType> {
 
-  QueryType _query;
+  QueryType query;
 
-  final Type _type;
+  final Type type;
 
   /// Creates a new filterable.
-  Filterable(this._query, this._type);
-
-  Type get type => _type;
-
-  QueryType get query => _query;
-
-  set query(QueryType value) {
-    _query = value;
-  }
+  Filterable(this.query, this.type);
 
 }

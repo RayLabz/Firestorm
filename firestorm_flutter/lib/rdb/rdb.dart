@@ -4,7 +4,6 @@ import 'package:firestorm/rdb/delegates/rdb_delete_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_list_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_listen_delegate.dart';
 import 'package:firestorm/rdb/delegates/rdb_reference_delegate.dart';
-import 'package:flutter/foundation.dart';
 
 import '../firestorm.dart';
 import 'delegates/rdb_create_delegate.dart';

@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:firestorm/gen/valid_class_holder.dart';
 
 /// Generates converter functions for converting objects to and from maps.

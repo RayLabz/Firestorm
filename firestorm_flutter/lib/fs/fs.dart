@@ -82,7 +82,7 @@ class FS {
   static disableCaching() async {
     //WEB:
     if (kIsWeb) {
-      print("!!! Disabling caching is not supported on web. Caching is always on once enabled. You must restart your app and avoid calling enableCaching().");
+      throw Exception("Disabling caching is not supported on web. Caching is always on once enabled. You must restart your app and avoid calling enableCaching().");
     }
     //MOBILE (iOS & Android)
     else {

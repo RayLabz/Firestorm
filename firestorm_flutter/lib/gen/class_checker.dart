@@ -28,6 +28,7 @@ class ClassChecker {
     for (final aClass in classes) {
       //Check the class for a public no-argument constructor:
       if (aClass.constructors.isEmpty || !aClass.constructors.any((c) => c.isPublic && c.parameters.isEmpty)) {
+        // ignore: avoid_print
         print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.", ColorfulText.red));
       }
       else {
@@ -61,6 +62,7 @@ class ClassChecker {
       }
 
       if (!hasIDField) {
+        // ignore: avoid_print
         print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It (or its superclasses) does not have an ID field of type String.", ColorfulText.red));
       }
       else {
@@ -77,6 +79,7 @@ class ClassChecker {
       bool isValid = true;
       for (final field in aClass.fields) {
         if (!FSTypes.isTypeSupported(field.type)) {
+          // ignore: avoid_print
           print(ColorfulText.paint("Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field '${field.name}' for Firestore.", ColorfulText.red));
           isValid = false;
           break;
@@ -96,6 +99,7 @@ class ClassChecker {
       bool isValid = true;
       for (final field in aClass.fields) {
         if (!RDBTypes.isTypeSupported(field.type)) {
+          // ignore: avoid_print
           print(ColorfulText.paint("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.", ColorfulText.red));
           isValid = false;
           break;

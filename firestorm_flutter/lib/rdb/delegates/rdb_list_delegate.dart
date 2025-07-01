@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firestorm/exceptions/no_document_exception.dart';
 import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 
 import '../queries/rdb_filterable.dart';
