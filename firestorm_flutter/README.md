@@ -20,7 +20,7 @@ and the Flutter guide for
 </p>
 
 <p align="center">
-   <img src="media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200"/>
+   <img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200"/>
 </p>
 
 Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool for Firebase's <a target="_blank" href="https://firebase.google.com/docs/firestore">Firestore</a>
@@ -147,7 +147,7 @@ This file contains the generated code for your custom classes and is required fo
     - For more information on how to use Firestorm, refer to the [API Guide](api-guide.md).
 
 ### Summary
-<img src="media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;"/>
+<img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;"/>
 ---
 
 ## API Guide
