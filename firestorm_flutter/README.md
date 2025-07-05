@@ -102,12 +102,13 @@ After importing Firestorm in your project, you can start using it by following t
    - For more information on how to generate this file, refer to the official Firebase documentation for [Android](https://firebase.google.com/docs/android/setup), [iOS](https://firebase.google.com/docs/ios/setup), and [Web](https://firebase.google.com/docs/web/setup).
 2. **Create your custom data classes**
     - <a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define your data classes.
-3. **Run build_runner to perform checks and generate `firestorm_models.dart`**:
-    - For Flutter, run:
-      ```bash
-      flutter pub run build_runner build --delete-conflicting-outputs
-      ```
-    - For plain Dart, run:
+3. **Install and run build_runner to perform checks and generate `firestorm_models.dart`**:
+    - To install, run:
+        ```bash
+        flutter pub add build_runner 
+        ```
+
+    - To generate, run:
       ```bash
       dart run build_runner build --delete-conflicting-outputs
       ```

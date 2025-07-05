@@ -99,17 +99,16 @@ class ExtensionGenerator {
     classBuffer.writeln("\tstatic ${aClass.name} fromMap(Map<String, dynamic> map) {");
     classBuffer.writeln("\t\t return ${aClass.name}(");
 
-    //Constructor parameters:
-    for (ParameterElement param in params) {
+// Positional parameters first:
+    for (ParameterElement param in params.where((p) => p.isPositional)) {
+      FieldElement? matchingField = aClass.getField(param.displayName); // match to field
 
-      FieldElement? matchingField = aClass.getField(param.displayName); //match to field
-
-      for (final parent in aClass.allSupertypes) { //Find field in parent classes
+      for (final parent in aClass.allSupertypes) { // find field in parent classes
         for (final parentField in parent.element.fields) {
           if (parentField.name != "hashCode" &&
               parentField.name == param.name &&
               parentField.name != "runtimeType") {
-            matchingField = parentField; //set matching field to parent field
+            matchingField = parentField;
             break;
           }
         }
@@ -121,40 +120,111 @@ class ExtensionGenerator {
 
       if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
-          classBuffer.writeln("\t\t\t null,"); //set excluded to null
+          classBuffer.writeln("\t\t\tnull,"); // set excluded to null
+        } else {
+          throw InvalidClassException(aClass.name); // cannot have excluded without nullable
         }
+      } else {
+        // If this is a user-defined type, use its own fromMap():
+        if (!matchingField.type.element!.library!.isDartCore &&
+            matchingField.type is InterfaceType &&
+            !ClassChecker.isEnumType(matchingField.type)) {
+          classBuffer.writeln(
+              "\t\t\t${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),");
+        }
+        // List
+        else if (param.type.isDartCoreList) {
+          final listType = param.type as InterfaceType;
+          DartType elementType = listType.typeArguments[0];
+          classBuffer.writeln(
+              "\t\t\tmap['${param.name}'] != null ? map['${param.name}'].cast<${elementType.getDisplayString()}>() : [],");
+        }
+        // Map
+        else if (param.type.isDartCoreMap) {
+          final listType = param.type as InterfaceType;
+          DartType valueType = listType.typeArguments[1];
+          classBuffer.writeln(
+              "\t\t\tmap['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},");
+        }
+        // Enum
+        else if (ClassChecker.isEnumType(param.type)) {
+          classBuffer.writeln(
+              "\t\t\t${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),");
+        }
+        // Other types
         else {
-          throw InvalidClassException(aClass.name); //cannot have excluded without nullable
-        }
-      }
-      else {
-        //If this is a user-defined type, use its own fromMap():
-        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType && !ClassChecker.isEnumType(matchingField.type)) {
-          classBuffer.writeln("\t\t\t ${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),"); //call fromMap() on user-defined type
-        }
-        else {
-          if (param.type.isDartCoreList) {
-            final listType = param.type as InterfaceType;
-            DartType elementType = listType.typeArguments[0];
-            classBuffer.writeln("\t\t\t map['${param.name}'] != null ? map['${param.name}'].cast<${elementType.getDisplayString()}>() : [],"); //cast to List<elementType>
-          }
-          else if (param.type.isDartCoreMap) {
-            final listType = param.type as InterfaceType;
-            DartType valueType = listType.typeArguments[1];
-            classBuffer.writeln("\t\t\t map['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},"); //cast to Map<String, valueType>
-          }
-          else if (ClassChecker.isEnumType(param.type)) {
-            classBuffer.writeln("\t\t\t ${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),"); //(normal, enum)
-          }
-          else {
-            classBuffer.writeln("\t\t\t map['${param.name}'] as ${matchingField.type.getDisplayString()},"); //not excluded (normal)
-          }
+          classBuffer.writeln(
+              "\t\t\tmap['${param.name}'] as ${matchingField.type.getDisplayString()},");
         }
       }
     }
 
+// Then named parameters in a map:
+    if (params.any((p) => p.isNamed)) {
+      // classBuffer.writeln("\t\t\t{");
+      for (ParameterElement param in params.where((p) => p.isNamed)) {
+        FieldElement? matchingField = aClass.getField(param.displayName); // match to field
+
+        for (final parent in aClass.allSupertypes) { // find field in parent classes
+          for (final parentField in parent.element.fields) {
+            if (parentField.name != "hashCode" &&
+                parentField.name == param.name &&
+                parentField.name != "runtimeType") {
+              matchingField = parentField;
+              break;
+            }
+          }
+        }
+
+        if (matchingField == null) {
+          throw InvalidClassException(aClass.name);
+        }
+
+        if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
+          if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
+            classBuffer.writeln("\t\t\t${param.name}: null,"); // set excluded to null
+          } else {
+            throw InvalidClassException(aClass.name); // cannot have excluded without nullable
+          }
+        } else {
+          // If this is a user-defined type, use its own fromMap():
+          if (!matchingField.type.element!.library!.isDartCore &&
+              matchingField.type is InterfaceType &&
+              !ClassChecker.isEnumType(matchingField.type)) {
+            classBuffer.writeln(
+                "\t\t\t${param.name}: ${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),");
+          }
+          // List
+          else if (param.type.isDartCoreList) {
+            final listType = param.type as InterfaceType;
+            DartType elementType = listType.typeArguments[0];
+            classBuffer.writeln(
+                "\t\t\t${param.name}: map['${param.name}'] != null ? map['${param.name}'].cast<${elementType.getDisplayString()}>() : [],");
+          }
+          // Map
+          else if (param.type.isDartCoreMap) {
+            final listType = param.type as InterfaceType;
+            DartType valueType = listType.typeArguments[1];
+            classBuffer.writeln(
+                "\t\t\t${param.name}: map['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},");
+          }
+          // Enum
+          else if (ClassChecker.isEnumType(param.type)) {
+            classBuffer.writeln(
+                "\t\t\t${param.name}: ${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),");
+          }
+          // Other types
+          else {
+            classBuffer.writeln(
+                "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type.getDisplayString()},");
+          }
+        }
+      }
+      // classBuffer.writeln("\t\t\t}");
+    }
+
     classBuffer.writeln("\t\t );");
-    classBuffer.writeln("\t }");
+    classBuffer.writeln("\t}");
     classBuffer.writeln();
 
     //End extension class

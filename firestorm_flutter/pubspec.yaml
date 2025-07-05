@@ -4,6 +4,7 @@ version: 0.1.1
 homepage: "https://pub.dev/packages/firestorm/"
 repository: "https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter"
 documentation: "https://raylabz.github.io/Firestorm/flutter-api/"
+license: "Apache-2.0"
 
 platforms:
   android:

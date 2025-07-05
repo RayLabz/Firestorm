@@ -1,5 +1,12 @@
+## v0.2.0 - Named parameter support
+Release date: 05/07/2025
+
+- Added support for named parameters in custom data classes.
+- Fixed instructions to include step to add build_runner as a dependency before running code generation.
+- Added license field in pubspec.yaml.
+
 ## v0.1.0 - Initial release (Beta)
-Release date: 30/06/2024
+Release date: 30/06/2025
 
 - Initial release of Firestorm for Flutter and Dart.
 - Supports Firestore and Realtime Database.

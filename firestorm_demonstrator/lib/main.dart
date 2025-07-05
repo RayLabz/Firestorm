@@ -2,12 +2,14 @@ import 'package:firestorm/fs/fs.dart';
 import 'package:firestorm/rdb/rdb.dart';
 import 'package:flutter/material.dart';
 
+import 'generated/firestorm_models.dart';
+
 void main () async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await FS.init();
-  // await RDB.init();
-  // registerClasses();
+  await FS.init();
+  await RDB.init();
+  registerClasses();
 
   runApp(Container());
 }
