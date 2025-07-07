@@ -1,3 +1,8 @@
+## v0.2.1 - Bug Fixes
+Release date: 07/07/2025
+
+- Fixed an issue with listener data deserialization causing runtime errors.
+
 ## v0.2.0 - Named parameter support
 Release date: 05/07/2025
 
