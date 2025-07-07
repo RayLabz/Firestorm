@@ -34,9 +34,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-#  firestorm: ^0.2.0
-  firestorm:
-    path: ../firestorm_flutter
+  firestorm: ^0.2.1
+#  firestorm:
+#    path: ../firestorm_flutter
   build_runner: ^2.5.4
   infinite_scroll_pagination: ^5.1.0
 

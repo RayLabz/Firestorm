@@ -284,10 +284,11 @@ packages:
   firestorm:
     dependency: "direct main"
     description:
-      path: "../firestorm_flutter"
-      relative: true
-    source: path
-    version: "0.2.0"
+      name: firestorm
+      sha256: "3e1801e673aa14c8ce0ec14ec1c10978438d44915cdefde7f3d28ecadab4f728"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   fixnum:
     dependency: transitive
     description:
