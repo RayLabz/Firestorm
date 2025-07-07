@@ -1,10 +1,12 @@
 import 'package:firestorm/annotations/firestorm_object.dart';
 import 'package:firestorm/firestorm.dart';
-import 'package:firestorm_demonstrator/address.dart';
+import 'package:firestorm_demonstrator/model/address.dart';
 import 'package:flutter/cupertino.dart';
 
 @FirestormObject()
 class Contact {
+
+  static Map<String, Contact> allContacts = {};
 
   String id;
   String firstname;
@@ -12,7 +14,7 @@ class Contact {
   String email;
   String phone;
   Address address; // COMPOSITION
-  DateTime createdAt;
+  int createdAt;
 
   Contact({
     required this.id,
@@ -21,8 +23,8 @@ class Contact {
     required this.email,
     required this.phone,
     required this.address,
-    DateTime? createdAt,
-  }) : createdAt = createdAt ?? DateTime.now();
+    required this.createdAt,
+  });
 
   static List<String> _firstNames = [
     'John',
@@ -62,9 +64,17 @@ class Contact {
       email: '$username@example.com',
       phone: '+1-555-${(1000 + (9999 * (DateTime.now().millisecondsSinceEpoch % 10000))).toString().substring(1)}',
       address: Address.createRandomAddress(),
-      createdAt: DateTime.now()
+      createdAt: DateTime.now().millisecondsSinceEpoch,
     );
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Contact && runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 
 }

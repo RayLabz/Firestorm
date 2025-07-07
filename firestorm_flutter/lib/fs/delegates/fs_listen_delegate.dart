@@ -114,6 +114,9 @@ class FSListenDelegate {
 
     //Map stream of snapshots to stream of deserialized objects.
     final Stream<T?> mappedStream = docRef.snapshots().map((snapshot) {
+      if (!snapshot.exists) {
+        return null; // Document does not exist.
+      }
       final data = snapshot.data() as Map<String, dynamic>;
       return deserializer(data);
     });

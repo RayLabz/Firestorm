@@ -1,5 +1,5 @@
 import 'package:firestorm/annotations/firestorm_object.dart';
-import 'package:firestorm_demonstrator/status.dart';
+import 'package:firestorm_demonstrator/model/status.dart';
 
 @FirestormObject()
 class ContactStatus {

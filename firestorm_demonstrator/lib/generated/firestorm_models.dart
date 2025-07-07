@@ -9,10 +9,10 @@
 
 import 'package:firestorm/fs/fs.dart';
 import 'package:firestorm/rdb/rdb.dart';
-import 'package:firestorm_demonstrator/address.dart';
-import 'package:firestorm_demonstrator/contact_status.dart';
-import 'package:firestorm_demonstrator/contact.dart';
-import 'package:firestorm_demonstrator/status.dart';
+import 'package:firestorm_demonstrator/model/address.dart';
+import 'package:firestorm_demonstrator/model/contact.dart';
+import 'package:firestorm_demonstrator/model/contact_status.dart';
+import 'package:firestorm_demonstrator/model/status.dart';
 
 // - - - - - - - FirestormObject Address - - - - - - -
 
@@ -31,11 +31,44 @@ extension AddressModel on Address {
 
 	static Address fromMap(Map<String, dynamic> map) {
 		 return Address(
-			 map['id'] as String,
-			 map['street'] as String,
-			 map['city'] as String,
+			map['id'] as String,
+			map['street'] as String,
+			map['city'] as String,
 		 );
+	}
+
+}
+
+// - - - - - - - FirestormObject Contact - - - - - - -
+
+extension ContactModel on Contact {
+
+	static final bool fsSupport = true;
+	static final bool rdbSupport = true;
+
+	 Map<String, dynamic> toMap() {
+		 return {
+			 'id': this.id,
+			 'firstname': this.firstname,
+			 'lastname': this.lastname,
+			 'email': this.email,
+			 'phone': this.phone,
+			 'address': this.address.toMap(),
+			 'createdAt': this.createdAt,
+		 };
 	 }
+
+	static Contact fromMap(Map<String, dynamic> map) {
+		 return Contact(
+			id: map['id'] as String,
+			firstname: map['firstname'] as String,
+			lastname: map['lastname'] as String,
+			email: map['email'] as String,
+			phone: map['phone'] as String,
+			address: AddressModel.fromMap(Map<String, dynamic>.from(map['address'] as Map)),
+			createdAt: map['createdAt'] as int,
+		 );
+	}
 
 }
 
@@ -56,44 +89,11 @@ extension ContactStatusModel on ContactStatus {
 
 	static ContactStatus fromMap(Map<String, dynamic> map) {
 		 return ContactStatus(
-			 map['id'] as String,
-			 map['contactID'] as String,
-			 Status.values.firstWhere((e) => e.toString() == map['status'] as String),
+			id: map['id'] as String,
+			contactID: map['contactID'] as String,
+			status: Status.values.firstWhere((e) => e.toString() == map['status'] as String),
 		 );
-	 }
-
-}
-
-// - - - - - - - FirestormObject Contact - - - - - - -
-
-extension ContactModel on Contact {
-
-	static final bool fsSupport = true;
-	static final bool rdbSupport = false;
-
-	 Map<String, dynamic> toMap() {
-		 return {
-			 'id': this.id,
-			 'firstname': this.firstname,
-			 'lastname': this.lastname,
-			 'email': this.email,
-			 'phone': this.phone,
-			 'address': this.address.toMap(),
-			 'createdAt': this.createdAt,
-		 };
-	 }
-
-	static Contact fromMap(Map<String, dynamic> map) {
-		 return Contact(
-			 map['id'] as String,
-			 map['firstname'] as String,
-			 map['lastname'] as String,
-			 map['email'] as String,
-			 map['phone'] as String,
-			 AddressModel.fromMap(Map<String, dynamic>.from(map['address'] as Map)),
-			 map['createdAt'] as DateTime,
-		 );
-	 }
+	}
 
 }
 
@@ -101,14 +101,14 @@ extension ContactModel on Contact {
 // - - - - - - - Registry - - - - - - -
 final Map<Type, Map<String, dynamic> Function(dynamic)> toMapRegistry = {
 	Address: (object) => (object as Address).toMap(),
-	ContactStatus: (object) => (object as ContactStatus).toMap(),
 	Contact: (object) => (object as Contact).toMap(),
+	ContactStatus: (object) => (object as ContactStatus).toMap(),
 };
 
 final Map<Type, dynamic Function(Map<String, dynamic>)> fromMapRegistry = {
 	Address: (map) => AddressModel.fromMap(map),
-	ContactStatus: (map) => ContactStatusModel.fromMap(map),
 	Contact: (map) => ContactModel.fromMap(map),
+	ContactStatus: (map) => ContactStatusModel.fromMap(map),
 };
 
 Map<String, dynamic> convertToMap(dynamic object) {
@@ -136,6 +136,8 @@ registerClasses() {
 	FS.registerDeserializer<ContactStatus>((map) => ContactStatusModel.fromMap(map));
 	RDB.registerSerializer<Address>((object) => object.toMap());
 	RDB.registerDeserializer<Address>((map) => AddressModel.fromMap(map));
+	RDB.registerSerializer<Contact>((object) => object.toMap());
+	RDB.registerDeserializer<Contact>((map) => ContactModel.fromMap(map));
 	RDB.registerSerializer<ContactStatus>((object) => object.toMap());
 	RDB.registerDeserializer<ContactStatus>((map) => ContactStatusModel.fromMap(map));
 }
