@@ -28,7 +28,7 @@ class FSGetDelegate implements GetDelegate {
   }
 
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.
-  /// Sends multiple requests at the same time returns when all are completed.
+  /// Sends multiple requests at the same time and returns when all are completed.
   @override
   Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];

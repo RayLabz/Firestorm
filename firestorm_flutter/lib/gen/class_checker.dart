@@ -118,9 +118,6 @@ class ClassChecker {
     //Find annotated classes:
     List<ClassElement> validClasses = findAnnotatedClasses(classes);
 
-    //Filter out classes that do not have a public no-argument constructor:
-    // annotatedClasses = findClassesWithPublicNoArgConstructor(annotatedClasses);
-
     //Filter out classes that do not have an ID field of type String:
     validClasses = findClassesWithIDField(validClasses);
 
