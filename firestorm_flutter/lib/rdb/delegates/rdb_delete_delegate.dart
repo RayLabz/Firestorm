@@ -1,3 +1,4 @@
+import 'package:firestorm/commons/delegate/delete_delegate.dart';
 import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 import 'package:firestorm/rdb/helpers/rdb_write_batch.dart';
 
@@ -5,10 +6,11 @@ import '../../exceptions/null_id_exception.dart';
 import '../rdb.dart';
 
 /// A delegate class to delete documents in RDB.
-class RDBDeleteDelegate {
+class RDBDeleteDelegate implements DeleteDelegate {
 
   /// Deletes a document in RDB from the given object.
-  Future<void> one(dynamic object, { String? subcollection }) async {
+  @override
+  Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = RDB.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -25,7 +27,8 @@ class RDBDeleteDelegate {
 
   /// Deletes multiple documents from RDB from a list of objects.
   /// Uses a batch operation for efficiency.
-  Future<void> many<T>(List<T> objects, { String? subcollection }) async {
+  @override
+  Future<void> many<T>(List<T> objects, { String? subcollection }) {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
@@ -34,13 +37,15 @@ class RDBDeleteDelegate {
   }
 
   /// Deletes a document from RDB by its type and document ID.
-  Future<void> oneWithID(Type type, String documentID, { String? subcollection }) async {
+  @override
+  Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
     String path = RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection);
     final reference = RDB.instance.ref(path);
     return reference.remove();
   }
 
   /// Deletes multiple documents from the RDB by their type and a list of document IDs.
+  @override
   Future<void> manyWithIDs(Type type, List<String> documentIDs, { String? subcollection }) async {
     if (documentIDs.isEmpty) return;
     if (documentIDs.length > 500) {
@@ -51,6 +56,7 @@ class RDBDeleteDelegate {
   }
 
   /// Deletes all documents of a specific type from RDB.
+  @override
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
       //Get the objects of this type:

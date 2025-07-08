@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestorm/filterable.dart';
+import 'package:firestorm/commons/filterable.dart';
 
 import '../../firestorm.dart';
 import '../fs.dart';

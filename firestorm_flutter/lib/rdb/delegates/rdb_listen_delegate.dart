@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firestorm/commons/delegate/listen_delegate.dart';
 import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 
 import '../../firestorm.dart';
@@ -9,9 +10,10 @@ import '../rdb.dart';
 typedef ObjectListener<T> = void Function(T object);
 
 /// A delegate class to listen to changes in Firestore documents.
-class RDBListenDelegate {
+class RDBListenDelegate implements ListenDelegate{
 
   /// Listens to changes in an object.
+  @override
   StreamSubscription<T?> toObject<T>(
     dynamic object, {
     void Function(T object)? onCreate,
@@ -30,6 +32,7 @@ class RDBListenDelegate {
   }
 
   /// Listens to changes in an object using its ID and type.
+  @override
   StreamSubscription<T?> toID<T>(
       Type type, String id, {
         void Function(T object)? onCreate,
@@ -48,6 +51,7 @@ class RDBListenDelegate {
   }
 
   /// Listens to changes in multiple objects.
+  @override
   List<StreamSubscription<T?>> toObjects<T>(
       List<dynamic> objects, {
         void Function(T object)? onCreate,
@@ -69,6 +73,7 @@ class RDBListenDelegate {
   }
 
   /// Listens to changes in multiple objects using their IDs and type.
+  @override
   List<StreamSubscription<T?>> toIDs<T>(
       Type type, List<String> ids, {
         void Function(T object)? onCreate,
@@ -90,6 +95,7 @@ class RDBListenDelegate {
     return subscriptions;
   }
 
+  /// Converst from a stream of Realtime database items into a stream of objects.
   StreamSubscription<T?> _handleDocumentListener<T>(
       DatabaseReference dbRef,
       Deserializer deserializer,

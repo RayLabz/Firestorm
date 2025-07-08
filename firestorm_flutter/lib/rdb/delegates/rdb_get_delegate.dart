@@ -22,7 +22,6 @@ class RDBGetDelegate {
   }
 
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.
-  /// //TODO - Consider the use of Multithreading.
   Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
     final deserializer = RDB.deserializers[T];
     if (deserializer == null) {

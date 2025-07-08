@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestorm/commons/delegate/update_delegate.dart';
 
 import '../../exceptions/null_id_exception.dart';
 import '../fs.dart';
 
 /// A delegate class to updates documents on Firestore.
-class FSUpdateDelegate {
+class FSUpdateDelegate implements UpdateDelegate {
 
   /// Updates a document in Firestore with the given object.
+  @override
   Future<void> one<T>(T object, { String? subcollection }) {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
@@ -24,6 +26,7 @@ class FSUpdateDelegate {
   }
 
   /// Updates multiple documents in Firestore with a list of objects.
+  @override
   Future<void> many<T>(List<T> objects, { String? subcollection }) {
     if (objects.isEmpty) return Future.value();
     if (objects.length > 500) {

@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firestorm/filterable.dart';
+import 'package:firestorm/commons/filterable.dart';
 import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 import 'package:firestorm/rdb/queries/rdb_query_result.dart';
 

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../commons/delegate/exist_delegate.dart';
 import '../fs.dart';
 
 /// A delegate class to check if a document exists in Firestore.
-class FSExistDelegate {
+class FSExistDelegate implements ExistDelegate {
 
   /// Checks if a document exists in Firestore using its type and ID.
+  @override
   Future<bool> one<T>(dynamic object, { String? subcollection }) async {
     if (object.id == null) {
       return false;
@@ -19,6 +21,7 @@ class FSExistDelegate {
   }
 
   /// Checks if a document exists in Firestore using its type and ID.
+  @override
   Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection }) async {
     DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
     if (subcollection != null) {

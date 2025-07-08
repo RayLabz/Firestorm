@@ -1,13 +1,15 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firestorm/commons/delegate/list_delegate.dart';
 import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 
 import '../queries/rdb_filterable.dart';
 import '../rdb.dart';
 
 /// A delegate to list items.
-class RDBListDelegate {
+class RDBListDelegate implements ListDelegate {
 
   /// Lists a limited number of items of a specific type without a query.
+  @override
   Future<List<T>> ofClass<T>(Type type, { int limit = 10, String? subcollection }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
@@ -32,6 +34,7 @@ class RDBListDelegate {
   }
 
   /// Lists all items of a specific type.
+  @override
   Future<List<T>> allOfClass<T>(Type type, { String? subcollection }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");

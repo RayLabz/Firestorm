@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../commons/delegate/create_delegate.dart';
 import '../../exceptions/null_id_exception.dart';
 import '../fs.dart';
 
 /// A delegate class to create documents in Firestore.
-class FSCreateDelegate {
+class FSCreateDelegate implements CreateDelegate {
 
   /// Creates a document in Firestore from the given object.
-  Future<void> one(dynamic object, { String? subcollection }) async {
+  @override
+  Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -26,6 +28,7 @@ class FSCreateDelegate {
 
   /// Creates multiple documents in Firestore from a list of objects.
   /// Uses a batch operation for efficiency.
+  @override
   Future<void> many<T>(List<T> objects, { String? subcollection }) {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');

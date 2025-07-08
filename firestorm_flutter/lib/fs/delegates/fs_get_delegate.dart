@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestorm/commons/delegate/get_delegate.dart';
 
 import '../fs.dart';
 
 /// A delegate class to read documents from Firestore.
-class FSGetDelegate {
+class FSGetDelegate implements GetDelegate {
 
-  /// Reads a document from Firestore and converts it to the specified type.
+  /// Reads a document from Firestore and converts it to the specified type.\
+  @override
   Future<T?> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
@@ -27,6 +29,7 @@ class FSGetDelegate {
 
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.
   /// Sends multiple requests at the same time returns when all are completed.
+  @override
   Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {

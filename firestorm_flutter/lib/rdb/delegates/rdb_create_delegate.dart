@@ -1,12 +1,14 @@
+import 'package:firestorm/commons/delegate/create_delegate.dart';
 import 'package:firestorm/rdb/helpers/rdb_write_batch.dart';
 
 import '../../exceptions/null_id_exception.dart';
 import '../rdb.dart';
 
 /// A delegate class to create documents in Firestore.
-class RDBCreateDelegate {
+class RDBCreateDelegate implements CreateDelegate {
 
   /// Creates a document in Firestore from the given object.
+  @override
   Future<void> one(dynamic object, { String? subcollection }) async {
     final serializer = RDB.serializers[object.runtimeType];
     if (serializer == null) {
@@ -24,6 +26,7 @@ class RDBCreateDelegate {
 
   /// Creates multiple documents in Firestore from a list of objects.
   /// Uses a batch operation for efficiency.
+  @override
   Future<void> many<T>(List<T> objects, { String? subcollection }) async {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');

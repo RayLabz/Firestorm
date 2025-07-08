@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestorm/commons/delegate/listen_delegate.dart';
 
 import '../../firestorm.dart';
 import '../fs.dart';
@@ -9,9 +10,10 @@ import '../fs.dart';
 typedef ObjectListener<T> = void Function(T object);
 
 /// A delegate class to listen to changes in Firestore documents.
-class FSListenDelegate {
+class FSListenDelegate implements ListenDelegate {
 
   /// Listens to changes in an object.
+  @override
   StreamSubscription<T?> toObject<T>(
     dynamic object, {
     void Function(T object)? onCreate,
@@ -33,6 +35,7 @@ class FSListenDelegate {
   }
 
   /// Listens to changes in an object using its ID and type.
+  @override
   StreamSubscription<T?> toID<T>(
       Type type, String id, {
         void Function(T object)? onCreate,
@@ -54,6 +57,7 @@ class FSListenDelegate {
   }
 
   /// Listens to changes in multiple objects.
+  @override
   List<StreamSubscription<T?>> toObjects<T>(
       List<dynamic> objects, {
         void Function(T object)? onCreate,
@@ -78,6 +82,7 @@ class FSListenDelegate {
   }
 
   /// Listens to changes in multiple objects using their IDs and type.
+  @override
   List<StreamSubscription<T?>> toIDs<T>(
       Type type, List<String> ids, {
         void Function(T object)? onCreate,
@@ -102,6 +107,7 @@ class FSListenDelegate {
     return subscriptions;
   }
 
+  /// Converts data from a stream of Firestore documents into a stream of objects.
   StreamSubscription<T?> _handleDocumentListener<T>(
       DocumentReference docRef,
       Deserializer deserializer,
