@@ -232,27 +232,25 @@ void main() {
     }
   });
 
-  testWidgets("Transaction stress test", (tester) async {
+  testWidgets("Transaction test", (tester) async {
     await FS.delete.all(ComputingStudent, iAmSure: true);
     await FS.delete.one(student);
-    student.height = 0;
     await FS.create.one(student);
 
     FS.transaction.run((transaction) async {
       ComputingStudent? s = await transaction.get.one<ComputingStudent>(student.id);
       if (s != null) {
-        student.height += 1;
+        student.firstname = "CHANGED!";
         transaction.update.one(student);
       }
     }).then((value) {
       FS.get.one<ComputingStudent>(student.id).then((result) {
         assert(result != null);
         if (result != null) {
-          assert(result.height == 1);
+          assert(result.firstname == "CHANGED!");
         }
       },);
     },);
-
   });
 
 
