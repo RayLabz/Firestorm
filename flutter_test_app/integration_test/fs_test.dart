@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/exceptions/no_document_exception.dart';
 import 'package:firestorm/fs/fs.dart';
@@ -44,9 +45,14 @@ void main() {
   });
 
   /* ----- TEST GET ----- */
-  testWidgets("Test get.one()", (tester) async {
+  testWidgets("Test get.one() with valid ID", (tester) async {
     ComputingStudent? result = await FS.get.one<ComputingStudent>(student.id);
     assert(result != null);
+  });
+
+  testWidgets("Test get.one() with invalid ID", (tester) async {
+    ComputingStudent? result = await FS.get.one<ComputingStudent>("INVALID_ID");
+    assert(result == null);
   });
 
   testWidgets("Test get.many()", (tester) async {
@@ -178,16 +184,77 @@ void main() {
   });
 
   /* ----- TEST PAGINATOR ----- */
-  
-  //TODO
+
+  testWidgets("Test paginate()", (tester) async {
+    await FS.delete.all(ComputingStudent, iAmSure: true);
+    await FS.create.many(students);
+    var paginator = FS.paginate<ComputingStudent>(limit: 3);
+
+    var currentPage = await paginator.next();
+    assert(currentPage.items.length <= 3);
+
+    while (currentPage.items.isNotEmpty) {
+      currentPage = await paginator.next();
+      assert(currentPage.items.length <= 3);
+    }
+  });
 
   /* ----- TEST BATCH ----- */
 
-  //TODO
+  testWidgets("Test batch write", (tester) async {
+    await FS.delete.all(ComputingStudent, iAmSure: true);
+    FS.batch.run((batch) {
+      for (var student in students) {
+        batch.create.one(student);
+      }
+    },);
+    List<ComputingStudent> result = await FS.get.many<ComputingStudent>(students.map((e) => e.id).toList());
+    assert(result.length == students.length);
+  });
 
   /* ----- TEST TRANSACTION ----- */
 
-  //TODO
+  testWidgets("Test transaction", (tester) async {
+    await FS.delete.all(ComputingStudent, iAmSure: true);
+    await FS.create.many(students);
+
+    await FS.transaction.run((transaction) {
+      for (var student in students) {
+        transaction.update.one(student..firstname = "updated");
+      }
+      return Future.value();
+    },);
+
+    List<ComputingStudent> result = await FS.list.allOfClass(ComputingStudent);
+    assert(result.length == students.length);
+    for (var student in result) {
+      assert(student.firstname == "updated");
+    }
+  });
+
+  testWidgets("Transaction stress test", (tester) async {
+    await FS.delete.all(ComputingStudent, iAmSure: true);
+    await FS.delete.one(student);
+    student.height = 0;
+    await FS.create.one(student);
+
+    FS.transaction.run((transaction) async {
+      ComputingStudent? s = await transaction.get.one<ComputingStudent>(student.id);
+      if (s != null) {
+        student.height += 1;
+        transaction.update.one(student);
+      }
+    }).then((value) {
+      FS.get.one<ComputingStudent>(student.id).then((result) {
+        assert(result != null);
+        if (result != null) {
+          assert(result.height == 1);
+        }
+      },);
+    },);
+
+  });
+
 
   /* ----------------------------------------------------------------------*/
 
