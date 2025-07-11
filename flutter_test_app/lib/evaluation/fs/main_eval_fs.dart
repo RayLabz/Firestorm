@@ -1,6 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/fs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_test_app/evaluation/fs/progressive/p_eval_create_many_firestorm.dart';
+import 'package:flutter_test_app/evaluation/fs/progressive/p_eval_create_many_fsapi.dart';
+import 'package:flutter_test_app/evaluation/fs/progressive/p_eval_get_many_firestorm.dart';
+import 'package:flutter_test_app/evaluation/fs/progressive/p_eval_get_many_fsapi.dart';
 
 import '../../generated/firestorm_models.dart';
 import 'create/eval_create_firestorm.dart';
@@ -47,6 +51,12 @@ main() async {
   DeleteManyEvaluationAPI deleteManyEvaluationAPI = DeleteManyEvaluationAPI();
   DeleteManyEvaluationFS deleteManyEvaluationFS = DeleteManyEvaluationFS();
 
+  ProgressiveCreateManyEvaluationAPI progressiveCreateManyEvaluationAPI = ProgressiveCreateManyEvaluationAPI();
+  ProgressiveCreateManyEvaluationFirestorm progressiveCreateManyEvaluationFirestorm = ProgressiveCreateManyEvaluationFirestorm();
+
+  ProgressiveGetManyEvaluationFSAPI progressiveGetManyEvaluationFSAPI = ProgressiveGetManyEvaluationFSAPI();
+  ProgressiveGetManyEvaluationFirestorm progressiveGetManyEvaluationFirestorm = ProgressiveGetManyEvaluationFirestorm();
+
   //Run:
 
   //create
@@ -80,6 +90,13 @@ main() async {
   //delete many
   // await deleteManyEvaluationAPI.run();
   // await deleteManyEvaluationFS.run();
+
+  //progressive evaluation
+  // await progressiveCreateManyEvaluationAPI.run();
+  // await progressiveCreateManyEvaluationFirestorm.run();
+
+  await progressiveGetManyEvaluationFSAPI.run();
+  await progressiveGetManyEvaluationFirestorm.run();
 
   runApp(Container());
 }
