@@ -20,7 +20,7 @@ class RDBCreateDelegate implements CreateDelegate {
       throw NullIDException(map);
     }
 
-    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id));
+    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
     return reference.set(map);
   }
 
