@@ -5,7 +5,7 @@ Release date: 15/07/2025
 - Downgraded `analyzer` to version 6.2.0 to avoid deprecation issues.
 - License update to point to correct file.
 - Added code-comparison.md to the documentation directory, linked to the README.
-- 
+- Improved examples.
 
 ## v0.2.1 - Bug Fixes
 Release date: 07/07/2025
