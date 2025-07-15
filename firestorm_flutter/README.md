@@ -16,7 +16,7 @@ and the Flutter guide for
 </div>
 
 <p align="center">
-    <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and Realtime Database</i>
+    <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and the Realtime Database</i>
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@ these datastores in an _object-oriented_ way, and with _minimal to no overheads_
 Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a> 
 at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
 
-Not convinced? Check out the [code comparison](code-comparison.md).
+**Not convinced? Check out the [code comparison](code-comparison.md).**
 
 [![pub package](https://img.shields.io/pub/v/firestorm.svg)](https://pub.dev/packages/firestorm)
 [![GitHub issues](https://img.shields.io/github/issues/RayLabz/Firestorm.svg)]()
