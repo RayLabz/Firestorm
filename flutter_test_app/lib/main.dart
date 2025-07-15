@@ -19,5 +19,39 @@ main() async {
   registerClasses();
 
 
+  FirebaseFirestore fs;
+  FirebaseDatabase db;
+
+  // var snapshot = await fs.collection("Person")
+  //   .doc(person.id)
+  //   .get();
+  //
+  // Person? p;
+  //
+  // if (snapshot.exists) {
+  //   p = Person(
+  //       snapshot.get("id") as String,
+  //       snapshot.get("name") as String,
+  //       snapshot.get("age") as int
+  //   );
+  // }
+
+  var snapshot = await db.ref("Person")
+    .child(person.id)
+    .get();
+
+  Person? p;
+
+  if (snapshot.exists) {
+    final data = snapshot.value as Map<dynamic, dynamic>;
+    p = Person(
+      data["id"] as String,
+      data["name"] as String,
+      data["age"] as int,
+    );
+  }
+
+
+
   runApp(Container());
 }

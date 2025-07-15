@@ -30,9 +30,10 @@ development of cross-platform Flutter applications using these two datastores, b
 The primary aim of Firestorm is to _reduce development effort and time_ by providing an easy to use API for interacting with
 these datastores in an _object-oriented_ way, and with _minimal to no overheads_ in terms of performance or flexibility.
 
-Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a>
-(developer alias <a target="_blank" href="https://github.com/raylabz">RayLabz</a>) 
+Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a> 
 at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
+
+Not convinced? Check out the [code comparison](code-comparison.md).
 
 [![pub package](https://img.shields.io/pub/v/firestorm.svg)](https://pub.dev/packages/firestorm)
 [![GitHub issues](https://img.shields.io/github/issues/RayLabz/Firestorm.svg)]()

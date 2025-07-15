@@ -2,6 +2,7 @@
 Release date: 15/07/2025
 
 - Switched to `logger` for debug prints rather than `colorful_text`.
+- Downgraded `analyzer` to version 6.2.0 to avoid deprecation issues.
 - 
 
 ## v0.2.1 - Bug Fixes
