@@ -1,3 +1,9 @@
+## v0.2.2 - Various updates
+Release date: 15/07/2025
+
+- Switched to `logger` for debug prints rather than `colorful_text`.
+- 
+
 ## v0.2.1 - Bug Fixes
 Release date: 07/07/2025
 

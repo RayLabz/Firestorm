@@ -1,9 +1,12 @@
+
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:colorful_text/colorful_text.dart';
 import 'package:firestorm/gen/valid_class_holder.dart';
 import 'package:firestorm/type/fs_types.dart';
 import 'package:firestorm/type/rdb_types.dart';
+
+import '../firestorm.dart';
 
 /// A utility class to check Dart classes for specific criteria related to Firestorm objects.
 class ClassChecker {
@@ -29,7 +32,7 @@ class ClassChecker {
       //Check the class for a public no-argument constructor:
       if (aClass.constructors.isEmpty || !aClass.constructors.any((c) => c.isPublic && c.parameters.isEmpty)) {
         // ignore: avoid_print
-        print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.", ColorfulText.red));
+        Firestorm.log.e("Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.");
       }
       else {
         resultClasses.add(aClass);
@@ -63,7 +66,7 @@ class ClassChecker {
 
       if (!hasIDField) {
         // ignore: avoid_print
-        print(ColorfulText.paint("Annotated class ${aClass.name} ignored. It (or its superclasses) does not have an ID field of type String.", ColorfulText.red));
+        Firestorm.log.e("Annotated class ${aClass.name} ignored. It (or its superclasses) does not have an ID field of type String.");
       }
       else {
         resultClasses.add(aClass);
@@ -80,7 +83,7 @@ class ClassChecker {
       for (final field in aClass.fields) {
         if (!FSTypes.isTypeSupported(field.type)) {
           // ignore: avoid_print
-          print(ColorfulText.paint("Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field '${field.name}' for Firestore.", ColorfulText.red));
+          Firestorm.log.e("Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field '${field.name}' for Firestore.");
           isValid = false;
           break;
         }
@@ -100,7 +103,7 @@ class ClassChecker {
       for (final field in aClass.fields) {
         if (!RDBTypes.isTypeSupported(field.type)) {
           // ignore: avoid_print
-          print(ColorfulText.paint("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.", ColorfulText.red));
+          Firestorm.log.e("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.");
           isValid = false;
           break;
         }
