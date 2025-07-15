@@ -1,3 +1,9 @@
+## v0.2.3 - Various updates
+Release date: 16/07/2025
+
+- Upgraded `analyzer` to version 7.3.0 to resolve static analysis issues.
+- Adjusted README for Flutter only.
+
 ## v0.2.2 - Various updates
 Release date: 15/07/2025
 

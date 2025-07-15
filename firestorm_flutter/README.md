@@ -64,23 +64,16 @@ at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
 3. Built-in datastore type safety.
 4. Automatic serialization and deserialization of data from/to objects.
 5. Easy access to advanced features such as real-time updates, offline persistence, transactions, batch writes, and more.
-6. Support for both Firestore and Real-Time Database.
-7. Support for both plain Dart and Flutter projects.
+6. Support for both Firestore and Realtime Database.
 
 ## Getting started
 
 ### Installation
 
-Install/import Firestorm by running the following commands in your project folder terminal:
+Install/import Firestorm by running the following command in your project folder terminal:
 
-Flutter projects:
 ```bash
 flutter pub add firestorm
-```
-
-Plain Dart projects:
-```bash
-dart pub add firestorm
 ```
 
 --- OR ---
@@ -89,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.2.2
+  firestorm: ^0.2.3
 ```
 
 ## Getting started with Firestorm for Flutter
@@ -117,7 +110,6 @@ This will generate a file called `firestorm_models.dart` in the `lib/generated/`
 This file contains the generated code for your custom classes and is required for Firestorm to work with them.
 
 4. **Initialize Firestorm in your application.**
-   - For Flutter, you can do this in the `main()` function:
      ```dart
      import 'package:firebase_core/firebase_core.dart';
      import 'package:firestorm/firestorm.dart';
@@ -129,19 +121,6 @@ This file contains the generated code for your custom classes and is required fo
        registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
        
        runApp(MyApp()); //Run your app normally here.
-     }
-     ```
-   - For plain Dart, you can do this in the `main()` function:
-     ```dart
-     import 'package:firebase_core/firebase_core.dart';
-     import 'package:firestorm/firestorm.dart';
-
-     void main() async {
-       await FS.init(); //Initialize Firestorm to use Firestore
-       await RDB.init(); //Initialize Firestorm to use Realtime Database
-       registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
-       
-       // Run your code here...
      }
      ```
      
