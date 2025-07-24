@@ -82,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.2.3
+  firestorm: ^0.2.4
 ```
 
 ## Getting started with Firestorm for Flutter
@@ -94,6 +94,7 @@ After importing Firestorm in your project, you can start using it by following t
    - For web, place it in `web/`.
    - For desktop, place it in `linux/`, `macos/`, or `windows/` as appropriate.
    - For more information on how to generate this file, refer to the official Firebase documentation for [Android](https://firebase.google.com/docs/android/setup), [iOS](https://firebase.google.com/docs/ios/setup), and [Web](https://firebase.google.com/docs/web/setup).
+   - You also need to configure each sub-project to use Firebase with the **correct dependencies**.
 2. **Create your custom data classes**
     - <a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define your data classes.
 3. **Install and run build_runner to perform checks and generate `firestorm_models.dart`**:

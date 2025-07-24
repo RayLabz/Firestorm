@@ -44,16 +44,16 @@ class ExtensionGenerator {
     classBuffer.writeln("\t\t return {");
 
     ConstructorElement constructorElement = aClass.unnamedConstructor!;
-    List<ParameterElement> params = constructorElement.parameters;
+    List<ParameterElement> constructorParams = constructorElement.parameters;
 
     //Fields:
-    for (ParameterElement param in params) {
-      FieldElement? matchingField = aClass.getField(param.displayName); //match to field
+    for (final field in aClass.fields) {
+      FieldElement? matchingField = field; //match to field
 
       for (final parent in aClass.allSupertypes) { //Find field in parent classes
         for (final parentField in parent.element.fields) {
           if (parentField.name != "hashCode" &&
-              parentField.name == param.name &&
+              parentField.name == field.name &&
               parentField.name != "runtimeType") {
             matchingField = parentField; //set matching field to parent field
             break;
@@ -77,16 +77,16 @@ class ExtensionGenerator {
       else {
         //If this is a user-defined type, expand it using it own toMap():
         if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType && !ClassChecker.isEnumType(matchingField.type)) {
-          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name}.toMap(),"); //call toMap() on user-defined type
+          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toMap(),"); //call toMap() on user-defined type
         }
         //enum:
         else if (ClassChecker.isEnumType(matchingField.type)) {
-          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name}.toString(),"); //not excluded (normal, enum)
+          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toString(),"); //not excluded (normal, enum)
         }
         //other:
         else {
           //Otherwise, just use the attribute:
-          classBuffer.writeln("\t\t\t '${param.name}': this.${param.name},"); //not excluded (normal)
+          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name},"); //not excluded (normal)
         }
       }
     }
@@ -95,13 +95,18 @@ class ExtensionGenerator {
     classBuffer.writeln("\t }");
     classBuffer.writeln();
 
+    //--------------------------------------------------------------------------
+
     //Generate fromMap() method
     classBuffer.writeln("\tstatic ${aClass.name} fromMap(Map<String, dynamic> map) {");
-    classBuffer.writeln("\t\t return ${aClass.name}(");
+    classBuffer.writeln("\t\t${aClass.name} object = ${aClass.name}(");
 
-// Positional parameters first:
-    for (ParameterElement param in params.where((p) => p.isPositional)) {
+    List<String> constructorParamNames = [];
+
+    // Positional parameters first:
+    for (ParameterElement param in constructorParams.where((p) => p.isPositional)) {
       FieldElement? matchingField = aClass.getField(param.displayName); // match to field
+      constructorParamNames.add(param.name);
 
       for (final parent in aClass.allSupertypes) { // find field in parent classes
         for (final parentField in parent.element.fields) {
@@ -159,11 +164,12 @@ class ExtensionGenerator {
       }
     }
 
-// Then named parameters in a map:
-    if (params.any((p) => p.isNamed)) {
+    // Then named parameters in a map:
+    if (constructorParams.any((p) => p.isNamed)) {
       // classBuffer.writeln("\t\t\t{");
-      for (ParameterElement param in params.where((p) => p.isNamed)) {
+      for (ParameterElement param in constructorParams.where((p) => p.isNamed)) {
         FieldElement? matchingField = aClass.getField(param.displayName); // match to field
+        constructorParamNames.add(param.name);
 
         for (final parent in aClass.allSupertypes) { // find field in parent classes
           for (final parentField in parent.element.fields) {
@@ -224,6 +230,56 @@ class ExtensionGenerator {
     }
 
     classBuffer.writeln("\t\t );");
+
+    //Set values for parameters that are not in the constructor:
+    for (final field in aClass.fields) {
+
+      if (constructorParamNames.contains(field.name)) {
+        continue; // skip fields that are already in the constructor
+      }
+
+      //Fields NOT in the constructor:
+      if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
+        if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
+          classBuffer.writeln("\t\t\t${field.name}: null,"); // set excluded to null
+        } else {
+          throw InvalidClassException(aClass.name); // cannot have excluded without nullable
+        }
+      } else {
+        // If this is a user-defined type, use its own fromMap():
+        if (!field.type.element!.library!.isDartCore &&
+            field.type is InterfaceType &&
+            !ClassChecker.isEnumType(field.type)) {
+          classBuffer.writeln(
+              "\t\t\t${field.name}: ${field.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field.name}'] as Map)),");
+        }
+        // List
+        else if (field.type.isDartCoreList) {
+          final listType = field.type as InterfaceType;
+          DartType elementType = listType.typeArguments[0];
+          classBuffer.writeln(
+              "\t\t\tobject.${field.name} =  map['${field.name}'] != null ? map['${field.name}'].cast<${elementType.getDisplayString()}>() : [];");
+        }
+        // Map
+        else if (field.type.isDartCoreMap) {
+          final listType = field.type as InterfaceType;
+          DartType valueType = listType.typeArguments[1];
+          classBuffer.writeln(
+              "\t\t\tobject.${field.name} = map['${field.name}'] != null ? map['${field.name}'].cast<String, ${valueType.getDisplayString()}>() : {};");
+        }
+        // Enum
+        else if (ClassChecker.isEnumType(field.type)) {
+          classBuffer.writeln(
+              "\t\t\tobject.${field.name} = ${field.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${field.name}'] as String);");
+        }
+        // Other types
+        else {
+          classBuffer.writeln(
+              "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type.getDisplayString()};");
+        }
+      }
+    }
+    classBuffer.writeln("\t\t return object;");
     classBuffer.writeln("\t}");
     classBuffer.writeln();
 

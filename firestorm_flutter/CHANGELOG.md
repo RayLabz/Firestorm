@@ -1,3 +1,8 @@
+## v0.2.4 - Bug Fixes and Improvements
+Release date: ?
+
+- Fixed issue with extension_generator which prevented fields not in the constructor from being serialized/deserialized.
+
 ## v0.2.3 - Various updates
 Release date: 16/07/2025
 
