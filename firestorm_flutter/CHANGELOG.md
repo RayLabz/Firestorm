@@ -1,3 +1,7 @@
+## v0.3.0
+Release date: 17/10/2025
+- Added support for Localstore, a local database similar to Firebase's databases which can acts as a local cache.
+
 ## v0.2.4 - Bug Fixes and Improvements
 Release date: ?
 
@@ -19,7 +23,7 @@ Release date: 15/07/2025
 - Improved examples.
 
 ## v0.2.1 - Bug Fixes
-Release date: 07/07/2025
+Release date: 07/07/2025**
 
 - Fixed an issue with listener data deserialization causing runtime errors.
 

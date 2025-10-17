@@ -10,19 +10,19 @@ This guide shows how to define classes in Firestorm for Flutter.
 ## Accepted data types
 This section lists the Dart data types that can be used in Firestorm classes for Firestore and Realtime Database.
 
-| Firestore 🔥         | Realtime Database ⚡  |
-|----------------------|----------------------|
-| String               | String               |
-| int                  | int                  |
-| double               | double               |
-| bool                 | bool                 |
-| null                 | null                 |
-| DateTime             | List<dynamic>        |
-| GeoPoint             | Map<String, dynamic> |
-| DocumentReference    |                      |
-| Uint8List            |                      |
-| List<dynamic>        |                      |
-| Map<String, dynamic> |                      |
+| Firestore 🔥 | Realtime Database ⚡  | Localstore 🛖
+|------------------------|----------------------|-|
+| String                 | String               | Any data type
+| int                    | int                  |
+| double                 | double               |
+| bool                   | bool                 |
+| null                   | null                 |
+| DateTime               | List<dynamic>        |
+| GeoPoint               | Map<String, dynamic> |
+| DocumentReference      |                      |
+| Uint8List              |                      |
+| List<dynamic>          |                      |
+| Map<String, dynamic>   |                      |
 
 > [!WARNING]
 > Other data types are not supported in Firestorm classes.

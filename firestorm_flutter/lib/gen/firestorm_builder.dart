@@ -34,6 +34,7 @@ class FirestormBuilder implements Builder {
 
     importsBuffer.writeln("import 'package:firestorm/fs/fs.dart';");
     importsBuffer.writeln("import 'package:firestorm/rdb/rdb.dart';");
+    importsBuffer.writeln("import 'package:firestorm/ls/ls.dart';");
 
     final Map<AssetId, Iterable<ClassElement>> allClasses = {};
     final Map<ClassElement, AssetId> assetIDs = {};

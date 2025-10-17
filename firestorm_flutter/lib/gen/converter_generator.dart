@@ -53,6 +53,11 @@ class RegistryGenerator {
       converterBuffer.writeln("\tRDB.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
       converterBuffer.writeln("\tRDB.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
     }
+    //Localstore:
+    for (final aClass in holder.fsValidClasses) {
+      converterBuffer.writeln("\tLS.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
+      converterBuffer.writeln("\tLS.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
+    }
     converterBuffer.writeln("}");
     converterBuffer.writeln();
 

@@ -24,8 +24,8 @@ and the Flutter guide for
 </p>
 
 Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool for Firebase's <a target="_blank" href="https://firebase.google.com/docs/firestore">Firestore</a>
-and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. It is designed to enable the rapid 
-development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.
+and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. This is supplemented by a local NoSQL database called Localstore, meant for use for local device storage.
+Firestorm is designed to enable the rapid development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.
 
 The primary aim of Firestorm is to _reduce development effort and time_ by providing an easy to use API for interacting with
 these datastores in an _object-oriented_ way, and with _minimal to no overheads_ in terms of performance or flexibility.
@@ -82,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.2.4
+  firestorm: ^0.3.0
 ```
 
 ## Getting started with Firestorm for Flutter
@@ -157,28 +157,29 @@ The guide covers the following topics:
 Even though Firestorm provides a unified API for both Firestore and Realtime Database, it is important to note that the two databases have different capabilities and limitations. Firestorm aims to provide a consistent interface while respecting the unique features of each database.
 - **Firestore**: A NoSQL document database that allows for complex queries, offline support, and real-time updates.
 - **Realtime Database**: A cloud-hosted NoSQL database that provides real-time synchronization and is optimized for low-latency data access.
+- **Localstore**: A local (on-device) NoSQL datastore.
 
-| Feature          | Firestore | Realtime Database |
-|------------------|---------|-----------------|
-| Basic operations (CRUD) | ✅       | ✅               |
-| Subcollections    | ✅       | ✅               |
-| Real-time Listeners | ✅       | ✅               |
-| Offline Support  | ✅       | ✅               |
-| Batch Writes     | ✅       | ❌               |
-| Queries          | Complex | Basic only      |
-| Transactions     | ✅       | ❌               |
-| Pagination       | ✅       | ❌               |
+| Feature          | Firestore | Realtime Database | Localstore |
+|------------------|---------|-----------------|----------------|
+| Basic operations (CRUD) | ✅       | ✅               | ✅ |
+| Subcollections    | ✅       | ✅               | ✅ |
+| Real-time Listeners | ✅       | ✅               | ❌ |
+| Offline Support  | ✅       | ✅               | ✅ | 
+| Batch Writes     | ✅       | ❌               | ❌ |
+| Queries          | Complex | Basic only      | ❌ |
+| Transactions     | ✅       | ❌               | ❌ |
+| Pagination       | ✅       | ❌               | ❌ |
 
 
 ## Platform support
-| Platform | Firestore | Realtime Database |
-|----------|-----------|-------------------|
-| Android  | ✅         | ✅                 |
-| iOS      | ✅       | ✅                 |
-| Web      | ✅       | ✅                 |
-| Windows  | ✅       | ❌                 |
-| macOS    | ✅       | ✅                 |
-| Linux    | ❌        | ❌                |
+| Platform | Firestore | Realtime Database | Localstore |
+|----------|-----------|-------------------|------------|
+| Android  | ✅         | ✅                 | ✅          |
+| iOS      | ✅       | ✅                 | ✅          |
+| Web      | ✅       | ✅                 | ✅          | 
+| Windows  | ✅       | ❌                 | ✅          |
+| macOS    | ✅       | ✅                 | ✅
+| Linux    | ❌        | ❌                | ✅ |
 
 
 ## Performance
@@ -197,11 +198,12 @@ You can find the performance benchmarks and comparisons in the [performance](per
 
 - Dart 3.2 or higher
 
-Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase packages for Dart:
+Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase and Localstore packages for Dart:
 
 - <a href="https://pub.dev/packages/firebase_core">firebase_core</a>
 - <a href="https://pub.dev/packages/firebase_database">firebase_database</a>
 - <a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a>
+- <a href="https://pub.dev/packages/localstore">localstore</a>
 
 You do not need to add these packages manually, as Firestorm will automatically add them as dependencies when you install it.
 
