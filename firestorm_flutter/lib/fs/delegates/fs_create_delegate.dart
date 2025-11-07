@@ -9,7 +9,7 @@ class FSCreateDelegate implements CreateDelegate {
 
   /// Creates a document in Firestore from the given object.
   @override
-  Future<void> one(dynamic object, { String? subcollection }) {
+  Future<void> one(dynamic object, { String? subcollection, SetOptions? setOptions }) {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -23,13 +23,13 @@ class FSCreateDelegate implements CreateDelegate {
     if (subcollection != null) {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
-    return ref.set(map);
+    return ref.set(map, setOptions);
   }
 
   /// Creates multiple documents in Firestore from a list of objects.
   /// Uses a batch operation for efficiency.
   @override
-  Future<void> many<T>(List<T> objects, { String? subcollection }) {
+  Future<void> many<T>(List<T> objects, { String? subcollection, SetOptions? setOptions }) {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
@@ -56,7 +56,7 @@ class FSCreateDelegate implements CreateDelegate {
         documentReference = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
 
-      batch.set(documentReference, serializer(object));
+      batch.set(documentReference, serializer(object), setOptions);
     }
     return batch.commit();
   }

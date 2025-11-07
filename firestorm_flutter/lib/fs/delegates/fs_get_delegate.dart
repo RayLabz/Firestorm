@@ -8,7 +8,7 @@ class FSGetDelegate implements GetDelegate {
 
   /// Reads a document from Firestore and converts it to the specified type.\
   @override
-  Future<T?> one<T>(String documentID, { String? subcollection }) async {
+  Future<T?> one<T>(String documentID, { String? subcollection, GetOptions? getOptions }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
@@ -19,7 +19,7 @@ class FSGetDelegate implements GetDelegate {
       ref = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
     }
 
-    DocumentSnapshot snapshot = await ref.get();
+    DocumentSnapshot snapshot = await ref.get(getOptions);
     if (!snapshot.exists) {
       return null;
     }
@@ -30,7 +30,7 @@ class FSGetDelegate implements GetDelegate {
   /// Reads multiple documents from Firestore and converts them to a list of the specified type.
   /// Sends multiple requests at the same time and returns when all are completed.
   @override
-  Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
+  Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection, GetOptions? getOptions }) async {
     final deserializer = FS.deserializers[T];
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
@@ -43,7 +43,7 @@ class FSGetDelegate implements GetDelegate {
     else {
       refs = documentIDs.map((id) => FS.instance.collection(T.toString()).doc(id)).toList();
     }
-    List<DocumentSnapshot> snapshots = await Future.wait(refs.map((ref) => ref.get()));
+    List<DocumentSnapshot> snapshots = await Future.wait(refs.map((ref) => ref.get(getOptions)));
     for (DocumentSnapshot snapshot in snapshots) {
       if (snapshot.exists) {
         T object = deserializer(snapshot.data() as Map<String, dynamic>) as T;

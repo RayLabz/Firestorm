@@ -8,7 +8,9 @@ import 'fs_query_result.dart';
 /// An item that helps with filtering objects from Firestore queries.
 class FSFilterable<T> extends Filterable<Query> {
 
-  FSFilterable(super.query, super.type);
+  final GetOptions? getOptions;
+
+  FSFilterable(super.query, super.type, { this.getOptions });
 
   /// Filters results by equality.
   FSFilterable<T> whereEqualTo(String field, dynamic value) {
@@ -126,7 +128,7 @@ class FSFilterable<T> extends Filterable<Query> {
     if (deserializer == null) {
       throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
     }
-    QuerySnapshot snapshot = await query.get();
+    QuerySnapshot snapshot = await query.get(getOptions);
     List<T> results = [];
     List<QueryDocumentSnapshot> docs = snapshot.docs;
     String? lastID;

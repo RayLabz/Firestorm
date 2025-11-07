@@ -1,3 +1,7 @@
+## v0.4.0
+Release date: 07/11/2025
+- Added support for providing `SetOptions` and `GetOptions` (optional parameters) in various operations for Firestore.
+
 ## v0.3.0
 Release date: 17/10/2025
 - Added support for Localstore, a local database similar to Firebase's databases which can acts as a local cache.

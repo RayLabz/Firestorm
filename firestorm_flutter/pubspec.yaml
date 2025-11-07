@@ -1,6 +1,6 @@
 name: firestorm
 description: "A data access API and ODM tool for Firebase's Firestore and Realtime Database"
-version: 0.3.0
+version: 0.4.0
 homepage: "https://pub.dev/packages/firestorm/"
 repository: "https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter"
 documentation: "https://raylabz.github.io/Firestorm/flutter-api/"

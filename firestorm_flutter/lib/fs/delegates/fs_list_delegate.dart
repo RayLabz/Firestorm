@@ -9,7 +9,7 @@ class FSListDelegate implements ListDelegate {
 
   /// Lists a limited number of items of a specific type without a query.
   @override
-  Future<List<T>> ofClass<T>(Type type, { int limit = 10, String? subcollection }) async {
+  Future<List<T>> ofClass<T>(Type type, { int limit = 10, String? subcollection, GetOptions? getOptions }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
     }
@@ -25,7 +25,7 @@ class FSListDelegate implements ListDelegate {
     }
 
     final Query<Map<String, dynamic>> query = collectionReference.limit(limit);
-    var querySnapshot = await query.get();
+    var querySnapshot = await query.get(getOptions);
     List<T> objects = [];
 
     //TODO - Consider the use of Multithreading
@@ -39,7 +39,7 @@ class FSListDelegate implements ListDelegate {
 
   /// Lists all items of a specific type.
   @override
-  Future<List<T>> allOfClass<T>(Type type, { String? subcollection }) async {
+  Future<List<T>> allOfClass<T>(Type type, { String? subcollection, GetOptions? getOptions }) async {
     if (T.toString() != type.toString()) {
       throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
     }
@@ -54,7 +54,7 @@ class FSListDelegate implements ListDelegate {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
     final Query<Map<String, dynamic>> query = collectionReference;
-    var querySnapshot = await query.get();
+    var querySnapshot = await query.get(getOptions);
     List<T> objects = [];
 
     //TODO - Consider the use of Multithreading
@@ -67,12 +67,12 @@ class FSListDelegate implements ListDelegate {
   }
 
   /// Applies a filter to a specific type of items and returns a list of items.
-  FSFilterable<T> filter<T>(Type type, { String? subcollection }) {
+  FSFilterable<T> filter<T>(Type type, { String? subcollection, GetOptions? getOptions }) {
     var collectionReference = FS.instance.collection(type.toString());
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
-    return FSFilterable<T>(collectionReference, type);
+    return FSFilterable<T>(collectionReference, type, getOptions: getOptions);
   }
 
 }

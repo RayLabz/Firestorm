@@ -6,9 +6,10 @@ import '../fs.dart';
 /// A delegate class to create documents in Firestore, using transactions.
 class FSTransactionCreateDelegate {
 
+  final SetOptions? setOptions;
   final Transaction _tx;
 
-  FSTransactionCreateDelegate.init(this._tx);
+  FSTransactionCreateDelegate.init(this._tx, { this.setOptions });
 
   /// Creates a document in Firestore from the given object.
   Future<Transaction> one(dynamic object, { String? subcollection }) async {
@@ -25,7 +26,7 @@ class FSTransactionCreateDelegate {
     if (subcollection != null) {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
-    return _tx.set(ref, map);
+    return _tx.set(ref, map, setOptions);
   }
 
   //TODO - Implement later, unsupported in v1.

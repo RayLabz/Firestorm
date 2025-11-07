@@ -49,6 +49,14 @@ main() async {
   ];
 
 
+  await FS.create.many(persons);
+
+  FS.listen.toObjects<Person>(
+    persons,
+    onChange: (object) {
+      print("Changed: $object.");
+    },
+  );
 
 
 

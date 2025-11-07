@@ -8,7 +8,7 @@ class FSExistDelegate implements ExistDelegate {
 
   /// Checks if a document exists in Firestore using its type and ID.
   @override
-  Future<bool> one<T>(dynamic object, { String? subcollection }) async {
+  Future<bool> one<T>(dynamic object, { String? subcollection, GetOptions? getOptions }) async {
     if (object.id == null) {
       return false;
     }
@@ -16,18 +16,18 @@ class FSExistDelegate implements ExistDelegate {
     if (subcollection != null) {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
     }
-    DocumentSnapshot snapshot = await ref.get();
+    DocumentSnapshot snapshot = await ref.get(getOptions);
     return snapshot.exists;
   }
 
   /// Checks if a document exists in Firestore using its type and ID.
   @override
-  Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection }) async {
+  Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection, GetOptions? getOptions }) async {
     DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
     if (subcollection != null) {
       ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
     }
-    DocumentSnapshot snapshot = await ref.get();
+    DocumentSnapshot snapshot = await ref.get(getOptions);
     return snapshot.exists;
   }
 

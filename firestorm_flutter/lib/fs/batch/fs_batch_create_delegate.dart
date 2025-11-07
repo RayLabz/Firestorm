@@ -6,12 +6,13 @@ import '../fs.dart';
 /// A delegate class to create documents in Firestore, using batches.
 class FSBatchCreateDelegate {
 
+  final SetOptions? setOptions;
   final WriteBatch _batch;
 
-  FSBatchCreateDelegate.init(this._batch);
+  FSBatchCreateDelegate.init(this._batch, { this.setOptions });
 
   /// Creates a document in Firestore from the given object.
-  one(dynamic object, { String? subcollection }) async {
+  Future<void> one(dynamic object, { String? subcollection }) async {
     final serializer = FS.serializers[object.runtimeType];
     if (serializer == null) {
       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
@@ -25,7 +26,7 @@ class FSBatchCreateDelegate {
     if (subcollection != null) {
       ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
     }
-    _batch.set(ref, map);
+    _batch.set(ref, map, setOptions);
   }
 
   //TODO - Implement later, unsupported in v1.
