@@ -31,17 +31,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -73,7 +70,7 @@
 </dt>
 <dd>
   Helps with the deserialization of data from the Realtime database by converting
-first into a Map&lt;String, dynamic&gt; to conform to requirements.
+first into a Map of String -&gt; dynamic to conform to requirements.
 </dd>
 
       </dl>
@@ -103,65 +100,81 @@ first into a Map&lt;String, dynamic&gt; to conform to requirements.
     <h5><span class="package-name">firestorm</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="../annotations_exclude">annotations\exclude</a></li>
-      <li><a href="../annotations_firestorm_object">annotations\firestorm_object</a></li>
-      <li><a href="../api_firestorm_data">api\firestorm_data</a></li>
-      <li><a href="../exceptions_invalid_class_exception">exceptions\invalid_class_exception</a></li>
-      <li><a href="../exceptions_no_document_exception">exceptions\no_document_exception</a></li>
-      <li><a href="../exceptions_null_id_exception">exceptions\null_id_exception</a></li>
-      <li><a href="../exceptions_unsupported_type_exception">exceptions\unsupported_type_exception</a></li>
-      <li><a href="../filterable">filterable</a></li>
-      <li><a href="../firestorm">firestorm</a></li>
-      <li><a href="../fs_batch_fs_batch">fs\batch\fs_batch</a></li>
-      <li><a href="../fs_batch_fs_batch_create_delegate">fs\batch\fs_batch_create_delegate</a></li>
-      <li><a href="../fs_batch_fs_batch_delete_delegate">fs\batch\fs_batch_delete_delegate</a></li>
-      <li><a href="../fs_batch_fs_batch_handler">fs\batch\fs_batch_handler</a></li>
-      <li><a href="../fs_batch_fs_batch_inliner">fs\batch\fs_batch_inliner</a></li>
-      <li><a href="../fs_batch_fs_batch_update_delegate">fs\batch\fs_batch_update_delegate</a></li>
-      <li><a href="../fs_delegates_fs_batch_delegate">fs\delegates\fs_batch_delegate</a></li>
-      <li><a href="../fs_delegates_fs_create_delegate">fs\delegates\fs_create_delegate</a></li>
-      <li><a href="../fs_delegates_fs_delete_delegate">fs\delegates\fs_delete_delegate</a></li>
-      <li><a href="../fs_delegates_fs_exist_delegate">fs\delegates\fs_exist_delegate</a></li>
-      <li><a href="../fs_delegates_fs_get_delegate">fs\delegates\fs_get_delegate</a></li>
-      <li><a href="../fs_delegates_fs_list_delegate">fs\delegates\fs_list_delegate</a></li>
-      <li><a href="../fs_delegates_fs_listen_delegate">fs\delegates\fs_listen_delegate</a></li>
-      <li><a href="../fs_delegates_fs_reference_delegate">fs\delegates\fs_reference_delegate</a></li>
-      <li><a href="../fs_delegates_fs_transaction_delegate">fs\delegates\fs_transaction_delegate</a></li>
-      <li><a href="../fs_delegates_fs_update_delegate">fs\delegates\fs_update_delegate</a></li>
-      <li><a href="../fs_fs">fs\fs</a></li>
-      <li><a href="../fs_queries_fs_filterable">fs\queries\fs_filterable</a></li>
-      <li><a href="../fs_queries_fs_paginator">fs\queries\fs_paginator</a></li>
-      <li><a href="../fs_queries_fs_query_result">fs\queries\fs_query_result</a></li>
-      <li><a href="../fs_transactions_fs_transaction">fs\transactions\fs_transaction</a></li>
-      <li><a href="../fs_transactions_fs_transaction_create_delegate">fs\transactions\fs_transaction_create_delegate</a></li>
-      <li><a href="../fs_transactions_fs_transaction_delete_delegate">fs\transactions\fs_transaction_delete_delegate</a></li>
-      <li><a href="../fs_transactions_fs_transaction_get_delegate">fs\transactions\fs_transaction_get_delegate</a></li>
-      <li><a href="../fs_transactions_fs_transaction_handler">fs\transactions\fs_transaction_handler</a></li>
-      <li><a href="../fs_transactions_fs_transaction_inliner">fs\transactions\fs_transaction_inliner</a></li>
-      <li><a href="../fs_transactions_fs_transaction_update_delegate">fs\transactions\fs_transaction_update_delegate</a></li>
-      <li><a href="../gen_builder">gen\builder</a></li>
-      <li><a href="../gen_class_checker">gen\class_checker</a></li>
-      <li><a href="../gen_converter_generator">gen\converter_generator</a></li>
-      <li><a href="../gen_extension_generator">gen\extension_generator</a></li>
-      <li><a href="../gen_firestorm_builder">gen\firestorm_builder</a></li>
-      <li><a href="../gen_header_generator">gen\header_generator</a></li>
-      <li><a href="../gen_import_generator">gen\import_generator</a></li>
-      <li><a href="../gen_valid_class_holder">gen\valid_class_holder</a></li>
-      <li><a href="../rdb_delegates_rdb_create_delegate">rdb\delegates\rdb_create_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_delete_delegate">rdb\delegates\rdb_delete_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_exist_delegate">rdb\delegates\rdb_exist_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_get_delegate">rdb\delegates\rdb_get_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_list_delegate">rdb\delegates\rdb_list_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_listen_delegate">rdb\delegates\rdb_listen_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_reference_delegate">rdb\delegates\rdb_reference_delegate</a></li>
-      <li><a href="../rdb_delegates_rdb_update_delegate">rdb\delegates\rdb_update_delegate</a></li>
-      <li><a href="../rdb_helpers_rdb_deserialization_helper">rdb\helpers\rdb_deserialization_helper</a></li>
-      <li><a href="../rdb_helpers_rdb_write_batch">rdb\helpers\rdb_write_batch</a></li>
-      <li><a href="../rdb_queries_rdb_filterable">rdb\queries\rdb_filterable</a></li>
-      <li><a href="../rdb_queries_rdb_query_result">rdb\queries\rdb_query_result</a></li>
-      <li><a href="../rdb_rdb">rdb\rdb</a></li>
-      <li><a href="../type_fs_types">type\fs_types</a></li>
-      <li><a href="../type_rdb_types">type\rdb_types</a></li>
+      <li><a href="../annotations_exclude/">annotations\exclude</a></li>
+      <li><a href="../annotations_firestorm_object/">annotations\firestorm_object</a></li>
+      <li><a href="../commons_delegate_batch_delegate/">commons\delegate\batch_delegate</a></li>
+      <li><a href="../commons_delegate_create_delegate/">commons\delegate\create_delegate</a></li>
+      <li><a href="../commons_delegate_delete_delegate/">commons\delegate\delete_delegate</a></li>
+      <li><a href="../commons_delegate_exist_delegate/">commons\delegate\exist_delegate</a></li>
+      <li><a href="../commons_delegate_get_delegate/">commons\delegate\get_delegate</a></li>
+      <li><a href="../commons_delegate_list_delegate/">commons\delegate\list_delegate</a></li>
+      <li><a href="../commons_delegate_listen_delegate/">commons\delegate\listen_delegate</a></li>
+      <li><a href="../commons_delegate_update_delegate/">commons\delegate\update_delegate</a></li>
+      <li><a href="../commons_filterable/">commons\filterable</a></li>
+      <li><a href="../exceptions_invalid_class_exception/">exceptions\invalid_class_exception</a></li>
+      <li><a href="../exceptions_no_document_exception/">exceptions\no_document_exception</a></li>
+      <li><a href="../exceptions_null_id_exception/">exceptions\null_id_exception</a></li>
+      <li><a href="../exceptions_unsupported_type_exception/">exceptions\unsupported_type_exception</a></li>
+      <li><a href="../firestorm/">firestorm</a></li>
+      <li><a href="../fs_batch_fs_batch/">fs\batch\fs_batch</a></li>
+      <li><a href="../fs_batch_fs_batch_create_delegate/">fs\batch\fs_batch_create_delegate</a></li>
+      <li><a href="../fs_batch_fs_batch_delete_delegate/">fs\batch\fs_batch_delete_delegate</a></li>
+      <li><a href="../fs_batch_fs_batch_handler/">fs\batch\fs_batch_handler</a></li>
+      <li><a href="../fs_batch_fs_batch_inliner/">fs\batch\fs_batch_inliner</a></li>
+      <li><a href="../fs_batch_fs_batch_update_delegate/">fs\batch\fs_batch_update_delegate</a></li>
+      <li><a href="../fs_delegates_fs_batch_delegate/">fs\delegates\fs_batch_delegate</a></li>
+      <li><a href="../fs_delegates_fs_create_delegate/">fs\delegates\fs_create_delegate</a></li>
+      <li><a href="../fs_delegates_fs_delete_delegate/">fs\delegates\fs_delete_delegate</a></li>
+      <li><a href="../fs_delegates_fs_exist_delegate/">fs\delegates\fs_exist_delegate</a></li>
+      <li><a href="../fs_delegates_fs_get_delegate/">fs\delegates\fs_get_delegate</a></li>
+      <li><a href="../fs_delegates_fs_list_delegate/">fs\delegates\fs_list_delegate</a></li>
+      <li><a href="../fs_delegates_fs_listen_delegate/">fs\delegates\fs_listen_delegate</a></li>
+      <li><a href="../fs_delegates_fs_reference_delegate/">fs\delegates\fs_reference_delegate</a></li>
+      <li><a href="../fs_delegates_fs_transaction_delegate/">fs\delegates\fs_transaction_delegate</a></li>
+      <li><a href="../fs_delegates_fs_update_delegate/">fs\delegates\fs_update_delegate</a></li>
+      <li><a href="../fs_fs/">fs\fs</a></li>
+      <li><a href="../fs_queries_fs_filterable/">fs\queries\fs_filterable</a></li>
+      <li><a href="../fs_queries_fs_paginator/">fs\queries\fs_paginator</a></li>
+      <li><a href="../fs_queries_fs_query_result/">fs\queries\fs_query_result</a></li>
+      <li><a href="../fs_transactions_fs_transaction/">fs\transactions\fs_transaction</a></li>
+      <li><a href="../fs_transactions_fs_transaction_create_delegate/">fs\transactions\fs_transaction_create_delegate</a></li>
+      <li><a href="../fs_transactions_fs_transaction_delete_delegate/">fs\transactions\fs_transaction_delete_delegate</a></li>
+      <li><a href="../fs_transactions_fs_transaction_get_delegate/">fs\transactions\fs_transaction_get_delegate</a></li>
+      <li><a href="../fs_transactions_fs_transaction_handler/">fs\transactions\fs_transaction_handler</a></li>
+      <li><a href="../fs_transactions_fs_transaction_inliner/">fs\transactions\fs_transaction_inliner</a></li>
+      <li><a href="../fs_transactions_fs_transaction_update_delegate/">fs\transactions\fs_transaction_update_delegate</a></li>
+      <li><a href="../gen_builder/">gen\builder</a></li>
+      <li><a href="../gen_class_checker/">gen\class_checker</a></li>
+      <li><a href="../gen_converter_generator/">gen\converter_generator</a></li>
+      <li><a href="../gen_extension_generator/">gen\extension_generator</a></li>
+      <li><a href="../gen_firestorm_builder/">gen\firestorm_builder</a></li>
+      <li><a href="../gen_header_generator/">gen\header_generator</a></li>
+      <li><a href="../gen_import_generator/">gen\import_generator</a></li>
+      <li><a href="../gen_valid_class_holder/">gen\valid_class_holder</a></li>
+      <li><a href="../ls_delegates_ls_create_delegate/">ls\delegates\ls_create_delegate</a></li>
+      <li><a href="../ls_delegates_ls_delete_delegate/">ls\delegates\ls_delete_delegate</a></li>
+      <li><a href="../ls_delegates_ls_exist_delegate/">ls\delegates\ls_exist_delegate</a></li>
+      <li><a href="../ls_delegates_ls_get_delegate/">ls\delegates\ls_get_delegate</a></li>
+      <li><a href="../ls_delegates_ls_list_delegate/">ls\delegates\ls_list_delegate</a></li>
+      <li><a href="../ls_delegates_ls_reference_delegate/">ls\delegates\ls_reference_delegate</a></li>
+      <li><a href="../ls_delegates_ls_update_delegate/">ls\delegates\ls_update_delegate</a></li>
+      <li><a href="../ls_ls/">ls\ls</a></li>
+      <li><a href="../rdb_delegates_rdb_create_delegate/">rdb\delegates\rdb_create_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_delete_delegate/">rdb\delegates\rdb_delete_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_exist_delegate/">rdb\delegates\rdb_exist_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_get_delegate/">rdb\delegates\rdb_get_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_list_delegate/">rdb\delegates\rdb_list_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_listen_delegate/">rdb\delegates\rdb_listen_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_reference_delegate/">rdb\delegates\rdb_reference_delegate</a></li>
+      <li><a href="../rdb_delegates_rdb_update_delegate/">rdb\delegates\rdb_update_delegate</a></li>
+      <li><a href="../rdb_helpers_rdb_deserialization_helper/">rdb\helpers\rdb_deserialization_helper</a></li>
+      <li><a href="../rdb_helpers_rdb_write_batch/">rdb\helpers\rdb_write_batch</a></li>
+      <li><a href="../rdb_queries_rdb_filterable/">rdb\queries\rdb_filterable</a></li>
+      <li><a href="../rdb_queries_rdb_query_result/">rdb\queries\rdb_query_result</a></li>
+      <li><a href="../rdb_rdb/">rdb\rdb</a></li>
+      <li><a href="../type_fs_types/">type\fs_types</a></li>
+      <li><a href="../type_ls_types/">type\ls_types</a></li>
+      <li><a href="../type_rdb_types/">type\rdb_types</a></li>
 </ol>
 
   </div>
@@ -172,7 +185,7 @@ first into a Map&lt;String, dynamic&gt; to conform to requirements.
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

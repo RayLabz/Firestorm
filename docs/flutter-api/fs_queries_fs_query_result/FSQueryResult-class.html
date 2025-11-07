@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_queries_fs_query_result">fs\queries\fs_query_result.dart</a></li>
+    <li><a href="../fs_queries_fs_query_result/">fs\queries\fs_query_result.dart</a></li>
     <li class="self-crumb">FSQueryResult<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
   </ol>
   <div class="self-name">FSQueryResult</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -66,8 +63,8 @@
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="FSQueryResult" class="callable">
-          <span class="name"><a href="../fs_queries_fs_query_result/FSQueryResult/FSQueryResult.html">FSQueryResult</a></span><span class="signature">(<span class="parameter" id="-param-_items"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">_items</span>, </span><span class="parameter" id="-param-_snapshot"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.4/cloud_firestore/QueryDocumentSnapshot-class.html">QueryDocumentSnapshot</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span>?</span> <span class="parameter-name">_snapshot</span>, </span><span class="parameter" id="-param-_lastDocumentId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">_lastDocumentId</span></span>)</span>
+        <dt id="FSQueryResult.new" class="callable">
+          <span class="name"><a href="../fs_queries_fs_query_result/FSQueryResult/FSQueryResult.html">FSQueryResult.new</a></span><span class="signature">(<span class="parameter" id="-param-_items"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">_items</span>, </span><span class="parameter" id="-param-_snapshot"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/QueryDocumentSnapshot-class.html">QueryDocumentSnapshot</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span>?</span> <span class="parameter-name">_snapshot</span>, </span><span class="parameter" id="-param-_lastDocumentId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">_lastDocumentId</span></span>)</span>
         </dt>
         <dd>
           
@@ -130,7 +127,7 @@
 
         <dt id="snapshot" class="property">
   <span class="name"><a href="../fs_queries_fs_query_result/FSQueryResult/snapshot.html">snapshot</a></span>
-  <span class="signature">&#8594; <a href="https://pub.dev/documentation/cloud_firestore/5.6.4/cloud_firestore/QueryDocumentSnapshot-class.html">QueryDocumentSnapshot</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span>?</span>
+  <span class="signature">&#8594; <a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/QueryDocumentSnapshot-class.html">QueryDocumentSnapshot</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span>?</span>
   
 
 </dt>
@@ -212,7 +209,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_queries_fs_query_result">fs_query_result</a></li>
+    <li><a href="../fs_queries_fs_query_result/">fs_query_result</a></li>
     <li class="self-crumb">FSQueryResult<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
 </ol>
 
@@ -225,7 +222,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_delegates_fs_get_delegate">fs\delegates\fs_get_delegate.dart</a></li>
+    <li><a href="../../fs_delegates_fs_get_delegate/">fs\delegates\fs_get_delegate.dart</a></li>
     <li><a href="../../fs_delegates_fs_get_delegate/FSGetDelegate-class.html">FSGetDelegate</a></li>
     <li class="self-crumb">one&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -57,24 +54,31 @@
 
     <section class="multi-line-signature">
       
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 <span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
 <span class="name ">one</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="one-param-documentID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">documentID</span>, {</span></li>
 <li><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span></li>
+<li><span class="parameter" id="one-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span>, </span></li>
 </ol>})
 
-      
+      <div class="features"><span class="feature">override</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Reads a document from Firestore and converts it to the specified type.</p>
+  <p>Reads a document from Firestore and converts it to the specified type.\</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;T?&gt; one&lt;T&gt;(String documentID, { String? subcollection }) async {
+  <pre class="language-dart"><code class="language-dart">@override
+Future&lt;T?&gt; one&lt;T&gt;(String documentID, { String? subcollection, GetOptions? getOptions }) async {
   final deserializer = FS.deserializers[T];
   if (deserializer == null) {
     throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
@@ -85,7 +89,7 @@
     ref = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
   }
 
-  DocumentSnapshot snapshot = await ref.get();
+  DocumentSnapshot snapshot = await ref.get(getOptions);
   if (!snapshot.exists) {
     return null;
   }
@@ -105,7 +109,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_delegates_fs_get_delegate">fs_get_delegate</a></li>
+    <li><a href="../../fs_delegates_fs_get_delegate/">fs_get_delegate</a></li>
     <li><a href="../../fs_delegates_fs_get_delegate/FSGetDelegate-class.html">FSGetDelegate</a></li>
     <li class="self-crumb">one&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
 </ol>
@@ -119,7 +123,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

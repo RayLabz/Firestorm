@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_delegates_fs_list_delegate">fs\delegates\fs_list_delegate.dart</a></li>
+    <li><a href="../../fs_delegates_fs_list_delegate/">fs\delegates\fs_list_delegate.dart</a></li>
     <li><a href="../../fs_delegates_fs_list_delegate/FSListDelegate-class.html">FSListDelegate</a></li>
     <li class="self-crumb">filter&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -60,6 +57,7 @@
 <span class="returntype"><a href="../../fs_queries_fs_filterable/FSFilterable-class.html">FSFilterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
 <span class="name ">filter</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="filter-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> <span class="parameter-name">type</span>, {</span></li>
 <li><span class="parameter" id="filter-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span></li>
+<li><span class="parameter" id="filter-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span>, </span></li>
 </ol>})
 
       
@@ -74,12 +72,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">FSFilterable&lt;T&gt; filter&lt;T&gt;(Type type, { String? subcollection }) {
+  <pre class="language-dart"><code class="language-dart">FSFilterable&lt;T&gt; filter&lt;T&gt;(Type type, { String? subcollection, GetOptions? getOptions }) {
   var collectionReference = FS.instance.collection(type.toString());
   if (subcollection != null) {
     collectionReference = collectionReference.doc(subcollection).collection(subcollection);
   }
-  return FSFilterable&lt;T&gt;(collectionReference, type);
+  return FSFilterable&lt;T&gt;(collectionReference, type, getOptions: getOptions);
 }</code></pre>
 </section>
 
@@ -94,7 +92,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_delegates_fs_list_delegate">fs_list_delegate</a></li>
+    <li><a href="../../fs_delegates_fs_list_delegate/">fs_list_delegate</a></li>
     <li><a href="../../fs_delegates_fs_list_delegate/FSListDelegate-class.html">FSListDelegate</a></li>
     <li class="self-crumb">filter&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
 </ol>
@@ -108,7 +106,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

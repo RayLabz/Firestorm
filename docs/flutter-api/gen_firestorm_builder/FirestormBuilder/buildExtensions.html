@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_firestorm_builder">gen\firestorm_builder.dart</a></li>
+    <li><a href="../../gen_firestorm_builder/">gen\firestorm_builder.dart</a></li>
     <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
     <li class="self-crumb">buildExtensions property</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -78,7 +75,7 @@ from the values in this map are expected as outputs.</p>
 <li>If an empty key exists, all inputs are considered matching.</li>
 <li>An instance of a builder must always return the same configuration.
 Typically, a builder will return a <code>const</code> map. Builders may also choose
-extensions based on <a href="https://pub.dev/documentation/build/2.4.2/build/BuilderOptions-class.html">BuilderOptions</a>.</li>
+extensions based on <a href="https://pub.dev/documentation/build/2.5.4/build/BuilderOptions-class.html">BuilderOptions</a>.</li>
 <li>Most builders will use a single input extension and one or more output
 extensions.</li>
 <li>For more information on build extensions, see
@@ -107,7 +104,7 @@ final buildExtensions = const {
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_firestorm_builder">firestorm_builder</a></li>
+    <li><a href="../../gen_firestorm_builder/">firestorm_builder</a></li>
     <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
     <li class="self-crumb">buildExtensions property</li>
 </ol>
@@ -121,7 +118,7 @@ final buildExtensions = const {
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

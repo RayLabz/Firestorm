@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_delegates_fs_get_delegate">fs\delegates\fs_get_delegate.dart</a></li>
+    <li><a href="../fs_delegates_fs_get_delegate/">fs\delegates\fs_get_delegate.dart</a></li>
     <li class="self-crumb">FSGetDelegate class</li>
   </ol>
   <div class="self-name">FSGetDelegate</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -61,13 +58,33 @@
 </section>
 
 
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+  <dt>Implemented types</dt>
+  <dd>
+    <ul class="comma-separated clazz-relationships">
+        <li><a href="../commons_delegate_get_delegate/GetDelegate-class.html">GetDelegate</a></li>
+    </ul>
+  </dd>
+        
+
+
+        
+        
+
+
+      </dl>
+    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="FSGetDelegate" class="callable">
-          <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/FSGetDelegate.html">FSGetDelegate</a></span><span class="signature">()</span>
+        <dt id="FSGetDelegate.new" class="callable">
+          <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/FSGetDelegate.html">FSGetDelegate.new</a></span><span class="signature">()</span>
         </dt>
         <dd>
           
@@ -114,7 +131,7 @@
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="many" class="callable">
-  <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/many.html">many</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="many-param-documentIDs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">documentIDs</span>, {</span><span class="parameter" id="many-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span></span>})
+  <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/many.html">many</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="many-param-documentIDs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">documentIDs</span>, {</span><span class="parameter" id="many-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span><span class="parameter" id="many-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span>
   </span>
   
@@ -122,8 +139,8 @@
 </dt>
 <dd>
   Reads multiple documents from Firestore and converts them to a list of the specified type.
-Sends multiple requests at the same time returns when all are completed.
-  
+Sends multiple requests at the same time and returns when all are completed.
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -141,15 +158,15 @@ Sends multiple requests at the same time returns when all are completed.
 </dd>
 
         <dt id="one" class="callable">
-  <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/one.html">one</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="one-param-documentID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">documentID</span>, {</span><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span></span>})
+  <span class="name"><a href="../fs_delegates_fs_get_delegate/FSGetDelegate/one.html">one</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="one-param-documentID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">documentID</span>, {</span><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span><span class="parameter" id="one-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T?</span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd>
-  Reads a document from Firestore and converts it to the specified type.
-  
+  Reads a document from Firestore and converts it to the specified type.\
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -203,7 +220,7 @@ Sends multiple requests at the same time returns when all are completed.
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_delegates_fs_get_delegate">fs_get_delegate</a></li>
+    <li><a href="../fs_delegates_fs_get_delegate/">fs_get_delegate</a></li>
     <li class="self-crumb">FSGetDelegate class</li>
 </ol>
 
@@ -216,7 +233,7 @@ Sends multiple requests at the same time returns when all are completed.
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

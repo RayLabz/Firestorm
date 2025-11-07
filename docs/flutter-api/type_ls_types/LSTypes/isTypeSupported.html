@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the isTypeSupported method from the LSTypes class, for the Dart programming language.">
+  <title>isTypeSupported method - LSTypes class - ls_types library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">firestorm</a></li>
+    <li><a href="../../type_ls_types/">type\ls_types.dart</a></li>
+    <li><a href="../../type_ls_types/LSTypes-class.html">LSTypes</a></li>
+    <li class="self-crumb">isTypeSupported static method</li>
+  </ol>
+  <div class="self-name">isTypeSupported</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="type_ls_types&#47;LSTypes-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">isTypeSupported</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+<span class="name ">isTypeSupported</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Checks if the given Dart type is supported by Localstore.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static bool isTypeSupported(DartType type) {
+
+  &#47;&#47;primitives
+  if (type.isDartCoreString ||
+      type.isDartCoreInt ||
+      type.isDartCoreDouble ||
+      type.isDartCoreBool ||
+      type.getDisplayString() == &#39;DateTime&#39; ||
+      type.isDartCoreNull ||
+      type.getDisplayString() == &#39;DocumentReference&#39; ||
+      type.getDisplayString() == &#39;GeoPoint&#39; ||
+      type.getDisplayString() == &#39;Uint8List&#39;
+  ) {
+    return true;
+  }
+
+  &#47;&#47;enums:
+  else if (ClassChecker.isEnumType(type)) {
+    return true;
+  }
+
+  &#47;&#47;lists, must contain supported elements
+  else if (type.isDartCoreList) {
+    final listType = type as InterfaceType;
+    if (listType.typeArguments.length == 1 &amp;&amp;
+        isTypeSupported(listType.typeArguments[0])) {
+      return true;
+    }
+  }
+
+  &#47;&#47;maps, must have String keys and supported values
+  else if (type.isDartCoreMap) {
+    final mapType = type as InterfaceType;
+    if (mapType.typeArguments.length == 2 &amp;&amp;
+        mapType.typeArguments[0].isDartCoreString &amp;&amp;
+        isTypeSupported(mapType.typeArguments[1])) {
+      return true;
+    }
+  }
+
+  &#47;&#47;check user-defined types:
+  else if (type.element != null &amp;&amp; !type.element!.library!.isDartCore &amp;&amp; type is InterfaceType) {
+    final element = type.element;
+    if (element is ClassElement) {
+      List&lt;FieldElement&gt; allFields = [];
+      allFields.addAll(element.fields);
+      for (final parent in element.allSupertypes) { &#47;&#47;Check parent classes too
+        if (parent.getDisplayString() != &#39;Object&#39;) { &#47;&#47;Avoid the Object class
+          allFields.addAll(parent.element.fields);
+        }
+      }
+
+      List&lt;bool&gt; fieldsSupported = [];
+      for (var field in allFields) {
+        if (!field.isStatic) {
+          bool b = isTypeSupported(field.type);
+          fieldsSupported.add(b);
+        }
+      }
+
+      &#47;&#47;Return true only if all fields are supported
+      for (final bool b in fieldsSupported) {
+        if (!b) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">firestorm</a></li>
+    <li><a href="../../type_ls_types/">ls_types</a></li>
+    <li><a href="../../type_ls_types/LSTypes-class.html">LSTypes</a></li>
+    <li class="self-crumb">isTypeSupported static method</li>
+</ol>
+
+    <h5>LSTypes class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    firestorm
+      0.4.0
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

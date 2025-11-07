@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../rdb_delegates_rdb_create_delegate">rdb\delegates\rdb_create_delegate.dart</a></li>
+    <li><a href="../rdb_delegates_rdb_create_delegate/">rdb\delegates\rdb_create_delegate.dart</a></li>
     <li class="self-crumb">RDBCreateDelegate class</li>
   </ol>
   <div class="self-name">RDBCreateDelegate</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -61,13 +58,33 @@
 </section>
 
 
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+  <dt>Implemented types</dt>
+  <dd>
+    <ul class="comma-separated clazz-relationships">
+        <li><a href="../commons_delegate_create_delegate/CreateDelegate-class.html">CreateDelegate</a></li>
+    </ul>
+  </dd>
+        
+
+
+        
+        
+
+
+      </dl>
+    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="RDBCreateDelegate" class="callable">
-          <span class="name"><a href="../rdb_delegates_rdb_create_delegate/RDBCreateDelegate/RDBCreateDelegate.html">RDBCreateDelegate</a></span><span class="signature">()</span>
+        <dt id="RDBCreateDelegate.new" class="callable">
+          <span class="name"><a href="../rdb_delegates_rdb_create_delegate/RDBCreateDelegate/RDBCreateDelegate.html">RDBCreateDelegate.new</a></span><span class="signature">()</span>
         </dt>
         <dd>
           
@@ -121,9 +138,9 @@
 
 </dt>
 <dd>
-  Creates multiple documents in Firestore from a list of objects.
+  Creates multiple documents in the Realtime database from a list of objects.
 Uses a batch operation for efficiency.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -148,8 +165,8 @@ Uses a batch operation for efficiency.
 
 </dt>
 <dd>
-  Creates a document in Firestore from the given object.
-  
+  Creates a document in the Realtime database from the given object.
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -203,7 +220,7 @@ Uses a batch operation for efficiency.
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../rdb_delegates_rdb_create_delegate">rdb_create_delegate</a></li>
+    <li><a href="../rdb_delegates_rdb_create_delegate/">rdb_create_delegate</a></li>
     <li class="self-crumb">RDBCreateDelegate class</li>
 </ol>
 
@@ -216,7 +233,7 @@ Uses a batch operation for efficiency.
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

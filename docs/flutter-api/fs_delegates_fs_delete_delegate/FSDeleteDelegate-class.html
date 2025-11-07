@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_delegates_fs_delete_delegate">fs\delegates\fs_delete_delegate.dart</a></li>
+    <li><a href="../fs_delegates_fs_delete_delegate/">fs\delegates\fs_delete_delegate.dart</a></li>
     <li class="self-crumb">FSDeleteDelegate class</li>
   </ol>
   <div class="self-name">FSDeleteDelegate</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -61,13 +58,33 @@
 </section>
 
 
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+  <dt>Implemented types</dt>
+  <dd>
+    <ul class="comma-separated clazz-relationships">
+        <li><a href="../commons_delegate_delete_delegate/DeleteDelegate-class.html">DeleteDelegate</a></li>
+    </ul>
+  </dd>
+        
+
+
+        
+        
+
+
+      </dl>
+    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="FSDeleteDelegate" class="callable">
-          <span class="name"><a href="../fs_delegates_fs_delete_delegate/FSDeleteDelegate/FSDeleteDelegate.html">FSDeleteDelegate</a></span><span class="signature">()</span>
+        <dt id="FSDeleteDelegate.new" class="callable">
+          <span class="name"><a href="../fs_delegates_fs_delete_delegate/FSDeleteDelegate/FSDeleteDelegate.html">FSDeleteDelegate.new</a></span><span class="signature">()</span>
         </dt>
         <dd>
           
@@ -122,7 +139,7 @@
 </dt>
 <dd>
   Deletes all documents of a specific type from Firestore.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -135,7 +152,7 @@
 </dt>
 <dd>
   Deletes multiple documents from Firestore using a list of objects.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -148,7 +165,7 @@
 </dt>
 <dd>
   Deletes multiple documents from Firestore by their type and a list of document IDs.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -166,7 +183,7 @@
 </dd>
 
         <dt id="one" class="callable">
-  <span class="name"><a href="../fs_delegates_fs_delete_delegate/FSDeleteDelegate/one.html">one</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="one-param-object"><span class="type-annotation">T</span> <span class="parameter-name">object</span>, {</span><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span></span>})
+  <span class="name"><a href="../fs_delegates_fs_delete_delegate/FSDeleteDelegate/one.html">one</a></span><span class="signature">(<wbr><span class="parameter" id="one-param-object"><span class="type-annotation">dynamic</span> <span class="parameter-name">object</span>, {</span><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
@@ -174,7 +191,7 @@
 </dt>
 <dd>
   Deletes a document from Firestore using an object.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -187,7 +204,7 @@
 </dt>
 <dd>
   Deletes a document from Firestore by its type and document ID.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -241,7 +258,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_delegates_fs_delete_delegate">fs_delete_delegate</a></li>
+    <li><a href="../fs_delegates_fs_delete_delegate/">fs_delete_delegate</a></li>
     <li class="self-crumb">FSDeleteDelegate class</li>
 </ol>
 
@@ -254,7 +271,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

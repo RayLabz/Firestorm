@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the FSFilterable constructor from Class FSFilterable from the fs_filterable library, for the Dart programming language.">
-  <title>FSFilterable constructor - FSFilterable - fs_filterable library - Dart API</title>
+  <meta name="description" content="API docs for the FSFilterable.new constructor from Class FSFilterable from the fs_filterable library, for the Dart programming language.">
+  <title>FSFilterable.new constructor - FSFilterable - fs_filterable library - Dart API</title>
 
 
   
@@ -25,25 +25,22 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_queries_fs_filterable">fs\queries\fs_filterable.dart</a></li>
+    <li><a href="../../fs_queries_fs_filterable/">fs\queries\fs_filterable.dart</a></li>
     <li><a href="../../fs_queries_fs_filterable/FSFilterable-class.html">FSFilterable<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">FSFilterable constructor</li>
+    <li class="self-crumb">FSFilterable.new constructor</li>
   </ol>
-  <div class="self-name">FSFilterable</div>
+  <div class="self-name">FSFilterable.new</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div
@@ -57,9 +54,10 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">FSFilterable&lt;<wbr><span class="type-parameter">T</span>&gt;</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="-param-query"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.4/cloud_firestore/Query-class.html">Query</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span></span> <span class="parameter-name">query</span>, </span></li>
-<li><span class="parameter" id="-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> <span class="parameter-name">type</span></span></li>
-</ol>)
+      <span class="name ">FSFilterable&lt;<wbr><span class="type-parameter">T</span>&gt;</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="-param-query"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/Query-class.html">Query</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>&gt;</span></span> <span class="parameter-name">query</span>, </span></li>
+<li><span class="parameter" id="-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> <span class="parameter-name">type</span>, {</span></li>
+<li><span class="parameter" id="-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span>, </span></li>
+</ol>})
     </section>
     
 
@@ -67,7 +65,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">FSFilterable(super.query, super.type);</code></pre>
+  <pre class="language-dart"><code class="language-dart">FSFilterable(super.query, super.type, { this.getOptions });</code></pre>
 </section>
 
 
@@ -81,9 +79,9 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../fs_queries_fs_filterable">fs_filterable</a></li>
+    <li><a href="../../fs_queries_fs_filterable/">fs_filterable</a></li>
     <li><a href="../../fs_queries_fs_filterable/FSFilterable-class.html">FSFilterable<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">FSFilterable constructor</li>
+    <li class="self-crumb">FSFilterable.new constructor</li>
 </ol>
 
     <h5>FSFilterable class</h5>
@@ -95,7 +93,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

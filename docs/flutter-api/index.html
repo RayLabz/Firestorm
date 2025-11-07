@@ -24,23 +24,20 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter">firestorm package</a></li>
+    <li><a href="https://pub.dev/packages/firestorm/">firestorm package</a></li>
   </ol>
   <div class="self-name">firestorm</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
@@ -62,29 +59,46 @@ and the Flutter guide for
     <h1> Firestorm for Dart &amp; Flutter</h1>
 </div>
 <p align="center">
-    <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and Realtime Database</i>
+    <i style="font-size: large; color: darkslategrey">An object-oriented data access API and ODM for Firebase's Firestore and the Realtime Database</i>
 </p>
 <p align="center">
    <img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/firestorm-logo.png" alt="Firestorm logo" width="200" height="200">
 </p>
 <p>Firestorm for Flutter is a data access and ODM (Object-Document Mapping) tool for Firebase's <a target="_blank" href="https://firebase.google.com/docs/firestore">Firestore</a>
-and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. It is designed to enable the rapid
-development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.</p>
-<p>Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase packages for Dart:</p>
-<ul>
-<li><a href="https://pub.dev/packages/firebase_core">firebase_core</a></li>
-<li><a href="https://pub.dev/packages/firebase_database">firebase_database</a></li>
-<li><a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a></li>
-</ul>
+and <a target="_blank" href="https://firebase.google.com/docs/database">Realtime Database</a>. This is supplemented by a local NoSQL database called Localstore, meant for use for local device storage.
+Firestorm is designed to enable the rapid development of cross-platform Flutter applications using these two datastores, by providing a simple object-oriented API for interacting with data with minimal to no overheads.</p>
 <p>The primary aim of Firestorm is to <em>reduce development effort and time</em> by providing an easy to use API for interacting with
 these datastores in an <em>object-oriented</em> way, and with <em>minimal to no overheads</em> in terms of performance or flexibility.</p>
 <p>Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a>
-(developer alias <a target="_blank" href="https://github.com/raylabz">RayLabz</a>)
 at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.</p>
+<p><strong>Not convinced? Check out the <a href="code-comparison.md">code comparison</a>.</strong></p>
 <p><a href="https://pub.dev/packages/firestorm"><img src="https://img.shields.io/pub/v/firestorm.svg" alt="pub package"></a>
 <a href=""><img src="https://img.shields.io/github/issues/RayLabz/Firestorm.svg" alt="GitHub issues"></a>
 <img src="https://img.shields.io/github/stars/RayLabz/Firestorm.svg?style=social&amp;label=Star" alt="GitHub stars">
 <img src="https://img.shields.io/github/license/RayLabz/Firestorm.svg" alt="GitHub license"></p>
+<hr>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#getting-started">Getting started</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+</ul>
+</li>
+<li><a href="#getting-started-with-firestorm-for-flutter">Getting started with Firestorm for Flutter</a></li>
+<li><a href="#api-guide">API Guide</a></li>
+<li><a href="#feature-support">Feature support</a></li>
+<li><a href="#platform-support">Platform support</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#information">Information</a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#known-issues">Known issues</a></li>
+<li><a href="#bug-reports-and-feature-requests">Bug reports and feature requests</a></li>
+</ul>
+</li>
+<li><a href="#license">License</a></li>
+</ul>
 <h2 id="features">Features</h2>
 <ol>
 <li>An easy-to-use data access API.</li>
@@ -92,60 +106,57 @@ at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.</p
 <li>Built-in datastore type safety.</li>
 <li>Automatic serialization and deserialization of data from/to objects.</li>
 <li>Easy access to advanced features such as real-time updates, offline persistence, transactions, batch writes, and more.</li>
-<li>Support for both Firestore and Real-Time Database.</li>
-<li>Support for both plain Dart and Flutter projects.</li>
+<li>Support for both Firestore and Realtime Database.</li>
 </ol>
 <h2 id="getting-started">Getting started</h2>
 <h3 id="installation">Installation</h3>
-<p>Install/import Firestorm by running the following commands in your project folder terminal:</p>
-<p>Flutter projects:</p>
+<p>Install/import Firestorm by running the following command in your project folder terminal:</p>
 <pre class="language-bash"><code class="language-bash">flutter pub add firestorm
-</code></pre>
-<p>Plain Dart projects:</p>
-<pre class="language-bash"><code class="language-bash">dart pub add firestorm
 </code></pre>
 <p>--- OR ---</p>
 <p>By adding it to your <code>pubspec.yaml</code> file:</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  firestorm: ^0.1.0
+  firestorm: ^0.3.0
 </code></pre>
 <h2 id="getting-started-with-firestorm-for-flutter">Getting started with Firestorm for Flutter</h2>
 <p>After importing Firestorm in your project, you can start using it by following these steps:</p>
 <ol>
 <li>
-<p><strong>Configure the <code>google-services.json</code> file to your project.</strong></p>
+<p><strong>Configure the <code>google-services.json</code> file in your project.</strong></p>
 <ul>
 <li>For Android, place it in <code>android/app/</code>.</li>
 <li>For iOS, place it in <code>ios/Runner/</code>.</li>
 <li>For web, place it in <code>web/</code>.</li>
 <li>For desktop, place it in <code>linux/</code>, <code>macos/</code>, or <code>windows/</code> as appropriate.</li>
 <li>For more information on how to generate this file, refer to the official Firebase documentation for <a href="https://firebase.google.com/docs/android/setup">Android</a>, <a href="https://firebase.google.com/docs/ios/setup">iOS</a>, and <a href="https://firebase.google.com/docs/web/setup">Web</a>.</li>
+<li>You also need to configure each sub-project to use Firebase with the <strong>correct dependencies</strong>.</li>
 </ul>
 </li>
 <li>
 <p><strong>Create your custom data classes</strong></p>
 <ul>
-<li><a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define custom classes.</li>
+<li><a target="_blank" href="defining-classes.md">Follow the guide</a> on how to define your data classes.</li>
 </ul>
 </li>
 <li>
-<p><strong>Run build_runner to perform checks and generate <code>firestorm_models.dart</code></strong>:</p>
+<p><strong>Install and run build_runner to perform checks and generate <code>firestorm_models.dart</code></strong>:</p>
 <ul>
-<li>For Flutter, run:
-<pre class="language-bash"><code class="language-bash">flutter pub run build_runner build --delete-conflicting-outputs
+<li>
+<p>To install, run:</p>
+<pre class="language-bash"><code class="language-bash">flutter pub add build_runner 
 </code></pre>
 </li>
-<li>For plain Dart, run:
+<li>
+<p>To generate, run:</p>
 <pre class="language-bash"><code class="language-bash">dart run build_runner build --delete-conflicting-outputs
 </code></pre>
-This will generate a file called <code>firestorm_models.dart</code> in the <code>lib/generated/</code> directory of your project.
-This file contains the generated code for your custom classes and is required for Firestorm to work with them.</li>
+<p>This will generate a file called <code>firestorm_models.dart</code> in the <code>lib/generated/</code> directory of your project.
+This file contains the generated code for your custom classes and is required for Firestorm to work with them.</p>
+</li>
 </ul>
 </li>
 <li>
 <p><strong>Initialize Firestorm in your application.</strong></p>
-<ul>
-<li>For Flutter, you can do this in the <code>main()</code> function:
 <pre class="language-dart"><code class="language-dart">import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/firestorm.dart';
 
@@ -154,25 +165,10 @@ void main() async {
   await FS.init(); //Initialize Firestorm to use Firestore
   await RDB.init(); //Initialize Firestorm to use Realtime Database
   registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
-       
+     
   runApp(MyApp()); //Run your app normally here.
 }
 </code></pre>
-</li>
-<li>For plain Dart, you can do this in the <code>main()</code> function:
-<pre class="language-dart"><code class="language-dart">import 'package:firebase_core/firebase_core.dart';
-import 'package:firestorm/firestorm.dart';
-
-void main() async {
-  await FS.init(); //Initialize Firestorm to use Firestore
-  await RDB.init(); //Initialize Firestorm to use Realtime Database
-  registerClasses(); //Registers custom classes. Imported from generated file [firestorm_models.dart].
-       
-  // Run your code here...
-}
-</code></pre>
-</li>
-</ul>
 </li>
 </ol>
 <div class="markdown-alert markdown-alert-tip">
@@ -199,7 +195,7 @@ void main() async {
 </ol>
 <h3 id="summary">Summary</h3>
 <img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;">
----
+<hr>
 <h2 id="api-guide">API Guide</h2>
 <p>For a detailed guide on how to use Firestorm, refer to the <a href="api-guide.md">API Guide</a>.
 The guide covers the following topics:</p>
@@ -208,13 +204,13 @@ The guide covers the following topics:</p>
 <li>How to use real-time updates with Firestorm.</li>
 <li>How to use transactions and batch writes for Firestore.</li>
 <li>How to use advanced features such as offline persistence, queries, and more.</li>
-<li>How to use Firestorm with custom classes and inheritance.</li>
 </ul>
 <h2 id="feature-support">Feature support</h2>
 <p>Even though Firestorm provides a unified API for both Firestore and Realtime Database, it is important to note that the two databases have different capabilities and limitations. Firestorm aims to provide a consistent interface while respecting the unique features of each database.</p>
 <ul>
 <li><strong>Firestore</strong>: A NoSQL document database that allows for complex queries, offline support, and real-time updates.</li>
 <li><strong>Realtime Database</strong>: A cloud-hosted NoSQL database that provides real-time synchronization and is optimized for low-latency data access.</li>
+<li><strong>Localstore</strong>: A local (on-device) NoSQL datastore.</li>
 </ul>
 <table>
 <thead>
@@ -222,6 +218,7 @@ The guide covers the following topics:</p>
 <th>Feature</th>
 <th>Firestore</th>
 <th>Realtime Database</th>
+<th>Localstore</th>
 </tr>
 </thead>
 <tbody>
@@ -229,9 +226,11 @@ The guide covers the following topics:</p>
 <td>Basic operations (CRUD)</td>
 <td>✅</td>
 <td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>Subcollections</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -239,9 +238,11 @@ The guide covers the following topics:</p>
 <td>Real-time Listeners</td>
 <td>✅</td>
 <td>✅</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>Offline Support</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -249,20 +250,24 @@ The guide covers the following topics:</p>
 <td>Batch Writes</td>
 <td>✅</td>
 <td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>Queries</td>
 <td>Complex</td>
 <td>Basic only</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>Transactions</td>
 <td>✅</td>
 <td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>Pagination</td>
 <td>✅</td>
+<td>❌</td>
 <td>❌</td>
 </tr>
 </tbody>
@@ -274,6 +279,7 @@ The guide covers the following topics:</p>
 <th>Platform</th>
 <th>Firestore</th>
 <th>Realtime Database</th>
+<th>Localstore</th>
 </tr>
 </thead>
 <tbody>
@@ -281,9 +287,11 @@ The guide covers the following topics:</p>
 <td>Android</td>
 <td>✅</td>
 <td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>iOS</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -291,14 +299,17 @@ The guide covers the following topics:</p>
 <td>Web</td>
 <td>✅</td>
 <td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>Windows</td>
 <td>✅</td>
 <td>❌</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>macOS</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 </tr>
@@ -306,14 +317,30 @@ The guide covers the following topics:</p>
 <td>Linux</td>
 <td>❌</td>
 <td>❌</td>
+<td>✅</td>
 </tr>
 </tbody>
 </table>
+<h2 id="performance">Performance</h2>
+<p>A primary consideration for Firestorm is efficient and minimal overheads.
+It uses the official Firebase packages for Dart, which are optimized for performance. Where
+necessary, it utilizes various techniques such as multithreading and multiplexing to ensure that
+the API is efficient and does not introduce unnecessary overheads. Firestorm's API is designed to
+be easy to use while its operations run at high performance.</p>
+<p>You can find the performance benchmarks and comparisons in the <a href="performance.md">performance</a> section.</p>
 <h2 id="information">Information</h2>
 <h3 id="requirements">Requirements</h3>
 <ul>
 <li>Dart 3.2 or higher</li>
 </ul>
+<p>Firestorm is designed to be used with Dart and Flutter, and is built on top of the official Firebase and Localstore packages for Dart:</p>
+<ul>
+<li><a href="https://pub.dev/packages/firebase_core">firebase_core</a></li>
+<li><a href="https://pub.dev/packages/firebase_database">firebase_database</a></li>
+<li><a href="https://pub.dev/packages/cloud_firestore">cloud_firestore</a></li>
+<li><a href="https://pub.dev/packages/localstore">localstore</a></li>
+</ul>
+<p>You do not need to add these packages manually, as Firestorm will automatically add them as dependencies when you install it.</p>
 <h3 id="known-issues">Known issues</h3>
 <p>No known issues.</p>
 <div class="markdown-alert markdown-alert-caution">
@@ -332,413 +359,525 @@ The guide covers the following topics:</p>
           <h2>Libraries</h2>
         <dl>
           <dt id="exclude">
-  <span class="name"><a href="annotations_exclude">annotations\exclude</a></span> 
+  <span class="name"><a href="annotations_exclude/">annotations\exclude</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="firestorm_object">
-  <span class="name"><a href="annotations_firestorm_object">annotations\firestorm_object</a></span> 
+  <span class="name"><a href="annotations_firestorm_object/">annotations\firestorm_object</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="firestorm_data">
-  <span class="name"><a href="api_firestorm_data">api\firestorm_data</a></span> 
+          <dt id="batch_delegate">
+  <span class="name"><a href="commons_delegate_batch_delegate/">commons\delegate\batch_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="invalid_class_exception">
-  <span class="name"><a href="exceptions_invalid_class_exception">exceptions\invalid_class_exception</a></span> 
+          <dt id="create_delegate">
+  <span class="name"><a href="commons_delegate_create_delegate/">commons\delegate\create_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="no_document_exception">
-  <span class="name"><a href="exceptions_no_document_exception">exceptions\no_document_exception</a></span> 
+          <dt id="delete_delegate">
+  <span class="name"><a href="commons_delegate_delete_delegate/">commons\delegate\delete_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="null_id_exception">
-  <span class="name"><a href="exceptions_null_id_exception">exceptions\null_id_exception</a></span> 
+          <dt id="exist_delegate">
+  <span class="name"><a href="commons_delegate_exist_delegate/">commons\delegate\exist_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="unsupported_type_exception">
-  <span class="name"><a href="exceptions_unsupported_type_exception">exceptions\unsupported_type_exception</a></span> 
+          <dt id="get_delegate">
+  <span class="name"><a href="commons_delegate_get_delegate/">commons\delegate\get_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="list_delegate">
+  <span class="name"><a href="commons_delegate_list_delegate/">commons\delegate\list_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="listen_delegate">
+  <span class="name"><a href="commons_delegate_listen_delegate/">commons\delegate\listen_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="update_delegate">
+  <span class="name"><a href="commons_delegate_update_delegate/">commons\delegate\update_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="filterable">
-  <span class="name"><a href="filterable">filterable</a></span> 
+  <span class="name"><a href="commons_filterable/">commons\filterable</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="invalid_class_exception">
+  <span class="name"><a href="exceptions_invalid_class_exception/">exceptions\invalid_class_exception</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="no_document_exception">
+  <span class="name"><a href="exceptions_no_document_exception/">exceptions\no_document_exception</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="null_id_exception">
+  <span class="name"><a href="exceptions_null_id_exception/">exceptions\null_id_exception</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="unsupported_type_exception">
+  <span class="name"><a href="exceptions_unsupported_type_exception/">exceptions\unsupported_type_exception</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="firestorm">
-  <span class="name"><a href="firestorm">firestorm</a></span> 
+  <span class="name"><a href="firestorm/">firestorm</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch">
-  <span class="name"><a href="fs_batch_fs_batch">fs\batch\fs_batch</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch/">fs\batch\fs_batch</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_create_delegate">
-  <span class="name"><a href="fs_batch_fs_batch_create_delegate">fs\batch\fs_batch_create_delegate</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch_create_delegate/">fs\batch\fs_batch_create_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_delete_delegate">
-  <span class="name"><a href="fs_batch_fs_batch_delete_delegate">fs\batch\fs_batch_delete_delegate</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch_delete_delegate/">fs\batch\fs_batch_delete_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_handler">
-  <span class="name"><a href="fs_batch_fs_batch_handler">fs\batch\fs_batch_handler</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch_handler/">fs\batch\fs_batch_handler</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_inliner">
-  <span class="name"><a href="fs_batch_fs_batch_inliner">fs\batch\fs_batch_inliner</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch_inliner/">fs\batch\fs_batch_inliner</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_update_delegate">
-  <span class="name"><a href="fs_batch_fs_batch_update_delegate">fs\batch\fs_batch_update_delegate</a></span> 
+  <span class="name"><a href="fs_batch_fs_batch_update_delegate/">fs\batch\fs_batch_update_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_batch_delegate">
-  <span class="name"><a href="fs_delegates_fs_batch_delegate">fs\delegates\fs_batch_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_batch_delegate/">fs\delegates\fs_batch_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_create_delegate">
-  <span class="name"><a href="fs_delegates_fs_create_delegate">fs\delegates\fs_create_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_create_delegate/">fs\delegates\fs_create_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_delete_delegate">
-  <span class="name"><a href="fs_delegates_fs_delete_delegate">fs\delegates\fs_delete_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_delete_delegate/">fs\delegates\fs_delete_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_exist_delegate">
-  <span class="name"><a href="fs_delegates_fs_exist_delegate">fs\delegates\fs_exist_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_exist_delegate/">fs\delegates\fs_exist_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_get_delegate">
-  <span class="name"><a href="fs_delegates_fs_get_delegate">fs\delegates\fs_get_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_get_delegate/">fs\delegates\fs_get_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_list_delegate">
-  <span class="name"><a href="fs_delegates_fs_list_delegate">fs\delegates\fs_list_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_list_delegate/">fs\delegates\fs_list_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_listen_delegate">
-  <span class="name"><a href="fs_delegates_fs_listen_delegate">fs\delegates\fs_listen_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_listen_delegate/">fs\delegates\fs_listen_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_reference_delegate">
-  <span class="name"><a href="fs_delegates_fs_reference_delegate">fs\delegates\fs_reference_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_reference_delegate/">fs\delegates\fs_reference_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_delegate">
-  <span class="name"><a href="fs_delegates_fs_transaction_delegate">fs\delegates\fs_transaction_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_transaction_delegate/">fs\delegates\fs_transaction_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_update_delegate">
-  <span class="name"><a href="fs_delegates_fs_update_delegate">fs\delegates\fs_update_delegate</a></span> 
+  <span class="name"><a href="fs_delegates_fs_update_delegate/">fs\delegates\fs_update_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs">
-  <span class="name"><a href="fs_fs">fs\fs</a></span> 
+  <span class="name"><a href="fs_fs/">fs\fs</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_filterable">
-  <span class="name"><a href="fs_queries_fs_filterable">fs\queries\fs_filterable</a></span> 
+  <span class="name"><a href="fs_queries_fs_filterable/">fs\queries\fs_filterable</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_paginator">
-  <span class="name"><a href="fs_queries_fs_paginator">fs\queries\fs_paginator</a></span> 
+  <span class="name"><a href="fs_queries_fs_paginator/">fs\queries\fs_paginator</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_query_result">
-  <span class="name"><a href="fs_queries_fs_query_result">fs\queries\fs_query_result</a></span> 
+  <span class="name"><a href="fs_queries_fs_query_result/">fs\queries\fs_query_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction">
-  <span class="name"><a href="fs_transactions_fs_transaction">fs\transactions\fs_transaction</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction/">fs\transactions\fs_transaction</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_create_delegate">
-  <span class="name"><a href="fs_transactions_fs_transaction_create_delegate">fs\transactions\fs_transaction_create_delegate</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_create_delegate/">fs\transactions\fs_transaction_create_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_delete_delegate">
-  <span class="name"><a href="fs_transactions_fs_transaction_delete_delegate">fs\transactions\fs_transaction_delete_delegate</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_delete_delegate/">fs\transactions\fs_transaction_delete_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_get_delegate">
-  <span class="name"><a href="fs_transactions_fs_transaction_get_delegate">fs\transactions\fs_transaction_get_delegate</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_get_delegate/">fs\transactions\fs_transaction_get_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_handler">
-  <span class="name"><a href="fs_transactions_fs_transaction_handler">fs\transactions\fs_transaction_handler</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_handler/">fs\transactions\fs_transaction_handler</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_inliner">
-  <span class="name"><a href="fs_transactions_fs_transaction_inliner">fs\transactions\fs_transaction_inliner</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_inliner/">fs\transactions\fs_transaction_inliner</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_transaction_update_delegate">
-  <span class="name"><a href="fs_transactions_fs_transaction_update_delegate">fs\transactions\fs_transaction_update_delegate</a></span> 
+  <span class="name"><a href="fs_transactions_fs_transaction_update_delegate/">fs\transactions\fs_transaction_update_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="builder">
-  <span class="name"><a href="gen_builder">gen\builder</a></span> 
+  <span class="name"><a href="gen_builder/">gen\builder</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="class_checker">
-  <span class="name"><a href="gen_class_checker">gen\class_checker</a></span> 
+  <span class="name"><a href="gen_class_checker/">gen\class_checker</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="converter_generator">
-  <span class="name"><a href="gen_converter_generator">gen\converter_generator</a></span> 
+  <span class="name"><a href="gen_converter_generator/">gen\converter_generator</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="extension_generator">
-  <span class="name"><a href="gen_extension_generator">gen\extension_generator</a></span> 
+  <span class="name"><a href="gen_extension_generator/">gen\extension_generator</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="firestorm_builder">
-  <span class="name"><a href="gen_firestorm_builder">gen\firestorm_builder</a></span> 
+  <span class="name"><a href="gen_firestorm_builder/">gen\firestorm_builder</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="header_generator">
-  <span class="name"><a href="gen_header_generator">gen\header_generator</a></span> 
+  <span class="name"><a href="gen_header_generator/">gen\header_generator</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="import_generator">
-  <span class="name"><a href="gen_import_generator">gen\import_generator</a></span> 
+  <span class="name"><a href="gen_import_generator/">gen\import_generator</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="valid_class_holder">
-  <span class="name"><a href="gen_valid_class_holder">gen\valid_class_holder</a></span> 
+  <span class="name"><a href="gen_valid_class_holder/">gen\valid_class_holder</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_create_delegate">
+  <span class="name"><a href="ls_delegates_ls_create_delegate/">ls\delegates\ls_create_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_delete_delegate">
+  <span class="name"><a href="ls_delegates_ls_delete_delegate/">ls\delegates\ls_delete_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_exist_delegate">
+  <span class="name"><a href="ls_delegates_ls_exist_delegate/">ls\delegates\ls_exist_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_get_delegate">
+  <span class="name"><a href="ls_delegates_ls_get_delegate/">ls\delegates\ls_get_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_list_delegate">
+  <span class="name"><a href="ls_delegates_ls_list_delegate/">ls\delegates\ls_list_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_reference_delegate">
+  <span class="name"><a href="ls_delegates_ls_reference_delegate/">ls\delegates\ls_reference_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_update_delegate">
+  <span class="name"><a href="ls_delegates_ls_update_delegate/">ls\delegates\ls_update_delegate</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls">
+  <span class="name"><a href="ls_ls/">ls\ls</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_create_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_create_delegate">rdb\delegates\rdb_create_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_create_delegate/">rdb\delegates\rdb_create_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_delete_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_delete_delegate">rdb\delegates\rdb_delete_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_delete_delegate/">rdb\delegates\rdb_delete_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_exist_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_exist_delegate">rdb\delegates\rdb_exist_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_exist_delegate/">rdb\delegates\rdb_exist_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_get_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_get_delegate">rdb\delegates\rdb_get_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_get_delegate/">rdb\delegates\rdb_get_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_list_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_list_delegate">rdb\delegates\rdb_list_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_list_delegate/">rdb\delegates\rdb_list_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_listen_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_listen_delegate">rdb\delegates\rdb_listen_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_listen_delegate/">rdb\delegates\rdb_listen_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_reference_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_reference_delegate">rdb\delegates\rdb_reference_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_reference_delegate/">rdb\delegates\rdb_reference_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_update_delegate">
-  <span class="name"><a href="rdb_delegates_rdb_update_delegate">rdb\delegates\rdb_update_delegate</a></span> 
+  <span class="name"><a href="rdb_delegates_rdb_update_delegate/">rdb\delegates\rdb_update_delegate</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_deserialization_helper">
-  <span class="name"><a href="rdb_helpers_rdb_deserialization_helper">rdb\helpers\rdb_deserialization_helper</a></span> 
+  <span class="name"><a href="rdb_helpers_rdb_deserialization_helper/">rdb\helpers\rdb_deserialization_helper</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_write_batch">
-  <span class="name"><a href="rdb_helpers_rdb_write_batch">rdb\helpers\rdb_write_batch</a></span> 
+  <span class="name"><a href="rdb_helpers_rdb_write_batch/">rdb\helpers\rdb_write_batch</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_filterable">
-  <span class="name"><a href="rdb_queries_rdb_filterable">rdb\queries\rdb_filterable</a></span> 
+  <span class="name"><a href="rdb_queries_rdb_filterable/">rdb\queries\rdb_filterable</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_query_result">
-  <span class="name"><a href="rdb_queries_rdb_query_result">rdb\queries\rdb_query_result</a></span> 
+  <span class="name"><a href="rdb_queries_rdb_query_result/">rdb\queries\rdb_query_result</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb">
-  <span class="name"><a href="rdb_rdb">rdb\rdb</a></span> 
+  <span class="name"><a href="rdb_rdb/">rdb\rdb</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="fs_types">
-  <span class="name"><a href="type_fs_types">type\fs_types</a></span> 
+  <span class="name"><a href="type_fs_types/">type\fs_types</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ls_types">
+  <span class="name"><a href="type_ls_types/">type\ls_types</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="rdb_types">
-  <span class="name"><a href="type_rdb_types">type\rdb_types</a></span> 
+  <span class="name"><a href="type_rdb_types/">type\rdb_types</a></span> 
 
 </dt>
 <dd>
@@ -755,71 +894,87 @@ The guide covers the following topics:</p>
   </form>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="https://github.com/RayLabz/Firestorm/tree/master/firestorm_flutter">firestorm package</a></li>
+    <li><a href="https://pub.dev/packages/firestorm/">firestorm package</a></li>
 </ol>
 
     <h5 class="hidden-xs"><span class="package-name">firestorm</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="annotations_exclude">annotations\exclude</a></li>
-      <li><a href="annotations_firestorm_object">annotations\firestorm_object</a></li>
-      <li><a href="api_firestorm_data">api\firestorm_data</a></li>
-      <li><a href="exceptions_invalid_class_exception">exceptions\invalid_class_exception</a></li>
-      <li><a href="exceptions_no_document_exception">exceptions\no_document_exception</a></li>
-      <li><a href="exceptions_null_id_exception">exceptions\null_id_exception</a></li>
-      <li><a href="exceptions_unsupported_type_exception">exceptions\unsupported_type_exception</a></li>
-      <li><a href="filterable">filterable</a></li>
-      <li><a href="firestorm">firestorm</a></li>
-      <li><a href="fs_batch_fs_batch">fs\batch\fs_batch</a></li>
-      <li><a href="fs_batch_fs_batch_create_delegate">fs\batch\fs_batch_create_delegate</a></li>
-      <li><a href="fs_batch_fs_batch_delete_delegate">fs\batch\fs_batch_delete_delegate</a></li>
-      <li><a href="fs_batch_fs_batch_handler">fs\batch\fs_batch_handler</a></li>
-      <li><a href="fs_batch_fs_batch_inliner">fs\batch\fs_batch_inliner</a></li>
-      <li><a href="fs_batch_fs_batch_update_delegate">fs\batch\fs_batch_update_delegate</a></li>
-      <li><a href="fs_delegates_fs_batch_delegate">fs\delegates\fs_batch_delegate</a></li>
-      <li><a href="fs_delegates_fs_create_delegate">fs\delegates\fs_create_delegate</a></li>
-      <li><a href="fs_delegates_fs_delete_delegate">fs\delegates\fs_delete_delegate</a></li>
-      <li><a href="fs_delegates_fs_exist_delegate">fs\delegates\fs_exist_delegate</a></li>
-      <li><a href="fs_delegates_fs_get_delegate">fs\delegates\fs_get_delegate</a></li>
-      <li><a href="fs_delegates_fs_list_delegate">fs\delegates\fs_list_delegate</a></li>
-      <li><a href="fs_delegates_fs_listen_delegate">fs\delegates\fs_listen_delegate</a></li>
-      <li><a href="fs_delegates_fs_reference_delegate">fs\delegates\fs_reference_delegate</a></li>
-      <li><a href="fs_delegates_fs_transaction_delegate">fs\delegates\fs_transaction_delegate</a></li>
-      <li><a href="fs_delegates_fs_update_delegate">fs\delegates\fs_update_delegate</a></li>
-      <li><a href="fs_fs">fs\fs</a></li>
-      <li><a href="fs_queries_fs_filterable">fs\queries\fs_filterable</a></li>
-      <li><a href="fs_queries_fs_paginator">fs\queries\fs_paginator</a></li>
-      <li><a href="fs_queries_fs_query_result">fs\queries\fs_query_result</a></li>
-      <li><a href="fs_transactions_fs_transaction">fs\transactions\fs_transaction</a></li>
-      <li><a href="fs_transactions_fs_transaction_create_delegate">fs\transactions\fs_transaction_create_delegate</a></li>
-      <li><a href="fs_transactions_fs_transaction_delete_delegate">fs\transactions\fs_transaction_delete_delegate</a></li>
-      <li><a href="fs_transactions_fs_transaction_get_delegate">fs\transactions\fs_transaction_get_delegate</a></li>
-      <li><a href="fs_transactions_fs_transaction_handler">fs\transactions\fs_transaction_handler</a></li>
-      <li><a href="fs_transactions_fs_transaction_inliner">fs\transactions\fs_transaction_inliner</a></li>
-      <li><a href="fs_transactions_fs_transaction_update_delegate">fs\transactions\fs_transaction_update_delegate</a></li>
-      <li><a href="gen_builder">gen\builder</a></li>
-      <li><a href="gen_class_checker">gen\class_checker</a></li>
-      <li><a href="gen_converter_generator">gen\converter_generator</a></li>
-      <li><a href="gen_extension_generator">gen\extension_generator</a></li>
-      <li><a href="gen_firestorm_builder">gen\firestorm_builder</a></li>
-      <li><a href="gen_header_generator">gen\header_generator</a></li>
-      <li><a href="gen_import_generator">gen\import_generator</a></li>
-      <li><a href="gen_valid_class_holder">gen\valid_class_holder</a></li>
-      <li><a href="rdb_delegates_rdb_create_delegate">rdb\delegates\rdb_create_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_delete_delegate">rdb\delegates\rdb_delete_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_exist_delegate">rdb\delegates\rdb_exist_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_get_delegate">rdb\delegates\rdb_get_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_list_delegate">rdb\delegates\rdb_list_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_listen_delegate">rdb\delegates\rdb_listen_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_reference_delegate">rdb\delegates\rdb_reference_delegate</a></li>
-      <li><a href="rdb_delegates_rdb_update_delegate">rdb\delegates\rdb_update_delegate</a></li>
-      <li><a href="rdb_helpers_rdb_deserialization_helper">rdb\helpers\rdb_deserialization_helper</a></li>
-      <li><a href="rdb_helpers_rdb_write_batch">rdb\helpers\rdb_write_batch</a></li>
-      <li><a href="rdb_queries_rdb_filterable">rdb\queries\rdb_filterable</a></li>
-      <li><a href="rdb_queries_rdb_query_result">rdb\queries\rdb_query_result</a></li>
-      <li><a href="rdb_rdb">rdb\rdb</a></li>
-      <li><a href="type_fs_types">type\fs_types</a></li>
-      <li><a href="type_rdb_types">type\rdb_types</a></li>
+      <li><a href="annotations_exclude/">annotations\exclude</a></li>
+      <li><a href="annotations_firestorm_object/">annotations\firestorm_object</a></li>
+      <li><a href="commons_delegate_batch_delegate/">commons\delegate\batch_delegate</a></li>
+      <li><a href="commons_delegate_create_delegate/">commons\delegate\create_delegate</a></li>
+      <li><a href="commons_delegate_delete_delegate/">commons\delegate\delete_delegate</a></li>
+      <li><a href="commons_delegate_exist_delegate/">commons\delegate\exist_delegate</a></li>
+      <li><a href="commons_delegate_get_delegate/">commons\delegate\get_delegate</a></li>
+      <li><a href="commons_delegate_list_delegate/">commons\delegate\list_delegate</a></li>
+      <li><a href="commons_delegate_listen_delegate/">commons\delegate\listen_delegate</a></li>
+      <li><a href="commons_delegate_update_delegate/">commons\delegate\update_delegate</a></li>
+      <li><a href="commons_filterable/">commons\filterable</a></li>
+      <li><a href="exceptions_invalid_class_exception/">exceptions\invalid_class_exception</a></li>
+      <li><a href="exceptions_no_document_exception/">exceptions\no_document_exception</a></li>
+      <li><a href="exceptions_null_id_exception/">exceptions\null_id_exception</a></li>
+      <li><a href="exceptions_unsupported_type_exception/">exceptions\unsupported_type_exception</a></li>
+      <li><a href="firestorm/">firestorm</a></li>
+      <li><a href="fs_batch_fs_batch/">fs\batch\fs_batch</a></li>
+      <li><a href="fs_batch_fs_batch_create_delegate/">fs\batch\fs_batch_create_delegate</a></li>
+      <li><a href="fs_batch_fs_batch_delete_delegate/">fs\batch\fs_batch_delete_delegate</a></li>
+      <li><a href="fs_batch_fs_batch_handler/">fs\batch\fs_batch_handler</a></li>
+      <li><a href="fs_batch_fs_batch_inliner/">fs\batch\fs_batch_inliner</a></li>
+      <li><a href="fs_batch_fs_batch_update_delegate/">fs\batch\fs_batch_update_delegate</a></li>
+      <li><a href="fs_delegates_fs_batch_delegate/">fs\delegates\fs_batch_delegate</a></li>
+      <li><a href="fs_delegates_fs_create_delegate/">fs\delegates\fs_create_delegate</a></li>
+      <li><a href="fs_delegates_fs_delete_delegate/">fs\delegates\fs_delete_delegate</a></li>
+      <li><a href="fs_delegates_fs_exist_delegate/">fs\delegates\fs_exist_delegate</a></li>
+      <li><a href="fs_delegates_fs_get_delegate/">fs\delegates\fs_get_delegate</a></li>
+      <li><a href="fs_delegates_fs_list_delegate/">fs\delegates\fs_list_delegate</a></li>
+      <li><a href="fs_delegates_fs_listen_delegate/">fs\delegates\fs_listen_delegate</a></li>
+      <li><a href="fs_delegates_fs_reference_delegate/">fs\delegates\fs_reference_delegate</a></li>
+      <li><a href="fs_delegates_fs_transaction_delegate/">fs\delegates\fs_transaction_delegate</a></li>
+      <li><a href="fs_delegates_fs_update_delegate/">fs\delegates\fs_update_delegate</a></li>
+      <li><a href="fs_fs/">fs\fs</a></li>
+      <li><a href="fs_queries_fs_filterable/">fs\queries\fs_filterable</a></li>
+      <li><a href="fs_queries_fs_paginator/">fs\queries\fs_paginator</a></li>
+      <li><a href="fs_queries_fs_query_result/">fs\queries\fs_query_result</a></li>
+      <li><a href="fs_transactions_fs_transaction/">fs\transactions\fs_transaction</a></li>
+      <li><a href="fs_transactions_fs_transaction_create_delegate/">fs\transactions\fs_transaction_create_delegate</a></li>
+      <li><a href="fs_transactions_fs_transaction_delete_delegate/">fs\transactions\fs_transaction_delete_delegate</a></li>
+      <li><a href="fs_transactions_fs_transaction_get_delegate/">fs\transactions\fs_transaction_get_delegate</a></li>
+      <li><a href="fs_transactions_fs_transaction_handler/">fs\transactions\fs_transaction_handler</a></li>
+      <li><a href="fs_transactions_fs_transaction_inliner/">fs\transactions\fs_transaction_inliner</a></li>
+      <li><a href="fs_transactions_fs_transaction_update_delegate/">fs\transactions\fs_transaction_update_delegate</a></li>
+      <li><a href="gen_builder/">gen\builder</a></li>
+      <li><a href="gen_class_checker/">gen\class_checker</a></li>
+      <li><a href="gen_converter_generator/">gen\converter_generator</a></li>
+      <li><a href="gen_extension_generator/">gen\extension_generator</a></li>
+      <li><a href="gen_firestorm_builder/">gen\firestorm_builder</a></li>
+      <li><a href="gen_header_generator/">gen\header_generator</a></li>
+      <li><a href="gen_import_generator/">gen\import_generator</a></li>
+      <li><a href="gen_valid_class_holder/">gen\valid_class_holder</a></li>
+      <li><a href="ls_delegates_ls_create_delegate/">ls\delegates\ls_create_delegate</a></li>
+      <li><a href="ls_delegates_ls_delete_delegate/">ls\delegates\ls_delete_delegate</a></li>
+      <li><a href="ls_delegates_ls_exist_delegate/">ls\delegates\ls_exist_delegate</a></li>
+      <li><a href="ls_delegates_ls_get_delegate/">ls\delegates\ls_get_delegate</a></li>
+      <li><a href="ls_delegates_ls_list_delegate/">ls\delegates\ls_list_delegate</a></li>
+      <li><a href="ls_delegates_ls_reference_delegate/">ls\delegates\ls_reference_delegate</a></li>
+      <li><a href="ls_delegates_ls_update_delegate/">ls\delegates\ls_update_delegate</a></li>
+      <li><a href="ls_ls/">ls\ls</a></li>
+      <li><a href="rdb_delegates_rdb_create_delegate/">rdb\delegates\rdb_create_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_delete_delegate/">rdb\delegates\rdb_delete_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_exist_delegate/">rdb\delegates\rdb_exist_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_get_delegate/">rdb\delegates\rdb_get_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_list_delegate/">rdb\delegates\rdb_list_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_listen_delegate/">rdb\delegates\rdb_listen_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_reference_delegate/">rdb\delegates\rdb_reference_delegate</a></li>
+      <li><a href="rdb_delegates_rdb_update_delegate/">rdb\delegates\rdb_update_delegate</a></li>
+      <li><a href="rdb_helpers_rdb_deserialization_helper/">rdb\helpers\rdb_deserialization_helper</a></li>
+      <li><a href="rdb_helpers_rdb_write_batch/">rdb\helpers\rdb_write_batch</a></li>
+      <li><a href="rdb_queries_rdb_filterable/">rdb\queries\rdb_filterable</a></li>
+      <li><a href="rdb_queries_rdb_query_result/">rdb\queries\rdb_query_result</a></li>
+      <li><a href="rdb_rdb/">rdb\rdb</a></li>
+      <li><a href="type_fs_types/">type\fs_types</a></li>
+      <li><a href="type_ls_types/">type\ls_types</a></li>
+      <li><a href="type_rdb_types/">type\rdb_types</a></li>
 </ol>
 
   </div>
@@ -829,7 +984,7 @@ The guide covers the following topics:</p>
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

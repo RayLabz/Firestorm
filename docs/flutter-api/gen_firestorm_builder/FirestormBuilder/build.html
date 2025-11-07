@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_firestorm_builder">gen\firestorm_builder.dart</a></li>
+    <li><a href="../../gen_firestorm_builder/">gen\firestorm_builder.dart</a></li>
     <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
     <li class="self-crumb">build method</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -63,7 +60,7 @@
     </ol>
   </div>
 <span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
-<span class="name ">build</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="build-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/2.4.2/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
+<span class="name ">build</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="build-param-buildStep"><span class="type-annotation"><a href="https://pub.dev/documentation/build/2.5.4/build/BuildStep-class.html">BuildStep</a></span> <span class="parameter-name">buildStep</span></span></li>
 </ol>)
 
       <div class="features"><span class="feature">override</span></div>
@@ -71,7 +68,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Generates the outputs for a given <a href="https://pub.dev/documentation/build/2.4.2/build/BuildStep-class.html">BuildStep</a>.</p>
+  <p>Generates the outputs for a given <a href="https://pub.dev/documentation/build/2.5.4/build/BuildStep-class.html">BuildStep</a>.</p>
 </section>
 
 
@@ -93,6 +90,7 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
 
   importsBuffer.writeln(&quot;import &#39;package:firestorm&#47;fs&#47;fs.dart&#39;;&quot;);
   importsBuffer.writeln(&quot;import &#39;package:firestorm&#47;rdb&#47;rdb.dart&#39;;&quot;);
+  importsBuffer.writeln(&quot;import &#39;package:firestorm&#47;ls&#47;ls.dart&#39;;&quot;);
 
   final Map&lt;AssetId, Iterable&lt;ClassElement&gt;&gt; allClasses = {};
   final Map&lt;ClassElement, AssetId&gt; assetIDs = {};
@@ -178,7 +176,7 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_firestorm_builder">firestorm_builder</a></li>
+    <li><a href="../../gen_firestorm_builder/">firestorm_builder</a></li>
     <li><a href="../../gen_firestorm_builder/FirestormBuilder-class.html">FirestormBuilder</a></li>
     <li class="self-crumb">build method</li>
 </ol>
@@ -192,7 +190,7 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

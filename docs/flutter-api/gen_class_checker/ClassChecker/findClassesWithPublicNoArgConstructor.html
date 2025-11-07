@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_class_checker">gen\class_checker.dart</a></li>
+    <li><a href="../../gen_class_checker/">gen\class_checker.dart</a></li>
     <li><a href="../../gen_class_checker/ClassChecker-class.html">ClassChecker</a></li>
     <li class="self-crumb">findClassesWithPublicNoArgConstructor static method</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -57,8 +54,8 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
-<span class="name ">findClassesWithPublicNoArgConstructor</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="findClassesWithPublicNoArgConstructor-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+<span class="name ">findClassesWithPublicNoArgConstructor</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="findClassesWithPublicNoArgConstructor-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span></li>
 </ol>)
 
       
@@ -79,7 +76,8 @@ Returns a list of ClassElements that meet the criteria.</p>
   for (final aClass in classes) {
     &#47;&#47;Check the class for a public no-argument constructor:
     if (aClass.constructors.isEmpty || !aClass.constructors.any((c) =&gt; c.isPublic &amp;&amp; c.parameters.isEmpty)) {
-      print(ColorfulText.paint(&quot;Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.&quot;, ColorfulText.red));
+      &#47;&#47; ignore: avoid_print
+      Firestorm.log.e(&quot;Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.&quot;);
     }
     else {
       resultClasses.add(aClass);
@@ -100,7 +98,7 @@ Returns a list of ClassElements that meet the criteria.</p>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">firestorm</a></li>
-    <li><a href="../../gen_class_checker">class_checker</a></li>
+    <li><a href="../../gen_class_checker/">class_checker</a></li>
     <li><a href="../../gen_class_checker/ClassChecker-class.html">ClassChecker</a></li>
     <li class="self-crumb">findClassesWithPublicNoArgConstructor static method</li>
 </ol>
@@ -114,7 +112,7 @@ Returns a list of ClassElements that meet the criteria.</p>
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

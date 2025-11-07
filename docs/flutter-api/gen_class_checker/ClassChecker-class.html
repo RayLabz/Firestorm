@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../gen_class_checker">gen\class_checker.dart</a></li>
+    <li><a href="../gen_class_checker/">gen\class_checker.dart</a></li>
     <li class="self-crumb">ClassChecker class</li>
   </ol>
   <div class="self-name">ClassChecker</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -66,8 +63,8 @@
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="ClassChecker" class="callable">
-          <span class="name"><a href="../gen_class_checker/ClassChecker/ClassChecker.html">ClassChecker</a></span><span class="signature">()</span>
+        <dt id="ClassChecker.new" class="callable">
+          <span class="name"><a href="../gen_class_checker/ClassChecker/ClassChecker.html">ClassChecker.new</a></span><span class="signature">()</span>
         </dt>
         <dd>
           
@@ -168,8 +165,8 @@
     <h2>Static Methods</h2>
     <dl class="callables">
         <dt id="checkClassesForValidFSTypes" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/checkClassesForValidFSTypes.html">checkClassesForValidFSTypes</a></span><span class="signature">(<wbr><span class="parameter" id="checkClassesForValidFSTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+  <span class="name"><a href="../gen_class_checker/ClassChecker/checkClassesForValidFSTypes.html">checkClassesForValidFSTypes</a></span><span class="signature">(<wbr><span class="parameter" id="checkClassesForValidFSTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
   </span>
   
 
@@ -181,8 +178,8 @@
 </dd>
 
         <dt id="checkClassesForValidRDBTypes" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/checkClassesForValidRDBTypes.html">checkClassesForValidRDBTypes</a></span><span class="signature">(<wbr><span class="parameter" id="checkClassesForValidRDBTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+  <span class="name"><a href="../gen_class_checker/ClassChecker/checkClassesForValidRDBTypes.html">checkClassesForValidRDBTypes</a></span><span class="signature">(<wbr><span class="parameter" id="checkClassesForValidRDBTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
   </span>
   
 
@@ -194,7 +191,7 @@
 </dd>
 
         <dt id="filter" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/filter.html">filter</a></span><span class="signature">(<wbr><span class="parameter" id="filter-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+  <span class="name"><a href="../gen_class_checker/ClassChecker/filter.html">filter</a></span><span class="signature">(<wbr><span class="parameter" id="filter-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
     <span class="returntype parameter">&#8594; <a href="../gen_valid_class_holder/ValidClassHolder-class.html">ValidClassHolder</a></span>
   </span>
   
@@ -208,8 +205,8 @@ Returns a ValidClassHolder containing two lists: one for Firestore valid classes
 </dd>
 
         <dt id="findAnnotatedClasses" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/findAnnotatedClasses.html">findAnnotatedClasses</a></span><span class="signature">(<wbr><span class="parameter" id="findAnnotatedClasses-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+  <span class="name"><a href="../gen_class_checker/ClassChecker/findAnnotatedClasses.html">findAnnotatedClasses</a></span><span class="signature">(<wbr><span class="parameter" id="findAnnotatedClasses-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
   </span>
   
 
@@ -222,8 +219,8 @@ Returns a list of ClassElements that are annotated with @FirestormObject.
 </dd>
 
         <dt id="findClassesWithIDField" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/findClassesWithIDField.html">findClassesWithIDField</a></span><span class="signature">(<wbr><span class="parameter" id="findClassesWithIDField-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+  <span class="name"><a href="../gen_class_checker/ClassChecker/findClassesWithIDField.html">findClassesWithIDField</a></span><span class="signature">(<wbr><span class="parameter" id="findClassesWithIDField-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
   </span>
   
 
@@ -237,8 +234,8 @@ Returns a list of ClassElements that meet the criteria.
 </dd>
 
         <dt id="findClassesWithPublicNoArgConstructor" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/findClassesWithPublicNoArgConstructor.html">findClassesWithPublicNoArgConstructor</a></span><span class="signature">(<wbr><span class="parameter" id="findClassesWithPublicNoArgConstructor-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+  <span class="name"><a href="../gen_class_checker/ClassChecker/findClassesWithPublicNoArgConstructor.html">findClassesWithPublicNoArgConstructor</a></span><span class="signature">(<wbr><span class="parameter" id="findClassesWithPublicNoArgConstructor-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
   </span>
   
 
@@ -251,7 +248,7 @@ Returns a list of ClassElements that meet the criteria.
 </dd>
 
         <dt id="isEnumType" class="callable">
-  <span class="name"><a href="../gen_class_checker/ClassChecker/isEnumType.html">isEnumType</a></span><span class="signature">(<wbr><span class="parameter" id="isEnumType-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.3.0/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
+  <span class="name"><a href="../gen_class_checker/ClassChecker/isEnumType.html">isEnumType</a></span><span class="signature">(<wbr><span class="parameter" id="isEnumType-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
   </span>
   
@@ -277,7 +274,7 @@ Returns a list of ClassElements that meet the criteria.
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../gen_class_checker">class_checker</a></li>
+    <li><a href="../gen_class_checker/">class_checker</a></li>
     <li class="self-crumb">ClassChecker class</li>
 </ol>
 
@@ -290,7 +287,7 @@ Returns a list of ClassElements that meet the criteria.
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>

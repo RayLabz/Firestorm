@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_batch_fs_batch_create_delegate">fs\batch\fs_batch_create_delegate.dart</a></li>
+    <li><a href="../fs_batch_fs_batch_create_delegate/">fs\batch\fs_batch_create_delegate.dart</a></li>
     <li class="self-crumb">FSBatchCreateDelegate class</li>
   </ol>
   <div class="self-name">FSBatchCreateDelegate</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -67,7 +64,7 @@
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="FSBatchCreateDelegate.init" class="callable">
-          <span class="name"><a href="../fs_batch_fs_batch_create_delegate/FSBatchCreateDelegate/FSBatchCreateDelegate.init.html">FSBatchCreateDelegate.init</a></span><span class="signature">(<span class="parameter" id="init-param-_batch"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.4/cloud_firestore/WriteBatch-class.html">WriteBatch</a></span> <span class="parameter-name">_batch</span></span>)</span>
+          <span class="name"><a href="../fs_batch_fs_batch_create_delegate/FSBatchCreateDelegate/FSBatchCreateDelegate.init.html">FSBatchCreateDelegate.init</a></span><span class="signature">(<span class="parameter" id="init-param-_batch"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/WriteBatch-class.html">WriteBatch</a></span> <span class="parameter-name">_batch</span>, {</span><span class="parameter" id="init-param-setOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/SetOptions-class.html">SetOptions</a>?</span> <span class="parameter-name">setOptions</span></span>})</span>
         </dt>
         <dd>
           
@@ -76,7 +73,7 @@
   </section>
     
   <section
-      class="summary offset-anchor inherited"
+      class="summary offset-anchor"
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
@@ -104,6 +101,18 @@
 
 </dd>
 
+        <dt id="setOptions" class="property">
+  <span class="name"><a href="../fs_batch_fs_batch_create_delegate/FSBatchCreateDelegate/setOptions.html">setOptions</a></span>
+  <span class="signature">&#8594; <a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/SetOptions-class.html">SetOptions</a>?</span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
     </dl>
   </section>
 
@@ -128,7 +137,7 @@
 
         <dt id="one" class="callable">
   <span class="name"><a href="../fs_batch_fs_batch_create_delegate/FSBatchCreateDelegate/one.html">one</a></span><span class="signature">(<wbr><span class="parameter" id="one-param-object"><span class="type-annotation">dynamic</span> <span class="parameter-name">object</span>, {</span><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span></span>})
-    <span class="returntype parameter">&#8594; dynamic</span>
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
 
@@ -189,7 +198,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">firestorm</a></li>
-    <li><a href="../fs_batch_fs_batch_create_delegate">fs_batch_create_delegate</a></li>
+    <li><a href="../fs_batch_fs_batch_create_delegate/">fs_batch_create_delegate</a></li>
     <li class="self-crumb">FSBatchCreateDelegate class</li>
 </ol>
 
@@ -202,7 +211,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.1.0
+      0.4.0
   </span>
   
 </footer>
