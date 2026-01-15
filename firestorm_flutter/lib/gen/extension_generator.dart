@@ -20,9 +20,19 @@ class ExtensionGenerator {
 
     //Generate extension class
     classBuffer.writeln("extension ${aClass.name}Model on ${aClass.name} {");
-
     classBuffer.writeln();
 
+    final ConstructorElement constructorElement = aClass.unnamedConstructor!;
+    final List<ParameterElement> constructorParams = constructorElement.parameters;
+
+    _generateStaticFields(classBuffer, hasFSSupport, hasRDBSupport);
+    _generateToMap(classBuffer, aClass);
+    _generateFromMap(classBuffer, aClass, constructorParams);
+    return classBuffer.toString();
+  }
+
+  /// Generates static fields.
+  static void _generateStaticFields(final StringBuffer classBuffer, final bool hasFSSupport, final bool hasRDBSupport) {
     //Generate static fields for Firestore & RDB support
     if (hasFSSupport) {
       classBuffer.writeln("\tstatic final bool fsSupport = true;");
@@ -38,35 +48,38 @@ class ExtensionGenerator {
       classBuffer.writeln("\tstatic final bool rdbSupport = false;");
     }
     classBuffer.writeln();
+  }
+
+  /// Generates the toMap() method.
+  static void _generateToMap(final StringBuffer classBuffer, final ClassElement aClass) {
+
+    List<FieldElement> allFields = _findAllFieldsForClass(aClass);
 
     //Generate toMap() method
     classBuffer.writeln("\t Map<String, dynamic> toMap() {");
     classBuffer.writeln("\t\t return {");
 
-    ConstructorElement constructorElement = aClass.unnamedConstructor!;
-    List<ParameterElement> constructorParams = constructorElement.parameters;
-
     //Fields:
-    for (final field in aClass.fields) {
-      FieldElement? matchingField = field; //match to field
+    for (final field in allFields) {
+      // FieldElement? matchingField = field; //match to field
 
-      for (final parent in aClass.allSupertypes) { //Find field in parent classes
-        for (final parentField in parent.element.fields) {
-          if (parentField.name != "hashCode" &&
-              parentField.name == field.name &&
-              parentField.name != "runtimeType") {
-            matchingField = parentField; //set matching field to parent field
-            break;
-          }
-        }
-      }
+      // for (final parent in aClass.allSupertypes) { //Find field in parent classes
+      //   for (final parentField in parent.element.fields) {
+      //     if (parentField.name != "hashCode" &&
+      //         parentField.name == field.name &&
+      //         parentField.name != "runtimeType") {
+      //       matchingField = parentField; //set matching field to parent field
+      //       break;
+      //     }
+      //   }
+      // }
 
-      if (matchingField == null) {
-        throw InvalidClassException(aClass.name);
-      }
+      // if (matchingField == null) {
+      //   throw InvalidClassException(aClass.name);
+      // }
 
-      if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
-        if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
+      if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
+        if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
           //Do nothing, this is kept for reference.
           // classBuffer.writeln("\t\t\t '${param.name}': null,"); //set excluded to null
         }
@@ -76,11 +89,11 @@ class ExtensionGenerator {
       }
       else {
         //If this is a user-defined type, expand it using it own toMap():
-        if (!matchingField.type.element!.library!.isDartCore && matchingField.type is InterfaceType && !ClassChecker.isEnumType(matchingField.type)) {
+        if (!field.type.element!.library!.isDartCore && field.type is InterfaceType && !ClassChecker.isEnumType(field.type)) {
           classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toMap(),"); //call toMap() on user-defined type
         }
         //enum:
-        else if (ClassChecker.isEnumType(matchingField.type)) {
+        else if (ClassChecker.isEnumType(field.type)) {
           classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toString(),"); //not excluded (normal, enum)
         }
         //other:
@@ -94,9 +107,10 @@ class ExtensionGenerator {
     classBuffer.writeln("\t\t };");
     classBuffer.writeln("\t }");
     classBuffer.writeln();
+  }
 
-    //--------------------------------------------------------------------------
-
+  /// Generates the fromMap() method.
+  static void _generateFromMap(final StringBuffer classBuffer, final ClassElement aClass, final List<ParameterElement> constructorParams) {
     //Generate fromMap() method
     classBuffer.writeln("\tstatic ${aClass.name} fromMap(Map<String, dynamic> map) {");
     classBuffer.writeln("\t\t${aClass.name} object = ${aClass.name}(");
@@ -286,7 +300,30 @@ class ExtensionGenerator {
     //End extension class
     classBuffer.writeln("}");
     classBuffer.writeln();
-
-    return classBuffer.toString();
   }
+
+  /// Finds all fields of a class (including those from its superclasses).
+  static List<FieldElement> _findAllFieldsForClass(ClassElement classElement) {
+    List<FieldElement> fields = [];
+
+    void collect(InterfaceElement c) {
+      fields.addAll(
+        c.fields.where((f) => !f.isStatic && f.name != "hashCode" && f.name != "runtimeType"),
+      );
+      for (final st in c.allSupertypes) {
+        collect(st.element);
+      }
+    }
+
+    collect(classElement);
+
+    // Deduplicate by name (child overrides parent)
+    final byName = <String, FieldElement>{};
+    for (final f in fields.reversed) {
+      byName[f.name] = f;
+    }
+
+    return byName.values.toList();
+  }
+
 }

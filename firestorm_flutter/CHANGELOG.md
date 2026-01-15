@@ -1,3 +1,7 @@
+## v0.5.0
+Release date: 15/01/2026
+- Added support for named parameters in constructors within inheritance hierarchies.
+
 ## v0.4.0
 Release date: 07/11/2025
 - Added support for providing `SetOptions` and `GetOptions` (optional parameters) in various operations for Firestore.
