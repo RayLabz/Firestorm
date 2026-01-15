@@ -22,6 +22,10 @@ class ExtensionGenerator {
     classBuffer.writeln("extension ${aClass.name}Model on ${aClass.name} {");
     classBuffer.writeln();
 
+    if (aClass.unnamedConstructor == null) {
+      throw InvalidClassException(aClass.name);
+    }
+
     final ConstructorElement constructorElement = aClass.unnamedConstructor!;
     final List<ParameterElement> constructorParams = constructorElement.parameters;
 
@@ -246,7 +250,9 @@ class ExtensionGenerator {
     classBuffer.writeln("\t\t );");
 
     //Set values for parameters that are not in the constructor:
-    for (final field in aClass.fields) {
+    final List<FieldElement> allFields = _findAllFieldsForClass(aClass);
+
+    for (final field in allFields) {
 
       if (constructorParamNames.contains(field.name)) {
         continue; // skip fields that are already in the constructor
@@ -255,7 +261,7 @@ class ExtensionGenerator {
       //Fields NOT in the constructor:
       if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
-          classBuffer.writeln("\t\t\t${field.name}: null,"); // set excluded to null
+          classBuffer.writeln("\t\t\tobject.${field.name} = null;"); // set excluded to null
         } else {
           throw InvalidClassException(aClass.name); // cannot have excluded without nullable
         }
@@ -265,7 +271,7 @@ class ExtensionGenerator {
             field.type is InterfaceType &&
             !ClassChecker.isEnumType(field.type)) {
           classBuffer.writeln(
-              "\t\t\t${field.name}: ${field.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field.name}'] as Map)),");
+              "\t\t\tobject.${field.name} = ${field.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field.name}'] as Map));");
         }
         // List
         else if (field.type.isDartCoreList) {

@@ -8,11 +8,11 @@ import 'invitation.dart';
 @FirestormObject()
 class BoardInvitation extends Invitation {
 
-  String boardID;
+  String? boardID;
 
   BoardInvitation({
-    required this.boardID,
     required super.id,
+    this.boardID,
     required super.type,
     required super.senderID,
     required super.receiverID,
