@@ -20,6 +20,8 @@ import 'computing_student.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  print("STARTED");
+
   await FS.init();
   await RDB.init();
   registerClasses();
@@ -27,7 +29,41 @@ main() async {
   //TODO - Test create, get, update, delete, list, exist...
 
 
+  //Create an array of 5 person:
+  // List<Person> persons = [];
+  //
+  // for (int i = 0; i < 10; i++) {
+  //   Person p = Person(
+  //     Firestorm.randomID(),
+  //     "John$i",
+  //     "Doe$i",
+  //     25+i,
+  //     1.8,
+  //     true,
+  //     ["Friend1", "Friend2"]
+  //   );
+  //   persons.add(p);
+  // }
+  //
+  //
+  // await FS.create.many(
+  //     persons,
+  //     subcollection: "SpecialPeople"
+  // );
 
+  FS.listen.toType<Person>(
+    subcollection: "SpecialPeople",
+    Person,
+    onCreate: (object) {
+      print("Created $object");
+    },
+    onChange: (object) {
+      print("Updated $object");
+    },
+    onDelete: (object) {
+      print("Deleted $object");
+    },
+  );
 
 
 

@@ -107,6 +107,47 @@ class FSListenDelegate implements ListenDelegate {
     return subscriptions;
   }
 
+  /// Listens to changes in a collection based on a [Type].
+  /// Returns a list containing the subscription to the collection snapshot.
+  @override
+  List<StreamSubscription<T>> toType<T>(
+      Type type, {
+        void Function(T object)? onCreate,
+        void Function(T object)? onChange,
+        void Function(T object)? onDelete,
+        void Function(List<T> objects)? onListChange,
+        String? subcollection,
+      }) {
+    Deserializer? deserializer = FS.deserializers[T];
+    if (deserializer == null) {
+      throw UnsupportedError(
+          'No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    }
+
+    // Determine the collection reference
+    Query query = FS.instance.collection(type.toString());
+
+    // Subcollection logic: .collection(type).doc(sub).collection(sub)
+    if (subcollection != null) {
+      query = FS.instance
+          .collection(type.toString())
+          .doc(subcollection)
+          .collection(subcollection);
+    }
+
+    // We return a list containing the single subscription that manages this collection's events
+    return [
+      _handleCollectionListener<T>(
+        query,
+        deserializer,
+        onCreate,
+        onChange,
+        onDelete,
+        onListChange,
+      )
+    ];
+  }
+
   /// Converts data from a stream of Firestore documents into a stream of objects.
   StreamSubscription<T?> _handleDocumentListener<T>(
       DocumentReference docRef,
@@ -148,6 +189,54 @@ class FSListenDelegate implements ListenDelegate {
 
       previous = current;
     });
+  }
+
+  // Internal helper to handle collection-level stream subscriptions and individual document events.
+  StreamSubscription<T> _handleCollectionListener<T>(
+      Query query,
+      Deserializer deserializer,
+      void Function(T object)? onCreate,
+      void Function(T object)? onChange,
+      void Function(T object)? onDelete,
+      void Function(List<T> objects)? onListChange,
+      ) {
+    // 1. Transform the QuerySnapshot stream into a Stream<T>
+    // We use asyncExpand to emit individual objects or handle the logic during the transition
+    final Stream<T> mappedStream = query.snapshots().asyncExpand((snapshot) async* {
+      // Process individual document changes
+      for (var change in snapshot.docChanges) {
+        final data = change.doc.data() as Map<String, dynamic>?;
+        if (data == null) continue;
+
+        final T object = deserializer(data) as T;
+
+        switch (change.type) {
+          case DocumentChangeType.added:
+            onCreate?.call(object);
+            break;
+          case DocumentChangeType.modified:
+            onChange?.call(object);
+            break;
+          case DocumentChangeType.removed:
+            onDelete?.call(object);
+            break;
+        }
+
+        // Yield the specific object that changed to satisfy the Stream<T> type
+        yield object;
+      }
+
+      // Handle the global list update
+      if (onListChange != null) {
+        final List<T> allObjects = snapshot.docs.map((doc) {
+          return deserializer(doc.data() as Map<String, dynamic>) as T;
+        }).toList();
+        onListChange(allObjects);
+      }
+    });
+
+    // 2. Listen to the mapped stream. It is now a StreamSubscription<T>.
+    return mappedStream.listen((event) {});
   }
 
 }

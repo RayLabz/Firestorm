@@ -376,6 +376,22 @@ FS.listen.toIDs<ComputingStudent>(
 );
 ```
 
+### Listen to all objects of a data type:
+```dart
+FS.listen.toType<Person>(
+  Person,
+  onCreate: (object) {
+    print("Created $object"); //TODO
+  },
+  onChange: (object) {
+    print("Changed: $object"); //TODO
+  },
+  onDelete: (object) {
+    print("Deleted $object"); //TODO
+  },
+);
+```
+
 [Back to contents](#contents)
 
 ---

@@ -1,3 +1,7 @@
+## v0.6.0
+Release date: 29/01/2026
+- Added support for **type listeners** in Realtime database and Firestore: `FS.listen.toType()` and `RDB.listen.toType()`.
+
 ## v0.5.0
 Release date: 15/01/2026
 - Added support for named parameters in constructors within inheritance hierarchies.
