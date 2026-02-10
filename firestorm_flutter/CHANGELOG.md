@@ -1,3 +1,9 @@
+## v0.7.0
+Release date: 10/02/2026
+- Firestore and Localstore support for release configuration in projects, fixing the issue where obfuscation leads to minified
+collection names.
+- TODO v0.8.0: RDB class naming support for release config.
+
 ## v0.6.0
 Release date: 29/01/2026
 - Added support for **type listeners** in Realtime database and Firestore: `FS.listen.toType()` and `RDB.listen.toType()`.

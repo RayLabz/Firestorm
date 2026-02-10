@@ -29,28 +29,21 @@ class ExtensionGenerator {
     final ConstructorElement constructorElement = aClass.unnamedConstructor!;
     final List<ParameterElement> constructorParams = constructorElement.parameters;
 
-    _generateStaticFields(classBuffer, hasFSSupport, hasRDBSupport);
+    _generateStaticFields(classBuffer, aClass, hasFSSupport, hasRDBSupport);
     _generateToMap(classBuffer, aClass);
     _generateFromMap(classBuffer, aClass, constructorParams);
     return classBuffer.toString();
   }
 
   /// Generates static fields.
-  static void _generateStaticFields(final StringBuffer classBuffer, final bool hasFSSupport, final bool hasRDBSupport) {
-    //Generate static fields for Firestore & RDB support
-    if (hasFSSupport) {
-      classBuffer.writeln("\tstatic final bool fsSupport = true;");
-    }
-    else {
-      classBuffer.writeln("\tstatic final bool fsSupport = false;");
-    }
+  static void _generateStaticFields(final StringBuffer classBuffer, final ClassElement aClass, final bool hasFSSupport, final bool hasRDBSupport) {
+    //Generate static field containing const class name (release config)
+    classBuffer.writeln("\tstatic const String className = \"${aClass.name}\";");
 
-    if (hasRDBSupport) {
-      classBuffer.writeln("\tstatic final bool rdbSupport = true;");
-    }
-    else {
-      classBuffer.writeln("\tstatic final bool rdbSupport = false;");
-    }
+    //Generate static fields for Firestore & RDB support
+    classBuffer.writeln("\tstatic const bool fsSupport = $hasFSSupport;");
+    classBuffer.writeln("\tstatic const bool rdbSupport = $hasRDBSupport;");
+
     classBuffer.writeln();
   }
 

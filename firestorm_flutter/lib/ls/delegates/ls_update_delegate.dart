@@ -11,16 +11,18 @@ class LSUpdateDelegate implements UpdateDelegate {
   @override
   Future<void> one<T>(T object, { String? subcollection }) {
     final serializer = LS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[object.runtimeType];
+
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentRef ref = LS.instance.collection(className).doc(map["id"]);
     if (subcollection != null) {
-      ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
     return ref.set(map);
   }
@@ -33,8 +35,9 @@ class LSUpdateDelegate implements UpdateDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
     final serializer = LS.serializers[objects[0].runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[objects[0].runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     List<Future> futures = [];
@@ -47,9 +50,9 @@ class LSUpdateDelegate implements UpdateDelegate {
       if (map["id"].isEmpty) {
         throw NullIDException(map);
       }
-      DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+      DocumentRef ref = LS.instance.collection(className).doc(map["id"]);
       if (subcollection != null) {
-        ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
 
       futures.add(ref.set(map));

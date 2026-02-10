@@ -13,11 +13,12 @@ class LSListDelegate implements ListDelegate {
     }
 
     final deserializer = LS.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[type];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = LS.instance.collection(type.toString());
+    var collectionReference = LS.instance.collection(className);
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -49,11 +50,12 @@ class LSListDelegate implements ListDelegate {
     }
 
     final deserializer = LS.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[type];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = LS.instance.collection(type.toString());
+    var collectionReference = LS.instance.collection(className);
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -73,14 +75,5 @@ class LSListDelegate implements ListDelegate {
     }
     return objects;
   }
-
-  /// Applies a filter to a specific type of items and returns a list of items.
-  // FSFilterable<T> filter<T>(Type type, { String? subcollection }) {
-  //   var collectionReference = FS.instance.collection(type.toString());
-  //   if (subcollection != null) {
-  //     collectionReference = collectionReference.doc(subcollection).collection(subcollection);
-  //   }
-  //   return FSFilterable<T>(collectionReference, type);
-  // }
 
 }

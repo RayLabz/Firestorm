@@ -23,13 +23,15 @@ class FSListenDelegate implements ListenDelegate {
     String? subcollection,
   }) {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    var docRef = FS.instance.collection(object.runtimeType.toString()).doc(object.id);
+    var docRef = FS.instance.collection(className).doc(object.id);
     if (subcollection != null) {
-      docRef = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+      docRef = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
     }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
@@ -45,13 +47,15 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[type.runtimeType];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    var docRef = FS.instance.collection(type.toString()).doc(id);
+    var docRef = FS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      docRef = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+      docRef = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
@@ -67,14 +71,16 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
     List<StreamSubscription<T?>> subscriptions = [];
     for (final object in objects) {
-      var docRef = FS.instance.collection(object.runtimeType.toString()).doc(object.id);
+      var docRef = FS.instance.collection(className).doc(object.id);
       if (subcollection != null) {
-        docRef = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+        docRef = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
       }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
@@ -92,15 +98,17 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[type.runtimeType];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
     List<StreamSubscription<T?>> subscriptions = [];
     for (final String id in ids) {
-      var docRef = FS.instance.collection(type.toString()).doc(id);
+      var docRef = FS.instance.collection(className).doc(id);
       if (subcollection != null) {
-        docRef = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+        docRef = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
       }
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
@@ -119,18 +127,20 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
+    final String? className = FS.classNames[type.runtimeType];
+
+    if (deserializer == null || className == null) {
       throw UnsupportedError(
-          'No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+          'No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
     // Determine the collection reference
-    Query query = FS.instance.collection(type.toString());
+    Query query = FS.instance.collection(className);
 
     // Subcollection logic: .collection(type).doc(sub).collection(sub)
     if (subcollection != null) {
       query = FS.instance
-          .collection(type.toString())
+          .collection(className)
           .doc(subcollection)
           .collection(subcollection);
     }

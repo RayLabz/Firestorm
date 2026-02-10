@@ -15,11 +15,14 @@ class FSListDelegate implements ListDelegate {
     }
 
     final deserializer = FS.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[type.runtimeType];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = FS.instance.collection(type.toString());
+
+    var collectionReference = FS.instance.collection(className);
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -45,11 +48,13 @@ class FSListDelegate implements ListDelegate {
     }
 
     final deserializer = FS.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[type.runtimeType];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
-    var collectionReference = FS.instance.collection(type.toString());
+    var collectionReference = FS.instance.collection(className);
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }
@@ -68,7 +73,11 @@ class FSListDelegate implements ListDelegate {
 
   /// Applies a filter to a specific type of items and returns a list of items.
   FSFilterable<T> filter<T>(Type type, { String? subcollection, GetOptions? getOptions }) {
-    var collectionReference = FS.instance.collection(type.toString());
+    final String? className = FS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+    var collectionReference = FS.instance.collection(className);
     if (subcollection != null) {
       collectionReference = collectionReference.doc(subcollection).collection(subcollection);
     }

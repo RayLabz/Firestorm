@@ -8,10 +8,14 @@ class LSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
   DocumentRef documentFromID(Type type, String documentID, { String? subcollection }) {
-    if (subcollection != null) {
-      return LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    final String? className = LS.classNames[type];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
-    return LS.instance.collection(type.toString()).doc(documentID);
+    if (subcollection != null) {
+      return LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
+    }
+    return LS.instance.collection(className).doc(documentID);
   }
 
   /// Returns a reference to a document using an object.
@@ -19,18 +23,26 @@ class LSReferenceDelegate {
     if (object == null) {
       throw NullIDException("Cannot get document reference from null object");
     }
-    if (subcollection != null) {
-      return LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+    final String? className = LS.classNames[object.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
-    return LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+    if (subcollection != null) {
+      return LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
+    }
+    return LS.instance.collection(className).doc(object.id);
   }
 
   /// Returns a reference to a collection using its class.
   CollectionRef collection(Type type, { String? subcollection }) {
-    if (subcollection != null) {
-      return LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection);
+    final String? className = LS.classNames[type];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
-    return LS.instance.collection(type.toString());
+    if (subcollection != null) {
+      return LS.instance.collection(className).doc(subcollection).collection(subcollection);
+    }
+    return LS.instance.collection(className);
   }
 
 }

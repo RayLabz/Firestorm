@@ -11,17 +11,18 @@ class FSCreateDelegate implements CreateDelegate {
   @override
   Future<void> one(dynamic object, { String? subcollection, SetOptions? setOptions }) {
     final serializer = FS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
     if (id.isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(id);
+    DocumentReference ref = FS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     return ref.set(map, setOptions);
   }
@@ -38,9 +39,10 @@ class FSCreateDelegate implements CreateDelegate {
     }
 
     final serializer = FS.serializers[objects[0].runtimeType];
+    final String? className = FS.classNames[objects[0].runtimeType];
 
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
 
     WriteBatch batch = FS.instance.batch();
@@ -51,9 +53,9 @@ class FSCreateDelegate implements CreateDelegate {
         throw NullIDException(map);
       }
 
-      DocumentReference documentReference = FS.instance.collection(T.toString()).doc(map["id"]);
+      DocumentReference documentReference = FS.instance.collection(className).doc(map["id"]);
       if (subcollection != null) {
-        documentReference = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        documentReference = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
 
       batch.set(documentReference, serializer(object), setOptions);

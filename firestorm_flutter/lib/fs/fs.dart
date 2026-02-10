@@ -21,6 +21,7 @@ class FS {
   static late FirebaseFirestore instance;
   static final Map<Type, Serializer> serializers = {};
   static final Map<Type, Deserializer> deserializers = {};
+  static final Map<Type, String> classNames = {};
   // static bool multithreadingEnabled = false;
 
   //Operation delegates:
@@ -52,6 +53,11 @@ class FS {
   /// You should not call this function directly in your code.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
     deserializers[T] = fromMap;
+  }
+
+  /// Registers a type name for release config compatibility (avoiding code obfuscation issues):
+  static void registerClassName(Type type, String typeName) {
+    classNames[type] = typeName;
   }
 
   /// Initializes the Firestore instance. This should be called before any other Firestore operations.

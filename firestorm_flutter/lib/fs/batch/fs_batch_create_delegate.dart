@@ -14,45 +14,20 @@ class FSBatchCreateDelegate {
   /// Creates a document in Firestore from the given object.
   Future<void> one(dynamic object, { String? subcollection }) async {
     final serializer = FS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
     if (id.isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(id);
+    DocumentReference ref = FS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     _batch.set(ref, map, setOptions);
   }
-
-  //TODO - Implement later, unsupported in v1.
-  // /// Creates multiple documents in Firestore from a list of objects.
-  // /// Uses a batch operation for efficiency.
-  // Future<void> many<T>(List<T> objects) async {
-  //   if (objects.length > 500) {
-  //     throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
-  //   }
-  //   WriteBatch batch = FS.firestore.batch();
-  //   for (var object in objects) {
-  //     final serializer = FS.serializers[object.runtimeType];
-  //
-  //     if (serializer == null) {
-  //       throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
-  //     }
-  //     final map = serializer(object);
-  //     if (map["id"].isEmpty) {
-  //       throw NullIDException(map);
-  //     }
-  //
-  //     final DocumentReference documentReference = FS.firestore.collection(T.toString()).doc(map["id"]);
-  //
-  //     batch.set(documentReference, serializer(object));
-  //   }
-  //   return batch.commit();
-  // }
 
 }

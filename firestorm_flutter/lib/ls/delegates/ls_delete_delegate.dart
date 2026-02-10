@@ -11,17 +11,18 @@ class LSDeleteDelegate implements DeleteDelegate {
   @override
   Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = LS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentRef ref = LS.instance.collection(className).doc(map["id"]);
 
     if (subcollection != null) {
-      ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
 
     return ref.delete();
@@ -35,14 +36,19 @@ class LSDeleteDelegate implements DeleteDelegate {
       throw ArgumentError('Batch delete limit exceeded. Maximum 500 objects allowed.');
     }
 
+    final String? className = LS.classNames[objects[0].runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    }
+
     List<Future<void>> futures = [];
     for (dynamic object in objects) {
       if (object.id == null) {
         continue; //skip
       }
-      DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+      DocumentRef ref = LS.instance.collection(className).doc(object.id);
       if (subcollection != null) {
-        ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+        ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
       }
       futures.add(ref.delete());
     }
@@ -52,9 +58,14 @@ class LSDeleteDelegate implements DeleteDelegate {
   /// Deletes a document from Firestore by its type and document ID.
   @override
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
-    DocumentRef ref = LS.instance.collection(type.toString()).doc(documentID);
+    final String? className = LS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+
+    DocumentRef ref = LS.instance.collection(className).doc(documentID);
     if (subcollection != null) {
-      ref = LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
     }
     return ref.delete();
   }
@@ -67,12 +78,17 @@ class LSDeleteDelegate implements DeleteDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
     }
 
+    final String? className = LS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+
     List<Future> futures = [];
 
     for (String id in documentIDs) {
-      DocumentRef ref = LS.instance.collection(type.toString()).doc(id);
+      DocumentRef ref = LS.instance.collection(className).doc(id);
       if (subcollection != null) {
-        ref = LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+        ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
       }
       futures.add(ref.delete());
     }
@@ -83,13 +99,18 @@ class LSDeleteDelegate implements DeleteDelegate {
   @override
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
+      final String? className = LS.classNames[type.runtimeType];
+      if (className == null) {
+        throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+      }
+
       Map<String, dynamic>? snapshot;
       if (subcollection == null) {
-        snapshot = await LS.instance.collection(type.toString()).get();
+        snapshot = await LS.instance.collection(className).get();
       }
       else {
         snapshot =
-        await LS.instance.collection(type.toString()).doc(subcollection)
+        await LS.instance.collection(className).doc(subcollection)
             .collection(subcollection)
             .get();
       }
@@ -98,7 +119,7 @@ class LSDeleteDelegate implements DeleteDelegate {
 
       List<Future> futures = [];
       for (var entry in snapshot.entries) {
-        futures.add(LS.instance.collection(type.toString()).doc(entry.key.split("/")[2]).delete());
+        futures.add(LS.instance.collection(className).doc(entry.key.split("/")[2]).delete());
       }
 
       await Future.wait(futures);

@@ -8,10 +8,14 @@ class FSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
   DocumentReference<Map<String, dynamic>> documentFromID(Type type, String documentID, { String? subcollection }) {
-    if (subcollection != null) {
-      return FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    final String? className = FS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
-    return FS.instance.collection(type.toString()).doc(documentID);
+    if (subcollection != null) {
+      return FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
+    }
+    return FS.instance.collection(className).doc(documentID);
   }
 
   /// Returns a reference to a document using an object.
@@ -19,10 +23,15 @@ class FSReferenceDelegate {
     if (object == null) {
       throw NullIDException("Cannot get document reference from null object");
     }
-    if (subcollection != null) {
-      return FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+    final String? className = FS.classNames[object.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
-    return FS.instance.collection(object.runtimeType.toString()).doc(object.id);
+
+    if (subcollection != null) {
+      return FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
+    }
+    return FS.instance.collection(className).doc(object.id);
   }
 
   /// Returns a reference to a document using its path.
@@ -38,10 +47,14 @@ class FSReferenceDelegate {
 
   /// Returns a reference to a collection using its class.
   CollectionReference<Map<String, dynamic>> collection(Type type, { String? subcollection }) {
-    if (subcollection != null) {
-      return FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection);
+    final String? className = FS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
-    return FS.instance.collection(type.toString());
+    if (subcollection != null) {
+      return FS.instance.collection(className).doc(subcollection).collection(subcollection);
+    }
+    return FS.instance.collection(className);
   }
 
 }

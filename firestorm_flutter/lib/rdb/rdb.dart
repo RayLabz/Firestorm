@@ -17,6 +17,7 @@ class RDB {
   static late FirebaseDatabase instance;
   static final Map<Type, Serializer> serializers = {};
   static final Map<Type, Deserializer> deserializers = {};
+  static final Map<Type, String> classNames = {};
 
   //Operation delegates:
   static final RDBCreateDelegate create = RDBCreateDelegate();
@@ -40,6 +41,11 @@ class RDB {
   /// You should not call this function directly in your code.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
     deserializers[T] = fromMap;
+  }
+
+  /// Registers a type name for release config compatibility (avoiding code obfuscation issues):
+  static void registerClassName(Type type, String typeName) {
+    classNames[type] = typeName;
   }
 
   /// Initializes the RDB instance. This should be called before any other Firestore operations.

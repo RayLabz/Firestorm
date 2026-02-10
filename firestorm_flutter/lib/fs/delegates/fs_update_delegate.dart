@@ -11,16 +11,18 @@ class FSUpdateDelegate implements UpdateDelegate {
   @override
   Future<void> one<T>(T object, { String? subcollection }) {
     final serializer = FS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[object.runtimeType];
+
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+    DocumentReference ref = FS.instance.collection(className).doc(map["id"]);
     if (subcollection != null) {
-      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+      ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
     }
     return ref.update(map);
   }
@@ -33,8 +35,9 @@ class FSUpdateDelegate implements UpdateDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
     final serializer = FS.serializers[objects[0].runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[objects[0].runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
     WriteBatch batch = FS.instance.batch();
     for (var object in objects) {
@@ -45,9 +48,9 @@ class FSUpdateDelegate implements UpdateDelegate {
       if (map["id"].isEmpty) {
         throw NullIDException(map);
       }
-      DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map["id"]);
+      DocumentReference ref = FS.instance.collection(className).doc(map["id"]);
       if (subcollection != null) {
-        ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
       batch.update(ref, map);
     }

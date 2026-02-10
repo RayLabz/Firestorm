@@ -10,13 +10,15 @@ class LSGetDelegate implements GetDelegate {
   @override
   Future<T?> one<T>(String documentID, { String? subcollection }) async {
     final deserializer = LS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    DocumentRef ref = LS.instance.collection(T.toString()).doc(documentID);
+    DocumentRef ref = LS.instance.collection(className).doc(documentID);
     if (subcollection != null) {
-      ref = LS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
     }
 
     Map<String, dynamic>? snapshot = await ref.get();
@@ -32,16 +34,17 @@ class LSGetDelegate implements GetDelegate {
   @override
   Future<List<T>> many<T>(List<String> documentIDs, { String? subcollection }) async {
     final deserializer = LS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[T];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
     List<T> objects = [];
     List<DocumentRef> refs;
     if (subcollection != null) {
-      refs = documentIDs.map((id) => LS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(id)).toList();
+      refs = documentIDs.map((id) => LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id)).toList();
     }
     else {
-      refs = documentIDs.map((id) => LS.instance.collection(T.toString()).doc(id)).toList();
+      refs = documentIDs.map((id) => LS.instance.collection(className).doc(id)).toList();
     }
     List<Map<String, dynamic>?> snapshots = await Future.wait(refs.map((ref) => ref.get()));
     for (var snapshot in snapshots) {

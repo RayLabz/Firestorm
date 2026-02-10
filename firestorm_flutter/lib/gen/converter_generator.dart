@@ -41,22 +41,33 @@ class RegistryGenerator {
     converterBuffer.writeln("}");
     converterBuffer.writeln();
 
+    //Types to const names map (release support):
+    converterBuffer.writeln("final Map<Type, String> typeToNameMap = {");
+    for (final aClass in holder.getAllValidClasses()) {
+      converterBuffer.writeln("\t${aClass.name}: \"${aClass.name}\",");
+    }
+    converterBuffer.writeln("};");
+    converterBuffer.writeln();
+
     //Generate serializer registrations for each class:
     converterBuffer.writeln("registerClasses() {");
     //Firestore:
     for (final aClass in holder.fsValidClasses) {
       converterBuffer.writeln("\tFS.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
       converterBuffer.writeln("\tFS.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
+      converterBuffer.writeln("\tFS.registerClassName(${aClass.displayName}, \"${aClass.name}\");");
     }
     //Realtime Database:
     for (final aClass in holder.rdbValidClasses) {
       converterBuffer.writeln("\tRDB.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
       converterBuffer.writeln("\tRDB.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
+      converterBuffer.writeln("\tRDB.registerClassName(${aClass.displayName}, \"${aClass.name}\");");
     }
     //Localstore:
     for (final aClass in holder.fsValidClasses) {
       converterBuffer.writeln("\tLS.registerSerializer<${aClass.displayName}>((object) => object.toMap());");
       converterBuffer.writeln("\tLS.registerDeserializer<${aClass.displayName}>((map) => ${aClass.displayName}Model.fromMap(map));");
+      converterBuffer.writeln("\tLS.registerClassName(${aClass.displayName}, \"${aClass.name}\");");
     }
     converterBuffer.writeln("}");
     converterBuffer.writeln();

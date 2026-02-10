@@ -129,8 +129,9 @@ class FSPaginator<T> {
   /// Fetches the next page of objects.
   Future<FSQueryResult<T>> next() async {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[T];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
     //If there is a last document ID, start from after that

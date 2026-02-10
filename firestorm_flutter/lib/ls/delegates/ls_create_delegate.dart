@@ -11,17 +11,18 @@ class LSCreateDelegate implements CreateDelegate {
   @override
   Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = LS.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = LS.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
     if (id.isEmpty) {
       throw NullIDException(map);
     }
-    DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(id);
+    DocumentRef ref = LS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     return ref.set(map);
   }
@@ -38,9 +39,10 @@ class LSCreateDelegate implements CreateDelegate {
     }
 
     final serializer = LS.serializers[objects[0].runtimeType];
+    final String? className = LS.classNames[objects[0].runtimeType];
 
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
 
     List<Future> futures = [];
@@ -52,9 +54,9 @@ class LSCreateDelegate implements CreateDelegate {
         throw NullIDException(map);
       }
 
-      DocumentRef documentReference = LS.instance.collection(T.toString()).doc(map["id"]);
+      DocumentRef documentReference = LS.instance.collection(className).doc(map["id"]);
       if (subcollection != null) {
-        documentReference = LS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map["id"]);
+        documentReference = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map["id"]);
       }
 
       futures.add(documentReference.set(serializer(object)));

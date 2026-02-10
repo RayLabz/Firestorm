@@ -12,9 +12,14 @@ class LSExistDelegate implements ExistDelegate {
     if (object.id == null) {
       return false;
     }
-    DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+    final String? className = LS.classNames[object.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
+    }
+
+    DocumentRef ref = LS.instance.collection(className).doc(object.id);
     if (subcollection != null) {
-      ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
     }
     Map<String, dynamic>? data = await ref.get();
     return data != null;
@@ -23,9 +28,14 @@ class LSExistDelegate implements ExistDelegate {
   /// Checks if a document exists in Localstore using its type and ID.
   @override
   Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection }) async {
-    DocumentRef ref = LS.instance.collection(type.toString()).doc(documentID);
+    final String? className = LS.classNames[type.runtimeType];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+
+    DocumentRef ref = LS.instance.collection(className).doc(documentID);
     if (subcollection != null) {
-      ref = LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
     }
     Map<String, dynamic>? data = await ref.get();
     return data != null;

@@ -125,8 +125,9 @@ class FSFilterable<T> extends Filterable<Query> {
   /// Fetches the results of the query.
   Future<FSQueryResult<T>> fetch() async {
     Deserializer? deserializer = FS.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = FS.classNames[T];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
     QuerySnapshot snapshot = await query.get(getOptions);
     List<T> results = [];
