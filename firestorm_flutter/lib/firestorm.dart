@@ -6,6 +6,9 @@ typedef Deserializer = dynamic Function(Map<String, dynamic> map); //Used to dyn
 
 class Firestorm {
 
+  ///Sets debugging messages on/off:
+  static bool debug = false;
+
   /// Logs warnings and errors on the console.
   static Logger log = Logger();
 

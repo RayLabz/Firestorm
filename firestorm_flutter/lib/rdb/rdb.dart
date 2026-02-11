@@ -34,6 +34,7 @@ class RDB {
   /// You should not call this function directly in your code.
   static void registerSerializer<T>(Map<String, dynamic> Function(T obj) function) {
     serializers[T] = (dynamic obj) => function(obj as T);
+    if (Firestorm.debug) Firestorm.log.i("Registered serializer for type: $T");
   }
 
   /// Registers a deserializer for a specific type. Needed for dynamically deserializing objects.
@@ -41,23 +42,27 @@ class RDB {
   /// You should not call this function directly in your code.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
     deserializers[T] = fromMap;
+    if (Firestorm.debug) Firestorm.log.i("Registered deserializer for type: $T");
   }
 
   /// Registers a type name for release config compatibility (avoiding code obfuscation issues):
   static void registerClassName(Type type, String typeName) {
     classNames[type] = typeName;
+    if (Firestorm.debug)  Firestorm.log.i("Registered class name: $typeName for type: $type");
   }
 
   /// Initializes the RDB instance. This should be called before any other Firestore operations.
   static init() async {
     await Firebase.initializeApp();
     instance = FirebaseDatabase.instance;
+    if (Firestorm.debug) Firestorm.log.i("Initialized Firestore");
   }
 
   /// Initializes the RDB instance with custom options.
   static initWithOptions(FirebaseOptions options) async {
     await Firebase.initializeApp(options: options);
     instance = FirebaseDatabase.instance;
+    if (Firestorm.debug) Firestorm.log.i("Initialized Firestore with options");
   }
 
   /// Constructs a path for a RDB object based on its type and ID.

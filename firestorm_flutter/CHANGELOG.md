@@ -1,3 +1,8 @@
+## v0.7.2
+Release date: 11/02/2026
+- Bug fixes.
+- Better logging during initialization.
+
 ## v0.7.1
 Release date: 11/02/2026
 - Bug fixes.

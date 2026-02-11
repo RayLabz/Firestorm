@@ -36,6 +36,7 @@ class LS {
   /// You should not call this function directly in your code.
   static void registerSerializer<T>(Map<String, dynamic> Function(T obj) function) {
     serializers[T] = (dynamic obj) => function(obj as T);
+    if (Firestorm.debug) Firestorm.log.i("Registered serializer for type: $T");
   }
 
   /// Registers a deserializer for a specific type. Needed for dynamically deserializing objects.
@@ -43,11 +44,13 @@ class LS {
   /// You should not call this function directly in your code.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
     deserializers[T] = fromMap;
+    if (Firestorm.debug) Firestorm.log.i("Registered deserializer for type: $T");
   }
 
   /// Registers a type name for release config compatibility (avoiding code obfuscation issues):
   static void registerClassName(Type type, String typeName) {
     classNames[type] = typeName;
+    if (Firestorm.debug)  Firestorm.log.i("Registered class name: $typeName for type: $type");
   }
 
 }
