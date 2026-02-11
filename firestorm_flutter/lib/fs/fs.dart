@@ -46,6 +46,7 @@ class FS {
   /// You should not call this function directly in your code.
   static void registerSerializer<T>(Map<String, dynamic> Function(T obj) function) {
     serializers[T] = (dynamic obj) => function(obj as T);
+    print("Registered serializer for type: $T");
   }
 
   /// Registers a deserializer for a specific type. Needed for dynamically deserializing objects.
@@ -53,11 +54,13 @@ class FS {
   /// You should not call this function directly in your code.
   static void registerDeserializer<T>(T Function(Map<String, dynamic>) fromMap) {
     deserializers[T] = fromMap;
+    print("Registered deserializer for type: $T");
   }
 
   /// Registers a type name for release config compatibility (avoiding code obfuscation issues):
   static void registerClassName(Type type, String typeName) {
     classNames[type] = typeName;
+    print("Registered class name: $typeName for type: $type");
   }
 
   /// Initializes the Firestore instance. This should be called before any other Firestore operations.

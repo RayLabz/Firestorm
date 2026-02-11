@@ -57,9 +57,9 @@ class FSDeleteDelegate implements DeleteDelegate {
   /// Deletes a document from Firestore by its type and document ID.
   @override
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: ${type.runtimeType}. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     DocumentReference ref = FS.instance.collection(className).doc(documentID);
@@ -78,9 +78,9 @@ class FSDeleteDelegate implements DeleteDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
     }
 
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: ${type.runtimeType}. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: ${className}. Consider re-generating Firestorm data classes.');
     }
 
     WriteBatch batch = FS.instance.batch();
@@ -99,9 +99,9 @@ class FSDeleteDelegate implements DeleteDelegate {
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
 
-      final String? className = FS.classNames[type.runtimeType];
+      final String? className = FS.classNames[type];
       if (className == null) {
-        throw UnsupportedError('No class name found for type: ${type.runtimeType}. Consider re-generating Firestorm data classes.');
+        throw UnsupportedError('No class name found for type: ${className}. Consider re-generating Firestorm data classes.');
       }
 
       QuerySnapshot snapshot;

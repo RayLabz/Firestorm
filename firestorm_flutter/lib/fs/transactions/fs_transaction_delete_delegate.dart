@@ -30,9 +30,9 @@ class FSTransactionDeleteDelegate {
 
   /// Deletes a document from Firestore by its type and document ID.
   Future<Transaction> oneWithID(Type type, String documentID) async {
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     DocumentReference ref = FS.instance.collection(className).doc(documentID);
     return _tx.delete(ref);

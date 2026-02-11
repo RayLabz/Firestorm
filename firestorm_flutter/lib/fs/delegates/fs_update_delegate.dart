@@ -34,10 +34,10 @@ class FSUpdateDelegate implements UpdateDelegate {
     if (objects.length > 500) {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
-    final serializer = FS.serializers[objects[0].runtimeType];
-    final String? className = FS.classNames[objects[0].runtimeType];
+    final serializer = FS.serializers[T];
+    final String? className = FS.classNames[T];
     if (serializer == null || className == null) {
-      throw UnsupportedError('No serializer/class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No serializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     WriteBatch batch = FS.instance.batch();
     for (var object in objects) {

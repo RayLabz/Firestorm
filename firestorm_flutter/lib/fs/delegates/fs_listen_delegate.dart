@@ -47,7 +47,7 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[T];
 
     if (deserializer == null || className == null) {
       throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
@@ -98,10 +98,10 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
 
     if (deserializer == null || className == null) {
-      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     List<StreamSubscription<T?>> subscriptions = [];
@@ -127,11 +127,11 @@ class FSListenDelegate implements ListenDelegate {
         String? subcollection,
       }) {
     Deserializer? deserializer = FS.deserializers[T];
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
 
     if (deserializer == null || className == null) {
       throw UnsupportedError(
-          'No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
+          'No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     // Determine the collection reference

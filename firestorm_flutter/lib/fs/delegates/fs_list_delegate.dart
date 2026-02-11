@@ -15,10 +15,10 @@ class FSListDelegate implements ListDelegate {
     }
 
     final deserializer = FS.deserializers[type];
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
 
     if (deserializer == null || className == null) {
-      throw UnsupportedError('No deserializer/class name found for type: $type. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
 
@@ -48,10 +48,10 @@ class FSListDelegate implements ListDelegate {
     }
 
     final deserializer = FS.deserializers[type];
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
 
     if (deserializer == null || className == null) {
-      throw UnsupportedError('No deserializer/class name found for type: $type. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No deserializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     var collectionReference = FS.instance.collection(className);
@@ -73,9 +73,9 @@ class FSListDelegate implements ListDelegate {
 
   /// Applies a filter to a specific type of items and returns a list of items.
   FSFilterable<T> filter<T>(Type type, { String? subcollection, GetOptions? getOptions }) {
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     var collectionReference = FS.instance.collection(className);
     if (subcollection != null) {

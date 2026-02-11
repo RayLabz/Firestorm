@@ -29,7 +29,7 @@ class FSExistDelegate implements ExistDelegate {
   Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection, GetOptions? getOptions }) async {
     final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: $type.runtimeType}. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     DocumentReference ref = FS.instance.collection(className).doc(documentID);
     if (subcollection != null) {

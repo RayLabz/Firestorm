@@ -8,7 +8,7 @@ class FSReferenceDelegate {
 
   /// Returns a reference to a document using its class and document ID.
   DocumentReference<Map<String, dynamic>> documentFromID(Type type, String documentID, { String? subcollection }) {
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
       throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
@@ -47,9 +47,9 @@ class FSReferenceDelegate {
 
   /// Returns a reference to a collection using its class.
   CollectionReference<Map<String, dynamic>> collection(Type type, { String? subcollection }) {
-    final String? className = FS.classNames[type.runtimeType];
+    final String? className = FS.classNames[type];
     if (className == null) {
-      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+      throw UnsupportedError('No class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     if (subcollection != null) {
       return FS.instance.collection(className).doc(subcollection).collection(subcollection);

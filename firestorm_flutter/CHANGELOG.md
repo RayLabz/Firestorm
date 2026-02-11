@@ -1,3 +1,7 @@
+## v0.7.1
+Release date: 11/02/2026
+- Bug fixes.
+
 ## v0.7.0
 Release date: 10/02/2026
 - Firestore and Localstore support for release configuration in projects, fixing the issue where obfuscation leads to minified
