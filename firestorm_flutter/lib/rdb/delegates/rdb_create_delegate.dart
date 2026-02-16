@@ -11,8 +11,9 @@ class RDBCreateDelegate implements CreateDelegate {
   @override
   Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = RDB.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: $className. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
@@ -20,7 +21,7 @@ class RDBCreateDelegate implements CreateDelegate {
       throw NullIDException(map);
     }
 
-    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(className, object.id, subcollection: subcollection));
     return reference.set(map);
   }
 

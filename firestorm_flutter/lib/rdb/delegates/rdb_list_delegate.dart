@@ -16,12 +16,14 @@ class RDBListDelegate implements ListDelegate {
     }
 
     final deserializer = RDB.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[type];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer found for type: $className. Consider re-generating Firestorm data classes.');
     }
 
     List<T> objects = [];
-    final String path = RDB.constructPathForClass(type, subcollection: subcollection);
+    final String path = RDB.constructPathForClass(className, subcollection: subcollection);
     final Query query = RDB.instance.ref(path).limitToFirst(limit);
     final DataSnapshot snapshot = await query.get();
     if (snapshot.exists) {
@@ -41,12 +43,13 @@ class RDBListDelegate implements ListDelegate {
     }
 
     final deserializer = RDB.deserializers[type];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $type. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[type];
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
 
     List<T> objects = [];
-    final String path = RDB.constructPathForClass(type, subcollection: subcollection);
+    final String path = RDB.constructPathForClass(className, subcollection: subcollection);
     final Query query = RDB.instance.ref(path);
     final DataSnapshot snapshot = await query.get();
     if (snapshot.exists) {
@@ -62,7 +65,15 @@ class RDBListDelegate implements ListDelegate {
 
   /// Applies a filter to a specific type of items and returns a list of items.
   RDBFilterable<T> filter<T>(Type type, { String? subcollection }) {
-    final String path = RDB.constructPathForClass(type, subcollection: subcollection);
+    if (T.toString() != type.toString()) {
+      throw ArgumentError("Type mismatch. Attempting to list items of type '${T.toString()}', but parameter type was ${type.toString()}");
+    }
+    final String? className = RDB.classNames[type];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+
+    final String path = RDB.constructPathForClass(className, subcollection: subcollection);
     DatabaseReference reference = RDB.instance.ref(path);
     return RDBFilterable<T>(reference, type);
   }

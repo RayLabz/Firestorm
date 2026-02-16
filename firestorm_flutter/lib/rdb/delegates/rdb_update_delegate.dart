@@ -12,14 +12,16 @@ class RDBUpdateDelegate implements UpdateDelegate {
   @override
   Future<void> one<T>(T object, { String? subcollection }) async {
     final serializer = RDB.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[object.runtimeType];
+
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     if (map["id"].isEmpty) {
       throw NullIDException(map);
     }
-    final String path = RDB.constructPathForClassAndID(object.runtimeType, map["id"], subcollection: subcollection);
+    final String path = RDB.constructPathForClassAndID(className, map["id"], subcollection: subcollection);
     DatabaseReference ref = RDB.instance.ref(path);
     await ref.update(map);
   }
@@ -32,8 +34,10 @@ class RDBUpdateDelegate implements UpdateDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 objects allowed.');
     }
     final serializer = RDB.serializers[objects[0].runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[objects[0].runtimeType];
+
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.');
     }
 
     RDBWriteBatch batch = RDBWriteBatch();

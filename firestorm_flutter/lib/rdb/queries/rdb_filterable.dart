@@ -63,8 +63,10 @@ class RDBFilterable<T> extends Filterable<Query> {
   /// Fetches the results of the query.
   Future<RDBQueryResult<T>> fetch() async {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
     DataSnapshot snapshot = await query.get();
     List<T> results = [];

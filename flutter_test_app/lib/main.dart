@@ -42,16 +42,22 @@ main() async {
     persons.add(p);
   }
 
-  print(persons);
 
-  await LS.create.one(persons[0]);
-  // await LS.create.many(persons.sublist(1));
-  //
-  // Person? pGet = await LS.get.one<Person>("1");
+  // await RDB.create.one(persons[0]);
+  // await RDB.create.many(persons.sublist(1));
+  // //
+  // Person? pGet = await RDB.get.one<Person>("1");
   // print(pGet);
-  //
-  // List<Person> personsGet = await LS.get.many<Person>(["1", "2", "5"]);
+  // //
+  // List<Person> personsGet = await RDB.get.many<Person>(["1", "2", "5"]);
   // print(personsGet);
+
+  // RDB.list.filter<Person>(Person, subcollection: "A")
+  //   .limitToFirst(4)
+  //   .fetch().then((value) {
+  //     print(value.items);
+  //   },);
+
   //
   // persons[0].firstname = "Nicos";
   // await LS.update.one(persons[0]);
@@ -66,9 +72,6 @@ main() async {
   // print(exists);
 
   print("FINISHED");
-}
-
-
 
 
 

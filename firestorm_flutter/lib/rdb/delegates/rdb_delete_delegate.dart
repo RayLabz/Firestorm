@@ -12,8 +12,9 @@ class RDBDeleteDelegate implements DeleteDelegate {
   @override
   Future<void> one(dynamic object, { String? subcollection }) {
     final serializer = RDB.serializers[object.runtimeType];
-    if (serializer == null) {
-      throw UnsupportedError('No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[object.runtimeType];
+    if (serializer == null || className == null) {
+      throw UnsupportedError('No serializer/class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.');
     }
     final map = serializer(object);
     String id = map["id"];
@@ -21,7 +22,7 @@ class RDBDeleteDelegate implements DeleteDelegate {
       throw NullIDException(map);
     }
 
-    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, id, subcollection: subcollection));
+    final reference = RDB.instance.ref(RDB.constructPathForClassAndID(className, id, subcollection: subcollection));
     return reference.remove();
   }
 
@@ -39,7 +40,11 @@ class RDBDeleteDelegate implements DeleteDelegate {
   /// Deletes a document from RDB by its type and document ID.
   @override
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
-    String path = RDB.constructPathForClassAndID(type, documentID, subcollection: subcollection);
+    final String? className = RDB.classNames[type];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+    }
+    String path = RDB.constructPathForClassAndID(className, documentID, subcollection: subcollection);
     final reference = RDB.instance.ref(path);
     return reference.remove();
   }
@@ -59,8 +64,12 @@ class RDBDeleteDelegate implements DeleteDelegate {
   @override
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
+      final String? className = RDB.classNames[type];
+      if (className == null) {
+        throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
+      }
       //Get the objects of this type:
-      final reference = RDB.instance.ref(type.toString());
+      final reference = RDB.instance.ref(className);
       final snapshot = await reference.once();
       if (snapshot.snapshot.value == null) {
         return;

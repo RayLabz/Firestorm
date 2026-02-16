@@ -23,11 +23,13 @@ class RDBListenDelegate implements ListenDelegate{
     String? subcollection,
   }) {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(className, object.id, subcollection: subcollection));
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -42,11 +44,13 @@ class RDBListenDelegate implements ListenDelegate{
         String? subcollection,
       }) {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[type];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
-    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
+    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(className, id, subcollection: subcollection));
     return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
   }
 
@@ -61,12 +65,14 @@ class RDBListenDelegate implements ListenDelegate{
         String? subcollection,
       }) {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[T];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
     List<StreamSubscription<T?>> subscriptions = [];
     for (final object in objects) {
-      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(className, object.id, subcollection: subcollection));
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;
@@ -83,13 +89,15 @@ class RDBListenDelegate implements ListenDelegate{
         String? subcollection,
       }) {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
-      throw UnsupportedError('No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+    final String? className = RDB.classNames[type];
+
+    if (deserializer == null || className == null) {
+      throw UnsupportedError('No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
     List<StreamSubscription<T?>> subscriptions = [];
     for (final String id in ids) {
-      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(type, id, subcollection: subcollection));
+      DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(className, id, subcollection: subcollection));
       subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
     }
     return subscriptions;
@@ -107,9 +115,11 @@ class RDBListenDelegate implements ListenDelegate{
         String? subcollection,
       }) {
     Deserializer? deserializer = RDB.deserializers[T];
-    if (deserializer == null) {
+    final String? className = RDB.classNames[type];
+
+    if (deserializer == null || className == null) {
       throw UnsupportedError(
-          'No deserializer found for type: $T. Consider re-generating Firestorm data classes.');
+          'No deserializer/class name found for type: $T. Consider re-generating Firestorm data classes.');
     }
 
     // Determine the collection reference path
@@ -117,7 +127,7 @@ class RDBListenDelegate implements ListenDelegate{
     // or using the type string directly as a folder.
     DatabaseReference collectionRef = RDB.instance.ref(type.toString());
     if (subcollection != null) {
-      collectionRef = RDB.instance.ref("${type.toString()}:$subcollection");
+      collectionRef = RDB.instance.ref("$className:$subcollection");
     }
 
     return [

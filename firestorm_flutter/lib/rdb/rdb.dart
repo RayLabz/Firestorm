@@ -66,19 +66,19 @@ class RDB {
   }
 
   /// Constructs a path for a RDB object based on its type and ID.
-  static String constructPathForClassAndID(Type type, String id, {String? subcollection}) {
+  static String constructPathForClassAndID(final String typeName, String id, {String? subcollection}) {
     if (subcollection == null) {
-      return "${type.toString()}/$id";
+      return "$typeName/$id";
     }
-    return "${type.toString()}:$subcollection/$id";
+    return "$typeName:$subcollection/$id";
   }
 
   /// Constructs a path for a class.
-  static String constructPathForClass(Type type, {String? subcollection}) {
+  static String constructPathForClass(final String typeName, {String? subcollection}) {
     if (subcollection == null) {
-      return type.toString();
+      return typeName;
     }
-    return "${type.toString()}:$subcollection";
+    return "$typeName:$subcollection";
   }
 
   /// Enables local caching for Firestore data.

@@ -1,3 +1,8 @@
+## v0.8.0
+Release date: 16/02/2026
+- Realtime database support for release configuration in project by fixing class obfuscation (minification) related to class/collection names 
+in release projects. 
+
 ## v0.7.4
 Release date: 16/02/2026
 - Bug fixes.
