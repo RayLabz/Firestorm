@@ -28,7 +28,7 @@ class LSExistDelegate implements ExistDelegate {
   /// Checks if a document exists in Localstore using its type and ID.
   @override
   Future<bool> oneWithID<T>(Type type, String documentID, { String? subcollection }) async {
-    final String? className = LS.classNames[type.runtimeType];
+    final String? className = LS.classNames[type];
     if (className == null) {
       throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }

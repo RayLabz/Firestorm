@@ -82,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.7.3
+  firestorm: ^0.7.4
 ```
 
 ## Getting started with Firestorm for Flutter

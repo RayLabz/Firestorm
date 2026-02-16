@@ -58,7 +58,7 @@ class LSDeleteDelegate implements DeleteDelegate {
   /// Deletes a document from Firestore by its type and document ID.
   @override
   Future<void> oneWithID(Type type, String documentID, { String? subcollection }) {
-    final String? className = LS.classNames[type.runtimeType];
+    final String? className = LS.classNames[type];
     if (className == null) {
       throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
@@ -78,7 +78,7 @@ class LSDeleteDelegate implements DeleteDelegate {
       throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
     }
 
-    final String? className = LS.classNames[type.runtimeType];
+    final String? className = LS.classNames[type];
     if (className == null) {
       throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
     }
@@ -99,7 +99,7 @@ class LSDeleteDelegate implements DeleteDelegate {
   @override
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
     if (iAmSure) {
-      final String? className = LS.classNames[type.runtimeType];
+      final String? className = LS.classNames[type];
       if (className == null) {
         throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
       }
