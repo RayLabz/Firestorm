@@ -7,17 +7,7 @@ class FSTypes {
   ///Checks if the given Dart type is supported by Firestore.
   static bool isTypeSupported(DartType type) {
 
-    //primitives
-    if (type.isDartCoreString ||
-        type.isDartCoreInt ||
-        type.isDartCoreDouble ||
-        type.isDartCoreBool ||
-        type.getDisplayString() == 'DateTime' ||
-        type.isDartCoreNull ||
-        type.getDisplayString() == 'DocumentReference' ||
-        type.getDisplayString() == 'GeoPoint' ||
-        type.getDisplayString() == 'Uint8List'
-    ) {
+    if (isSupportedPrimitive(type)) {
       return true;
     }
 
@@ -73,6 +63,33 @@ class FSTypes {
         }
 
         return true;
+      }
+    }
+
+    return false;
+  }
+
+  ///Checks if the given Dart type is a supported primitive type for Firestore.
+  static bool isSupportedPrimitive(DartType type) {
+    // Core primitives (nullability-safe)
+    if (type.isDartCoreString ||
+        type.isDartCoreInt ||
+        type.isDartCoreDouble ||
+        type.isDartCoreBool ||
+        type.isDartCoreNull) {
+      return true;
+    }
+
+    // Interface types (DateTime, etc.)
+    if (type is InterfaceType) {
+      final element = type.element;
+
+      switch (element.name) {
+        case 'DateTime':
+        case 'DocumentReference':
+        case 'GeoPoint':
+        case 'Uint8List':
+          return true;
       }
     }
 

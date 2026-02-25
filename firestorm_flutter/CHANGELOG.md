@@ -1,3 +1,7 @@
+## v0.8.1
+Release date: 25/02/2026
+- Bug fixes related to nullable fields in primitive or Firebase-default classes.
+
 ## v0.8.0
 Release date: 16/02/2026
 - Realtime database support for release configuration in project by fixing class obfuscation (minification) related to class/collection names 

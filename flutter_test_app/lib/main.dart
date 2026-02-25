@@ -26,50 +26,7 @@ main() async {
   await RDB.init();
   registerClasses();
 
-  //TODO - Test create, get, update, delete, list, exist...
-  List<Person> persons = [];
 
-  for (int i = 0; i < 10; i++) {
-    Person p = Person(
-      "$i",
-      "John $i",
-      "Doe $i",
-      20 + i,
-      1.8 + i,
-      true,
-      ["AAA"],
-    );
-    persons.add(p);
-  }
-
-
-  // await RDB.create.one(persons[0]);
-  // await RDB.create.many(persons.sublist(1));
-  // //
-  // Person? pGet = await RDB.get.one<Person>("1");
-  // print(pGet);
-  // //
-  // List<Person> personsGet = await RDB.get.many<Person>(["1", "2", "5"]);
-  // print(personsGet);
-
-  // RDB.list.filter<Person>(Person, subcollection: "A")
-  //   .limitToFirst(4)
-  //   .fetch().then((value) {
-  //     print(value.items);
-  //   },);
-
-  //
-  // persons[0].firstname = "Nicos";
-  // await LS.update.one(persons[0]);
-  //
-  // await LS.delete.one("1");
-  // await LS.delete.many(["2", "3"]);
-  //
-  // List<Person> personsList = await LS.list.allOfClass<Person>(Person);
-  // print(personsList);
-  //
-  // bool exists = await LS.exists.one<Person>("1");
-  // print(exists);
 
   print("FINISHED");
 
