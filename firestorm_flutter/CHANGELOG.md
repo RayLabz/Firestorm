@@ -1,3 +1,8 @@
+## v0.8.2
+Release date: 26/02/2026
+- Use of `Timestamp` fields in custom data classes instead of `DateTime` (FS only).
+- Bug fixes in code generator to handle Firestore-native types.
+
 ## v0.8.1
 Release date: 25/02/2026
 - Bug fixes related to nullable fields in primitive or Firebase-default classes.

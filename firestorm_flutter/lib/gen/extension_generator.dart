@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:firestorm/exceptions/invalid_class_exception.dart';
+import 'package:firestorm/type/fs_types.dart';
 
 import 'class_checker.dart';
 
@@ -58,22 +59,6 @@ class ExtensionGenerator {
 
     //Fields:
     for (final field in allFields) {
-      // FieldElement? matchingField = field; //match to field
-
-      // for (final parent in aClass.allSupertypes) { //Find field in parent classes
-      //   for (final parentField in parent.element.fields) {
-      //     if (parentField.name != "hashCode" &&
-      //         parentField.name == field.name &&
-      //         parentField.name != "runtimeType") {
-      //       matchingField = parentField; //set matching field to parent field
-      //       break;
-      //     }
-      //   }
-      // }
-
-      // if (matchingField == null) {
-      //   throw InvalidClassException(aClass.name);
-      // }
 
       if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
@@ -87,16 +72,21 @@ class ExtensionGenerator {
       else {
         //If this is a user-defined type, expand it using it own toMap():
         if (!field.type.element!.library!.isDartCore && field.type is InterfaceType && !ClassChecker.isEnumType(field.type)) {
-          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toMap(),"); //call toMap() on user-defined type
+          if (FSTypes.isSupportedPrimitive(field.type)) {
+            classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal, supported primitive)
+          }
+          else {
+            classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toMap(),"); //call toMap() on user-defined type
+          }
         }
         //enum:
         else if (ClassChecker.isEnumType(field.type)) {
-          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name}.toString(),"); //not excluded (normal, enum)
+          classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toString(),"); //not excluded (normal, enum)
         }
         //other:
         else {
           //Otherwise, just use the attribute:
-          classBuffer.writeln("\t\t\t '${field.name}': this.${field.name},"); //not excluded (normal)
+          classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal)
         }
       }
     }
@@ -145,8 +135,16 @@ class ExtensionGenerator {
         if (!matchingField.type.element!.library!.isDartCore &&
             matchingField.type is InterfaceType &&
             !ClassChecker.isEnumType(matchingField.type)) {
-          classBuffer.writeln(
-              "\t\t\t${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),");
+          if (FSTypes.isSupportedPrimitive(matchingField.type)) {
+            classBuffer.writeln(
+                "\t\t\tmap['${param.name}'] as ${matchingField.type.getDisplayString()},");
+          }
+          else {
+            classBuffer.writeln(
+                "\t\t\t${matchingField.type
+                    .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param
+                    .name}'] as Map)),");
+          }
         }
         // List
         else if (param.type.isDartCoreList) {
@@ -208,8 +206,16 @@ class ExtensionGenerator {
           if (!matchingField.type.element!.library!.isDartCore &&
               matchingField.type is InterfaceType &&
               !ClassChecker.isEnumType(matchingField.type)) {
-            classBuffer.writeln(
-                "\t\t\t${param.name}: ${matchingField.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param.name}'] as Map)),");
+            if (FSTypes.isSupportedPrimitive(matchingField.type)) {
+              classBuffer.writeln(
+                  "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type.getDisplayString()},");
+            }
+            else {
+              classBuffer.writeln(
+                  "\t\t\t${param.name}: ${matchingField.type
+                      .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param
+                      .name}'] as Map)),");
+            }
           }
           // List
           else if (param.type.isDartCoreList) {
@@ -263,8 +269,16 @@ class ExtensionGenerator {
         if (!field.type.element!.library!.isDartCore &&
             field.type is InterfaceType &&
             !ClassChecker.isEnumType(field.type)) {
-          classBuffer.writeln(
-              "\t\t\tobject.${field.name} = ${field.type.getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field.name}'] as Map));");
+          if (FSTypes.isSupportedPrimitive(field.type)) {
+            classBuffer.writeln(
+                "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type.getDisplayString()};");
+          }
+          else {
+            classBuffer.writeln(
+                "\t\t\tobject.${field.name} = ${field.type
+                    .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field
+                    .name}'] as Map));");
+          }
         }
         // List
         else if (field.type.isDartCoreList) {

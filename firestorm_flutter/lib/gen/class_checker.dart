@@ -24,6 +24,11 @@ class ClassChecker {
     return annotatedClasses;
   }
 
+  /// Checks if a given ClassElement is annotated with @FirestormObject.
+  static bool isClassAnnotatedWithFirestormObject(final ClassElement aClass) {
+    return aClass.metadata.any((m) => m.element?.displayName == 'FirestormObject');
+  }
+
   ///Finds all classes that have a public, no-argument constructor from a list of classes.
   ///Returns a list of ClassElements that meet the criteria.
   static List<ClassElement> findClassesWithPublicNoArgConstructor(final List<ClassElement> classes) {
@@ -102,7 +107,6 @@ class ClassChecker {
       bool isValid = true;
       for (final field in aClass.fields) {
         if (!RDBTypes.isTypeSupported(field.type)) {
-          // ignore: avoid_print
           Firestorm.log.e("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.");
           isValid = false;
           break;

@@ -50,7 +50,8 @@ class FSTypes {
         List<bool> fieldsSupported = [];
         for (var field in allFields) {
           if (!field.isStatic) {
-            bool b = isTypeSupported(field.type);
+            ClassElement fieldClassElement = field.type.element as ClassElement;
+            bool b = isTypeSupported(field.type) && ClassChecker.isClassAnnotatedWithFirestormObject(fieldClassElement);
             fieldsSupported.add(b);
           }
         }
@@ -80,20 +81,25 @@ class FSTypes {
       return true;
     }
 
-    // Interface types (DateTime, etc.)
+    //Firestore natives:
+    return isFirestoreNativeType(type);
+  }
+
+  /// Checks if the given Dart type is a native Firestore type (e.g., Timestamp, DocumentReference, ...).
+  static bool isFirestoreNativeType(DartType type) {
     if (type is InterfaceType) {
       final element = type.element;
-
-      switch (element.name) {
-        case 'DateTime':
-        case 'DocumentReference':
-        case 'GeoPoint':
-        case 'Uint8List':
-          return true;
-      }
+      return fsNativeTypes.contains(element.name);
     }
-
     return false;
   }
+
+  /// List of native Firestore types that are directly supported without conversion.
+  static const List<String> fsNativeTypes = [
+    'Timestamp',
+    'DocumentReference',
+    'GeoPoint',
+    'Uint8List',
+  ];
 
 }

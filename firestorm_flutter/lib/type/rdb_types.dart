@@ -44,6 +44,7 @@ class RDBTypes {
     //check user-defined types:
     else if (type.element != null && !type.element!.library!.isDartCore && type is InterfaceType) {
       final element = type.element;
+
       if (element is ClassElement) {
         List<FieldElement> allFields = [];
         allFields.addAll(element.fields);
@@ -56,7 +57,8 @@ class RDBTypes {
         List<bool> fieldsSupported = [];
         for (var field in allFields) {
           if (!field.isStatic) {
-            bool b = isTypeSupported(field.type);
+            ClassElement fieldClassElement = field.type.element as ClassElement;
+            bool b = isTypeSupported(field.type) && ClassChecker.isClassAnnotatedWithFirestormObject(fieldClassElement);
             fieldsSupported.add(b);
           }
         }

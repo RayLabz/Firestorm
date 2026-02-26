@@ -6,4 +6,10 @@ class ImportGenerator {
     importsBuffer.writeln("import '${asset.uri}';");
     return importsBuffer.toString();
   }
+
+  static String generateImportFromString(StringBuffer importsBuffer, String importPath) {
+    importsBuffer.writeln("import '$importPath';");
+    return importsBuffer.toString();
+  }
+
 }
