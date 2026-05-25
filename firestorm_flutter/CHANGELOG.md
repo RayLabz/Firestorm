@@ -1,3 +1,8 @@
+## v0.8.3
+Release date: 25/05/2026
+- Fixed bug affecting zero-point doubles being interpreted/written to DB as integers in web platform.
+
+
 ## v0.8.2
 Release date: 26/02/2026
 - Use of `Timestamp` fields in custom data classes instead of `DateTime` (FS only).

@@ -73,7 +73,15 @@ class ExtensionGenerator {
         //If this is a user-defined type, expand it using it own toMap():
         if (!field.type.element!.library!.isDartCore && field.type is InterfaceType && !ClassChecker.isEnumType(field.type)) {
           if (FSTypes.isSupportedPrimitive(field.type)) {
-            classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal, supported primitive)
+
+            //Fix for doubles being converted into int in web.
+            if (field.type.getDisplayString() == 'double?' || field.type.getDisplayString() == 'double') {
+              classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toDouble(),"); //force double
+            }
+            else {
+              classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal, supported primitive)
+            }
+
           }
           else {
             classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toMap(),"); //call toMap() on user-defined type
@@ -167,8 +175,16 @@ class ExtensionGenerator {
         }
         // Other types
         else {
-          classBuffer.writeln(
-              "\t\t\tmap['${param.name}'] as ${matchingField.type.getDisplayString()},");
+          //Fix for doubles being converted into int in web.
+          if (param.type.getDisplayString() == 'double?' || param.type.getDisplayString() == 'double') {
+            classBuffer.writeln(
+                "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+          }
+          else {
+            classBuffer.writeln(
+                "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type
+                    .getDisplayString()},");
+          }
         }
       }
     }
@@ -238,8 +254,16 @@ class ExtensionGenerator {
           }
           // Other types
           else {
-            classBuffer.writeln(
-                "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type.getDisplayString()},");
+            //Fix for doubles being converted into int in web.
+            if (param.type.getDisplayString() == 'double?' || param.type.getDisplayString() == 'double') {
+              classBuffer.writeln(
+                  "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+            }
+            else {
+              classBuffer.writeln(
+                  "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type
+                      .getDisplayString()},");
+            }
           }
         }
       }
@@ -301,8 +325,16 @@ class ExtensionGenerator {
         }
         // Other types
         else {
-          classBuffer.writeln(
-              "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type.getDisplayString()};");
+          //Fix for doubles being converted into int in web.
+          if (field.type.getDisplayString() == 'double?' || field.type.getDisplayString() == 'double') {
+            classBuffer.writeln(
+                "\t\t\t${field.name}: (map['${field.name}'] as num).toDouble(),");
+          }
+          else {
+            classBuffer.writeln(
+                "\t\t\t${field.name}: map['${field.name}'] as ${field.type
+                    .getDisplayString()},");
+          }
         }
       }
     }
