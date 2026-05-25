@@ -178,7 +178,7 @@ class ExtensionGenerator {
           //Fix for doubles being converted into int in web.
           if (param.type.getDisplayString() == 'double?' || param.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+                "\t\t\t${param.name}: (map['${param.name}'] as num?)?.toDouble(),");
           }
           else {
             classBuffer.writeln(
@@ -257,7 +257,7 @@ class ExtensionGenerator {
             //Fix for doubles being converted into int in web.
             if (param.type.getDisplayString() == 'double?' || param.type.getDisplayString() == 'double') {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+                  "\t\t\t${param.name}: (map['${param.name}'] as num?)?.toDouble(),");
             }
             else {
               classBuffer.writeln(
@@ -328,7 +328,7 @@ class ExtensionGenerator {
           //Fix for doubles being converted into int in web.
           if (field.type.getDisplayString() == 'double?' || field.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\t${field.name}: (map['${field.name}'] as num).toDouble(),");
+                "\t\t\t${field.name}: (map['${field.name}'] as num?)?.toDouble(),");
           }
           else {
             classBuffer.writeln(

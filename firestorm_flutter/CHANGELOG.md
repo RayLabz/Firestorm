@@ -1,3 +1,7 @@
+## v0.8.4
+Release date: 25/05/2026
+- Fixed bug affecting zero-point doubles being interpreted/written to DB as integers in web platform. 
+
 ## v0.8.3
 Release date: 25/05/2026
 - Fixed bug affecting zero-point doubles being interpreted/written to DB as integers in web platform.
