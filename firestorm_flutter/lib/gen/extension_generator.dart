@@ -336,16 +336,16 @@ class ExtensionGenerator {
           //Fix for doubles being converted into int in web.
           if (field.type.getDisplayString() == 'double?') {
             classBuffer.writeln(
-                "\t\t\t${field.name}: (map['${field.name}'] as num?)?.toDouble(),");
+                "\t\t\tobject.${field.name} = (map['${field.name}'] as num?)?.toDouble();");
           }
           else if (field.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\t${field.name}: (map['${field.name}'] as num).toDouble(),");
+                "\t\t\tobject.${field.name} = (map['${field.name}'] as num).toDouble();");
           }
           else {
             classBuffer.writeln(
-                "\t\t\t${field.name}: map['${field.name}'] as ${field.type
-                    .getDisplayString()},");
+                "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type
+                    .getDisplayString()};");
           }
         }
       }
