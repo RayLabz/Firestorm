@@ -82,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^0.8.7
+  firestorm: ^1.0.0
 ```
 
 ## Getting started with Firestorm for Flutter
@@ -207,16 +207,9 @@ Firestorm is designed to be used with Dart and Flutter, and is built on top of t
 
 You do not need to add these packages manually, as Firestorm will automatically add them as dependencies when you install it.
 
-### Known issues
+### Known issues and feature requests
 
-No known issues.
-
-> [!CAUTION]
-> Firestorm is still an experimental tool and may contain bugs or issues. Please report any issues on our [GitHub repository](https://github.com/RayLabz/Firestorm/issues).
-
-### Bug reports and feature requests
-
-If you find a bug or have a feature request, [please report it on our GitHub repository](https://github.com/RayLabz/Firestorm/issues).
+No known issues. If you find a bug or have a feature request, [please report it on our GitHub repository](https://github.com/RayLabz/Firestorm/issues).
 
 View the [change log](CHANGELOG.md) for the latest updates and changes to Firestorm.
 

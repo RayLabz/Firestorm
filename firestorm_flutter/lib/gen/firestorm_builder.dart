@@ -23,7 +23,7 @@ class FirestormBuilder implements Builder {
   @override
   Future<void> build(BuildStep buildStep) async {
 
-    Firestorm.log.i("Starting FirestormBuilder for ${buildStep.inputId}...");
+    log.info("Starting Firestorm Builder for ${buildStep.inputId}...");
 
     //Buffers:
     final fileBuffer = StringBuffer();
@@ -77,12 +77,16 @@ class FirestormBuilder implements Builder {
     }
 
     if (validClassHolder.getAllValidClasses().isEmpty) {
-        Firestorm.log.i("""No valid classes found for Firestorm:
+        log.info("No valid classes found for Firestorm:");
+        print("""
+            INSTRUCTIONS
+            --------------------------------------------------------------------
             1. Use the @FirestormObject() annotation in your data classes.
             2. Ensure your data classes have a public constructor.
             3. Ensure your data classes have an 'id' field of type String.
             4. Ensure your data classes only use supported types for Firestore or Realtime Database.
             5. Ensure that any private fields have both a getter and setter method.
+            
             More information: https://github.com/RayLabz/Firestorm/blob/master/firestorm_flutter/defining-classes.md""");
         return;
     }
@@ -123,5 +127,8 @@ class FirestormBuilder implements Builder {
 
     final outputId = AssetId(buildStep.inputId.package, 'lib/generated/firestorm_models.dart');
     await buildStep.writeAsString(outputId, formattedOutput);
+
+    log.info("Firestorm Builder completed for ${buildStep.inputId}. Generated file: $outputId.");
+
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firestorm/annotations/exclude.dart';
 import 'package:firestorm/annotations/firestorm_object.dart';
 
 @FirestormObject()
@@ -9,7 +10,9 @@ class Person {
   int age;
   double height;
   bool isEmployed;
-  List<String> friends;
+
+  @Exclude()
+  List<String>? friends;
 
   Person(this.id, this.firstname, this.lastname, this.age, this.height,
       this.isEmployed, this.friends);

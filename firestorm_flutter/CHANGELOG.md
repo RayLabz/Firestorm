@@ -1,9 +1,10 @@
-## v0.8.7
+## v1.0.0
 Release date: 03/06/2026
-- Avoiding/ignoring private fields explicitly while still allowing for generation if class is valid.
-- Better logging
+- Support for private fields in custom data classes, allowing for better encapsulation and data hiding.
+- Better logging and messages.
+- Improvements in code generation.
 - Unit tests.
-
+- Removed `logger` dependency and replaced it with `builder` log functionality.
 
 ## v0.8.6
 Release date: 26/05/2026
