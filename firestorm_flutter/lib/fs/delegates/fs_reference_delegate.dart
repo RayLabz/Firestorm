@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference, CollectionReference;
 
 import '../../exceptions/null_id_exception.dart';
 import '../fs.dart';

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show GetOptions, Query;
 import 'package:firestorm/commons/delegate/list_delegate.dart';
 
 import '../fs.dart';

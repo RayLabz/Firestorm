@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference, DocumentSnapshot, GetOptions;
 
 import '../../commons/delegate/exist_delegate.dart';
 import '../fs.dart';

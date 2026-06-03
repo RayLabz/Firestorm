@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference, QuerySnapshot, WriteBatch, QueryDocumentSnapshot;
 import 'package:firestorm/commons/delegate/delete_delegate.dart';
+import 'dart:core';
 
 import '../../exceptions/null_id_exception.dart';
 import '../fs.dart';
@@ -70,30 +71,6 @@ class FSDeleteDelegate implements DeleteDelegate {
     return ref.delete();
   }
 
-  /// Deletes multiple documents from Firestore by their type and a list of document IDs.
-  @override
-  Future<void> manyWithIDs(Type type, List<String> documentIDs, { String? subcollection }) async {
-    if (documentIDs.isEmpty) return;
-    if (documentIDs.length > 500) {
-      throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
-    }
-
-    final String? className = FS.classNames[type];
-    if (className == null) {
-      throw UnsupportedError('No class name found for type: ${className}. Consider re-generating Firestorm data classes.');
-    }
-
-    WriteBatch batch = FS.instance.batch();
-    for (String id in documentIDs) {
-      DocumentReference ref = FS.instance.collection(className).doc(id);
-      if (subcollection != null) {
-        ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
-      }
-      batch.delete(ref);
-    }
-    return batch.commit();
-  }
-
   /// Deletes all documents of a specific type from Firestore.
   @override
   Future<void> all(Type type, { required bool iAmSure, String? subcollection }) async {
@@ -125,6 +102,30 @@ class FSDeleteDelegate implements DeleteDelegate {
       }
       return batch.commit();
     }
+  }
+
+  /// Deletes multiple documents from Firestore by their type and a list of document IDs.
+  @override
+  Future<void> manyWithIDs(type, List<String> documentIDs, { String? subcollection }) async {
+    if (documentIDs.isEmpty) return;
+    if (documentIDs.length > 500) {
+      throw ArgumentError('Batch limit exceeded. Maximum 500 document IDs allowed.');
+    }
+
+    final String? className = FS.classNames[type];
+    if (className == null) {
+      throw UnsupportedError('No class name found for type: ${className}. Consider re-generating Firestorm data classes.');
+    }
+
+    WriteBatch batch = FS.instance.batch();
+    for (String id in documentIDs) {
+      DocumentReference ref = FS.instance.collection(className).doc(id);
+      if (subcollection != null) {
+        ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
+      }
+      batch.delete(ref);
+    }
+    return batch.commit();
   }
 
 }

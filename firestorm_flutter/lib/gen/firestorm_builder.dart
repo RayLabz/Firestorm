@@ -112,7 +112,7 @@ class FirestormBuilder implements Builder {
     }
 
     //Generate import for firestore library:
-    ImportGenerator.generateImportFromString(importsBuffer, "package:cloud_firestore/cloud_firestore.dart");
+    // ImportGenerator.generateImportFromString(importsBuffer, "package:cloud_firestore/cloud_firestore.dart");
 
     //Generate the converter functions
     RegistryGenerator.generateConverterFunctions(converterBuffer, validClassHolder);

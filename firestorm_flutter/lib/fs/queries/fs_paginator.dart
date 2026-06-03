@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show QuerySnapshot, QueryDocumentSnapshot, Query;
 import 'package:firestorm/fs/queries/fs_query_result.dart';
 import '../../firestorm.dart';
 import '../fs.dart';

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore, Settings, PersistenceSettings;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/delegates/fs_get_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_listen_delegate.dart';
@@ -64,33 +64,26 @@ class FS {
   }
 
   /// Initializes the Firestore instance. This should be called before any other Firestore operations.
-  static init() async {
+  static Future<void> init() async {
     await Firebase.initializeApp();
     instance = FirebaseFirestore.instance;
     if (Firestorm.debug) Firestorm.log.i("Initialized Firestore");
   }
 
   /// Initializes the Firestore instance with custom options.
-  static initWithOptions(FirebaseOptions options) async {
+  static Future<void> initWithOptions(FirebaseOptions options) async {
     await Firebase.initializeApp(options: options);
     instance = FirebaseFirestore.instance;
     if (Firestorm.debug) Firestorm.log.i("Initialized Firestore with options");
   }
 
   /// Enables local caching for Firestore data.
-  static enableCaching() async {
-    //WEB:
-    if (kIsWeb) {
-      await instance.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
-    }
-    //MOBILE (iOS & Android)
-    else {
+  static Future<void> enableCaching() async {
       instance.settings = const Settings(persistenceEnabled: true);
-    }
   }
 
   /// Disables local caching for Firestore data.
-  static disableCaching() async {
+  static Future<void> disableCaching() async {
     //WEB:
     if (kIsWeb) {
       throw Exception("Disabling caching is not supported on web. Caching is always on once enabled. You must restart your app and avoid calling enableCaching().");
@@ -112,7 +105,7 @@ class FS {
   }
 
   /// Configures Firestore to use the emulator instead of the real database.
-  static useEmulator(final String host, final int port) {
+  static void useEmulator(final String host, final int port) {
     instance.useFirestoreEmulator(host, port);
   }
   //

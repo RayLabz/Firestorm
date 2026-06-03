@@ -47,7 +47,7 @@ class RDBTypes {
       final isSDKType = uri != null && (uri.scheme == 'dart' || uri.scheme == 'package' && uri.pathSegments.first == 'flutter');
       if (isSDKType) {
         return false;
-      };
+      }
 
       final element = type.element;
 

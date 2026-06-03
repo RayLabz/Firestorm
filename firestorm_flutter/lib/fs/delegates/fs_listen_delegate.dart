@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' show Query, DocumentReference, DocumentChangeType;
 import 'package:firestorm/commons/delegate/listen_delegate.dart';
 
 import '../../firestorm.dart';
