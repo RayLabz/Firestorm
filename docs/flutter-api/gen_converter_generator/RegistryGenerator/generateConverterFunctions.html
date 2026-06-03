@@ -106,22 +106,33 @@
   converterBuffer.writeln(&quot;}&quot;);
   converterBuffer.writeln();
 
+  &#47;&#47;Types to const names map (release support):
+  converterBuffer.writeln(&quot;final Map&lt;Type, String&gt; typeToNameMap = {&quot;);
+  for (final aClass in holder.getAllValidClasses()) {
+    converterBuffer.writeln(&quot;\t${aClass.name}: \&quot;${aClass.name}\&quot;,&quot;);
+  }
+  converterBuffer.writeln(&quot;};&quot;);
+  converterBuffer.writeln();
+
   &#47;&#47;Generate serializer registrations for each class:
   converterBuffer.writeln(&quot;registerClasses() {&quot;);
   &#47;&#47;Firestore:
   for (final aClass in holder.fsValidClasses) {
     converterBuffer.writeln(&quot;\tFS.registerSerializer&lt;${aClass.displayName}&gt;((object) =&gt; object.toMap());&quot;);
     converterBuffer.writeln(&quot;\tFS.registerDeserializer&lt;${aClass.displayName}&gt;((map) =&gt; ${aClass.displayName}Model.fromMap(map));&quot;);
+    converterBuffer.writeln(&quot;\tFS.registerClassName(${aClass.displayName}, \&quot;${aClass.name}\&quot;);&quot;);
   }
   &#47;&#47;Realtime Database:
   for (final aClass in holder.rdbValidClasses) {
     converterBuffer.writeln(&quot;\tRDB.registerSerializer&lt;${aClass.displayName}&gt;((object) =&gt; object.toMap());&quot;);
     converterBuffer.writeln(&quot;\tRDB.registerDeserializer&lt;${aClass.displayName}&gt;((map) =&gt; ${aClass.displayName}Model.fromMap(map));&quot;);
+    converterBuffer.writeln(&quot;\tRDB.registerClassName(${aClass.displayName}, \&quot;${aClass.name}\&quot;);&quot;);
   }
   &#47;&#47;Localstore:
   for (final aClass in holder.fsValidClasses) {
     converterBuffer.writeln(&quot;\tLS.registerSerializer&lt;${aClass.displayName}&gt;((object) =&gt; object.toMap());&quot;);
     converterBuffer.writeln(&quot;\tLS.registerDeserializer&lt;${aClass.displayName}&gt;((map) =&gt; ${aClass.displayName}Model.fromMap(map));&quot;);
+    converterBuffer.writeln(&quot;\tLS.registerClassName(${aClass.displayName}, \&quot;${aClass.name}\&quot;);&quot;);
   }
   converterBuffer.writeln(&quot;}&quot;);
   converterBuffer.writeln();
@@ -155,7 +166,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

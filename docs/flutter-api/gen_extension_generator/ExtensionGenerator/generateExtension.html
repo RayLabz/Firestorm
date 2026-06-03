@@ -56,7 +56,7 @@
       
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
 <span class="name ">generateExtension</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="generateExtension-param-classBuffer"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/StringBuffer-class.html">StringBuffer</a></span> <span class="parameter-name">classBuffer</span>, </span></li>
-<li><span class="parameter" id="generateExtension-param-aClass"><span class="type-annotation"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span> <span class="parameter-name">aClass</span>, </span></li>
+<li><span class="parameter" id="generateExtension-param-aClass"><span class="type-annotation"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_element/ClassElement-class.html">ClassElement</a></span> <span class="parameter-name">aClass</span>, </span></li>
 <li><span class="parameter" id="generateExtension-param-hasFSSupport"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hasFSSupport</span>, </span></li>
 <li><span class="parameter" id="generateExtension-param-hasRDBSupport"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hasRDBSupport</span>, </span></li>
 </ol>)
@@ -93,7 +93,7 @@
   final ConstructorElement constructorElement = aClass.unnamedConstructor!;
   final List&lt;ParameterElement&gt; constructorParams = constructorElement.parameters;
 
-  _generateStaticFields(classBuffer, hasFSSupport, hasRDBSupport);
+  _generateStaticFields(classBuffer, aClass, hasFSSupport, hasRDBSupport);
   _generateToMap(classBuffer, aClass);
   _generateFromMap(classBuffer, aClass, constructorParams);
   return classBuffer.toString();
@@ -125,7 +125,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

@@ -82,9 +82,10 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
   if (objects.length &gt; 500) {
     throw ArgumentError(&#39;Batch limit exceeded. Maximum 500 objects allowed.&#39;);
   }
-  final serializer = FS.serializers[objects[0].runtimeType];
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  final serializer = FS.serializers[T];
+  final String? className = FS.classNames[T];
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
   WriteBatch batch = FS.instance.batch();
   for (var object in objects) {
@@ -95,9 +96,9 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
     if (map[&quot;id&quot;].isEmpty) {
       throw NullIDException(map);
     }
-    DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map[&quot;id&quot;]);
+    DocumentReference ref = FS.instance.collection(className).doc(map[&quot;id&quot;]);
     if (subcollection != null) {
-      ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
+      ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
     }
     batch.update(ref, map);
   }
@@ -130,7 +131,7 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

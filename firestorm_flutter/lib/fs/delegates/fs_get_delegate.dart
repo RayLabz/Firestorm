@@ -6,7 +6,7 @@ import '../fs.dart';
 /// A delegate class to read documents from Firestore.
 class FSGetDelegate implements GetDelegate {
 
-  /// Reads a document from Firestore and converts it to the specified type.\
+  /// Reads a document from Firestore and converts it to the specified type.
   @override
   Future<T?> one<T>(String documentID, { String? subcollection, GetOptions? getOptions }) async {
     final deserializer = FS.deserializers[T];

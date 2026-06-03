@@ -71,8 +71,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;RDBQueryResult&lt;T&gt;&gt; fetch() async {
   Deserializer? deserializer = RDB.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = RDB.classNames[T];
+
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
   DataSnapshot snapshot = await query.get();
   List&lt;T&gt; results = [];
@@ -118,7 +120,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

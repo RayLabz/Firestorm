@@ -75,10 +75,14 @@
   if (object == null) {
     throw NullIDException(&quot;Cannot get document reference from null object&quot;);
   }
-  if (subcollection != null) {
-    return LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+  final String? className = LS.classNames[object.runtimeType];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
-  return LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+  if (subcollection != null) {
+    return LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
+  }
+  return LS.instance.collection(className).doc(object.id);
 }</code></pre>
 </section>
 
@@ -107,7 +111,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

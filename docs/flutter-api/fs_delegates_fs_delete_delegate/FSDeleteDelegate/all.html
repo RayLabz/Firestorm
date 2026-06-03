@@ -80,13 +80,19 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection }) async {
   if (iAmSure) {
+
+    final String? className = FS.classNames[type];
+    if (className == null) {
+      throw UnsupportedError(&#39;No class name found for type: ${className}. Consider re-generating Firestorm data classes.&#39;);
+    }
+
     QuerySnapshot snapshot;
     if (subcollection == null) {
-      snapshot = await FS.instance.collection(type.toString()).get();
+      snapshot = await FS.instance.collection(className).get();
     }
     else {
       snapshot =
-      await FS.instance.collection(type.toString()).doc(subcollection)
+      await FS.instance.collection(className).doc(subcollection)
           .collection(subcollection)
           .get();
     }
@@ -129,7 +135,7 @@ Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

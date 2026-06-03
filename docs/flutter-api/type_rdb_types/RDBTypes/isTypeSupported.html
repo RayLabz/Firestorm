@@ -55,7 +55,7 @@
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-<span class="name ">isTypeSupported</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span></li>
+<span class="name ">isTypeSupported</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span></li>
 </ol>)
 
       
@@ -106,8 +106,15 @@
   }
 
   &#47;&#47;check user-defined types:
-  else if (type.element != null &amp;&amp; !type.element!.library!.isDartCore &amp;&amp; type is InterfaceType) {
+  else if (type.element != null &amp;&amp; type is InterfaceType) {
+    final uri = type.element3.library2?.uri;
+    final isSDKType = uri != null &amp;&amp; (uri.scheme == &#39;dart&#39; || uri.scheme == &#39;package&#39; &amp;&amp; uri.pathSegments.first == &#39;flutter&#39;);
+    if (isSDKType) {
+      return false;
+    }
+
     final element = type.element;
+
     if (element is ClassElement) {
       List&lt;FieldElement&gt; allFields = [];
       allFields.addAll(element.fields);
@@ -120,7 +127,8 @@
       List&lt;bool&gt; fieldsSupported = [];
       for (var field in allFields) {
         if (!field.isStatic) {
-          bool b = isTypeSupported(field.type);
+          ClassElement fieldClassElement = field.type.element as ClassElement;
+          bool b = isTypeSupported(field.type) &amp;&amp; ClassChecker.isClassAnnotatedWithFirestormObject(fieldClassElement);
           fieldsSupported.add(b);
         }
       }
@@ -165,7 +173,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

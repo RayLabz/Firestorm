@@ -83,14 +83,19 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
     throw ArgumentError(&#39;Batch delete limit exceeded. Maximum 500 objects allowed.&#39;);
   }
 
+  final String? className = LS.classNames[objects[0].runtimeType];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  }
+
   List&lt;Future&lt;void&gt;&gt; futures = [];
   for (dynamic object in objects) {
     if (object.id == null) {
       continue; &#47;&#47;skip
     }
-    DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+    DocumentRef ref = LS.instance.collection(className).doc(object.id);
     if (subcollection != null) {
-      ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
     }
     futures.add(ref.delete());
   }
@@ -123,7 +128,7 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

@@ -72,10 +72,14 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">CollectionRef collection(Type type, { String? subcollection }) {
-  if (subcollection != null) {
-    return LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection);
+  final String? className = LS.classNames[type];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
   }
-  return LS.instance.collection(type.toString());
+  if (subcollection != null) {
+    return LS.instance.collection(className).doc(subcollection).collection(subcollection);
+  }
+  return LS.instance.collection(className);
 }</code></pre>
 </section>
 
@@ -104,7 +108,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

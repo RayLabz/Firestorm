@@ -75,6 +75,7 @@ You should not call this function directly in your code.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static void registerDeserializer&lt;T&gt;(T Function(Map&lt;String, dynamic&gt;) fromMap) {
   deserializers[T] = fromMap;
+  if (Firestorm.debug) Firestorm.log.i(&quot;Registered deserializer for type: $T&quot;);
 }</code></pre>
 </section>
 
@@ -103,7 +104,7 @@ You should not call this function directly in your code.</p>
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

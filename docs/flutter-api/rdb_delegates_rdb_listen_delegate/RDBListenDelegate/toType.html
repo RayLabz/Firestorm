@@ -77,7 +77,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Listens to changes in a class/collection <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a>.</p>
+  <p>Listens to changes in a class/collection.</p>
 </section>
 
 
@@ -94,9 +94,11 @@ List&lt;StreamSubscription&lt;T&gt;&gt; toType&lt;T&gt;(
       String? subcollection,
     }) {
   Deserializer? deserializer = RDB.deserializers[T];
-  if (deserializer == null) {
+  final String? className = RDB.classNames[type];
+
+  if (deserializer == null || className == null) {
     throw UnsupportedError(
-        &#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+        &#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
 
   &#47;&#47; Determine the collection reference path
@@ -104,7 +106,7 @@ List&lt;StreamSubscription&lt;T&gt;&gt; toType&lt;T&gt;(
   &#47;&#47; or using the type string directly as a folder.
   DatabaseReference collectionRef = RDB.instance.ref(type.toString());
   if (subcollection != null) {
-    collectionRef = RDB.instance.ref(&quot;${type.toString()}:$subcollection&quot;);
+    collectionRef = RDB.instance.ref(&quot;$className:$subcollection&quot;);
   }
 
   return [
@@ -145,7 +147,7 @@ List&lt;StreamSubscription&lt;T&gt;&gt; toType&lt;T&gt;(
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

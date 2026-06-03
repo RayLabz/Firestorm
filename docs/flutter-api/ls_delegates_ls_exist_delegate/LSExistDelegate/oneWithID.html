@@ -79,9 +79,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;bool&gt; oneWithID&lt;T&gt;(Type type, String documentID, { String? subcollection }) async {
-  DocumentRef ref = LS.instance.collection(type.toString()).doc(documentID);
+  final String? className = LS.classNames[type];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+  }
+
+  DocumentRef ref = LS.instance.collection(className).doc(documentID);
   if (subcollection != null) {
-    ref = LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
   }
   Map&lt;String, dynamic&gt;? data = await ref.get();
   return data != null;
@@ -113,7 +118,7 @@ Future&lt;bool&gt; oneWithID&lt;T&gt;(Type type, String documentID, { String? su
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

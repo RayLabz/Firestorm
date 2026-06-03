@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore, Settings, PersistenceSettings;
+import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore, Settings;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firestorm/fs/delegates/fs_get_delegate.dart';
 import 'package:firestorm/fs/delegates/fs_listen_delegate.dart';
@@ -121,7 +121,7 @@ class FS {
   //   multithreadingEnabled = false;
   // }
 
-  /// Shuts down the Firestore instance. If used again, a new instance has to be created by calling [FS.init()]
+  /// Shuts down the Firestore instance. If used again, a new instance has to be created by calling FS.init().
   static Future<void> shutdown() {
     return instance.terminate();
   }

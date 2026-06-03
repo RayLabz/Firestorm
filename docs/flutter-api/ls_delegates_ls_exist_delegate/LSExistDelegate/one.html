@@ -81,9 +81,14 @@ Future&lt;bool&gt; one&lt;T&gt;(dynamic object, { String? subcollection }) async
   if (object.id == null) {
     return false;
   }
-  DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(object.id);
+  final String? className = LS.classNames[object.runtimeType];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
+  }
+
+  DocumentRef ref = LS.instance.collection(className).doc(object.id);
   if (subcollection != null) {
-    ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+    ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
   }
   Map&lt;String, dynamic&gt;? data = await ref.get();
   return data != null;
@@ -115,7 +120,7 @@ Future&lt;bool&gt; one&lt;T&gt;(dynamic object, { String? subcollection }) async
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

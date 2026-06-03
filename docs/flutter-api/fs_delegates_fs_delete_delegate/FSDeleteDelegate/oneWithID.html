@@ -79,9 +79,15 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; oneWithID(Type type, String documentID, { String? subcollection }) {
-  DocumentReference ref = FS.instance.collection(type.toString()).doc(documentID);
+  final String? className = FS.classNames[type];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
+  }
+
+  DocumentReference ref = FS.instance.collection(className).doc(documentID);
+
   if (subcollection != null) {
-    ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
   }
   return ref.delete();
 }</code></pre>
@@ -112,7 +118,7 @@ Future&lt;void&gt; oneWithID(Type type, String documentID, { String? subcollecti
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

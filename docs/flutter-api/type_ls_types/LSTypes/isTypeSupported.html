@@ -55,7 +55,7 @@
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-<span class="name ">isTypeSupported</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span></li>
+<span class="name ">isTypeSupported</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span></li>
 </ol>)
 
       
@@ -72,17 +72,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static bool isTypeSupported(DartType type) {
 
-  &#47;&#47;primitives
-  if (type.isDartCoreString ||
-      type.isDartCoreInt ||
-      type.isDartCoreDouble ||
-      type.isDartCoreBool ||
-      type.getDisplayString() == &#39;DateTime&#39; ||
-      type.isDartCoreNull ||
-      type.getDisplayString() == &#39;DocumentReference&#39; ||
-      type.getDisplayString() == &#39;GeoPoint&#39; ||
-      type.getDisplayString() == &#39;Uint8List&#39;
-  ) {
+  if (isSupportedPrimitive(type)) {
     return true;
   }
 
@@ -170,7 +160,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

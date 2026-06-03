@@ -73,14 +73,15 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;T&gt;&gt; many&lt;T&gt;(List&lt;String&gt; documentIDs, { String? subcollection }) async {
   final deserializer = RDB.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = RDB.classNames[T];
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
   List&lt;T&gt; objects = [];
   List&lt;String&gt; paths = [];
 
   for (String documentID in documentIDs) {
-    String path = RDB.constructPathForClassAndID(T, documentID, subcollection: subcollection);
+    String path = RDB.constructPathForClassAndID(className, documentID, subcollection: subcollection);
     paths.add(path);
   }
 
@@ -94,7 +95,7 @@
         objects.add(object);
       } else {
         throw UnsupportedError(
-            &#39;Expected type $T but got ${object.runtimeType}&#39;);
+            &#39;Expected type $className but got ${object.runtimeType}&#39;);
       }
     }
   }
@@ -127,7 +128,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

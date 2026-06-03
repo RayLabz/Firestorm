@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype">dynamic</span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">init</span>(<wbr>)
 
       
@@ -69,9 +69,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static init() async {
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; init() async {
   await Firebase.initializeApp();
   instance = FirebaseFirestore.instance;
+  if (Firestorm.debug) Firestorm.log.i(&quot;Initialized Firestore&quot;);
 }</code></pre>
 </section>
 
@@ -100,7 +101,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

@@ -78,10 +78,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;bool&gt; one&lt;T&gt;(dynamic object, { String? subcollection }) async {
+  final String? className = RDB.classNames[object.runtimeType];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
+  }
   if (object.id == null) {
     return false;
   }
-  String path = RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection);
+  String path = RDB.constructPathForClassAndID(className, object.id, subcollection: subcollection);
   final snapshot = await RDB.instance.ref(path).get();
   return snapshot.exists;
 }</code></pre>
@@ -112,7 +116,7 @@ Future&lt;bool&gt; one&lt;T&gt;(dynamic object, { String? subcollection }) async
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/DocumentReference-class.html">DocumentReference</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span>&gt;</span></span>
+<span class="returntype"><a href="https://pub.dev/documentation/cloud_firestore/6.5.0/cloud_firestore/DocumentReference-class.html">DocumentReference</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span>&gt;</span></span>
 <span class="name ">documentFromObject</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="documentFromObject-param-object"><span class="type-annotation">dynamic</span> <span class="parameter-name">object</span>, {</span></li>
 <li><span class="parameter" id="documentFromObject-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span></li>
 </ol>})
@@ -75,10 +75,15 @@
   if (object == null) {
     throw NullIDException(&quot;Cannot get document reference from null object&quot;);
   }
-  if (subcollection != null) {
-    return FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(object.id);
+  final String? className = FS.classNames[object.runtimeType];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.&#39;);
   }
-  return FS.instance.collection(object.runtimeType.toString()).doc(object.id);
+
+  if (subcollection != null) {
+    return FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(object.id);
+  }
+  return FS.instance.collection(className).doc(object.id);
 }</code></pre>
 </section>
 
@@ -107,7 +112,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

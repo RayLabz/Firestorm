@@ -93,13 +93,15 @@ StreamSubscription&lt;T?&gt; toID&lt;T&gt;(
       String? subcollection,
     }) {
   Deserializer? deserializer = FS.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = FS.classNames[T];
+
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
 
-  var docRef = FS.instance.collection(type.toString()).doc(id);
+  var docRef = FS.instance.collection(className).doc(id);
   if (subcollection != null) {
-    docRef = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+    docRef = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
   }
   return _handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange);
 }</code></pre>
@@ -130,7 +132,7 @@ StreamSubscription&lt;T?&gt; toID&lt;T&gt;(
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

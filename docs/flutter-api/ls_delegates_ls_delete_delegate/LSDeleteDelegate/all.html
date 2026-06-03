@@ -80,13 +80,18 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection }) async {
   if (iAmSure) {
+    final String? className = LS.classNames[type];
+    if (className == null) {
+      throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+    }
+
     Map&lt;String, dynamic&gt;? snapshot;
     if (subcollection == null) {
-      snapshot = await LS.instance.collection(type.toString()).get();
+      snapshot = await LS.instance.collection(className).get();
     }
     else {
       snapshot =
-      await LS.instance.collection(type.toString()).doc(subcollection)
+      await LS.instance.collection(className).doc(subcollection)
           .collection(subcollection)
           .get();
     }
@@ -95,7 +100,7 @@ Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection
 
     List&lt;Future&gt; futures = [];
     for (var entry in snapshot.entries) {
-      futures.add(LS.instance.collection(type.toString()).doc(entry.key.split(&quot;&#47;&quot;)[2]).delete());
+      futures.add(LS.instance.collection(className).doc(entry.key.split(&quot;&#47;&quot;)[2]).delete());
     }
 
     await Future.wait(futures);
@@ -128,7 +133,7 @@ Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

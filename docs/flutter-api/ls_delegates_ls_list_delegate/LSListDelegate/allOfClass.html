@@ -83,11 +83,12 @@ Future&lt;List&lt;T&gt;&gt; allOfClass&lt;T&gt;(Type type, { String? subcollecti
   }
 
   final deserializer = LS.deserializers[type];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = LS.classNames[type];
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
 
-  var collectionReference = LS.instance.collection(type.toString());
+  var collectionReference = LS.instance.collection(className);
   if (subcollection != null) {
     collectionReference = collectionReference.doc(subcollection).collection(subcollection);
   }
@@ -134,7 +135,7 @@ Future&lt;List&lt;T&gt;&gt; allOfClass&lt;T&gt;(Type type, { String? subcollecti
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

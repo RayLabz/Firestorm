@@ -71,8 +71,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;FSQueryResult&lt;T&gt;&gt; fetch() async {
   Deserializer? deserializer = FS.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = FS.classNames[T];
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
   QuerySnapshot snapshot = await query.get(getOptions);
   List&lt;T&gt; results = [];
@@ -117,7 +118,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

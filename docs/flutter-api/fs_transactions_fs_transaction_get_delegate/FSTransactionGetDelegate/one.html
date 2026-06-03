@@ -73,16 +73,17 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;T?&gt; one&lt;T&gt;(String documentID, { String? subcollection }) async {
   final deserializer = FS.deserializers[T];
-  if (deserializer == null) {
+  final String? className = FS.classNames[T];
+  if (deserializer == null || className == null) {
     throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
-  DocumentReference ref = FS.instance.collection(T.toString()).doc(documentID);
+  DocumentReference ref = FS.instance.collection(className).doc(documentID);
   if (subcollection != null) {
-    ref = FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
   }
   DocumentSnapshot snapshot =  await _tx.get(ref);
   if (!snapshot.exists) {
-    return Future.error(&#39;Document with ID $documentID does not exist in collection ${T.toString()}&#39;);
+    return Future.error(&#39;Document with ID $documentID does not exist in collection $className&#39;);
   }
   T object = deserializer(snapshot.data() as Map&lt;String, dynamic&gt;) as T;
   return object;
@@ -114,7 +115,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

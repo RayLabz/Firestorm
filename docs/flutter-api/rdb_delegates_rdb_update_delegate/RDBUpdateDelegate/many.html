@@ -83,8 +83,10 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
     throw ArgumentError(&#39;Batch limit exceeded. Maximum 500 objects allowed.&#39;);
   }
   final serializer = RDB.serializers[objects[0].runtimeType];
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = RDB.classNames[objects[0].runtimeType];
+
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.&#39;);
   }
 
   RDBWriteBatch batch = RDBWriteBatch();
@@ -117,7 +119,7 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

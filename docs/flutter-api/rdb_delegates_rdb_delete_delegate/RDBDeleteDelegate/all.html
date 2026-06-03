@@ -80,8 +80,12 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection }) async {
   if (iAmSure) {
+    final String? className = RDB.classNames[type];
+    if (className == null) {
+      throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+    }
     &#47;&#47;Get the objects of this type:
-    final reference = RDB.instance.ref(type.toString());
+    final reference = RDB.instance.ref(className);
     final snapshot = await reference.once();
     if (snapshot.snapshot.value == null) {
       return;
@@ -126,7 +130,7 @@ Future&lt;void&gt; all(Type type, { required bool iAmSure, String? subcollection
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

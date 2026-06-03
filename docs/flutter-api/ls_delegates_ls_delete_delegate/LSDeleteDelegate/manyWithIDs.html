@@ -84,12 +84,17 @@ Future&lt;void&gt; manyWithIDs(Type type, List&lt;String&gt; documentIDs, { Stri
     throw ArgumentError(&#39;Batch limit exceeded. Maximum 500 document IDs allowed.&#39;);
   }
 
+  final String? className = LS.classNames[type];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+  }
+
   List&lt;Future&gt; futures = [];
 
   for (String id in documentIDs) {
-    DocumentRef ref = LS.instance.collection(type.toString()).doc(id);
+    DocumentRef ref = LS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      ref = LS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     futures.add(ref.delete());
   }
@@ -122,7 +127,7 @@ Future&lt;void&gt; manyWithIDs(Type type, List&lt;String&gt; documentIDs, { Stri
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

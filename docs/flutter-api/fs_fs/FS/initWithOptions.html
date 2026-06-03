@@ -54,8 +54,8 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype">dynamic</span>
-<span class="name ">initWithOptions</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="initWithOptions-param-options"><span class="type-annotation"><a href="https://pub.dev/documentation/firebase_core_platform_interface/6.0.0/firebase_core_platform_interface/FirebaseOptions-class.html">FirebaseOptions</a></span> <span class="parameter-name">options</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">initWithOptions</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="initWithOptions-param-options"><span class="type-annotation"><a href="https://pub.dev/documentation/firebase_core_platform_interface/7.0.1/firebase_core_platform_interface/FirebaseOptions-class.html">FirebaseOptions</a></span> <span class="parameter-name">options</span></span></li>
 </ol>)
 
       
@@ -70,9 +70,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static initWithOptions(FirebaseOptions options) async {
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; initWithOptions(FirebaseOptions options) async {
   await Firebase.initializeApp(options: options);
   instance = FirebaseFirestore.instance;
+  if (Firestorm.debug) Firestorm.log.i(&quot;Initialized Firestore with options&quot;);
 }</code></pre>
 </section>
 
@@ -101,7 +102,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

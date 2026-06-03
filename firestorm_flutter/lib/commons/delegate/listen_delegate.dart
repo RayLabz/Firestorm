@@ -43,7 +43,7 @@ abstract class ListenDelegate {
         String? subcollection,
       });
 
-  /// Listens to changes in a collection based on a [Type].
+  /// Listens to changes in a collection based on a Type.
   List<StreamSubscription<T>> toType<T>(
       Type type, {
         void Function(T object)? onCreate,

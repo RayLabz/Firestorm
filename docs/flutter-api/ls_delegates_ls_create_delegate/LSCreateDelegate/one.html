@@ -79,17 +79,18 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; one(dynamic object, { String? subcollection }) {
   final serializer = LS.serializers[object.runtimeType];
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = LS.classNames[object.runtimeType];
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
   final map = serializer(object);
   String id = map[&quot;id&quot;];
   if (id.isEmpty) {
     throw NullIDException(map);
   }
-  DocumentRef ref = LS.instance.collection(object.runtimeType.toString()).doc(id);
+  DocumentRef ref = LS.instance.collection(className).doc(id);
   if (subcollection != null) {
-    ref = LS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(id);
+    ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
   }
   return ref.set(map);
 }</code></pre>
@@ -120,7 +121,7 @@ Future&lt;void&gt; one(dynamic object, { String? subcollection }) {
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

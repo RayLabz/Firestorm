@@ -74,10 +74,15 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; deleteWithIDs(Type type, List&lt;String&gt; ids, { String? subcollection }) async {
   Map&lt;String, dynamic&gt; objectsToDelete = {};
+  final String? className = RDB.classNames[type];
+
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: $type. Consider re-generating Firestorm data classes.&#39;);
+  }
 
   &#47;&#47;For each object, serialize it, and then add it to the list of updates:
   for (final String id in ids) {
-    objectsToDelete[RDB.constructPathForClassAndID(type, id, subcollection: subcollection)] = null;
+    objectsToDelete[RDB.constructPathForClassAndID(className, id, subcollection: subcollection)] = null;
   }
 
   await RDB.instance.ref().update(objectsToDelete);
@@ -109,7 +114,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

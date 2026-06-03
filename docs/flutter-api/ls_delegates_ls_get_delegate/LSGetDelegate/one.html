@@ -79,13 +79,15 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;T?&gt; one&lt;T&gt;(String documentID, { String? subcollection }) async {
   final deserializer = LS.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = LS.classNames[T];
+
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
 
-  DocumentRef ref = LS.instance.collection(T.toString()).doc(documentID);
+  DocumentRef ref = LS.instance.collection(className).doc(documentID);
   if (subcollection != null) {
-    ref = LS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(documentID);
+    ref = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(documentID);
   }
 
   Map&lt;String, dynamic&gt;? snapshot = await ref.get();
@@ -122,7 +124,7 @@ Future&lt;T?&gt; one&lt;T&gt;(String documentID, { String? subcollection }) asyn
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

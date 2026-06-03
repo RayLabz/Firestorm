@@ -73,8 +73,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; update&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection }) async {
   Serializer? serializer = RDB.serializers[T];
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = RDB.classNames[T];
+
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
 
   final Map&lt;String, dynamic&gt; updates = {};
@@ -85,7 +87,7 @@
     if (map[&quot;id&quot;] == null || map[&quot;id&quot;].isEmpty) {
       throw NullIDException(map);
     }
-    String path = RDB.constructPathForClassAndID(object.runtimeType, map[&quot;id&quot;], subcollection: subcollection);
+    String path = RDB.constructPathForClassAndID(className, map[&quot;id&quot;], subcollection: subcollection);
     updates[path] = map;
   }
 
@@ -118,7 +120,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

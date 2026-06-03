@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/cloud_firestore/5.6.11/cloud_firestore/Transaction-class.html">Transaction</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://pub.dev/documentation/cloud_firestore/6.5.0/cloud_firestore/Transaction-class.html">Transaction</a></span>&gt;</span></span>
 <span class="name ">one</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="one-param-object"><span class="type-annotation">T</span> <span class="parameter-name">object</span>, {</span></li>
 <li><span class="parameter" id="one-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span></li>
 </ol>})
@@ -73,16 +73,17 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;Transaction&gt; one&lt;T&gt;(T object, { String? subcollection }) async {
   final serializer = FS.serializers[object.runtimeType];
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: ${object.runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = FS.classNames[object.runtimeType];
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: ${className}. Consider re-generating Firestorm data classes.&#39;);
   }
   final map = serializer(object);
   if (map[&quot;id&quot;].isEmpty) {
     throw NullIDException(map);
   }
-  DocumentReference ref = FS.instance.collection(object.runtimeType.toString()).doc(map[&quot;id&quot;]);
+  DocumentReference ref = FS.instance.collection(className).doc(map[&quot;id&quot;]);
   if (subcollection != null) {
-    ref = FS.instance.collection(object.runtimeType.toString()).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
+    ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
   }
   return _tx.update(ref, map);
 }</code></pre>
@@ -113,7 +114,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

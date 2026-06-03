@@ -62,7 +62,7 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/flutter_test/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span>
 <span class="name ">many</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="many-param-documentIDs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">documentIDs</span>, {</span></li>
 <li><span class="parameter" id="many-param-subcollection"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">subcollection</span>, </span></li>
-<li><span class="parameter" id="many-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/6.6.11/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span>, </span></li>
+<li><span class="parameter" id="many-param-getOptions"><span class="type-annotation"><a href="https://pub.dev/documentation/cloud_firestore_platform_interface/8.0.2/cloud_firestore_platform_interface/GetOptions-class.html">GetOptions</a>?</span> <span class="parameter-name">getOptions</span>, </span></li>
 </ol>})
 
       <div class="features"><span class="feature">override</span></div>
@@ -81,16 +81,18 @@ Sends multiple requests at the same time and returns when all are completed.</p>
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;List&lt;T&gt;&gt; many&lt;T&gt;(List&lt;String&gt; documentIDs, { String? subcollection, GetOptions? getOptions }) async {
   final deserializer = FS.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = FS.classNames[T];
+
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
   List&lt;T&gt; objects = [];
   List&lt;DocumentReference&gt; refs;
   if (subcollection != null) {
-    refs = documentIDs.map((id) =&gt; FS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(id)).toList();
+    refs = documentIDs.map((id) =&gt; FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id)).toList();
   }
   else {
-    refs = documentIDs.map((id) =&gt; FS.instance.collection(T.toString()).doc(id)).toList();
+    refs = documentIDs.map((id) =&gt; FS.instance.collection(className).doc(id)).toList();
   }
   List&lt;DocumentSnapshot&gt; snapshots = await Future.wait(refs.map((ref) =&gt; ref.get(getOptions)));
   for (DocumentSnapshot snapshot in snapshots) {
@@ -128,7 +130,7 @@ Future&lt;List&lt;T&gt;&gt; many&lt;T&gt;(List&lt;String&gt; documentIDs, { Stri
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

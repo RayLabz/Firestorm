@@ -115,7 +115,7 @@ class FSListenDelegate implements ListenDelegate {
     return subscriptions;
   }
 
-  /// Listens to changes in a collection based on a [Type].
+  /// Listens to changes in a collection based on a Type.
   /// Returns a list containing the subscription to the collection snapshot.
   @override
   List<StreamSubscription<T>> toType<T>(

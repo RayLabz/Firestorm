@@ -55,7 +55,7 @@
     
       <section class="multi-line-signature">
         
-        <a href="https://pub.dev/documentation/logger/2.6.0/logger/Logger-class.html">Logger</a>
+        <a href="https://pub.dev/documentation/logger/2.7.0/logger/Logger-class.html">Logger</a>
         <span class="name ">log</span>
         <div class="features"><span class="feature">getter/setter pair</span></div>
 
@@ -68,7 +68,19 @@
       
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static Logger log = Logger();</code></pre>
+  <pre class="language-dart"><code class="language-dart">static Logger log = Logger(
+  printer: PrettyPrinter(
+    methodCount: 0,
+    errorMethodCount: 5,
+    lineLength: 80,
+    colors: true,
+    printEmojis: true,
+    printTime: false,
+  ),
+  output: ConsoleOutput(),
+  level: Level.trace,
+  filter: ProductionFilter(),
+);</code></pre>
 </section>
 
 
@@ -97,7 +109,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

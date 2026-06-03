@@ -87,9 +87,10 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
   }
 
   final serializer = LS.serializers[objects[0].runtimeType];
+  final String? className = LS.classNames[objects[0].runtimeType];
 
-  if (serializer == null) {
-    throw UnsupportedError(&#39;No serializer found for type: ${objects[0].runtimeType}. Consider re-generating Firestorm data classes.&#39;);
+  if (serializer == null || className == null) {
+    throw UnsupportedError(&#39;No serializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
 
   List&lt;Future&gt; futures = [];
@@ -101,9 +102,9 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
       throw NullIDException(map);
     }
 
-    DocumentRef documentReference = LS.instance.collection(T.toString()).doc(map[&quot;id&quot;]);
+    DocumentRef documentReference = LS.instance.collection(className).doc(map[&quot;id&quot;]);
     if (subcollection != null) {
-      documentReference = LS.instance.collection(T.toString()).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
+      documentReference = LS.instance.collection(className).doc(subcollection).collection(subcollection).doc(map[&quot;id&quot;]);
     }
 
     futures.add(documentReference.set(serializer(object)));
@@ -138,7 +139,7 @@ Future&lt;void&gt; many&lt;T&gt;(List&lt;T&gt; objects, { String? subcollection 
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

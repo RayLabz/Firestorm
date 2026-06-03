@@ -78,6 +78,8 @@
   <pre class="language-dart"><code class="language-dart">@override
 Future&lt;void&gt; build(BuildStep buildStep) async {
 
+  log.info(&quot;Starting Firestorm Builder for ${buildStep.inputId}...&quot;);
+
   &#47;&#47;Buffers:
   final fileBuffer = StringBuffer();
   final headerBuffer = StringBuffer();
@@ -122,15 +124,30 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
   &#47;&#47;3. ID field
   &#47;&#47;4. Firestore or Realtime Database support (type checks)
 
-  ValidClassHolder allFilesClassHolder = ValidClassHolder.empty();
+  ValidClassHolder validClassHolder = ValidClassHolder.empty();
   for (final pair in allClasses.entries) {
     final Iterable&lt;ClassElement&gt; allClasses = pair.value;
     var fileClassHolder = ClassChecker.filter(allClasses);
-    allFilesClassHolder.join(fileClassHolder);
+    validClassHolder.join(fileClassHolder);
+  }
+
+  if (validClassHolder.getAllValidClasses().isEmpty) {
+      log.info(&quot;No valid classes found for Firestorm:&quot;);
+      print(&quot;&quot;&quot;
+          INSTRUCTIONS
+          --------------------------------------------------------------------
+          1. Use the @FirestormObject() annotation in your data classes.
+          2. Ensure your data classes have a public constructor.
+          3. Ensure your data classes have an &#39;id&#39; field of type String.
+          4. Ensure your data classes only use supported types for Firestore or Realtime Database.
+          5. Ensure that any private fields have both a getter and setter method.
+
+          More information: https:&#47;&#47;github.com&#47;RayLabz&#47;Firestorm&#47;blob&#47;master&#47;firestorm_flutter&#47;defining-classes.md&quot;&quot;&quot;);
+      return;
   }
 
   &#47;&#47;For every valid class, generate necessary imports and its extension:
-  for (final validClass in allFilesClassHolder.getAllValidClasses()) {
+  for (final validClass in validClassHolder.getAllValidClasses()) {
 
     &#47;&#47;Add into the import buffer, if there are any classes in this file
     ImportGenerator.generateImports(importsBuffer, assetIDs[validClass]!);
@@ -139,8 +156,8 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
     ExtensionGenerator.generateExtension(
         classBuffer,
         validClass,
-        allFilesClassHolder.hasFSSupport(validClass),
-        allFilesClassHolder.hasRDBSupport(validClass)
+        validClassHolder.hasFSSupport(validClass),
+        validClassHolder.hasRDBSupport(validClass)
     );
   }
 
@@ -149,8 +166,11 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
     ImportGenerator.generateImports(importsBuffer, assetID);
   }
 
+  &#47;&#47;Generate import for firestore library:
+  &#47;&#47; ImportGenerator.generateImportFromString(importsBuffer, &quot;package:cloud_firestore&#47;cloud_firestore.dart&quot;);
+
   &#47;&#47;Generate the converter functions
-  RegistryGenerator.generateConverterFunctions(converterBuffer, allFilesClassHolder);
+  RegistryGenerator.generateConverterFunctions(converterBuffer, validClassHolder);
 
   &#47;&#47;Add everything into the file buffer
   fileBuffer.writeln(headerBuffer.toString());
@@ -162,6 +182,9 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
 
   final outputId = AssetId(buildStep.inputId.package, &#39;lib&#47;generated&#47;firestorm_models.dart&#39;);
   await buildStep.writeAsString(outputId, formattedOutput);
+
+  log.info(&quot;Firestorm Builder completed for ${buildStep.inputId}. Generated file: $outputId.&quot;);
+
 }</code></pre>
 </section>
 
@@ -190,7 +213,7 @@ Future&lt;void&gt; build(BuildStep buildStep) async {
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

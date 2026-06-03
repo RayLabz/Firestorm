@@ -104,7 +104,7 @@ class RDBListenDelegate implements ListenDelegate{
   }
 
 
-  /// Listens to changes in a class/collection [Type].
+  /// Listens to changes in a class/collection.
   @override
   List<StreamSubscription<T>> toType<T>(
       Type type, {

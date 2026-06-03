@@ -92,12 +92,14 @@ List&lt;StreamSubscription&lt;T?&gt;&gt; toObjects&lt;T&gt;(
       String? subcollection,
     }) {
   Deserializer? deserializer = RDB.deserializers[T];
-  if (deserializer == null) {
-    throw UnsupportedError(&#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+  final String? className = RDB.classNames[T];
+
+  if (deserializer == null || className == null) {
+    throw UnsupportedError(&#39;No deserializer&#47;class name found for type: $T. Consider re-generating Firestorm data classes.&#39;);
   }
   List&lt;StreamSubscription&lt;T?&gt;&gt; subscriptions = [];
   for (final object in objects) {
-    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(object.runtimeType, object.id, subcollection: subcollection));
+    DatabaseReference docRef = RDB.instance.ref(RDB.constructPathForClassAndID(className, object.id, subcollection: subcollection));
     subscriptions.add(_handleDocumentListener(docRef, deserializer, onDelete, onNull, onCreate, onChange));
   }
   return subscriptions;
@@ -129,7 +131,7 @@ List&lt;StreamSubscription&lt;T?&gt;&gt; toObjects&lt;T&gt;(
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

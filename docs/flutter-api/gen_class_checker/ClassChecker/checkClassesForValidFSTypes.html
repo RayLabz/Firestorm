@@ -54,8 +54,8 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
-<span class="name ">checkClassesForValidFSTypes</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="checkClassesForValidFSTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span>
+<span class="name ">checkClassesForValidFSTypes</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="checkClassesForValidFSTypes-param-classes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a class="deprecated" href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_element/ClassElement-class.html">ClassElement</a></span>&gt;</span></span> <span class="parameter-name">classes</span></span></li>
 </ol>)
 
       
@@ -77,7 +77,7 @@
     for (final field in aClass.fields) {
       if (!FSTypes.isTypeSupported(field.type)) {
         &#47;&#47; ignore: avoid_print
-        Firestorm.log.e(&quot;Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field &#39;${field.name}&#39; for Firestore.&quot;);
+        Firestorm.log.w(&quot;Annotated class ${aClass.name} ignored for Firestore &amp; Localstore. It has an unsupported type in field &#39;${field.name}&#39; for Firestore.&quot;);
         isValid = false;
         break;
       }
@@ -115,7 +115,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

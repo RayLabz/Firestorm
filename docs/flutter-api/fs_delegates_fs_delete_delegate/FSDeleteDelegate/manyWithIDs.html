@@ -78,16 +78,22 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-Future&lt;void&gt; manyWithIDs(Type type, List&lt;String&gt; documentIDs, { String? subcollection }) async {
+Future&lt;void&gt; manyWithIDs(type, List&lt;String&gt; documentIDs, { String? subcollection }) async {
   if (documentIDs.isEmpty) return;
   if (documentIDs.length &gt; 500) {
     throw ArgumentError(&#39;Batch limit exceeded. Maximum 500 document IDs allowed.&#39;);
   }
+
+  final String? className = FS.classNames[type];
+  if (className == null) {
+    throw UnsupportedError(&#39;No class name found for type: ${className}. Consider re-generating Firestorm data classes.&#39;);
+  }
+
   WriteBatch batch = FS.instance.batch();
   for (String id in documentIDs) {
-    DocumentReference ref = FS.instance.collection(type.toString()).doc(id);
+    DocumentReference ref = FS.instance.collection(className).doc(id);
     if (subcollection != null) {
-      ref = FS.instance.collection(type.toString()).doc(subcollection).collection(subcollection).doc(id);
+      ref = FS.instance.collection(className).doc(subcollection).collection(subcollection).doc(id);
     }
     batch.delete(ref);
   }
@@ -120,7 +126,7 @@ Future&lt;void&gt; manyWithIDs(Type type, List&lt;String&gt; documentIDs, { Stri
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

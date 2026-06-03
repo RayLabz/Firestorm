@@ -161,8 +161,34 @@
   <section class="summary offset-anchor" id="static-methods">
     <h2>Static Methods</h2>
     <dl class="callables">
+        <dt id="isFirestoreNativeType" class="callable">
+  <span class="name"><a href="../type_fs_types/FSTypes/isFirestoreNativeType.html">isFirestoreNativeType</a></span><span class="signature">(<wbr><span class="parameter" id="isFirestoreNativeType-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Checks if the given Dart type is a native Firestore type (e.g., Timestamp, DocumentReference, ...).
+  
+
+</dd>
+
+        <dt id="isSupportedPrimitive" class="callable">
+  <span class="name"><a href="../type_fs_types/FSTypes/isSupportedPrimitive.html">isSupportedPrimitive</a></span><span class="signature">(<wbr><span class="parameter" id="isSupportedPrimitive-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Checks if the given Dart type is a supported primitive type for Firestore.
+  
+
+</dd>
+
         <dt id="isTypeSupported" class="callable">
-  <span class="name"><a href="../type_fs_types/FSTypes/isTypeSupported.html">isTypeSupported</a></span><span class="signature">(<wbr><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.5.9/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
+  <span class="name"><a href="../type_fs_types/FSTypes/isTypeSupported.html">isTypeSupported</a></span><span class="signature">(<wbr><span class="parameter" id="isTypeSupported-param-type"><span class="type-annotation"><a href="https://pub.dev/documentation/analyzer/7.7.1/dart_element_type/DartType-class.html">DartType</a></span> <span class="parameter-name">type</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
   </span>
   
@@ -178,6 +204,23 @@
   </section>
     
 
+  <section class="summary offset-anchor" id="constants">
+    <h2>Constants</h2>
+    <dl class="properties">
+        <dt id="fsNativeTypes" class="constant">
+    <span class="name "><a href="../type_fs_types/FSTypes/fsNativeTypes-constant.html">fsNativeTypes</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  List of native Firestore types that are directly supported without conversion.
+  
+
+</dd>
+
+    </dl>
+  </section>
   </div> <!-- /.main-content -->
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
@@ -201,7 +244,7 @@
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>

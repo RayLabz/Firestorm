@@ -52,14 +52,14 @@ class RDB {
   }
 
   /// Initializes the RDB instance. This should be called before any other Firestore operations.
-  static init() async {
+  static Future<void> init() async {
     await Firebase.initializeApp();
     instance = FirebaseDatabase.instance;
     if (Firestorm.debug) Firestorm.log.i("Initialized Firestore");
   }
 
   /// Initializes the RDB instance with custom options.
-  static initWithOptions(FirebaseOptions options) async {
+  static Future<void> initWithOptions(FirebaseOptions options) async {
     await Firebase.initializeApp(options: options);
     instance = FirebaseDatabase.instance;
     if (Firestorm.debug) Firestorm.log.i("Initialized Firestore with options");
@@ -82,21 +82,21 @@ class RDB {
   }
 
   /// Enables local caching for Firestore data.
-  static enableCaching() async {
+  static Future<void> enableCaching() async {
       instance.setPersistenceEnabled(true);
   }
 
   /// Disables local caching for Firestore data.
-  static disableCaching() async {
+  static Future<void> disableCaching() async {
     instance.setPersistenceEnabled(false);
   }
 
   /// Configures RDB to use the emulator instead of the real database.
-  static useEmulator(final String host, final int port) {
+  static void useEmulator(final String host, final int port) {
     instance.useDatabaseEmulator(host, port);
   }
 
-  /// Shuts down the RDB instance. If used again, a new instance has to be created by calling [RDB.init()]
+  /// Shuts down the RDB instance. If used again, a new instance has to be created by calling RDB.init().
   static Future<void> shutdown() {
     return instance.goOffline();
   }

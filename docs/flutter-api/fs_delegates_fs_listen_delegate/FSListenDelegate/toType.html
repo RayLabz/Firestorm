@@ -77,7 +77,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Listens to changes in a collection based on a <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a>.
+  <p>Listens to changes in a collection based on a Type.
 Returns a list containing the subscription to the collection snapshot.</p>
 </section>
 
@@ -95,18 +95,20 @@ List&lt;StreamSubscription&lt;T&gt;&gt; toType&lt;T&gt;(
       String? subcollection,
     }) {
   Deserializer? deserializer = FS.deserializers[T];
-  if (deserializer == null) {
+  final String? className = FS.classNames[type];
+
+  if (deserializer == null || className == null) {
     throw UnsupportedError(
-        &#39;No deserializer found for type: $T. Consider re-generating Firestorm data classes.&#39;);
+        &#39;No deserializer&#47;class name found for type: $className. Consider re-generating Firestorm data classes.&#39;);
   }
 
   &#47;&#47; Determine the collection reference
-  Query query = FS.instance.collection(type.toString());
+  Query query = FS.instance.collection(className);
 
   &#47;&#47; Subcollection logic: .collection(type).doc(sub).collection(sub)
   if (subcollection != null) {
     query = FS.instance
-        .collection(type.toString())
+        .collection(className)
         .doc(subcollection)
         .collection(subcollection);
   }
@@ -150,7 +152,7 @@ List&lt;StreamSubscription&lt;T&gt;&gt; toType&lt;T&gt;(
 <footer>
   <span class="no-break">
     firestorm
-      0.6.0
+      1.0.0
   </span>
   
 </footer>
