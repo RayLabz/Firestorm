@@ -60,6 +60,11 @@ class ExtensionGenerator {
     //Fields:
     for (final field in allFields) {
 
+      // skip private parameters
+      if (field.name.startsWith("_")) {
+        continue;
+      }
+
       if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
           //Do nothing, this is kept for reference.
@@ -112,8 +117,14 @@ class ExtensionGenerator {
 
     List<String> constructorParamNames = [];
 
-    // Positional parameters first:
+    // ##### Positional parameters first #####
     for (ParameterElement param in constructorParams.where((p) => p.isPositional)) {
+
+      // skip private parameters
+      if (param.name.startsWith("_")) {
+        continue;
+      }
+
       FieldElement? matchingField = aClass.getField(param.displayName); // match to field
       constructorParamNames.add(param.name);
 
@@ -178,15 +189,15 @@ class ExtensionGenerator {
           //Fix for doubles being converted into int in web.
           if (param.type.getDisplayString() == 'double?') {
             classBuffer.writeln(
-                "\t\t\t${param.name}: (map['${param.name}'] as num?)?.toDouble(),");
+                "\t\t\t(map['${param.name}'] as num?)?.toDouble(),");
           }
           else if (param.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+                "\t\t\t(map['${param.name}'] as num).toDouble(),");
           }
           else {
             classBuffer.writeln(
-                "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type
+                "\t\t\tmap['${param.name}'] as ${matchingField.type
                     .getDisplayString()},");
           }
         }
@@ -197,6 +208,12 @@ class ExtensionGenerator {
     if (constructorParams.any((p) => p.isNamed)) {
       // classBuffer.writeln("\t\t\t{");
       for (ParameterElement param in constructorParams.where((p) => p.isNamed)) {
+
+        // skip private parameters
+        if (param.name.startsWith("_")) {
+          continue;
+        }
+
         FieldElement? matchingField = aClass.getField(param.displayName); // match to field
         constructorParamNames.add(param.name);
 
@@ -284,6 +301,11 @@ class ExtensionGenerator {
     final List<FieldElement> allFields = _findAllFieldsForClass(aClass);
 
     for (final field in allFields) {
+
+      // skip private parameters
+      if (field.name.startsWith("_")) {
+        continue;
+      }
 
       if (constructorParamNames.contains(field.name)) {
         continue; // skip fields that are already in the constructor
