@@ -77,7 +77,12 @@ class FirestormBuilder implements Builder {
     }
 
     if (validClassHolder.getAllValidClasses().isEmpty) {
-        Firestorm.log.i("No annotated classes found for Firestorm. Use the @FirestormObject() annotation in your data classes.");
+        Firestorm.log.i("""No valid classes found for Firestorm:
+            1. Use the @FirestormObject() annotation in your data classes.
+            2. Ensure your data classes have a public no-argument constructor.
+            3. Ensure your data classes have an 'id' field of type String.
+            4. Ensure your data classes only use supported types for Firestore or Realtime Database
+            More information: https://github.com/RayLabz/Firestorm/blob/master/firestorm_flutter/defining-classes.md""");
         return;
     }
 
