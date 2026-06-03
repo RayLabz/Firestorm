@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:firestorm/firestorm.dart';
 import 'package:firestorm/gen/header_generator.dart';
 import 'package:firestorm/gen/import_generator.dart';
 import 'package:firestorm/gen/valid_class_holder.dart';

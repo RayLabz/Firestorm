@@ -17,7 +17,6 @@ class Firestorm {
       lineLength: 80,
       colors: true,
       printEmojis: true,
-      printTime: false,
     ),
     output: ConsoleOutput(),
     level: Level.trace,
