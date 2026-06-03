@@ -37,7 +37,7 @@ class ClassChecker {
       //Check the class for a public no-argument constructor:
       if (aClass.constructors.isEmpty || !aClass.constructors.any((c) => c.isPublic && c.parameters.isEmpty)) {
         // ignore: avoid_print
-        Firestorm.log.e("Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.");
+        Firestorm.log.w("Annotated class ${aClass.name} ignored. It does not have a public no-argument constructor.");
       }
       else {
         resultClasses.add(aClass);
@@ -71,7 +71,7 @@ class ClassChecker {
 
       if (!hasIDField) {
         // ignore: avoid_print
-        Firestorm.log.e("Annotated class ${aClass.name} ignored. It (or its superclasses) does not have an ID field of type String.");
+        Firestorm.log.w("Annotated class ${aClass.name} ignored. It (or its superclasses) does not have an ID field of type String.");
       }
       else {
         resultClasses.add(aClass);
@@ -88,7 +88,7 @@ class ClassChecker {
       for (final field in aClass.fields) {
         if (!FSTypes.isTypeSupported(field.type)) {
           // ignore: avoid_print
-          Firestorm.log.e("Annotated class ${aClass.name} ignored for Firestore. It has an unsupported type in field '${field.name}' for Firestore.");
+          Firestorm.log.w("Annotated class ${aClass.name} ignored for Firestore & Localstore. It has an unsupported type in field '${field.name}' for Firestore.");
           isValid = false;
           break;
         }
@@ -107,7 +107,7 @@ class ClassChecker {
       bool isValid = true;
       for (final field in aClass.fields) {
         if (!RDBTypes.isTypeSupported(field.type)) {
-          Firestorm.log.e("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.");
+          Firestorm.log.w("Annotated class ${aClass.name} ignored for RDB. It has an unsupported type in field '${field.name}' for RDB.");
           isValid = false;
           break;
         }

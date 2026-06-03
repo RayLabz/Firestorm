@@ -1,3 +1,10 @@
+## v0.8.7
+Release date: 03/06/2026
+- Avoiding/ignoring private fields explicitly while still allowing for generation if class is valid.
+- Better logging
+- Unit tests.
+
+
 ## v0.8.6
 Release date: 26/05/2026
 - Bug fixes.

@@ -10,7 +10,19 @@ class Firestorm {
   static bool debug = false;
 
   /// Logs warnings and errors on the console.
-  static Logger log = Logger();
+  static Logger log = Logger(
+    printer: PrettyPrinter(
+      methodCount: 0,
+      errorMethodCount: 5,
+      lineLength: 80,
+      colors: true,
+      printEmojis: true,
+      printTime: false,
+    ),
+    output: ConsoleOutput(),
+    level: Level.trace,
+    filter: ProductionFilter(),
+  );
 
   /// Returns a random ID using UUID v8.
   static String randomID() {

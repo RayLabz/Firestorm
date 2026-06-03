@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:firestorm/firestorm.dart';
 import 'package:firestorm/gen/header_generator.dart';
 import 'package:firestorm/gen/import_generator.dart';
 import 'package:firestorm/gen/valid_class_holder.dart';
@@ -21,6 +22,8 @@ class FirestormBuilder implements Builder {
 
   @override
   Future<void> build(BuildStep buildStep) async {
+
+    Firestorm.log.i("Starting FirestormBuilder for ${buildStep.inputId}...");
 
     //Buffers:
     final fileBuffer = StringBuffer();
@@ -66,15 +69,20 @@ class FirestormBuilder implements Builder {
     //3. ID field
     //4. Firestore or Realtime Database support (type checks)
 
-    ValidClassHolder allFilesClassHolder = ValidClassHolder.empty();
+    ValidClassHolder validClassHolder = ValidClassHolder.empty();
     for (final pair in allClasses.entries) {
       final Iterable<ClassElement> allClasses = pair.value;
       var fileClassHolder = ClassChecker.filter(allClasses);
-      allFilesClassHolder.join(fileClassHolder);
+      validClassHolder.join(fileClassHolder);
+    }
+
+    if (validClassHolder.getAllValidClasses().isEmpty) {
+        Firestorm.log.i("No annotated classes found for Firestorm. Use the @FirestormObject() annotation in your data classes.");
+        return;
     }
 
     //For every valid class, generate necessary imports and its extension:
-    for (final validClass in allFilesClassHolder.getAllValidClasses()) {
+    for (final validClass in validClassHolder.getAllValidClasses()) {
 
       //Add into the import buffer, if there are any classes in this file
       ImportGenerator.generateImports(importsBuffer, assetIDs[validClass]!);
@@ -83,8 +91,8 @@ class FirestormBuilder implements Builder {
       ExtensionGenerator.generateExtension(
           classBuffer,
           validClass,
-          allFilesClassHolder.hasFSSupport(validClass),
-          allFilesClassHolder.hasRDBSupport(validClass)
+          validClassHolder.hasFSSupport(validClass),
+          validClassHolder.hasRDBSupport(validClass)
       );
     }
 
@@ -97,7 +105,7 @@ class FirestormBuilder implements Builder {
     ImportGenerator.generateImportFromString(importsBuffer, "package:cloud_firestore/cloud_firestore.dart");
 
     //Generate the converter functions
-    RegistryGenerator.generateConverterFunctions(converterBuffer, allFilesClassHolder);
+    RegistryGenerator.generateConverterFunctions(converterBuffer, validClassHolder);
 
     //Add everything into the file buffer
     fileBuffer.writeln(headerBuffer.toString());
