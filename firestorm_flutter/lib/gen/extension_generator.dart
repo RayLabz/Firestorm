@@ -61,6 +61,8 @@ class ExtensionGenerator {
     //Fields:
     for (final field in allFields) {
 
+      final String fieldName = field.name.replaceAll("_", ""); // remove underscore for private fields
+
       if (field.isSynthetic) {
         continue;
       }
@@ -93,25 +95,25 @@ class ExtensionGenerator {
 
             //Fix for doubles being converted into int in web.
             if (field.type.getDisplayString() == 'double?' || field.type.getDisplayString() == 'double') {
-              classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toDouble(),"); //force double
+              classBuffer.writeln("\t\t\t '$fieldName': $fieldName.toDouble(),"); //force double
             }
             else {
-              classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal, supported primitive)
+              classBuffer.writeln("\t\t\t '$fieldName': $fieldName,"); //not excluded (normal, supported primitive)
             }
 
           }
           else {
-            classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toMap(),"); //call toMap() on user-defined type
+            classBuffer.writeln("\t\t\t '$fieldName': $fieldName.toMap(),"); //call toMap() on user-defined type
           }
         }
         //enum:
         else if (ClassChecker.isEnumType(field.type)) {
-          classBuffer.writeln("\t\t\t '${field.name}': ${field.name}.toString(),"); //not excluded (normal, enum)
+          classBuffer.writeln("\t\t\t '$fieldName': $fieldName.toString(),"); //not excluded (normal, enum)
         }
         //other:
         else {
           //Otherwise, just use the attribute:
-          classBuffer.writeln("\t\t\t '${field.name}': ${field.name},"); //not excluded (normal)
+          classBuffer.writeln("\t\t\t '$fieldName': $fieldName,"); //not excluded (normal)
         }
       }
     }
@@ -120,6 +122,10 @@ class ExtensionGenerator {
     classBuffer.writeln("\t }");
     classBuffer.writeln();
   }
+
+  //###########################################################################
+  //###########################################################################
+  //###########################################################################
 
   /// Generates the fromMap() method.
   static void _generateFromMap(final StringBuffer classBuffer, final ClassElement aClass, final List<ParameterElement> constructorParams) {
@@ -131,6 +137,8 @@ class ExtensionGenerator {
 
     // ##### Positional parameters first #####
     for (ParameterElement param in constructorParams.where((p) => p.isPositional)) {
+
+      final String fieldName = param.name.replaceAll("_", ""); // remove underscore for private fields
 
       if (param.isSynthetic) {
         continue;
@@ -179,13 +187,12 @@ class ExtensionGenerator {
             !ClassChecker.isEnumType(matchingField.type)) {
           if (FSTypes.isSupportedPrimitive(matchingField.type)) {
             classBuffer.writeln(
-                "\t\t\tmap['${param.name}'] as ${matchingField.type.getDisplayString()},");
+                "\t\t\tmap['$fieldName'] as ${matchingField.type.getDisplayString()},");
           }
           else {
             classBuffer.writeln(
                 "\t\t\t${matchingField.type
-                    .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param
-                    .name}'] as Map)),");
+                    .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['$fieldName'] as Map)),");
           }
         }
         // List
@@ -193,34 +200,34 @@ class ExtensionGenerator {
           final listType = param.type as InterfaceType;
           DartType elementType = listType.typeArguments[0];
           classBuffer.writeln(
-              "\t\t\tmap['${param.name}'] != null ? map['${param.name}'].cast<${elementType.getDisplayString()}>() : [],");
+              "\t\t\tmap['$fieldName'] != null ? map['$fieldName'].cast<${elementType.getDisplayString()}>() : [],");
         }
         // Map
         else if (param.type.isDartCoreMap) {
           final listType = param.type as InterfaceType;
           DartType valueType = listType.typeArguments[1];
           classBuffer.writeln(
-              "\t\t\tmap['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},");
+              "\t\t\tmap['$fieldName'] != null ? map['$fieldName'].cast<String, ${valueType.getDisplayString()}>() : {},");
         }
         // Enum
         else if (ClassChecker.isEnumType(param.type)) {
           classBuffer.writeln(
-              "\t\t\t${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),");
+              "\t\t\t${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['$fieldName'] as String),");
         }
         // Other types
         else {
           //Fix for doubles being converted into int in web.
           if (param.type.getDisplayString() == 'double?') {
             classBuffer.writeln(
-                "\t\t\t(map['${param.name}'] as num?)?.toDouble(),");
+                "\t\t\t(map['$fieldName'] as num?)?.toDouble(),");
           }
           else if (param.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\t(map['${param.name}'] as num).toDouble(),");
+                "\t\t\t(map['$fieldName'] as num).toDouble(),");
           }
           else {
             classBuffer.writeln(
-                "\t\t\tmap['${param.name}'] as ${matchingField.type
+                "\t\t\tmap['$fieldName'] as ${matchingField.type
                     .getDisplayString()},");
           }
         }
@@ -231,6 +238,8 @@ class ExtensionGenerator {
     if (constructorParams.any((p) => p.isNamed)) {
       // classBuffer.writeln("\t\t\t{");
       for (ParameterElement param in constructorParams.where((p) => p.isNamed)) {
+
+        final String fieldName = param.name.replaceAll("_", ""); // remove underscore for private fields
 
         if (param.isSynthetic) {
           continue;
@@ -267,7 +276,7 @@ class ExtensionGenerator {
 
         if (matchingField.metadata.any((m) => m.element?.displayName == 'Exclude')) {
           if (matchingField.type.nullabilitySuffix == NullabilitySuffix.question) {
-            classBuffer.writeln("\t\t\t${param.name}: null,"); // set excluded to null
+            classBuffer.writeln("\t\t\t$fieldName: null,"); // set excluded to null
           } else {
             throw InvalidClassException(aClass.name); // cannot have excluded without nullable
           }
@@ -278,13 +287,12 @@ class ExtensionGenerator {
               !ClassChecker.isEnumType(matchingField.type)) {
             if (FSTypes.isSupportedPrimitive(matchingField.type)) {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type.getDisplayString()},");
+                  "\t\t\t$fieldName: map['$fieldName'] as ${matchingField.type.getDisplayString()},");
             }
             else {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: ${matchingField.type
-                      .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${param
-                      .name}'] as Map)),");
+                  "\t\t\t$fieldName: ${matchingField.type
+                      .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['$fieldName'] as Map)),");
             }
           }
           // List
@@ -292,34 +300,34 @@ class ExtensionGenerator {
             final listType = param.type as InterfaceType;
             DartType elementType = listType.typeArguments[0];
             classBuffer.writeln(
-                "\t\t\t${param.name}: map['${param.name}'] != null ? map['${param.name}'].cast<${elementType.getDisplayString()}>() : [],");
+                "\t\t\t$fieldName: map['$fieldName'] != null ? map['$fieldName'].cast<${elementType.getDisplayString()}>() : [],");
           }
           // Map
           else if (param.type.isDartCoreMap) {
             final listType = param.type as InterfaceType;
             DartType valueType = listType.typeArguments[1];
             classBuffer.writeln(
-                "\t\t\t${param.name}: map['${param.name}'] != null ? map['${param.name}'].cast<String, ${valueType.getDisplayString()}>() : {},");
+                "\t\t\t$fieldName: map['${param.name}'] != null ? map['$fieldName'].cast<String, ${valueType.getDisplayString()}>() : {},");
           }
           // Enum
           else if (ClassChecker.isEnumType(param.type)) {
             classBuffer.writeln(
-                "\t\t\t${param.name}: ${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${param.name}'] as String),");
+                "\t\t\t$fieldName: ${param.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['$fieldName'] as String),");
           }
           // Other types
           else {
             //Fix for doubles being converted into int in web.
             if (param.type.getDisplayString() == 'double?') {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: (map['${param.name}'] as num?)?.toDouble(),");
+                  "\t\t\t$fieldName: (map['$fieldName'] as num?)?.toDouble(),");
             }
             else if (param.type.getDisplayString() == 'double') {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: (map['${param.name}'] as num).toDouble(),");
+                  "\t\t\t$fieldName: (map['$fieldName'] as num).toDouble(),");
             }
             else {
               classBuffer.writeln(
-                  "\t\t\t${param.name}: map['${param.name}'] as ${matchingField.type
+                  "\t\t\t$fieldName: map['$fieldName'] as ${matchingField.type
                       .getDisplayString()},");
             }
           }
@@ -351,6 +359,8 @@ class ExtensionGenerator {
         }
       }
 
+      final String fieldName = field.name.replaceAll("_", ""); // remove underscore for private fields
+
       if (constructorParamNames.contains(field.name)) {
         continue; // skip fields that are already in the constructor
       }
@@ -358,7 +368,7 @@ class ExtensionGenerator {
       //Fields NOT in the constructor:
       if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
         if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
-          classBuffer.writeln("\t\t\tobject.${field.name} = null;"); // set excluded to null
+          classBuffer.writeln("\t\t\tobject.$fieldName = null;"); // set excluded to null
         } else {
           throw InvalidClassException(aClass.name); // cannot have excluded without nullable
         }
@@ -369,11 +379,11 @@ class ExtensionGenerator {
             !ClassChecker.isEnumType(field.type)) {
           if (FSTypes.isSupportedPrimitive(field.type)) {
             classBuffer.writeln(
-                "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type.getDisplayString()};");
+                "\t\t\tobject.$fieldName = map['$fieldName'] as ${field.type.getDisplayString()};");
           }
           else {
             classBuffer.writeln(
-                "\t\t\tobject.${field.name} = ${field.type
+                "\t\t\tobject.$fieldName = ${field.type
                     .getDisplayString()}Model.fromMap(Map<String, dynamic>.from(map['${field
                     .name}'] as Map));");
           }
@@ -383,34 +393,34 @@ class ExtensionGenerator {
           final listType = field.type as InterfaceType;
           DartType elementType = listType.typeArguments[0];
           classBuffer.writeln(
-              "\t\t\tobject.${field.name} =  map['${field.name}'] != null ? map['${field.name}'].cast<${elementType.getDisplayString()}>() : [];");
+              "\t\t\tobject.$fieldName =  map['$fieldName'] != null ? map['$fieldName'].cast<${elementType.getDisplayString()}>() : [];");
         }
         // Map
         else if (field.type.isDartCoreMap) {
           final listType = field.type as InterfaceType;
           DartType valueType = listType.typeArguments[1];
           classBuffer.writeln(
-              "\t\t\tobject.${field.name} = map['${field.name}'] != null ? map['${field.name}'].cast<String, ${valueType.getDisplayString()}>() : {};");
+              "\t\t\tobject.$fieldName = map['$fieldName'] != null ? map['$fieldName'].cast<String, ${valueType.getDisplayString()}>() : {};");
         }
         // Enum
         else if (ClassChecker.isEnumType(field.type)) {
           classBuffer.writeln(
-              "\t\t\tobject.${field.name} = ${field.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['${field.name}'] as String);");
+              "\t\t\tobject.$fieldName = ${field.type.getDisplayString()}.values.firstWhere((e) => e.toString() == map['$fieldName'] as String);");
         }
         // Other types
         else {
           //Fix for doubles being converted into int in web.
           if (field.type.getDisplayString() == 'double?') {
             classBuffer.writeln(
-                "\t\t\tobject.${field.name} = (map['${field.name}'] as num?)?.toDouble();");
+                "\t\t\tobject.$fieldName = (map['$fieldName'] as num?)?.toDouble();");
           }
           else if (field.type.getDisplayString() == 'double') {
             classBuffer.writeln(
-                "\t\t\tobject.${field.name} = (map['${field.name}'] as num).toDouble();");
+                "\t\t\tobject.$fieldName = (map['$fieldName'] as num).toDouble();");
           }
           else {
             classBuffer.writeln(
-                "\t\t\tobject.${field.name} = map['${field.name}'] as ${field.type
+                "\t\t\tobject.$fieldName = map['$fieldName'] as ${field.type
                     .getDisplayString()};");
           }
         }
