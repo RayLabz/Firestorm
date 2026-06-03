@@ -4,7 +4,7 @@ Release date: 03/06/2026
 - Better logging and messages.
 - Improvements in code generation.
 - Unit tests.
-- Removed `logger` dependency and replaced it with `builder` log functionality.
+- Updated `firebase_core` (4.10.0), `cloud_firestore` (6.5.0), and `firebase_database` (12.4.2)
 
 ## v0.8.6
 Release date: 26/05/2026
