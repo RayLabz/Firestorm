@@ -11,8 +11,6 @@ class Person {
   bool isEmployed;
   List<String> friends;
 
-  String _private = "a";
-
   Person(this.id, this.firstname, this.lastname, this.age, this.height,
       this.isEmployed, this.friends);
 

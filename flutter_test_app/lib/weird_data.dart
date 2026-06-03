@@ -13,11 +13,7 @@ class WeirdData extends Person {
   CustomColor color;
 
   int get privateData => _privateData;
-
-
-  set privateData(int value) {
-    _privateData = value;
-  }
+  set privateData(int value) => _privateData = value;
 
   WeirdData(this.data, this.color, {this.otherData = 'default'}) : super('id', 'first', 'last', 0, 0.0, false, []);
 }

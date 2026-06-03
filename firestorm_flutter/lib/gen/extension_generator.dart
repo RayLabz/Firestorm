@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:firestorm/exceptions/invalid_class_exception.dart';
+import 'package:firestorm/firestorm.dart';
 import 'package:firestorm/type/fs_types.dart';
 
 import 'class_checker.dart';
@@ -60,9 +61,20 @@ class ExtensionGenerator {
     //Fields:
     for (final field in allFields) {
 
-      // skip private parameters
-      if (field.name.startsWith("_")) {
+      if (field.isSynthetic) {
         continue;
+      }
+
+      //Skip private fields that do not have both a getter and setter:
+      if (field.name.startsWith("_")) {
+        bool getterSetterCheck = checkPrivateFieldHasBothGetterAndSetter(
+            field, aClass);
+        if (!getterSetterCheck) {
+          Firestorm.log.i(
+              "No setter and getter found for '${field.name}' in class '${aClass
+                  .name}'. Skipping this private field in toMap().");
+          continue;
+        }
       }
 
       if (field.metadata.any((m) => m.element?.displayName == 'Exclude')) {
@@ -120,9 +132,20 @@ class ExtensionGenerator {
     // ##### Positional parameters first #####
     for (ParameterElement param in constructorParams.where((p) => p.isPositional)) {
 
-      // skip private parameters
-      if (param.name.startsWith("_")) {
+      if (param.isSynthetic) {
         continue;
+      }
+
+      //Skip private fields that do not have both a getter and setter:
+      if (param.name.startsWith("_")) {
+        bool getterSetterCheck = checkParamHasBothGetterAndSetter(
+            param, aClass);
+        if (!getterSetterCheck) {
+          Firestorm.log.i(
+              "No setter and getter found for '${param.name}' in class '${aClass
+                  .name}'. Skipping this private field in fromMap().");
+          continue;
+        }
       }
 
       FieldElement? matchingField = aClass.getField(param.displayName); // match to field
@@ -209,9 +232,19 @@ class ExtensionGenerator {
       // classBuffer.writeln("\t\t\t{");
       for (ParameterElement param in constructorParams.where((p) => p.isNamed)) {
 
-        // skip private parameters
-        if (param.name.startsWith("_")) {
+        if (param.isSynthetic) {
           continue;
+        }
+
+        if (param.name.startsWith("_")) {
+          //Skip private fields that do not have both a getter and setter:
+          bool getterSetterCheck = checkParamHasBothGetterAndSetter(param, aClass);
+          if (!getterSetterCheck) {
+            Firestorm.log.i(
+                "No setter and getter found for '${param.name}' in class '${aClass
+                    .name}'. Skipping this private field in fromMap().");
+            continue;
+          }
         }
 
         FieldElement? matchingField = aClass.getField(param.displayName); // match to field
@@ -302,9 +335,20 @@ class ExtensionGenerator {
 
     for (final field in allFields) {
 
-      // skip private parameters
-      if (field.name.startsWith("_")) {
+      if (field.isSynthetic) {
         continue;
+      }
+
+      //Skip private fields that do not have both a getter and setter:
+      if (field.name.startsWith("_")) {
+        bool getterSetterCheck = checkPrivateFieldHasBothGetterAndSetter(
+            field, aClass);
+        if (!getterSetterCheck) {
+          Firestorm.log.i(
+              "No setter and getter found for '${field.name}' in class '${aClass
+                  .name}'. Skipping this private field in fromMap().");
+          continue;
+        }
       }
 
       if (constructorParamNames.contains(field.name)) {
@@ -403,6 +447,68 @@ class ExtensionGenerator {
     }
 
     return byName.values.toList();
+  }
+
+  /// Checks if a private field has both a getter and setter in the class.
+  static bool checkPrivateFieldHasBothGetterAndSetter(FieldElement field, ClassElement aClass,) {
+    if (!field.name.startsWith('_')) {
+      return true;
+    }
+
+    final publicName = field.name.substring(1);
+
+    bool hasGetter = false;
+    bool hasSetter = false;
+
+    for (final accessor in aClass.accessors) {
+      if (accessor.isSynthetic) continue;
+
+      final accessorName =
+      accessor.displayName.replaceAll('=', '');
+
+      if (accessorName != publicName) continue;
+
+      if (accessor.isGetter) {
+        hasGetter = true;
+      }
+
+      if (accessor.isSetter) {
+        hasSetter = true;
+      }
+    }
+
+    return hasGetter && hasSetter;
+  }
+
+  /// Checks if a param has both a getter and setter in the class.
+  static bool checkParamHasBothGetterAndSetter(ParameterElement element, ClassElement aClass) {
+    if (!element.name.startsWith('_')) {
+      return true;
+    }
+
+    final publicName = element.name.substring(1);
+
+    bool hasGetter = false;
+    bool hasSetter = false;
+
+    for (final accessor in aClass.accessors) {
+      if (accessor.isSynthetic) continue;
+
+      final accessorName =
+      accessor.displayName.replaceAll('=', '');
+
+      if (accessorName != publicName) continue;
+
+      if (accessor.isGetter) {
+        hasGetter = true;
+      }
+
+      if (accessor.isSetter) {
+        hasSetter = true;
+      }
+    }
+
+    return hasGetter && hasSetter;
   }
 
 }

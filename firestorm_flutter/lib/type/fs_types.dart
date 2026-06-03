@@ -36,7 +36,13 @@ class FSTypes {
     }
 
     //check user-defined types:
-    else if (type.element != null && !type.element!.library!.isDartCore && type is InterfaceType) {
+    else if (type.element != null && type is InterfaceType) {
+      final uri = type.element3.library2?.uri;
+      final isSDKType = uri != null && (uri.scheme == 'dart' || uri.scheme == 'package' && uri.pathSegments.first == 'flutter');
+      if (isSDKType) {
+        return false;
+      };
+
       final element = type.element;
       if (element is ClassElement) {
         List<FieldElement> allFields = [];
