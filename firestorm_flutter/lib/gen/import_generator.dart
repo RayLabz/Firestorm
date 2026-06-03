@@ -12,4 +12,9 @@ class ImportGenerator {
     return importsBuffer.toString();
   }
 
+  static String generateManualImport(StringBuffer importsBuffer, String importPath) {
+    importsBuffer.writeln(importPath);
+    return importsBuffer.toString();
+  }
+
 }
