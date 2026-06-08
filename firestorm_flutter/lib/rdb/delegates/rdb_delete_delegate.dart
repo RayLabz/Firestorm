@@ -1,5 +1,4 @@
 import 'package:firestorm/commons/delegate/delete_delegate.dart';
-import 'package:firestorm/rdb/helpers/rdb_deserialization_helper.dart';
 import 'package:firestorm/rdb/helpers/rdb_write_batch.dart';
 
 import '../../exceptions/null_id_exception.dart';
