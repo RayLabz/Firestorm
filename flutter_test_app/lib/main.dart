@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firestorm/firestorm.dart';
 import 'package:firestorm/fs/fs.dart';
@@ -26,6 +28,23 @@ main() async {
   await RDB.init();
   registerClasses();
 
+  List<Person> p = [];
+
+  for (int i = 0; i < 100; i++) {
+    final person = Person('id_$i', 'First$i', 'Last$i', 20 + i, 1.5 * i, i % 2 == 0, ['friend${i+1}', 'friend${i+2}']);
+    p.add(person);
+  }
+
+  await RDB.create.many(p, subcollection: "aha");
+  print("Write complete");
+
+  var list = await RDB.list.allOfClass<Person>(Person, subcollection: "aha");
+  print("Got list of ${list.length} people");
+
+  print("PRess enter to delete");
+
+  print("Deleting...");
+  await RDB.delete.all(Person, iAmSure: true, subcollection: "aha");
 
 
   print("FINISHED");

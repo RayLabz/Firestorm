@@ -82,7 +82,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^1.0.0
+  firestorm: ^1.0.1
 ```
 
 ## Getting started with Firestorm for Flutter
@@ -140,7 +140,7 @@ This file contains the generated code for your custom classes and is required fo
     - For more information on how to use Firestorm, refer to the [API Guide](api-guide.md).
 
 ### Summary
-<img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/overview-flow.png" alt="Firestorm overview" style="max-width: 100%;"/>
+<img src="https://raw.githubusercontent.com/RayLabz/Firestorm/refs/heads/master/firestorm_flutter/media/firestorm_overview_2.png" alt="Firestorm overview" style="max-width: 100%;"/>
 
 ---
 

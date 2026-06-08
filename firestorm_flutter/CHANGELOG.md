@@ -1,4 +1,9 @@
-## v1.0.0
+## v1.0.1
+Release date: 08/06/2026
+- Bug fixes related to `LS.delete.all()` method in Localstore.
+- `RDB.delete.all()` optimization in RDB.
+
+# v1.0.0
 Release date: 03/06/2026
 - Support for private fields in custom data classes, allowing for better encapsulation and data hiding.
 - Better logging and messages.

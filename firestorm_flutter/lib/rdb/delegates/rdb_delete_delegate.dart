@@ -68,23 +68,31 @@ class RDBDeleteDelegate implements DeleteDelegate {
       if (className == null) {
         throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
       }
-      //Get the objects of this type:
-      final reference = RDB.instance.ref(className);
-      final snapshot = await reference.once();
-      if (snapshot.snapshot.value == null) {
-        return;
+
+      if (subcollection == null) {
+        await RDB.instance.ref(className).remove();
+      }
+      else {
+        await RDB.instance.ref("$className:$subcollection").remove();
       }
 
-      Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot.snapshot);
-      final Map<String, dynamic> updates = {};
-
-      data.forEach((key, value) {
-        String path = key.toString();
-        updates[path] = null; // Mark for deletion
-      });
-
-      // Perform the deletion in a single update operation:
-      return await reference.update(updates);
+      // //Get the objects of this type:
+      // final reference = RDB.instance.ref(className);
+      // final snapshot = await reference.once();
+      // if (snapshot.snapshot.value == null) {
+      //   return;
+      // }
+      //
+      // Map<String, dynamic> data = RDBDeserializationHelper.snapshotToMap(snapshot.snapshot);
+      // final Map<String, dynamic> updates = {};
+      //
+      // data.forEach((key, value) {
+      //   String path = key.toString();
+      //   updates[path] = null; // Mark for deletion
+      // });
+      //
+      // // Perform the deletion in a single update operation:
+      // return await reference.update(updates);
     }
   }
 

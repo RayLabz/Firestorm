@@ -104,25 +104,13 @@ class LSDeleteDelegate implements DeleteDelegate {
         throw UnsupportedError('No class name found for type: $type. Consider re-generating Firestorm data classes.');
       }
 
-      Map<String, dynamic>? snapshot;
       if (subcollection == null) {
-        snapshot = await LS.instance.collection(className).get();
+        await LS.instance.collection(className).delete();
       }
       else {
-        snapshot =
-        await LS.instance.collection(className).doc(subcollection)
-            .collection(subcollection)
-            .get();
+        final collectionRef = LS.instance.collection(className).doc(subcollection).collection(subcollection);
+        await collectionRef.delete();
       }
-      if (snapshot == null) return Future.value();
-      if (snapshot.isEmpty) return Future.value();
-
-      List<Future> futures = [];
-      for (var entry in snapshot.entries) {
-        futures.add(LS.instance.collection(className).doc(entry.key.split("/")[2]).delete());
-      }
-
-      await Future.wait(futures);
     }
   }
 
