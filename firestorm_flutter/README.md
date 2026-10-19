@@ -30,9 +30,6 @@ Firestorm is designed to enable the rapid development of cross-platform Flutter 
 The primary aim of Firestorm is to _reduce development effort and time_ by providing an easy to use API for interacting with
 these datastores in an _object-oriented_ way, and with _minimal to no overheads_ in terms of performance or flexibility.
 
-Developed by <a target="_blank" href="https://github.com/nkasenides">Dr Nicos Kasenides</a> 
-at <a target="_blank" href="https://www.uclancyprus.ac.cy/">UCLan Cyprus</a>.
-
 **Not convinced? Check out the [code comparison](code-comparison.md).**
 
 [![pub package](https://img.shields.io/pub/v/firestorm.svg)](https://pub.dev/packages/firestorm)
@@ -82,7 +79,7 @@ By adding it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  firestorm: ^1.0.1
+  firestorm: ^1.0.2
 ```
 
 ## Getting started with Firestorm for Flutter
