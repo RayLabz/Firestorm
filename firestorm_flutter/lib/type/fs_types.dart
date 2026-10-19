@@ -37,7 +37,7 @@ class FSTypes {
 
     //check user-defined types:
     else if (type.element != null && type is InterfaceType) {
-      final uri = type.element3.library2.uri;
+      final uri = type.element.library.source.uri;
       final isSDKType = (uri.scheme == 'dart' || uri.scheme == 'package' && uri.pathSegments.first == 'flutter');
       if (isSDKType) {
         return false;
