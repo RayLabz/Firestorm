@@ -19,6 +19,8 @@ Realtime Database. It is available as a Maven dependency and can be imported int
 
 [Firestorm for Java](firestorm-java/java-api-guide.md)
 
+Use: [Maven Central](https://central.sonatype.com/artifact/com.raylabz/firestorm)
+
 ## Android (Java)
 Firestorm for Android is a client-side port of Firestorm for **Android** apps.
 
@@ -28,3 +30,5 @@ Firestorm for Android is a client-side port of Firestorm for **Android** apps.
 Firestorm for Flutter enables developers to utilize Firestorm in cross-platform <b>Flutter & Dart</b> projects.
 
 [Firestorm for Dart & Flutter](firestorm_flutter)
+
+Use: [pub.dev](https://pub.dev/packages/firestorm)
