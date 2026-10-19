@@ -1,3 +1,8 @@
+## v1.0.2
+Release date: 19/10/2026
+- Documentation to support newer Dart language versions, where `analyzer` cannot be used due to `dot-shorthands` experimental issues.
+- Added generation command recommendation in README.me for newer Dart versions (3.12+).
+
 ## v1.0.1
 Release date: 08/06/2026
 - Bug fixes related to `LS.delete.all()` method in Localstore.

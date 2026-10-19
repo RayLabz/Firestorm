@@ -103,7 +103,12 @@ After importing Firestorm in your project, you can start using it by following t
         flutter pub add build_runner 
         ```
 
-    - To generate, run:
+    - To generate, run the following if your project's Dart SDK is >=3.12:
+        ```bash
+        dart run build_runner build --enable-experiment=dot-shorthands --delete-conflicting-outputs
+        ```
+
+    - Run the following if your project's Dart SDK is <3.12 (older projects):
       ```bash
       dart run build_runner build --delete-conflicting-outputs
       ```
